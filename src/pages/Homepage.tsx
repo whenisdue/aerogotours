@@ -1,8 +1,9 @@
-import { useState, type FormEvent } from "react";
+import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
 import { ArrowDown, ArrowRight, ArrowUpRight, CalendarDays, Check, Compass, Hotel, Luggage, MessageCircle, Plane, Sparkles, Ticket, TrainFront, WalletCards } from "lucide-react";
 import { Link } from "react-router-dom";
 import { SiteHeader } from "../components/SiteHeader";
 import { Brand } from "../components/Brand";
+import { destinations } from "../data/destinations";
 
 const services = [
   { icon: <Plane size={19} />, label: "Flights" },
@@ -15,8 +16,6 @@ const services = [
   { icon: <MessageCircle size={19} />, label: "Travel support" },
 ];
 
-const photo = "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1400&q=85";
-
 export function Homepage() {
   const [submitted, setSubmitted] = useState(false);
   const submitInquiry = (event: FormEvent<HTMLFormElement>) => {
@@ -27,28 +26,21 @@ export function Homepage() {
   return <div className="public-site">
     <SiteHeader />
     <main>
-      <section className="hero page-shell">
-        <div className="hero__copy">
-          <span className="eyebrow hero__eyebrow"><span className="eyebrow-mark" /> A CLEARER WAY TO PLAN YOUR TRIP</span>
-          <h1>Your trip,<br /><em>taken care of.</em></h1>
-          <p>Tell us where you want to go. We help compare flights and stays, organize your itinerary and travel requirements, and keep the important details together so you don’t have to.</p>
-          <div className="hero__actions"><a className="button hero__primary" href="#inquiry">Tell us about your trip <ArrowUpRight size={17} /></a><a className="text-link hero__secondary" href="#how-it-works">See how it works <ArrowRight size={15} /></a></div>
-          <p className="hero__reassurance">No commitment. Start with a few trip details.</p>
-        </div>
+      <section className="hero" aria-labelledby="homepage-hero-title">
         <div className="hero__visual">
-          <img className="hero__image" src={photo} alt="A quiet lantern-lit street in Japan at dusk" />
+          <img className="hero__image" src={destinations[0].heroImage} alt={destinations[0].imageAlt} fetchPriority="high" />
           <div className="hero__image-shade" />
-          <div className="hero__photo-caption"><span>LESS TO FIGURE OUT</span><strong>More room to be there.</strong></div>
-          <aside className="hero__trip-card" aria-label="Your trip plan">
-            <div className="hero-trip-card__heading"><span className="hero-trip-card__dot" /> YOUR TRIP PLAN</div>
-            <ul className="hero-trip-card__list">
-              <li><span>Flights</span><strong>Options compared</strong></li>
-              <li><span>Stay</span><strong>Shortlist ready</strong></li>
-              <li><span>Itinerary</span><strong>Organized</strong></li>
-              <li><span>Support</span><strong>When you need it</strong></li>
-            </ul>
-          </aside>
+          <div className="page-shell hero__inner">
+            <div className="hero__copy">
+              <span className="eyebrow hero__eyebrow"><span className="eyebrow-mark" /> A CLEARER WAY TO PLAN YOUR TRIP</span>
+              <h1 id="homepage-hero-title">Your trip,<br /><em>taken care of.</em></h1>
+              <p>Tell us where you want to go. We help compare flights and stays, organize your itinerary and travel requirements, and keep the important details together so you don’t have to.</p>
+              <div className="hero__actions"><a className="button hero__primary" href="#inquiry">Tell us about your trip <ArrowUpRight size={17} /></a><a className="text-link hero__secondary" href="#how-it-works">See how it works <ArrowRight size={15} /></a></div>
+              <p className="hero__reassurance">No commitment. Start with a few trip details.</p>
+            </div>
+          </div>
         </div>
+        <DestinationRail />
       </section>
 
       <section className="how-section section-pad" id="how-it-works">
@@ -119,6 +111,57 @@ export function Homepage() {
     </main>
     <footer className="site-footer"><div className="page-shell site-footer__inner"><Brand light /><span>Thoughtful travel planning, made simpler.</span><span className="site-footer__domain">aerogotours.com</span><span className="site-footer__legal">© 2026 AeroGo Travel &amp; Tours · Sample prototype</span></div></footer>
   </div>;
+}
+
+function DestinationRail() {
+  const railRef = useRef<HTMLDivElement>(null);
+  const [canScrollPrevious, setCanScrollPrevious] = useState(false);
+  const [canScrollNext, setCanScrollNext] = useState(true);
+
+  const syncScrollControls = useCallback(() => {
+    const rail = railRef.current;
+    if (!rail) return;
+    setCanScrollPrevious(rail.scrollLeft > 4);
+    setCanScrollNext(rail.scrollLeft + rail.clientWidth < rail.scrollWidth - 4);
+  }, []);
+
+  useEffect(() => {
+    syncScrollControls();
+    window.addEventListener("resize", syncScrollControls);
+    return () => window.removeEventListener("resize", syncScrollControls);
+  }, [syncScrollControls]);
+
+  const scrollRail = (direction: -1 | 1) => {
+    const rail = railRef.current;
+    if (!rail) return;
+    const behavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
+    rail.scrollBy({ left: direction * rail.clientWidth * 0.76, behavior });
+  };
+
+  return <section className="destination-rail page-shell" aria-labelledby="destination-rail-title">
+    <div className="destination-rail__heading">
+      <h2 id="destination-rail-title" className="destination-rail__intro eyebrow">A LITTLE INSPIRATION <span aria-hidden="true">·</span> SOMEWHERE WORTH IMAGINING</h2>
+      <div className="destination-rail__controls" aria-label="Destination browsing controls">
+        <button type="button" onClick={() => scrollRail(-1)} disabled={!canScrollPrevious} aria-label="Show previous destinations"><ArrowRight size={18} className="destination-rail__arrow--back" /></button>
+        <button type="button" onClick={() => scrollRail(1)} disabled={!canScrollNext} aria-label="Show more destinations"><ArrowRight size={18} /></button>
+      </div>
+    </div>
+    <div className="destination-rail__viewport" ref={railRef} onScroll={syncScrollControls} onWheel={(event) => {
+      if (Math.abs(event.deltaY) > Math.abs(event.deltaX) && event.currentTarget.scrollWidth > event.currentTarget.clientWidth) {
+        event.preventDefault();
+        event.currentTarget.scrollLeft += event.deltaY;
+      }
+    }} role="region" aria-label="Browse destination inspiration" tabIndex={0}>
+      <div className="destination-rail__track">
+        {destinations.map((destination) => <Link className="destination-card" key={destination.slug} to={`/destinations/${destination.slug}`} aria-label={`Explore ${destination.name}: ${destination.tagline}`}>
+          <img src={destination.cardImage} alt="" loading="lazy" decoding="async" />
+          <span className="destination-card__shade" />
+          <span className="destination-card__copy"><strong>{destination.name}</strong><span>{destination.tagline}</span></span>
+          <span className="destination-card__arrow" aria-hidden="true"><ArrowUpRight size={18} /></span>
+        </Link>)}
+      </div>
+    </div>
+  </section>;
 }
 
 function ClockBadge() {

@@ -1,9 +1,12 @@
 import { ArrowUpRight, Menu, X } from "lucide-react";
 import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { Brand } from "./Brand";
 
 export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { pathname } = useLocation();
+  const sectionLink = (section: string) => pathname === "/" ? section : `/${section}`;
 
   return (
     <header className="site-header">
@@ -13,10 +16,10 @@ export function SiteHeader() {
           {menuOpen ? <X size={21} /> : <Menu size={21} />}
         </button>
         <nav className={`site-nav${menuOpen ? " site-nav--open" : ""}`} aria-label="Main navigation">
-          <a href="#how-it-works" onClick={() => setMenuOpen(false)}>How it works</a>
-          <a href="#services" onClick={() => setMenuOpen(false)}>What we help with</a>
-          <a href="#companion" onClick={() => setMenuOpen(false)}>The Companion</a>
-          <a className="site-nav__cta" href="#inquiry" onClick={() => setMenuOpen(false)}>Plan my trip <ArrowUpRight size={15} /></a>
+          <Link to={sectionLink("#how-it-works")} onClick={() => setMenuOpen(false)}>How it works</Link>
+          <Link to={sectionLink("#services")} onClick={() => setMenuOpen(false)}>What we help with</Link>
+          <Link to={sectionLink("#companion")} onClick={() => setMenuOpen(false)}>The Companion</Link>
+          <Link className="site-nav__cta" to={sectionLink("#inquiry")} onClick={() => setMenuOpen(false)}>Plan my trip <ArrowUpRight size={15} /></Link>
         </nav>
       </div>
     </header>
