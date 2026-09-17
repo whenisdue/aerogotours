@@ -152,7 +152,11 @@
 .form-submit { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 21px; }
 .form-submit > span { color: #8c938d; font-size: 9px; }
 .form-submit .button { min-height: 42px; font-size: 11px; }
-.form-demo-note { margin: 15px 0 0; color: #a0a69e; font-size: 8px; text-align: right; }
+.inquiry-form__honeypot { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.form-feedback { margin: 17px 0 0; font-size: 13px; line-height: 1.5; }
+.form-feedback--error { border-left: 2px solid #b8573b; padding-left: 10px; color: #a94e37; }
+.form-submit button:disabled { opacity: .65; cursor: wait; transform: none; }
+.form-privacy-note { margin: 14px 0 0; color: #7a857c; font-size: 12px; line-height: 1.55; }
 .form-success { display: flex; min-height: 410px; flex-direction: column; align-items: flex-start; justify-content: center; }
 .form-success__icon { display: grid; width: 48px; height: 48px; place-items: center; margin-bottom: 23px; border-radius: 50%; background: #e5eee6; color: #4d795e; }
 .form-success h3 { max-width: 370px; margin: 12px 0 8px; font-family: var(--serif); font-size: 32px; font-weight: 400; }
@@ -576,7 +580,6 @@ button.trip-event:hover .trip-event__content > strong { color: #b76c4e; }
   .inquiry-form > label { margin-top: 14px; }
   .form-submit { align-items: flex-end; flex-direction: column-reverse; gap: 8px; margin-top: 16px; }
   .form-submit .button { min-height: 40px; }
-  .form-demo-note { text-align: left; }
   .site-footer__inner { min-height: 0; grid-template-columns: 1fr auto; gap: 12px; padding-block: 22px; }
   .site-footer__inner > .brand { grid-column: 1; grid-row: 1 / span 2; }
   .site-footer__inner > span { font-size: 8px; }
@@ -749,7 +752,7 @@ button.trip-event:hover .trip-event__content > strong { color: #b76c4e; }
 .trust-points p { font-size: 14px; line-height: 1.7; }
 .inquiry-note strong { font-size: 13px; }
 .inquiry-note small { font-size: 12px; line-height: 1.6; }
-.form-required, .form-submit > span, .form-demo-note { font-size: 12px; }
+.form-required, .form-submit > span { font-size: 12px; }
 .inquiry-form label { font-size: 14px; line-height: 1.45; }
 .inquiry-form input, .inquiry-form textarea, .inquiry-form select { font-size: 15px; line-height: 1.45; }
 .inquiry-form input::placeholder, .inquiry-form textarea::placeholder { font-size: 14px; }

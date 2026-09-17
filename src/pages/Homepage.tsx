@@ -17,10 +17,47 @@ const services = [
 ];
 
 export function Homepage() {
-  const [submitted, setSubmitted] = useState(false);
-  const submitInquiry = (event: FormEvent<HTMLFormElement>) => {
+  const [submissionState, setSubmissionState] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [submissionError, setSubmissionError] = useState("");
+  const formStartedAt = useRef(0);
+  const submissionInFlight = useRef(false);
+
+  useEffect(() => {
+    formStartedAt.current = Date.now();
+  }, []);
+
+  const submitInquiry = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setSubmitted(true);
+    const form = event.currentTarget;
+    if (!form.reportValidity() || submissionInFlight.current) return;
+
+    submissionInFlight.current = true;
+    setSubmissionState("submitting");
+    setSubmissionError("");
+
+    const formData = Object.fromEntries(new FormData(form).entries());
+    formData.formStartedAt = String(formStartedAt.current || Date.now());
+
+    try {
+      const response = await fetch("/api/inquiry", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      const result = await response.json().catch(() => null) as { ok?: boolean; error?: string } | null;
+
+      if (!response.ok || !result?.ok) {
+        throw new Error(result?.error || "Unable to send inquiry");
+      }
+
+      form.reset();
+      setSubmissionState("success");
+    } catch {
+      setSubmissionError("We couldn't send your inquiry right now. Please try again.");
+      setSubmissionState("error");
+    } finally {
+      submissionInFlight.current = false;
+    }
   };
 
   return <div className="public-site">
@@ -96,14 +133,16 @@ export function Homepage() {
         <div className="page-shell inquiry-layout">
           <div className="inquiry-copy"><span className="eyebrow eyebrow--light">LET'S MAKE IT EASIER</span><h2>Tell us where<br /><em>you want to go.</em></h2><p>Share a few details and we’ll have a better idea of how to help. No pressure, just a good place to start.</p><div className="inquiry-note"><span className="inquiry-note__icon"><MessageCircle size={17} /></span><span><strong>A real conversation, first.</strong><small>We’ll learn what matters to you before suggesting next steps.</small></span></div><div className="inquiry-doodle"><span>Have a destination in mind?</span><ArrowDown size={18} /></div></div>
           <form className="inquiry-form" onSubmit={submitInquiry}>
-            {submitted ? <div className="form-success" role="status"><span className="form-success__icon"><Check size={22} /></span><span className="eyebrow">THANKS FOR SHARING</span><h3>Your trip idea is on its way.</h3><p>This demo form doesn't send your details yet. In a live AeroGo site, our team would follow up with you.</p><button className="text-link" type="button" onClick={() => setSubmitted(false)}>Edit your details <ArrowRight size={15} /></button></div> : <>
+            {submissionState === "success" ? <div className="form-success" role="status"><span className="form-success__icon"><Check size={22} /></span><span className="eyebrow">THANKS FOR SHARING</span><h3>Your inquiry has been received.</h3><p>Thank you! We'll review your trip details and get back to you.</p><button className="text-link" type="button" onClick={() => { formStartedAt.current = Date.now(); setSubmissionState("idle"); }}>Send another inquiry <ArrowRight size={15} /></button></div> : <>
               <div className="form-heading"><span className="eyebrow">START WITH THE BASICS</span><span className="form-required">* Required</span></div>
-              <div className="form-row"><label>Your name *<input required name="name" placeholder="e.g. Maria Santos" autoComplete="name" /></label><label>Email or phone *<input required name="contact" placeholder="Where can we reach you?" /></label></div>
+              <div className="form-row"><label>Your name *<input required name="name" placeholder="e.g. Maria Santos" autoComplete="name" /></label><label>Your email *<input required type="email" name="email" placeholder="Where can we reach you?" autoComplete="email" /></label></div>
               <div className="form-row"><label>Where would you like to go? *<input required name="destination" placeholder="City, country or 'not sure yet'" /></label><label>Approximate dates<input name="dates" placeholder="e.g. November 2026" /></label></div>
               <div className="form-row form-row--small"><label>Travelers<select name="travelers" defaultValue="2"><option value="1">1 traveler</option><option value="2">2 travelers</option><option value="3">3 travelers</option><option value="4">4 travelers</option><option value="5+">5 or more</option></select></label><label>Trip style<select name="style" defaultValue="family"><option value="family">Family / group</option><option value="couple">Couple</option><option value="solo">Solo</option><option value="work">Work trip</option><option value="other">Other</option></select></label></div>
               <label>Anything you'd like us to know?<textarea name="notes" placeholder="What would make this trip feel easy for you?" rows={3} /></label>
-              <div className="form-submit"><span>Just an inquiry. No commitment.</span><button type="submit" className="button button--coral">Send trip inquiry <ArrowUpRight size={16} /></button></div>
-              <p className="form-demo-note">Demo only · This form does not send or store your information.</p>
+              <div className="inquiry-form__honeypot" aria-hidden="true"><label>Leave this field empty<input name="website" tabIndex={-1} autoComplete="off" /></label></div>
+              {submissionState === "error" && <p className="form-feedback form-feedback--error" role="alert">{submissionError}</p>}
+              <div className="form-submit"><span>Just an inquiry. No commitment.</span><button type="submit" className="button button--coral" disabled={submissionState === "submitting"}>{submissionState === "submitting" ? "Sending inquiry…" : "Send trip inquiry"} <ArrowUpRight size={16} /></button></div>
+              <p className="form-privacy-note">We use these details to review your travel inquiry and respond. Please don't include passport, payment, or government ID information.</p>
             </>}
           </form>
         </div>
