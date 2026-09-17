@@ -3,7 +3,10 @@ import { ArrowDown, ArrowRight, ArrowUpRight, CalendarDays, Check, Compass, Hote
 import { Link } from "react-router-dom";
 import { SiteHeader } from "../components/SiteHeader";
 import { Brand } from "../components/Brand";
-import { destinations } from "../data/destinations";
+import { destinations, featuredDestinations } from "../data/destinations";
+import { japanDreamImages } from "../data/dreamTrips";
+import type { DreamTripHandoff } from "../utils/dreamTripEngine";
+import { createDreamTrip } from "../utils/dreamTripEngine";
 
 const services = [
   { icon: <Plane size={19} />, label: "Flights" },
@@ -16,14 +19,46 @@ const services = [
   { icon: <MessageCircle size={19} />, label: "Travel support" },
 ];
 
+const homepageDreamTrip = createDreamTrip({ group: "sample", travelers: 4, duration: 7, interest: "mix", pace: "balanced" });
+
 export function Homepage() {
   const [submissionState, setSubmissionState] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [submissionError, setSubmissionError] = useState("");
   const formStartedAt = useRef(0);
   const submissionInFlight = useRef(false);
+  const inquiryFormRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     formStartedAt.current = Date.now();
+  }, []);
+
+  useEffect(() => {
+    try {
+      const storedHandoff = window.sessionStorage.getItem("aerogo.dreamTripInquiry");
+      if (!storedHandoff || !inquiryFormRef.current) return;
+
+      const handoff = JSON.parse(storedHandoff) as Partial<DreamTripHandoff>;
+      const form = inquiryFormRef.current;
+      const setField = (name: string, value: string | undefined) => {
+        if (value === undefined) return;
+        const field = form.elements.namedItem(name);
+        if (field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement || field instanceof HTMLSelectElement) {
+          field.value = value;
+        }
+      };
+
+      setField("destination", handoff.destination);
+      setField("travelers", handoff.personalized ? handoff.travelers : "");
+      setField("style", handoff.personalized ? handoff.style : "");
+      setField("notes", handoff.summary);
+      window.sessionStorage.removeItem("aerogo.dreamTripInquiry");
+    } catch {
+      try {
+        window.sessionStorage.removeItem("aerogo.dreamTripInquiry");
+      } catch {
+        // Ignore storage errors and leave the form available for manual completion.
+      }
+    }
   }, []);
 
   const submitInquiry = async (event: FormEvent<HTMLFormElement>) => {
@@ -69,16 +104,17 @@ export function Homepage() {
           <div className="hero__image-shade" />
           <div className="page-shell hero__inner">
             <div className="hero__copy">
-              <span className="eyebrow hero__eyebrow"><span className="eyebrow-mark" /> A CLEARER WAY TO PLAN YOUR TRIP</span>
-              <h1 id="homepage-hero-title">Your trip,<br /><em>taken care of.</em></h1>
-              <p>Tell us where you want to go. We help compare flights and stays, organize your itinerary and travel requirements, and keep the important details together so you don’t have to.</p>
-              <div className="hero__actions"><a className="button hero__primary" href="#inquiry">Tell us about your trip <ArrowUpRight size={17} /></a><a className="text-link hero__secondary" href="#how-it-works">See how it works <ArrowRight size={15} /></a></div>
-              <p className="hero__reassurance">No commitment. Start with a few trip details.</p>
+              <span className="eyebrow hero__eyebrow"><span className="eyebrow-mark" /> AEROGO · TRAVEL INSPIRATION</span>
+              <h1 id="homepage-hero-title">Find somewhere worth dreaming about.</h1>
+              <p>Explore beautiful places, imagine what your trip could look like, and discover the possibilities at your own pace.</p>
+              <div className="hero__actions"><a className="text-link hero__secondary" href="#inquiry">Already planning a trip? Tell us about it <ArrowRight size={15} /></a></div>
+              <p className="hero__reassurance">Browse freely. No account or booking required.</p>
             </div>
           </div>
         </div>
-        <DestinationRail />
+        <section className="homepage-destination-section" id="destinations"><DestinationRail /></section>
       </section>
+      <HomepageDreamPreview />
 
       <section className="how-section section-pad" id="how-it-works">
         <div className="page-shell">
@@ -132,12 +168,12 @@ export function Homepage() {
       <section className="inquiry-section section-pad" id="inquiry">
         <div className="page-shell inquiry-layout">
           <div className="inquiry-copy"><span className="eyebrow eyebrow--light">LET'S MAKE IT EASIER</span><h2>Tell us where<br /><em>you want to go.</em></h2><p>Share a few details and we’ll have a better idea of how to help. No pressure, just a good place to start.</p><div className="inquiry-note"><span className="inquiry-note__icon"><MessageCircle size={17} /></span><span><strong>A real conversation, first.</strong><small>We’ll learn what matters to you before suggesting next steps.</small></span></div><div className="inquiry-doodle"><span>Have a destination in mind?</span><ArrowDown size={18} /></div></div>
-          <form className="inquiry-form" onSubmit={submitInquiry}>
+          <form className="inquiry-form" ref={inquiryFormRef} onSubmit={submitInquiry}>
             {submissionState === "success" ? <div className="form-success" role="status"><span className="form-success__icon"><Check size={22} /></span><span className="eyebrow">THANKS FOR SHARING</span><h3>Your inquiry has been received.</h3><p>Thank you! We'll review your trip details and get back to you.</p><button className="text-link" type="button" onClick={() => { formStartedAt.current = Date.now(); setSubmissionState("idle"); }}>Send another inquiry <ArrowRight size={15} /></button></div> : <>
               <div className="form-heading"><span className="eyebrow">START WITH THE BASICS</span><span className="form-required">* Required</span></div>
               <div className="form-row"><label>Your name *<input required name="name" placeholder="e.g. Maria Santos" autoComplete="name" /></label><label>Your email *<input required type="email" name="email" placeholder="Where can we reach you?" autoComplete="email" /></label></div>
               <div className="form-row"><label>Where would you like to go? *<input required name="destination" placeholder="City, country or 'not sure yet'" /></label><label>Approximate dates<input name="dates" placeholder="e.g. November 2026" /></label></div>
-              <div className="form-row form-row--small"><label>Travelers<select name="travelers" defaultValue="2"><option value="1">1 traveler</option><option value="2">2 travelers</option><option value="3">3 travelers</option><option value="4">4 travelers</option><option value="5+">5 or more</option></select></label><label>Trip style<select name="style" defaultValue="family"><option value="family">Family / group</option><option value="couple">Couple</option><option value="solo">Solo</option><option value="work">Work trip</option><option value="other">Other</option></select></label></div>
+              <div className="form-row form-row--small"><label>Travelers<select name="travelers" defaultValue="2"><option value="">Not specified</option><option value="1">1 traveler</option><option value="2">2 travelers</option><option value="3">3 travelers</option><option value="4">4 travelers</option><option value="5+">5 or more</option></select></label><label>Trip style<select name="style" defaultValue="family"><option value="">Not specified</option><option value="family">Family / group</option><option value="couple">Couple</option><option value="solo">Solo</option><option value="work">Work trip</option><option value="other">Other</option></select></label></div>
               <label>Anything you'd like us to know?<textarea name="notes" placeholder="What would make this trip feel easy for you?" rows={3} /></label>
               <div className="inquiry-form__honeypot" aria-hidden="true"><label>Leave this field empty<input name="website" tabIndex={-1} autoComplete="off" /></label></div>
               {submissionState === "error" && <p className="form-feedback form-feedback--error" role="alert">{submissionError}</p>}
@@ -150,6 +186,20 @@ export function Homepage() {
     </main>
     <footer className="site-footer"><div className="page-shell site-footer__inner"><Brand light /><span>Thoughtful travel planning, made simpler.</span><span className="site-footer__domain">aerogotours.com</span><span className="site-footer__legal">© 2026 AeroGo Travel &amp; Tours · Sample prototype</span></div></footer>
   </div>;
+}
+
+function HomepageDreamPreview() {
+  const highlights = [homepageDreamTrip.days[0], homepageDreamTrip.days[2], homepageDreamTrip.days[4]];
+
+  return <section className="homepage-dream-preview" aria-labelledby="homepage-dream-preview-title">
+    <div className="page-shell">
+      <div className="homepage-dream-preview__heading"><div><span className="eyebrow">TRY A DREAM TRIP · JAPAN</span><h2 id="homepage-dream-preview-title">See what seven days in Japan could look like.</h2></div></div>
+      <div className="homepage-dream-preview__feature">
+        <div className="homepage-dream-preview__visual"><img src={japanDreamImages.hero.image} alt={japanDreamImages.hero.alt} loading="lazy" /><span className="homepage-dream-preview__visual-label">JAPAN · ILLUSTRATIVE ONLY</span></div>
+        <div className="homepage-dream-preview__copy"><p>Explore a curated sample journey through Tokyo and Kyoto, then shape it around your travel style.</p><p className="homepage-dream-preview__honesty">Japan is one of AeroGo’s interactive Dream Trip examples. This is an illustrative itinerary, not a confirmed booking. Routes, activities, availability and prices can be refined with AeroGo.</p><div className="homepage-dream-preview__highlights">{highlights.map((day) => <div className="homepage-dream-highlight" key={day.day}><span>DAY {String(day.day).padStart(2, "0")}</span><div><strong>{day.title}</strong><small>{day.location}</small></div><ArrowRight size={16} /></div>)}</div><Link className="button homepage-dream-preview__button" to="/dream/japan">Explore the Japan Dream Trip <ArrowUpRight size={16} /></Link></div>
+      </div>
+    </div>
+  </section>;
 }
 
 function DestinationRail() {
@@ -179,7 +229,7 @@ function DestinationRail() {
 
   return <section className="destination-rail page-shell" aria-labelledby="destination-rail-title">
     <div className="destination-rail__heading">
-      <h2 id="destination-rail-title" className="destination-rail__intro eyebrow">A LITTLE INSPIRATION <span aria-hidden="true">·</span> SOMEWHERE WORTH IMAGINING</h2>
+      <div className="destination-rail__title"><span className="destination-rail__intro eyebrow">EXPLORE DESTINATIONS</span><h2 id="destination-rail-title">Explore Asian destinations</h2><p>Start with a little inspiration. See where it takes you.</p></div>
       <div className="destination-rail__controls" aria-label="Destination browsing controls">
         <button type="button" onClick={() => scrollRail(-1)} disabled={!canScrollPrevious} aria-label="Show previous destinations"><ArrowRight size={18} className="destination-rail__arrow--back" /></button>
         <button type="button" onClick={() => scrollRail(1)} disabled={!canScrollNext} aria-label="Show more destinations"><ArrowRight size={18} /></button>
@@ -192,12 +242,17 @@ function DestinationRail() {
       }
     }} role="region" aria-label="Browse destination inspiration" tabIndex={0}>
       <div className="destination-rail__track">
-        {destinations.map((destination) => <Link className="destination-card" key={destination.slug} to={`/destinations/${destination.slug}`} aria-label={`Explore ${destination.name}: ${destination.tagline}`}>
-          <img src={destination.cardImage} alt="" loading="lazy" decoding="async" />
-          <span className="destination-card__shade" />
-          <span className="destination-card__copy"><strong>{destination.name}</strong><span>{destination.tagline}</span></span>
-          <span className="destination-card__arrow" aria-hidden="true"><ArrowUpRight size={18} /></span>
-        </Link>)}
+        {featuredDestinations.map((destination) => {
+          const isDreamTrip = destination.slug === "japan" || destination.slug === "thailand" || destination.slug === "south-korea";
+          const destinationPath = isDreamTrip ? `/dream/${destination.slug}` : `/destinations/${destination.slug}`;
+          return <Link className="destination-card" key={destination.slug} to={destinationPath} aria-label={`Explore ${destination.name}: ${destination.tagline}${isDreamTrip ? " Opens the sample Dream Trip itinerary" : ""}`}>
+            <img src={destination.cardImage} alt="" loading="lazy" decoding="async" />
+            <span className="destination-card__shade" />
+            {isDreamTrip && <span className="destination-card__label">SAMPLE TRIP</span>}
+            <span className="destination-card__copy"><strong>{destination.name}</strong><span>{destination.tagline}</span></span>
+            <span className="destination-card__arrow" aria-hidden="true"><ArrowUpRight size={18} /></span>
+          </Link>;
+        })}
       </div>
     </div>
   </section>;

@@ -44,6 +44,11 @@ export function DestinationPage() {
         </div>
       </section>
 
+      {(destination.slug === "japan" || destination.slug === "thailand" || destination.slug === "south-korea") && <section className="destination-dream-entry page-shell" aria-labelledby="destination-dream-title">
+        <div className="destination-dream-entry__copy"><span className="eyebrow">A DIFFERENT WAY TO BEGIN</span><h2 id="destination-dream-title">Imagine your trip to {destination.name}</h2><p>See what a vacation here could look like before you make any plans.</p></div>
+        <Link className="button destination-dream-entry__button" to={`/dream/${destination.slug}`}>Explore a Dream Trip <ArrowUpRight size={17} /></Link>
+      </section>}
+
       <section className="destination-moments">
         <div className="page-shell">
           <div className="destination-section-heading">

@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { Homepage } from "./pages/Homepage";
 import { CompanionPage } from "./pages/Companion";
 import { DestinationPage } from "./pages/DestinationPage";
+import { DreamTripNotFound, DreamTripPage } from "./pages/DreamTripPage";
 import { findDestination } from "./data/destinations";
 import "./App.css";
 
@@ -13,11 +14,13 @@ function PageTitle() {
   useEffect(() => {
     document.title = pathname.startsWith("/companion")
       ? "Sample Trip Companion · AeroGo"
+      : pathname.startsWith("/dream/")
+        ? "Dream Trip Preview · AeroGo"
       : destination
-        ? `${destination.name} inspiration · AeroGo`
-        : pathname.startsWith("/destinations/")
-          ? "Destination inspiration · AeroGo"
-          : "AeroGo Travel & Tours | Your trip, taken care of.";
+          ? `${destination.name} inspiration · AeroGo`
+          : pathname.startsWith("/destinations/")
+            ? "Destination inspiration · AeroGo"
+          : "AeroGo Travel & Tours | From what if? to we're going.";
   }, [pathname, destination]);
   return null;
 }
@@ -43,6 +46,8 @@ export default function App() {
     <Route path="/" element={<Homepage />} />
     <Route path="/companion" element={<CompanionPage />} />
     <Route path="/destinations/:slug" element={<DestinationPage />} />
+    <Route path="/dream/:slug" element={<DreamTripPage />} />
+    <Route path="/dream/*" element={<DreamTripNotFound />} />
     <Route path="*" element={<Homepage />} />
   </Routes></BrowserRouter>;
 }

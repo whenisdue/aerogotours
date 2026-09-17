@@ -19,6 +19,19 @@ The public site is available at `/` and the sample Travel Companion is at `/comp
 - There is no authentication, payment processing, live travel data, or AI integration.
 - The trip information is organized in `src/data/trip.ts` so a future data service can replace the sample data.
 
+## Dream Trip content references
+
+The Thailand Dream Trip is curated inspiration, not a live booking product. Named places and regional route ideas were checked against these reference sources:
+
+- [Tourism Authority of Thailand: Bangkok](https://www.tourismthailand.org/Destinations/Provinces/bangkok/219) — Bangkok's Grand Palace/Wat Phra Kaew, Wat Pho, Wat Arun, Yaowarat and market areas.
+- [Tourism Authority of Thailand: Chiang Mai](https://www.tourismthailand.org/Destinations/North/Chiang-Mai) — Chiang Mai's Old City, Tha Phae Walking Street, Wat Phra That Doi Suthep, Nimman and nearby nature references.
+- [Tourism Authority of Thailand: Phuket one-day route](https://www.tourismthailand.org/Trip-Planner/Suggestion-Detail/recommended-route-for-one-day-3) — Phuket Old Town, Wat Chalong, viewpoints and coastal route ideas.
+- [UNESCO: Historic City of Ayutthaya](https://whc.unesco.org/en/list/576) — Ayutthaya's historical-city context and heritage-site naming.
+
+The interface intentionally omits live opening hours, journey times, prices, availability, visa guidance and reservations. AeroGo should verify current logistics and quotations before turning an illustrative route into a real trip.
+
+The South Korea Dream Trip was checked on 2026-09-17 against the [Official Travel Guide to Seoul](https://english.visitseoul.net/AboutSeoul), its pages for [Gyeongbokgung Palace](https://english.visitseoul.net/PalaceArea/GyeongbokgungPalace/ENN000608) and [Bukchon Hanok Village](https://english.visitseoul.net/attractions/bukchon-hanok-village/ENP000261), [Visit Busan's Gamcheon Culture Village guide](https://www.visitbusan.net/index.do?lang_cd=en+&menuCd=DOM_000000301001001000&uc_seq=365), [VISITKOREA's Gyeongju course](https://english.visitkorea.or.kr/svc/whereToGo/hdrdslt/hdrdsltView.do?crsSn=534028) and [Bulguksa Temple guide](https://english.visitkorea.or.kr/svc/contents/contentsView.do?vcontsId=94395), and the [Korea Transportation Guide](https://english.visitkorea.or.kr/public/contents/travel/KoreaTransportationGuide_enu.pdf). These support the named Seoul, Busan and Gyeongju places and the use of intercity rail as a planning concept; the app intentionally does not claim current schedules, fares, opening hours or availability.
+
 ## Inquiry email setup
 
 The Vercel Function at `api/inquiry.ts` expects these server-side variables:

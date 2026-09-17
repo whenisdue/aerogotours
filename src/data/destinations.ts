@@ -209,7 +209,82 @@ export const destinations: Destination[] = [
       { day: 4, title: "Keep one last day flexible", description: "Return to the water or follow a new idea before heading home." },
     ],
   },
+  {
+    slug: "singapore",
+    name: "Singapore",
+    tagline: "A polished city with green space to spare.",
+    cardImage: unsplash("photo-1525625293386-3f8f99389edd", 900),
+    heroImage: unsplash("photo-1525625293386-3f8f99389edd", 2200),
+    imageAlt: "A bright Southeast Asian city skyline beside the water",
+    intro: [
+      "Singapore brings together hawker stalls in Chinatown and Tiong Bahru, shaded paths at Gardens by the Bay, and waterfront walks around Marina Bay in a compact city setting.",
+      "Choose a few neighborhoods to get to know, then leave room for a slower garden walk or an evening by the bay. The city works best when the route has space between its highlights.",
+    ],
+    moments: [
+      { title: "A table full of flavor", description: "Move between Chinatown hawker favorites and a Tiong Bahru café, letting the meal become part of the route." },
+      { title: "Green in the middle of it all", description: "Take a slower walk through Gardens by the Bay or the Botanic Gardens, where the city noise softens for a while." },
+      { title: "The bay after dark", description: "Watch the Marina Bay skyline change color, then choose a nearby street for one more taste." },
+    ],
+    journey: [
+      { day: 1, title: "Arrive by the bay", description: "Settle in and take an easy first walk near the water." },
+      { day: 2, title: "Follow Chinatown and Tiong Bahru", description: "Pair hawker flavors with colorful streets and small neighborhood discoveries." },
+      { day: 3, title: "Make space for the gardens", description: "Balance the city's architecture with a slower afternoon at Gardens by the Bay or the Botanic Gardens." },
+      { day: 4, title: "Keep the final morning open", description: "Return to a favorite table or take one last walk before heading home." },
+    ],
+  },
+  {
+    slug: "vietnam",
+    name: "Vietnam",
+    tagline: "Street life, slow meals and stories in between.",
+    cardImage: unsplash("photo-1528127269322-539801943592", 900),
+    heroImage: unsplash("photo-1528127269322-539801943592", 2200),
+    imageAlt: "A peaceful Vietnamese landscape layered with green hills",
+    intro: [
+      "Vietnam rewards a curious pace: Hanoi's Old Quarter, Hoi An's lantern-lined Ancient Town, and meals that invite you to stay a little longer each offer a different starting point.",
+      "Choose one or two places to get to know rather than racing between every highlight. The smaller transitions, from Hoan Kiem to a quiet riverside lane, often carry the best memories.",
+    ],
+    moments: [
+      { title: "A city waking up", description: "Start around Hanoi's Old Quarter or Hoan Kiem with a market or coffee, then let the morning streets set the rhythm." },
+      { title: "A slower lane", description: "Follow Hoi An Ancient Town's old façades and riverside paths, or choose a neighborhood where daily life unfolds around you." },
+      { title: "Dinner at street level", description: "Share a table, try something unfamiliar, and leave room for one more small dish." },
+    ],
+    journey: [
+      { day: 1, title: "Arrive and find your bearings", description: "Keep the first walk close to your stay and let the city arrive gently." },
+      { day: 2, title: "Follow the morning flavors", description: "Pair Hanoi's Old Quarter with a market or café and a neighborhood wander." },
+      { day: 3, title: "Take the riverside turn", description: "Spend time in Hoi An Ancient Town, by the water, or in a quieter nearby setting." },
+      { day: 4, title: "Leave room for one last meal", description: "Return to a favorite corner before the journey onward." },
+    ],
+  },
+  {
+    slug: "malaysia",
+    name: "Malaysia",
+    tagline: "Many cultures, one generous welcome.",
+    cardImage: unsplash("photo-1596422846543-75c6fc197f07", 900),
+    heroImage: unsplash("photo-1596422846543-75c6fc197f07", 2200),
+    imageAlt: "A Malaysian city skyline glowing in warm evening light",
+    intro: [
+      "Malaysia makes room for contrasts: Kuala Lumpur's city streets, George Town's layered food traditions, tropical landscapes, and old neighborhoods shaped by many cultures.",
+      "A good trip can choose one city base or pair Kuala Lumpur with a slower change of scenery, while keeping the meals, markets, and conversations close to the center of the experience.",
+    ],
+    moments: [
+      { title: "A city from above", description: "Let Kuala Lumpur's skyline orient you, then come back down to the streets where the details live." },
+      { title: "A meal with many influences", description: "Follow George Town's food trail through different flavors and let curiosity choose the next bite." },
+      { title: "A greener horizon", description: "Make time for a park, coast, or highland pause when the city starts to feel full." },
+    ],
+    journey: [
+      { day: 1, title: "Arrive in the city", description: "Settle in and take a gentle first look around your neighborhood." },
+      { day: 2, title: "Follow the food trail", description: "Move between Kuala Lumpur markets, old streets, and a table worth lingering at." },
+      { day: 3, title: "Find a different rhythm", description: "Choose a green space, cultural stop, or nearby change of scenery." },
+      { day: 4, title: "Keep the ending open", description: "Return to a favorite place or follow one last new idea before departure." },
+    ],
+  },
 ];
 
 export const findDestination = (slug: string | undefined) =>
   destinations.find((destination) => destination.slug === slug);
+
+const featuredDestinationSlugs = ["japan", "thailand", "south-korea", "hong-kong", "bali", "singapore", "vietnam", "malaysia"] as const;
+
+export const featuredDestinations = featuredDestinationSlugs
+  .map((slug) => destinations.find((destination) => destination.slug === slug))
+  .filter((destination): destination is Destination => Boolean(destination));

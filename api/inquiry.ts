@@ -6,8 +6,8 @@ const MIN_FORM_COMPLETION_MS = 1_200;
 const MAX_AGE_MS = 7 * 24 * 60 * 60 * 1_000;
 
 const ALLOWED_FIELDS = new Set(["name", "email", "destination", "dates", "travelers", "style", "notes", "website", "formStartedAt"]);
-const TRAVELER_VALUES = new Set(["1", "2", "3", "4", "5+"]);
-const STYLE_VALUES = new Set(["family", "couple", "solo", "work", "other"]);
+const TRAVELER_VALUES = new Set(["", "1", "2", "3", "4", "5+"]);
+const STYLE_VALUES = new Set(["", "family", "couple", "solo", "work", "other"]);
 const LINE_BREAKS = /[\r\n]/;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
 

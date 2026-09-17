@@ -85,6 +85,16 @@ test("accepts a valid inquiry when the provider accepts it", async () => {
   assert.match(providerPayload.text, /Kyoto, Japan/);
 });
 
+test("accepts a sample-trip inquiry without selected traveler or style values", async () => {
+  setConfiguredEnvironment();
+  globalThis.fetch = async () => new Response(JSON.stringify({ id: "email_sample" }), { status: 200, headers: { "content-type": "application/json" } });
+
+  const response = await invoke(validInquiry({ travelers: "", style: "", notes: "Sample itinerary — preferences not selected." }));
+
+  assert.equal(response.statusCode, 200);
+  assert.deepEqual(response.payload, { ok: true });
+});
+
 test("rejects a missing required field", async () => {
   setConfiguredEnvironment();
   const response = await invoke(validInquiry({ destination: "" }));
