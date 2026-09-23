@@ -3,18 +3,22 @@ import { ArrowDownRight, ArrowLeft, ArrowRight, CalendarDays, Check, CircleAlert
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import { Brand } from "../components/Brand";
 import { TravelCompanion } from "../components/TravelCompanion";
+import { vietnamDreamImages } from "../data/dreamTrips";
 import { formatPhp, tripStageLabels } from "../data/myTripPresentation";
-import type { BookingProgressItem, ItineraryDay, MyTripRecord, ProposalOption, TravelMoment, TripStage, TripStatus } from "../data/myTripTypes";
+import type { BookingProgressItem, MyTripRecord, ProposalItineraryDay, ProposalOption, ProposalTripRecord, TravelMoment, TripContact, TripStage, TripStatus } from "../data/myTripTypes";
 import { resolveInitialTripStage } from "../utils/tripEntry";
 
 const stageOrder: TripStage[] = ["proposal", "booking", "companion", "completed"];
 type ClientTrip = Omit<MyTripRecord, "token">;
+type ProposalStageTrip = ClientTrip | ProposalTripRecord;
 type AuthState =
   | { status: "loading" }
   | { status: "locked"; token: string; error?: string }
   | { status: "error"; token: string; error: string }
   | { status: "unavailable"; token: string; lifecycle: "expired" | "archived" | "revoked" }
+  | { status: "proposal"; token: string; trip: ProposalTripRecord }
   | { status: "authenticated"; token: string; trip: ClientTrip; sessionExpiresAt: string };
+type TripApiPayload = { ok?: boolean; access?: "proposal"; trip?: ClientTrip | ProposalTripRecord; sessionExpiresAt?: string; error?: string; lifecycle?: "expired" | "archived" | "revoked" };
 
 export function MyTripPage() {
   const { token } = useParams();
@@ -26,9 +30,10 @@ export function MyTripPage() {
     const restoreSession = async () => {
       try {
         const response = await fetch("/api/trips/session", { method: "POST", credentials: "include", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ token }) });
-        const payload = await response.json() as { ok?: boolean; trip?: ClientTrip; sessionExpiresAt?: string; error?: string; lifecycle?: "expired" | "archived" | "revoked" };
+        const payload = await response.json() as TripApiPayload;
         if (!active) return;
-        if (response.ok && payload.ok && payload.trip && payload.sessionExpiresAt) setAuth({ status: "authenticated", token, trip: payload.trip, sessionExpiresAt: payload.sessionExpiresAt });
+        if (response.ok && payload.ok && payload.access === "proposal" && payload.trip?.currentStage === "proposal") setAuth({ status: "proposal", token, trip: payload.trip as ProposalTripRecord });
+        else if (response.ok && payload.ok && payload.trip && payload.sessionExpiresAt) setAuth({ status: "authenticated", token, trip: payload.trip as ClientTrip, sessionExpiresAt: payload.sessionExpiresAt });
         else if (response.status === 410 && payload.lifecycle) setAuth({ status: "unavailable", token, lifecycle: payload.lifecycle });
         else if (response.status === 503) setAuth({ status: "error", token, error: "AeroGo cannot open this trip right now. Please try again later." });
         else setAuth({ status: "locked", token });
@@ -45,8 +50,8 @@ export function MyTripPage() {
     setAuth({ status: "loading" });
     try {
       const response = await fetch("/api/trips/access", { method: "POST", credentials: "include", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ token, password }) });
-      const payload = await response.json() as { ok?: boolean; trip?: ClientTrip; sessionExpiresAt?: string; error?: string; lifecycle?: "expired" | "archived" | "revoked" };
-      if (response.ok && payload.ok && payload.trip && payload.sessionExpiresAt) setAuth({ status: "authenticated", token, trip: payload.trip, sessionExpiresAt: payload.sessionExpiresAt });
+      const payload = await response.json() as TripApiPayload;
+      if (response.ok && payload.ok && payload.trip && payload.sessionExpiresAt) setAuth({ status: "authenticated", token, trip: payload.trip as ClientTrip, sessionExpiresAt: payload.sessionExpiresAt });
       else if (response.status === 410 && payload.lifecycle) setAuth({ status: "unavailable", token, lifecycle: payload.lifecycle });
       else if (response.status === 503) setAuth({ status: "error", token, error: "AeroGo cannot open this trip right now. Please try again later." });
       else setAuth({ status: "locked", token, error: response.status === 429 ? "Too many attempts for now. Please wait a moment, then try again." : payload.error });
@@ -59,10 +64,16 @@ export function MyTripPage() {
     setAuth({ status: "locked", token });
   };
 
+  if (auth.status === "proposal" && auth.token === token) return <ProposalWorkspace trip={auth.trip} />;
   if (auth.status === "authenticated" && auth.token === token) return <TripWorkspace key={`${token}-${auth.sessionExpiresAt}`} trip={auth.trip} onLogout={logout} />;
   if (auth.status === "unavailable" && auth.token === token) return <UnavailableTripPage status={auth.lifecycle === "revoked" ? undefined : auth.lifecycle} />;
   if (auth.status === "error" && auth.token === token) return <TripAccessScreen loading={false} error={auth.error} onUnlock={unlock} />;
-  return <TripAccessScreen loading={auth.status === "loading"} error={auth.status === "locked" ? auth.error : undefined} onUnlock={unlock} />;
+  if (auth.status === "loading") return <TripLoadingScreen />;
+  return <TripAccessScreen loading={false} error={auth.status === "locked" ? auth.error : undefined} onUnlock={unlock} />;
+}
+
+function TripLoadingScreen() {
+  return <div className="mytrip-app mytrip-loading-app" aria-busy="true"><header className="mytrip-topbar"><div className="mytrip-topbar__inner"><Brand /></div></header></div>;
 }
 
 function TripAccessScreen({ loading, error, onUnlock }: { loading: boolean; error?: string; onUnlock: (password: string) => Promise<void> }) {
@@ -131,6 +142,15 @@ function TripWorkspace({ trip, onLogout }: { trip: ClientTrip; onLogout: () => P
   </div>;
 }
 
+function ProposalWorkspace({ trip }: { trip: ProposalTripRecord }) {
+  const isIllustrativeProposal = trip.proposal?.kind === "illustrative";
+  return <div className={`mytrip-app${isIllustrativeProposal ? " mytrip-app--illustrative" : ""}`}>
+    <header className="mytrip-topbar"><div className="mytrip-topbar__inner"><Brand /><div className="mytrip-topbar__meta"><Link to="/"><ArrowLeft size={14} /> AeroGo home</Link></div></div></header>
+    <main className="mytrip-main"><div className="mytrip-content"><ProposalStage trip={trip} /></div></main>
+    <footer className="mytrip-footer"><div><Brand light /><span>Your trip details, all in one place.</span></div><p><Link to="/">Return to AeroGo</Link></p></footer>
+  </div>;
+}
+
 function UnavailableTripPage({ status }: { status?: TripStatus }) {
   const isArchived = status === "archived";
   const isExpired = status === "expired";
@@ -139,19 +159,20 @@ function UnavailableTripPage({ status }: { status?: TripStatus }) {
   return <div className="mytrip-app mytrip-unavailable"><header className="mytrip-topbar"><div className="mytrip-topbar__inner"><Brand /><Link to="/"><ArrowLeft size={14} /> AeroGo home</Link></div></header><main className="mytrip-unavailable__main"><span className="mytrip-kicker"><ShieldCheck size={14} /> AEROGO MY TRIP</span><h1>{title.split("\n").map((line, index) => <span key={line}>{index > 0 && <br />}<em>{line}</em></span>)}</h1><p>{description}</p><Link className="mytrip-button mytrip-button--dark" to="/#inquire">Message AeroGo <ArrowRight size={16} /></Link><span className="mytrip-unavailable__note">No customer information is shown for this unavailable trip link.</span></main></div>;
 }
 
-function ProposalStage({ trip }: { trip: ClientTrip }) {
+function ProposalStage({ trip }: { trip: ProposalStageTrip }) {
   if (trip.proposal?.kind === "illustrative") return <IllustrativeProposalStage trip={trip} />;
   return <PricedProposalStage trip={trip} />;
 }
 
-function PricedProposalStage({ trip }: { trip: ClientTrip }) {
+function PricedProposalStage({ trip }: { trip: ProposalStageTrip }) {
   const [selectedOptionId, setSelectedOptionId] = useState(trip.quote.options.find((option) => option.recommended)?.id ?? trip.quote.options[0].id);
   const selectedOption = trip.quote.options.find((option) => option.id === selectedOptionId) ?? trip.quote.options[0];
+  const packageName = "booking" in trip ? trip.booking.acceptedQuoteSnapshot.packageName : selectedOption.name;
   return <section className="mytrip-stage mytrip-proposal-stage">
     <StageHeading eyebrow="01 · PROPOSAL" title={tripStageLabels.proposal.title} />
     <div className="mytrip-proposal-grid">
       <article className="mytrip-card mytrip-quote-card"><div className="mytrip-card__topline"><span className="mytrip-status-pill"><span /> {trip.quote.status}</span><span className="mytrip-revision">{trip.quote.revision}</span></div><div className="mytrip-quote-card__heading"><span className="mytrip-kicker">TRIP FOR</span><h2>{trip.travelerName}</h2><p>{trip.destination} <span>·</span> {trip.dates}</p></div><div className="mytrip-quote-card__price"><span>Estimated total</span><strong>{formatPhp(selectedOption.amount)}</strong><small>For {trip.travelerCount} people · {formatPhp(selectedOption.perTraveler)} per person</small></div><div className="mytrip-quote-card__validity"><CalendarDays size={16} /><span><strong>{trip.quote.validity}</strong><small>Availability and final price must still be confirmed.</small></span></div></article>
-      <article className="mytrip-card mytrip-quote-summary"><CardKicker icon={<ReceiptText size={15} />} label="YOUR TRIP PLAN" /><h2>A plan for your review.</h2><p>Review the route, hotel and package details below.</p><div className="mytrip-quote-summary__route"><span>MANILA</span><ArrowRight size={15} /><span>{trip.destinationShort.toUpperCase()}</span><i /> <strong>{trip.booking.acceptedQuoteSnapshot.packageName}</strong></div><a className="mytrip-button mytrip-button--dark" href="#package-options">View Your Quote <ArrowDownRight size={16} /></a></article>
+      <article className="mytrip-card mytrip-quote-summary"><CardKicker icon={<ReceiptText size={15} />} label="YOUR TRIP PLAN" /><h2>A plan for your review.</h2><p>Review the route, hotel and package details below.</p><div className="mytrip-quote-summary__route"><span>MANILA</span><ArrowRight size={15} /><span>{trip.destinationShort.toUpperCase()}</span><i /> <strong>{packageName}</strong></div><a className="mytrip-button mytrip-button--dark" href="#package-options">View Your Quote <ArrowDownRight size={16} /></a></article>
     </div>
 
     <section className="mytrip-section" id="package-options"><SectionHeading eyebrow="CHOOSE YOUR PACKAGE" title="Choose a package." note="All amounts are estimates until confirmed." /><div className="mytrip-option-grid">{trip.quote.options.map((option) => <ProposalOptionCard key={option.id} option={option} selected={option.id === selectedOptionId} onSelect={() => setSelectedOptionId(option.id)} />)}</div></section>
@@ -169,9 +190,20 @@ const vietnamAtAGlanceTitles = [
   "Easy departure from Da Nang",
 ];
 
+type VietnamProposalImage = Readonly<{ image: string; alt: string }>;
+
+const vietnamProposalImages: Record<number, VietnamProposalImage | undefined> = {
+  2: vietnamDreamImages.daNangCoast,
+  3: {
+    image: "https://images.unsplash.com/photo-1748674278237-00d4bc40fe2c?auto=format&fit=crop&w=1200&q=85",
+    alt: "The Golden Bridge at Ba Na Hills, held by stone hands above green mountains",
+  },
+  4: vietnamDreamImages.hoiAn,
+};
+
 type VietnamHighlight = { label: string; note?: string; optional?: boolean };
 
-function getVietnamDayExperience(day: ItineraryDay) {
+function getVietnamDayExperience(day: ProposalItineraryDay) {
   switch (day.day) {
     case 1:
       return "Land in Da Nang, make your way to the hotel and ease into your first evening in Vietnam.";
@@ -188,7 +220,7 @@ function getVietnamDayExperience(day: ItineraryDay) {
   }
 }
 
-function getVietnamHighlights(day: ItineraryDay): VietnamHighlight[] {
+function getVietnamHighlights(day: ProposalItineraryDay): VietnamHighlight[] {
   const dragonBridgeNote = day.items.find((item) => item.title.toLowerCase().includes("dragon bridge"))?.note;
   switch (day.day) {
     case 1:
@@ -228,7 +260,7 @@ function getVietnamHighlights(day: ItineraryDay): VietnamHighlight[] {
   }
 }
 
-function IllustrativeProposalStage({ trip }: { trip: ClientTrip }) {
+function IllustrativeProposalStage({ trip }: { trip: ProposalStageTrip }) {
   const proposal = trip.proposal;
   if (!proposal) return null;
   return <section className="mytrip-stage mytrip-proposal-stage mytrip-proposal-stage--illustrative">
@@ -252,14 +284,10 @@ function IllustrativeProposalStage({ trip }: { trip: ClientTrip }) {
         {trip.companion.itinerary.map((day) => <article className="mytrip-vietnam-day" key={day.day}>
           <div className="mytrip-vietnam-day__heading"><span>DAY {String(day.day).padStart(2, "0")}</span><div><h3>{day.title}</h3><small>{day.date}</small></div></div>
           <p className="mytrip-vietnam-day__experience">{getVietnamDayExperience(day)}</p>
+          {vietnamProposalImages[day.day] && <figure className="mytrip-vietnam-day__visual"><img src={vietnamProposalImages[day.day]?.image} alt={vietnamProposalImages[day.day]?.alt ?? ""} loading="lazy" decoding="async" /></figure>}
           <div className="mytrip-vietnam-day__highlights"><span className="mytrip-vietnam-day__label">HIGHLIGHTS</span><ul>{getVietnamHighlights(day).map((highlight) => <li className={highlight.optional ? "is-optional" : ""} key={highlight.label}><div><strong>{highlight.label}</strong>{highlight.optional && <span>Evening option</span>}</div>{highlight.note && <small>{highlight.note}</small>}</li>)}</ul></div>
         </article>)}
       </div>
-    </section>
-
-    <section className="mytrip-section mytrip-vietnam-proposal-section" id="other-interests">
-      <SectionHeading eyebrow="NEXT POSSIBILITIES" title="Also on your wishlist" note="These would work best as a separate route or with additional travel days." />
-      <div className="mytrip-vietnam-interest-list">{proposal.otherInterests.map((interest) => <article className="mytrip-vietnam-interest" key={interest.place}><span className="mytrip-vietnam-interest__label">WISHLIST</span><strong>{interest.place}</strong><span>{interest.interest}</span><p>{interest.note}</p></article>)}</div>
     </section>
 
     <section className="mytrip-section mytrip-vietnam-proposal-section" id="proposal-pricing">
@@ -309,7 +337,7 @@ function ProposalOptionCard({ option, selected, onSelect }: { option: ProposalOp
   return <article className={`mytrip-option-card${selected ? " is-selected" : ""}`}><button type="button" className="mytrip-option-card__select" onClick={onSelect} aria-pressed={selected}><span className="mytrip-option-card__radio">{selected && <span />}</span><span><strong>{option.name}</strong>{option.recommended && <em>Recommended for your trip</em>}</span><ArrowRight size={17} /></button><p>{option.description}</p><div className="mytrip-option-card__price"><strong>{formatPhp(option.amount)}</strong><span>Estimated total</span><small>{formatPhp(option.perTraveler)} per person</small></div><div className="mytrip-option-card__tags"><span><Check size={13} /> {option.includes[0]}</span><span><Check size={13} /> {option.includes[1]}</span></div></article>;
 }
 
-function ItineraryPreview({ days }: { days: ItineraryDay[] }) {
+function ItineraryPreview({ days }: { days: ProposalItineraryDay[] }) {
   return <div className="mytrip-itinerary-preview">{days.map((day) => <div key={day.day}><span className="mytrip-itinerary-preview__day">0{day.day}</span><span><strong>{day.title}</strong><small>{day.date} · {day.summary}</small></span></div>)}</div>;
 }
 
@@ -317,6 +345,6 @@ function ProgressList({ items }: { items: BookingProgressItem[] }) {
   return <div className="mytrip-progress-list">{items.map((item, index) => <div className={`mytrip-progress-item is-${item.status}`} key={item.label}><span className="mytrip-progress-item__line"><i>{item.status === "complete" ? <Check size={13} /> : String(index + 1).padStart(2, "0")}</i></span><span><strong>{item.label}</strong><small>{item.detail}</small></span></div>)}</div>;
 }
 
-function ContactCard({ trip, label, text }: { trip: ClientTrip; label: string; text: string }) {
+function ContactCard({ trip, label, text }: { trip: { contact: TripContact }; label: string; text: string }) {
   return <section className="mytrip-contact-card"><div className="mytrip-contact-card__icon"><MessageCircle size={20} /></div><div><span className="mytrip-kicker">AERO GO SUPPORT</span><h3>{label}</h3><p>{text}</p><small>{trip.contact.note}</small></div><Link className="mytrip-button mytrip-button--light" to={trip.contact.href}>{trip.contact.label} <ArrowRight size={16} /></Link></section>;
 }

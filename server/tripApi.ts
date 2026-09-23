@@ -1,5 +1,6 @@
 import { hashTripPassword, randomToken, SESSION_TTL_SECONDS, getClientIp, hashSessionToken, hashTripToken, verifyTripPassword } from "./tripSecurity.ts";
 import { buildRateLimitScopes, clearFailedAttempts, deleteSession, findSession, findTripByTokenHash, isRateLimited, isTripActive, recordFailedAttempt, toClientTrip, createSession, findTripById } from "./tripStore.ts";
+import { toProposalTrip } from "./tripDataSafety.ts";
 import { ensureDemoTripSeeded } from "./demoSeed.ts";
 
 const SESSION_COOKIE = "aerogo_trip_session";
@@ -75,11 +76,15 @@ async function restoreTripSession(request: TripApiRequest): Promise<TripApiResul
   await ensureDemoTripSeeded();
   const { token } = readCredentials(request.body);
   const sessionToken = readCookie(request.headers.cookie, SESSION_COOKIE);
-  if (!token || !sessionToken) return response(401, { ok: false, error: GENERIC_UNLOCK_ERROR }, baseHeaders);
+  if (!token) return response(401, { ok: false, error: GENERIC_UNLOCK_ERROR }, baseHeaders);
 
   const tokenHash = hashTripToken(token);
+  if (!sessionToken) {
+    return await publicProposalAccess(tokenHash, baseHeaders) ?? response(401, { ok: false, error: GENERIC_UNLOCK_ERROR }, baseHeaders);
+  }
+
   const session = await findSession(hashSessionToken(sessionToken));
-  if (!session || session.tokenHash !== tokenHash) return response(401, { ok: false, error: GENERIC_UNLOCK_ERROR }, baseHeaders);
+  if (!session || session.tokenHash !== tokenHash) return await publicProposalAccess(tokenHash, baseHeaders) ?? response(401, { ok: false, error: GENERIC_UNLOCK_ERROR }, baseHeaders);
 
   const trip = await findTripById(session.tripId);
   if (!trip || session.credentialVersion !== trip.credentialVersion) {
@@ -91,6 +96,14 @@ async function restoreTripSession(request: TripApiRequest): Promise<TripApiResul
     return response(410, { ok: false, error: "This trip link is no longer active.", lifecycle: tripLifecycle(trip) }, { ...baseHeaders, "Set-Cookie": clearSessionCookie() });
   }
   return response(200, { ok: true, trip: toClientTrip(trip), sessionExpiresAt: session.expiresAt }, baseHeaders);
+}
+
+async function publicProposalAccess(tokenHash: string, baseHeaders: Record<string, string>): Promise<TripApiResult | null> {
+  const proposalTrip = await findTripByTokenHash(tokenHash);
+  if (!proposalTrip) return null;
+  if (!isTripActive(proposalTrip)) return response(410, { ok: false, error: "This trip link is no longer active.", lifecycle: tripLifecycle(proposalTrip) }, { ...baseHeaders, "Set-Cookie": clearSessionCookie() });
+  if (proposalTrip.data.currentStage !== "proposal" || proposalTrip.data.isDemo) return null;
+  return response(200, { ok: true, access: "proposal", trip: toProposalTrip(proposalTrip.data) }, { ...baseHeaders, "Set-Cookie": clearSessionCookie() });
 }
 
 async function logoutTrip(request: TripApiRequest): Promise<TripApiResult> {

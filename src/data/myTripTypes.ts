@@ -239,3 +239,25 @@ export type MyTripRecord = {
   contact: TripContact;
   archiveDate: string;
 };
+
+export type ProposalItineraryItem = Pick<ItineraryItem, "time" | "title" | "location" | "note" | "kind">;
+
+export type ProposalItineraryDay = Pick<ItineraryDay, "day" | "date" | "title" | "summary"> & {
+  items: ProposalItineraryItem[];
+};
+
+export type ProposalPresentation = Pick<ProposalDetails, "kind" | "statusLabel" | "summary" | "pricingNote">;
+
+export type ProposalTripRecord = {
+  currentStage: "proposal";
+  travelerName: string;
+  destination: string;
+  destinationShort: string;
+  dates: string;
+  duration: string;
+  travelerCount: number;
+  quote: Pick<MyTripRecord["quote"], "status" | "validity" | "revision" | "revisions" | "options">;
+  proposal?: ProposalPresentation;
+  companion: { itinerary: ProposalItineraryDay[] };
+  contact: TripContact;
+};
