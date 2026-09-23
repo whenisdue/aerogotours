@@ -102,7 +102,7 @@ function TripWorkspace({ trip, onLogout }: { trip: ClientTrip; onLogout: () => P
     });
   };
 
-  return <div className="mytrip-app">
+  return <div className={`mytrip-app${isIllustrativeProposal ? " mytrip-app--illustrative" : ""}`}>
     <header className="mytrip-topbar">
       <div className="mytrip-topbar__inner">
         <Brand />
@@ -127,7 +127,7 @@ function TripWorkspace({ trip, onLogout }: { trip: ClientTrip; onLogout: () => P
       </div>
     </main>
 
-    {stage !== "companion" && <footer className="mytrip-footer"><div><Brand light /><span>Your trip details, all in one place.</span></div><p>{trip.isDemo ? "Fictional demo · No real client data · " : trip.proposal?.kind === "illustrative" ? "Illustrative local preview · No client data · " : "Private client trip space · "}<Link to="/">Return to AeroGo</Link></p></footer>}
+    {stage !== "companion" && <footer className="mytrip-footer"><div><Brand light /><span>Your trip details, all in one place.</span></div><p>{trip.isDemo ? "Fictional demo · No real client data · " : trip.proposal?.kind === "illustrative" ? "" : "Private client trip space · "}<Link to="/">Return to AeroGo</Link></p></footer>}
   </div>;
 }
 
@@ -233,12 +233,12 @@ function IllustrativeProposalStage({ trip }: { trip: ClientTrip }) {
   if (!proposal) return null;
   return <section className="mytrip-stage mytrip-proposal-stage mytrip-proposal-stage--illustrative">
     <section className="mytrip-vietnam-proposal-brief" aria-labelledby="vietnam-proposal-title">
-      <div className="mytrip-vietnam-proposal-brief__topline"><span className="mytrip-status-pill mytrip-status-pill--preview"><span /> {proposal.statusLabel}</span><span>Initial itinerary</span></div>
+      <div className="mytrip-vietnam-proposal-brief__topline"><span className="mytrip-status-pill mytrip-status-pill--preview"><span /> {proposal.statusLabel}</span></div>
       <h1 id="vietnam-proposal-title">{trip.destination}</h1>
       <p className="mytrip-vietnam-proposal-brief__dates">{trip.dates} <span>·</span> {trip.duration}</p>
       <a className="mytrip-button mytrip-button--coral" href="#vietnam-itinerary">See the 5-day plan <ArrowDownRight size={16} /></a>
       <p className="mytrip-vietnam-proposal-brief__summary">{proposal.summary}</p>
-      <p className="mytrip-vietnam-proposal-brief__planning-note">Initial itinerary for discussion.</p>
+      <p className="mytrip-vietnam-proposal-brief__planning-note">A starting point for shaping your trip together.</p>
     </section>
 
     <section className="mytrip-vietnam-glance" aria-labelledby="vietnam-at-a-glance-title">
@@ -247,7 +247,7 @@ function IllustrativeProposalStage({ trip }: { trip: ClientTrip }) {
     </section>
 
     <section className="mytrip-section mytrip-vietnam-proposal-section" id="vietnam-itinerary">
-      <SectionHeading eyebrow="DAY BY DAY" title="Five days in Central Vietnam." note="Moments to look forward to across Da Nang and Hoi An." />
+      <SectionHeading eyebrow="DAY BY DAY" title="Your 5-day Vietnam itinerary" />
       <div className="mytrip-vietnam-day-list">
         {trip.companion.itinerary.map((day) => <article className="mytrip-vietnam-day" key={day.day}>
           <div className="mytrip-vietnam-day__heading"><span>DAY {String(day.day).padStart(2, "0")}</span><div><h3>{day.title}</h3><small>{day.date}</small></div></div>
@@ -264,7 +264,7 @@ function IllustrativeProposalStage({ trip }: { trip: ClientTrip }) {
 
     <section className="mytrip-section mytrip-vietnam-proposal-section" id="proposal-pricing">
       <SectionHeading eyebrow="PRICING" title="Next: your package price" />
-      <div className="mytrip-vietnam-pricing"><strong>Price being prepared</strong><p>We’re preparing the package price around the final trip arrangements.</p></div>
+      <div className="mytrip-vietnam-pricing"><strong>Price being prepared</strong><p>We’re now putting together the package price based on this trip plan.</p></div>
       <div className="mytrip-vietnam-before-booking"><span className="mytrip-vietnam-day__label">BEFORE BOOKING</span><p>{proposal.pricingNote}</p></div>
     </section>
 

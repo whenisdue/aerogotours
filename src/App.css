@@ -2684,3 +2684,164 @@ button.trip-event:hover .trip-event__content > strong { color: #b76c4e; }
   .mytrip-proposal-stage--illustrative .mytrip-vietnam-day__highlights small, .mytrip-vietnam-before-booking p { font-size: 16px; }
   .mytrip-vietnam-before-booking { padding: 15px 15px 16px; }
 }
+
+/* Vietnam proposal identity prototype: scoped to the illustrative route only. */
+.mytrip-app--illustrative {
+  --aero-evergreen: #13342c;
+  --aero-cobalt: #004ba8;
+  --aero-cerulean: #3e78b2;
+  --aero-peach: #ec7357;
+  --aero-jungle: #00a878;
+  --aero-page: #f7f9f8;
+  --aero-surface: #fff;
+  --aero-soft: #f1f5f4;
+  --aero-ink: #17211e;
+  --aero-muted: #66716d;
+  background: var(--aero-page);
+  color: var(--aero-ink);
+  font-family: "DM Sans", "Avenir Next", Avenir, sans-serif;
+}
+
+.mytrip-app--illustrative .mytrip-topbar { border-bottom-color: #dce7e3; background: var(--aero-surface); }
+.mytrip-app--illustrative .mytrip-topbar .brand { color: var(--aero-evergreen); }
+.mytrip-app--illustrative .mytrip-topbar__meta { color: var(--aero-muted); }
+.mytrip-app--illustrative .mytrip-topbar__meta > a:hover { color: var(--aero-cobalt); }
+.mytrip-app--illustrative .mytrip-secure-label { color: var(--aero-evergreen); }
+.mytrip-app--illustrative .mytrip-secure-label svg { color: var(--aero-jungle); }
+.mytrip-app--illustrative .mytrip-content { width: min(100% - 32px, 1160px); padding: 34px 0 84px; }
+
+.mytrip-app--illustrative .mytrip-vietnam-proposal-brief {
+  border: 0;
+  border-radius: 24px;
+  background: var(--aero-evergreen);
+  box-shadow: 0 16px 32px rgba(19, 52, 44, .14);
+  padding: clamp(32px, 5vw, 64px);
+  color: #fff;
+}
+.mytrip-app--illustrative .mytrip-vietnam-proposal-brief__topline { color: rgba(255,255,255,.68); }
+.mytrip-app--illustrative .mytrip-status-pill--preview { border-color: rgba(255,255,255,.24); background: rgba(255,255,255,.1); color: #fff; }
+.mytrip-app--illustrative .mytrip-status-pill--preview > span { background: var(--aero-jungle); box-shadow: 0 0 0 3px rgba(0,168,120,.18); }
+.mytrip-app--illustrative .mytrip-vietnam-proposal-brief h1 { max-width: 850px; color: #fff; font-family: inherit; font-size: clamp(44px, 6vw, 76px); font-weight: 700; letter-spacing: -.045em; line-height: 1.02; }
+.mytrip-app--illustrative .mytrip-vietnam-proposal-brief__dates { color: #d9e7e2; font-size: 18px; }
+.mytrip-app--illustrative .mytrip-vietnam-proposal-brief__dates span { color: var(--aero-peach); }
+.mytrip-app--illustrative .mytrip-vietnam-proposal-brief__summary { color: #d2e0dc; font-size: 18px; line-height: 1.55; }
+.mytrip-app--illustrative .mytrip-vietnam-proposal-brief__planning-note { color: #a9beb7; }
+.mytrip-app--illustrative .mytrip-vietnam-proposal-brief .mytrip-button { margin-top: 28px; }
+.mytrip-app--illustrative .mytrip-button--coral { background: var(--aero-peach); color: #fff; }
+.mytrip-app--illustrative .mytrip-button--coral:hover { background: #d85d44; }
+
+.mytrip-app--illustrative .mytrip-vietnam-glance {
+  margin: 18px 0 46px;
+  border: 1px solid #dce7e3;
+  border-left: 4px solid var(--aero-cobalt);
+  border-radius: 20px;
+  background: var(--aero-surface);
+  box-shadow: 0 8px 20px rgba(19,52,44,.06);
+  padding: 20px;
+}
+.mytrip-app--illustrative .mytrip-vietnam-glance__heading h2 { color: var(--aero-cobalt); font-family: inherit; font-size: 13px; }
+.mytrip-app--illustrative .mytrip-vietnam-glance__heading span { color: var(--aero-muted); }
+.mytrip-app--illustrative .mytrip-vietnam-glance ol { gap: 10px; margin-top: 16px; }
+.mytrip-app--illustrative .mytrip-vietnam-glance li { min-height: 106px; border: 1px solid #e0e9e6; border-top: 3px solid var(--aero-cobalt); border-radius: 14px; background: var(--aero-soft); padding: 13px; }
+.mytrip-app--illustrative .mytrip-vietnam-glance li:nth-child(3) { border-top-color: var(--aero-peach); }
+.mytrip-app--illustrative .mytrip-vietnam-glance li > span { display: inline-flex; border-radius: 999px; background: #e4edf7; padding: 4px 7px; color: var(--aero-cobalt); font-size: 10px; }
+.mytrip-app--illustrative .mytrip-vietnam-glance li strong { margin-top: 10px; color: var(--aero-evergreen); font-family: inherit; font-size: 16px; font-weight: 700; }
+
+.mytrip-app--illustrative .mytrip-section { margin-top: 52px; }
+.mytrip-app--illustrative .mytrip-section-heading { margin-bottom: 18px; }
+.mytrip-app--illustrative .mytrip-section-heading h3 { color: var(--aero-evergreen); font-family: inherit; font-size: clamp(29px, 3.2vw, 40px); font-weight: 700; letter-spacing: -.035em; }
+.mytrip-app--illustrative .mytrip-section-heading > p { color: var(--aero-muted); font-size: 13px; line-height: 1.45; }
+.mytrip-app--illustrative .mytrip-vietnam-day-list { gap: 14px; }
+.mytrip-app--illustrative .mytrip-vietnam-day {
+  border: 0;
+  border-top: 4px solid var(--aero-cobalt);
+  border-radius: 18px;
+  background: var(--aero-surface);
+  box-shadow: 0 9px 24px rgba(19,52,44,.07);
+  padding: 23px 24px 22px;
+}
+.mytrip-app--illustrative .mytrip-vietnam-day:nth-child(2) { border-top-color: var(--aero-cerulean); }
+.mytrip-app--illustrative .mytrip-vietnam-day:nth-child(3) { border-top-color: var(--aero-peach); }
+.mytrip-app--illustrative .mytrip-vietnam-day:nth-child(4) { border-top-color: var(--aero-cobalt); }
+.mytrip-app--illustrative .mytrip-vietnam-day:nth-child(5) { border-top-color: var(--aero-jungle); }
+.mytrip-app--illustrative .mytrip-vietnam-day__heading { grid-template-columns: auto minmax(0, 1fr); gap: 15px; }
+.mytrip-app--illustrative .mytrip-vietnam-day__heading > span { align-self: start; border-radius: 10px; background: #e4edf7; padding: 7px 8px; color: var(--aero-cobalt); font-size: 11px; letter-spacing: .08em; line-height: 1.2; }
+.mytrip-app--illustrative .mytrip-vietnam-day:nth-child(3) .mytrip-vietnam-day__heading > span { background: #fff0eb; color: #c8563e; }
+.mytrip-app--illustrative .mytrip-vietnam-day__heading h3 { color: var(--aero-evergreen); font-family: inherit; font-size: 25px; font-weight: 700; letter-spacing: -.025em; line-height: 1.15; }
+.mytrip-app--illustrative .mytrip-vietnam-day__heading small { color: var(--aero-muted); font-size: 14px; }
+.mytrip-app--illustrative .mytrip-vietnam-day__experience { color: var(--aero-ink); font-size: 17px; font-weight: 500; line-height: 1.5; }
+.mytrip-app--illustrative .mytrip-vietnam-day__highlights { border: 0; border-radius: 14px; background: var(--aero-soft); padding: 15px; }
+.mytrip-app--illustrative .mytrip-vietnam-day__highlights .mytrip-vietnam-day__label { color: var(--aero-cobalt); font-size: 11px; }
+.mytrip-app--illustrative .mytrip-vietnam-day__highlights li::before { background: var(--aero-jungle); }
+.mytrip-app--illustrative .mytrip-vietnam-day__highlights li.is-optional::before { background: var(--aero-peach); }
+.mytrip-app--illustrative .mytrip-vietnam-day__highlights strong { color: var(--aero-evergreen); font-family: inherit; font-size: 16px; }
+.mytrip-app--illustrative .mytrip-vietnam-day__highlights li > div > span { color: #c8563e; }
+.mytrip-app--illustrative .mytrip-vietnam-day__highlights small { color: var(--aero-muted); }
+
+.mytrip-app--illustrative .mytrip-vietnam-interest-list { gap: 12px; }
+.mytrip-app--illustrative .mytrip-vietnam-interest {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  border: 1px solid #d7e5ef;
+  border-left: 4px solid var(--aero-cobalt);
+  border-radius: 16px;
+  background: #eef5fb;
+  padding: 18px;
+}
+.mytrip-app--illustrative .mytrip-vietnam-interest__label { display: inline-flex; width: fit-content; border-radius: 999px; background: #dfeaf5; padding: 4px 8px; color: var(--aero-cobalt); font-size: 10px; }
+.mytrip-app--illustrative .mytrip-vietnam-interest strong { color: var(--aero-evergreen); font-family: inherit; font-size: 21px; font-weight: 700; }
+.mytrip-app--illustrative .mytrip-vietnam-interest > span:not(.mytrip-vietnam-interest__label) { margin-top: 0; color: var(--aero-cobalt); font-size: 16px; }
+.mytrip-app--illustrative .mytrip-vietnam-interest p { margin-top: 2px; color: var(--aero-muted); }
+.mytrip-app--illustrative .mytrip-vietnam-pricing { border: 1px solid #d2e2ee; border-left: 4px solid var(--aero-cobalt); border-radius: 16px; background: #eef5fb; padding: 20px 22px; }
+.mytrip-app--illustrative .mytrip-vietnam-pricing strong { color: var(--aero-evergreen); font-family: inherit; font-size: 22px; font-weight: 700; }
+.mytrip-app--illustrative .mytrip-vietnam-pricing p { color: var(--aero-muted); }
+.mytrip-app--illustrative .mytrip-vietnam-before-booking { border: 1px solid #dfe7e4; border-left: 3px solid #9aa9a3; border-radius: 14px; background: var(--aero-soft); padding: 15px 18px; }
+.mytrip-app--illustrative .mytrip-vietnam-before-booking .mytrip-vietnam-day__label { color: #71807a; }
+.mytrip-app--illustrative .mytrip-vietnam-before-booking p { color: var(--aero-muted); }
+
+.mytrip-app--illustrative .mytrip-vietnam-contact { margin-top: 38px; }
+.mytrip-app--illustrative .mytrip-contact-card { border-radius: 22px; background: var(--aero-evergreen); box-shadow: 0 14px 28px rgba(19,52,44,.12); padding: 28px 30px; }
+.mytrip-app--illustrative .mytrip-contact-card h3 { color: #fff; font-family: inherit; font-size: 27px; font-weight: 700; letter-spacing: -.025em; }
+.mytrip-app--illustrative .mytrip-contact-card__icon { border-color: rgba(255,255,255,.25); color: var(--aero-peach); }
+.mytrip-app--illustrative .mytrip-contact-card .mytrip-button--light { background: var(--aero-peach); color: #fff; }
+.mytrip-app--illustrative .mytrip-contact-card .mytrip-button--light:hover { background: #d85d44; }
+.mytrip-app--illustrative .mytrip-footer { background: var(--aero-evergreen); }
+.mytrip-app--illustrative .mytrip-footer .brand--light { color: #fff; }
+
+@media (max-width: 700px) {
+  .mytrip-app--illustrative .mytrip-topbar__inner, .mytrip-app--illustrative .mytrip-content { width: min(100% - 28px, 560px); }
+  .mytrip-app--illustrative .mytrip-topbar__inner { min-height: 64px; }
+  .mytrip-app--illustrative .mytrip-content { padding: 18px 0 64px; }
+  .mytrip-app--illustrative .mytrip-vietnam-proposal-brief { border-radius: 20px; padding: 25px 20px 27px; }
+  .mytrip-app--illustrative .mytrip-vietnam-proposal-brief__topline { gap: 8px 12px; }
+  .mytrip-app--illustrative .mytrip-vietnam-proposal-brief h1 { margin-top: 22px; font-size: clamp(37px, 11.5vw, 52px); }
+  .mytrip-app--illustrative .mytrip-vietnam-proposal-brief__dates { font-size: 16px; }
+  .mytrip-app--illustrative .mytrip-vietnam-proposal-brief__summary { font-size: 16px; line-height: 1.5; }
+  .mytrip-app--illustrative .mytrip-vietnam-proposal-brief .mytrip-button { width: 100%; min-height: 48px; margin-top: 21px; }
+  .mytrip-app--illustrative .mytrip-vietnam-glance { margin: 14px 0 34px; border-radius: 18px; padding: 15px; }
+  .mytrip-app--illustrative .mytrip-vietnam-glance ol { gap: 8px; margin-top: 13px; }
+  .mytrip-app--illustrative .mytrip-vietnam-glance li { min-height: 84px; padding: 11px; }
+  .mytrip-app--illustrative .mytrip-vietnam-glance li strong { font-size: 15px; }
+  .mytrip-app--illustrative .mytrip-section { margin-top: 42px; }
+  .mytrip-app--illustrative .mytrip-section-heading { margin-bottom: 15px; }
+  .mytrip-app--illustrative .mytrip-section-heading h3 { font-size: clamp(27px, 8vw, 34px); }
+  .mytrip-app--illustrative .mytrip-vietnam-day { border-radius: 16px; padding: 18px 16px 17px; }
+  .mytrip-app--illustrative .mytrip-vietnam-day__heading { grid-template-columns: auto minmax(0, 1fr); gap: 10px; }
+  .mytrip-app--illustrative .mytrip-vietnam-day__heading > span { padding: 6px 7px; font-size: 10px; }
+  .mytrip-app--illustrative .mytrip-vietnam-day__heading h3 { font-size: 21px; }
+  .mytrip-app--illustrative .mytrip-vietnam-day__heading small { font-size: 14px; }
+  .mytrip-app--illustrative .mytrip-vietnam-day__experience { margin-top: 14px; font-size: 16px; }
+  .mytrip-app--illustrative .mytrip-vietnam-day__highlights { margin-top: 14px; padding: 13px; }
+  .mytrip-app--illustrative .mytrip-vietnam-interest { padding: 16px; }
+  .mytrip-app--illustrative .mytrip-vietnam-contact { margin-top: 30px; }
+  .mytrip-app--illustrative .mytrip-contact-card { border-radius: 18px; padding: 21px 18px; }
+  .mytrip-app--illustrative .mytrip-contact-card h3 { font-size: 23px; }
+}
+
+@media (max-width: 360px) {
+  .mytrip-app--illustrative .mytrip-vietnam-proposal-brief h1 { font-size: 36px; }
+  .mytrip-app--illustrative .mytrip-vietnam-glance ol { grid-template-columns: 1fr; }
+  .mytrip-app--illustrative .mytrip-vietnam-glance li { min-height: 0; }
+  .mytrip-app--illustrative .mytrip-vietnam-day__heading h3 { font-size: 20px; }
+}

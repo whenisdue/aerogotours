@@ -18,7 +18,7 @@ export const vietnamProposalTrip: MyTripRecord = {
     status: "Vietnam trip · planning preview",
     validity: "Availability, schedules and final price require confirmation",
     revision: "Planning preview",
-    revisions: [{ label: "Planning preview", date: "For discussion", status: "current" }],
+    revisions: [{ label: "Planning preview", date: "Initial itinerary", status: "current" }],
     options: [],
   },
   proposal: {
@@ -28,7 +28,7 @@ export const vietnamProposalTrip: MyTripRecord = {
     pricingNote: "We’ll confirm the final hotel, transfers, activity availability, inclusions and package price with you before anything is booked.",
     otherInterests: [
       { place: "Da Lat", interest: "Mongo Land / Mario Kart", note: "This could work as a separate route or with additional days." },
-      { place: "Sapa", interest: "Sightseeing", note: "This would need a separate northern Vietnam route or additional travel days." },
+      { place: "Sapa", interest: "Sightseeing", note: "This would work best as a separate northern Vietnam route or with additional travel days." },
     ],
   },
   booking: {
