@@ -165,31 +165,66 @@ const vietnamAtAGlanceTitles = [
   "Arrive in Da Nang",
   "Son Tra + Lady Buddha",
   "Ba Na Hills + Golden Bridge",
-  "Hoi An + lantern evening",
-  "Fly home",
+  "Hoi An by day, lanterns by night",
+  "Easy departure from Da Nang",
 ];
 
-function getVietnamPrimaryTitle(day: ItineraryDay) {
-  if (day.day === 3) return "Ba Na Hills + Golden Bridge";
-  if (day.day === 4) return "Hoi An Old Town";
-  if (day.day === 5) return "Check out + departure";
-  return vietnamAtAGlanceTitles[day.day - 1] ?? day.title;
-}
+type VietnamHighlight = { label: string; note?: string; optional?: boolean };
 
-function getVietnamDayContext(day: ItineraryDay) {
+function getVietnamDayExperience(day: ItineraryDay) {
   switch (day.day) {
     case 1:
-      return "Arrival timing will shape the optional evening.";
+      return "Land in Da Nang, make your way to the hotel and ease into your first evening in Vietnam.";
     case 2:
-      return "Keep any additional stops open unless travel time supports them.";
+      return "Explore the greener side of Da Nang with a visit to Son Tra Peninsula and Lady Buddha.";
     case 3:
-      return "Cable car experience is proposed as part of this full-day idea.";
+      return "Spend a full day above Da Nang at Ba Na Hills, ride the cable car into the mountains and walk across the famous Golden Bridge.";
     case 4:
-      return "The optional evening experience is not booked or included.";
+      return "Spend the day wandering Hoi An Old Town, then stay into the evening for the lantern-lit riverside atmosphere.";
     case 5:
-      return "Departure time and flight booking are not included.";
+      return "Enjoy an easy final morning in Da Nang before checking out and heading to the airport.";
     default:
       return day.summary;
+  }
+}
+
+function getVietnamHighlights(day: ItineraryDay): VietnamHighlight[] {
+  const dragonBridgeNote = day.items.find((item) => item.title.toLowerCase().includes("dragon bridge"))?.note;
+  switch (day.day) {
+    case 1:
+      return [
+        { label: "Arrival in Da Nang" },
+        { label: "Airport to hotel transfer" },
+        { label: "Hotel check-in" },
+        { label: "Dragon Bridge evening option", note: dragonBridgeNote, optional: true },
+      ];
+    case 2:
+      return [
+        { label: "Son Tra Peninsula" },
+        { label: "Lady Buddha" },
+        { label: "Viewpoints and surroundings" },
+      ];
+    case 3:
+      return [
+        { label: "Ba Na Hills" },
+        { label: "Golden Bridge" },
+        { label: "Cable car experience" },
+      ];
+    case 4:
+      return [
+        { label: "Hoi An Old Town" },
+        { label: "Time to explore" },
+        { label: "Evening lantern boat", optional: true },
+        { label: "Return to Da Nang" },
+      ];
+    case 5:
+      return [
+        { label: "Hotel checkout" },
+        { label: "Airport transfer" },
+        { label: "Departure" },
+      ];
+    default:
+      return day.items.map((item) => ({ label: item.title }));
   }
 }
 
@@ -198,11 +233,12 @@ function IllustrativeProposalStage({ trip }: { trip: ClientTrip }) {
   if (!proposal) return null;
   return <section className="mytrip-stage mytrip-proposal-stage mytrip-proposal-stage--illustrative">
     <section className="mytrip-vietnam-proposal-brief" aria-labelledby="vietnam-proposal-title">
-      <div className="mytrip-vietnam-proposal-brief__topline"><span className="mytrip-status-pill mytrip-status-pill--preview"><span /> {proposal.statusLabel}</span><span>For discussion</span></div>
+      <div className="mytrip-vietnam-proposal-brief__topline"><span className="mytrip-status-pill mytrip-status-pill--preview"><span /> {proposal.statusLabel}</span><span>Initial itinerary</span></div>
       <h1 id="vietnam-proposal-title">{trip.destination}</h1>
       <p className="mytrip-vietnam-proposal-brief__dates">{trip.dates} <span>·</span> {trip.duration}</p>
       <a className="mytrip-button mytrip-button--coral" href="#vietnam-itinerary">See the 5-day plan <ArrowDownRight size={16} /></a>
       <p className="mytrip-vietnam-proposal-brief__summary">{proposal.summary}</p>
+      <p className="mytrip-vietnam-proposal-brief__planning-note">Initial itinerary for discussion.</p>
     </section>
 
     <section className="mytrip-vietnam-glance" aria-labelledby="vietnam-at-a-glance-title">
@@ -211,28 +247,28 @@ function IllustrativeProposalStage({ trip }: { trip: ClientTrip }) {
     </section>
 
     <section className="mytrip-section mytrip-vietnam-proposal-section" id="vietnam-itinerary">
-      <SectionHeading eyebrow="DAY BY DAY" title="A proposed Central Vietnam route." note="The order is a starting point; final details need confirmation." />
+      <SectionHeading eyebrow="DAY BY DAY" title="Five days in Central Vietnam." note="Moments to look forward to across Da Nang and Hoi An." />
       <div className="mytrip-vietnam-day-list">
         {trip.companion.itinerary.map((day) => <article className="mytrip-vietnam-day" key={day.day}>
           <div className="mytrip-vietnam-day__heading"><span>DAY {String(day.day).padStart(2, "0")}</span><div><h3>{day.title}</h3><small>{day.date}</small></div></div>
-          {day.items[0] && <div className="mytrip-vietnam-day__primary"><span className="mytrip-vietnam-day__label">MAIN PLAN</span><strong>{getVietnamPrimaryTitle(day)}</strong><span>{day.items[0].time} · {day.items[0].location}</span><p>{day.items[0].note}</p></div>}
-          <p className="mytrip-vietnam-day__context">{getVietnamDayContext(day)}</p>
-          {day.items.length > 1 && <div className="mytrip-vietnam-day__support"><span className="mytrip-vietnam-day__label">STILL BEING ARRANGED</span><ul>{day.items.slice(1).map((item) => <li key={item.id ?? `${day.day}-${item.title}`}><strong>{item.title}</strong><span>{item.time} · {item.location}</span><small>{item.note}</small></li>)}</ul></div>}
+          <p className="mytrip-vietnam-day__experience">{getVietnamDayExperience(day)}</p>
+          <div className="mytrip-vietnam-day__highlights"><span className="mytrip-vietnam-day__label">HIGHLIGHTS</span><ul>{getVietnamHighlights(day).map((highlight) => <li className={highlight.optional ? "is-optional" : ""} key={highlight.label}><div><strong>{highlight.label}</strong>{highlight.optional && <span>Evening option</span>}</div>{highlight.note && <small>{highlight.note}</small>}</li>)}</ul></div>
         </article>)}
       </div>
     </section>
 
     <section className="mytrip-section mytrip-vietnam-proposal-section" id="other-interests">
-      <SectionHeading eyebrow="ALTERNATIVE ROUTES" title="Other places you'd like to visit" note="These are alternatives to the five-day plan, not included services." />
-      <div className="mytrip-vietnam-interest-list">{proposal.otherInterests.map((interest) => <article className="mytrip-vietnam-interest" key={interest.place}><span className="mytrip-vietnam-interest__label">NOT PART OF THIS PLAN</span><strong>{interest.place}</strong><span>{interest.interest}</span><p>{interest.note}</p></article>)}</div>
+      <SectionHeading eyebrow="NEXT POSSIBILITIES" title="Also on your wishlist" note="These would work best as a separate route or with additional travel days." />
+      <div className="mytrip-vietnam-interest-list">{proposal.otherInterests.map((interest) => <article className="mytrip-vietnam-interest" key={interest.place}><span className="mytrip-vietnam-interest__label">WISHLIST</span><strong>{interest.place}</strong><span>{interest.interest}</span><p>{interest.note}</p></article>)}</div>
     </section>
 
     <section className="mytrip-section mytrip-vietnam-proposal-section" id="proposal-pricing">
-      <SectionHeading eyebrow="PRICING" title="A quote comes next." note={proposal.pricingNote} />
-      <div className="mytrip-vietnam-pricing"><strong>Price being prepared</strong><p>We’ll prepare the price once the final arrangements are clear. No amount, PHP equivalent, airfare or booking details have been added yet.</p></div>
+      <SectionHeading eyebrow="PRICING" title="Next: your package price" />
+      <div className="mytrip-vietnam-pricing"><strong>Price being prepared</strong><p>We’re preparing the package price around the final trip arrangements.</p></div>
+      <div className="mytrip-vietnam-before-booking"><span className="mytrip-vietnam-day__label">BEFORE BOOKING</span><p>{proposal.pricingNote}</p></div>
     </section>
 
-    <div className="mytrip-vietnam-contact"><ContactCard trip={trip} label="Want to shape this plan?" text="Tell AeroGo what you would like to change or confirm." /></div>
+    <div className="mytrip-vietnam-contact"><ContactCard trip={trip} label="Want to shape this trip?" text="Tell AeroGo what you’d like to change, add or prioritize." /></div>
   </section>;
 }
 

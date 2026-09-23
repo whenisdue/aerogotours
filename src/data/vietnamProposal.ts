@@ -15,7 +15,7 @@ export const vietnamProposalTrip: MyTripRecord = {
   travelerCount: 0,
   heroImage: { src: vietnamDreamImages.daNang.image, alt: vietnamDreamImages.daNang.alt },
   quote: {
-    status: "Illustrative proposal · not booked",
+    status: "Vietnam trip · planning preview",
     validity: "Availability, schedules and final price require confirmation",
     revision: "Planning preview",
     revisions: [{ label: "Planning preview", date: "For discussion", status: "current" }],
@@ -23,12 +23,12 @@ export const vietnamProposalTrip: MyTripRecord = {
   },
   proposal: {
     kind: "illustrative",
-    statusLabel: "Illustrative proposal · not booked",
-    summary: "A five-day planning idea for Da Nang and Hoi An. This is not a final quotation or a booking.",
-    pricingNote: "Availability, schedule, accommodation, transfers, inclusions and any optional activity require confirmation.",
+    statusLabel: "Vietnam trip · planning preview",
+    summary: "Five days exploring Da Nang and Hoi An, from mountain views and the Golden Bridge to lantern-lit evenings in Hoi An.",
+    pricingNote: "We’ll confirm the final hotel, transfers, activity availability, inclusions and package price with you before anything is booked.",
     otherInterests: [
-      { place: "Da Lat", interest: "Mongo Land / Mario Kart", note: "Outside this Da Nang and Hoi An plan; it would need a different route and/or more days." },
-      { place: "Sapa", interest: "Sightseeing", note: "Outside this Da Nang and Hoi An plan; it would need a different route and/or more days." },
+      { place: "Da Lat", interest: "Mongo Land / Mario Kart", note: "This could work as a separate route or with additional days." },
+      { place: "Sapa", interest: "Sightseeing", note: "This would need a separate northern Vietnam route or additional travel days." },
     ],
   },
   booking: {
@@ -69,12 +69,12 @@ export const vietnamProposalTrip: MyTripRecord = {
         dateISO: "2027-01-17",
         timeZone: "Asia/Ho_Chi_Minh",
         title: "Arrive in Da Nang",
-        summary: "Arrive in Da Nang; a proposed airport transfer and hotel check-in are subject to arrangements. An optional Dragon Bridge fire show depends on a verified show schedule and your actual arrival time, so attendance is not guaranteed.",
+        summary: "Land in Da Nang, settle into the hotel and ease into your first evening in Vietnam.",
         items: [
-          { time: "Arrival", title: "Arrive in Da Nang", location: "Da Nang", note: "No flight time or flight booking is included in this proposal.", kind: "experience", status: "planned" },
-          { time: "Proposed", title: "Airport transfer", location: "Da Nang International Airport → Da Nang", note: "Suggested only; the provider and pickup details require confirmation.", kind: "transfer", status: "planned" },
-          { time: "Subject to arrangements", title: "Hotel check-in", location: "Da Nang", note: "Accommodation and check-in details are not arranged yet.", kind: "stay", status: "planned" },
-          { time: "Optional", title: "Dragon Bridge fire show", location: "Da Nang", note: "Only if the 2027 show schedule is verified and your actual arrival time allows it; attendance is not guaranteed.", kind: "experience", status: "planned" },
+          { time: "Arrival", title: "Arrive in Da Nang", location: "Da Nang", note: "Land in Da Nang and settle into the start of your trip.", kind: "experience", status: "planned" },
+          { time: "Travel", title: "Airport to hotel transfer", location: "Da Nang International Airport → Da Nang", note: "Make your way from the airport to the hotel.", kind: "transfer", status: "planned" },
+          { time: "Stay", title: "Hotel check-in", location: "Da Nang", note: "Settle in and take a breather after the journey.", kind: "stay", status: "planned" },
+          { time: "Optional", title: "Dragon Bridge evening option", location: "Da Nang", note: "Depends on the confirmed 2027 show schedule and your arrival time.", kind: "experience", status: "planned" },
         ],
       },
       {
@@ -83,9 +83,9 @@ export const vietnamProposalTrip: MyTripRecord = {
         dateISO: "2027-01-18",
         timeZone: "Asia/Ho_Chi_Minh",
         title: "Son Tra Peninsula and Lady Buddha",
-        summary: "A focused Da Nang day around Son Tra Peninsula and Lady Buddha. Keep further stops open unless their travel time is confirmed to fit.",
+        summary: "Explore the greener side of Da Nang with a visit to Son Tra Peninsula and Lady Buddha.",
         items: [
-          { time: "Flexible", title: "Son Tra Peninsula and Lady Buddha", location: "Son Tra Peninsula", note: "Proposed sightseeing only; the final order and access require confirmation.", kind: "experience", status: "planned" },
+          { time: "Day out", title: "Son Tra Peninsula and Lady Buddha", location: "Son Tra Peninsula", note: "Take in the viewpoints and surroundings at an easy pace.", kind: "experience", status: "planned" },
         ],
       },
       {
@@ -94,9 +94,9 @@ export const vietnamProposalTrip: MyTripRecord = {
         dateISO: "2027-01-19",
         timeZone: "Asia/Ho_Chi_Minh",
         title: "Ba Na Hills and Golden Bridge",
-        summary: "A full-day idea for Ba Na Hills, the Golden Bridge and a cable car experience. Ticket details, inclusions and prices are not provided.",
+        summary: "Spend a full day above Da Nang at Ba Na Hills, ride the cable car into the mountains and walk across the famous Golden Bridge.",
         items: [
-          { time: "Full day", title: "Ba Na Hills, Golden Bridge and cable car", location: "Ba Na Hills", note: "Proposed experience only; tickets, inclusions, access and price require confirmation.", kind: "experience", status: "planned" },
+          { time: "Full day", title: "Ba Na Hills, Golden Bridge and cable car", location: "Ba Na Hills", note: "A full day among mountain views and the Golden Bridge.", kind: "experience", status: "planned" },
         ],
       },
       {
@@ -105,11 +105,11 @@ export const vietnamProposalTrip: MyTripRecord = {
         dateISO: "2027-01-20",
         timeZone: "Asia/Ho_Chi_Minh",
         title: "Hoi An Old Town",
-        summary: "Spend the day in Hoi An Old Town, with an optional evening lantern boat experience before returning to Da Nang. The boat is not booked or included.",
+        summary: "Spend the day wandering Hoi An Old Town, then stay into the evening for the lantern-lit riverside atmosphere.",
         items: [
-          { time: "Flexible", title: "Hoi An Old Town", location: "Hoi An", note: "Proposed sightseeing only; the exact route and access require confirmation.", kind: "experience", status: "planned" },
-          { time: "Optional", title: "Evening lantern boat experience", location: "Hoi An", note: "Optional, not booked and not included; availability and price require confirmation.", kind: "experience", status: "planned" },
-          { time: "Return", title: "Return to Da Nang", location: "Hoi An → Da Nang", note: "Proposed return route; transport details require confirmation.", kind: "transfer", status: "planned" },
+          { time: "Day out", title: "Hoi An Old Town", location: "Hoi An", note: "Wander, pause and take in the riverside atmosphere.", kind: "experience", status: "planned" },
+          { time: "Optional", title: "Evening lantern boat", location: "Hoi An", note: "An evening option for a lantern-lit riverside atmosphere.", kind: "experience", status: "planned" },
+          { time: "Later", title: "Return to Da Nang", location: "Hoi An → Da Nang", note: "Return to Da Nang after the day in Hoi An.", kind: "transfer", status: "planned" },
         ],
       },
       {
@@ -118,17 +118,17 @@ export const vietnamProposalTrip: MyTripRecord = {
         dateISO: "2027-01-21",
         timeZone: "Asia/Ho_Chi_Minh",
         title: "Check out and depart",
-        summary: "Check out and use a proposed airport transfer for departure. No flight time or booking is included.",
+        summary: "Enjoy an easy final morning in Da Nang before checking out and heading to the airport.",
         items: [
-          { time: "Flexible", title: "Check out", location: "Da Nang", note: "Hotel and check-out details are subject to arrangements.", kind: "stay", status: "planned" },
-          { time: "Proposed", title: "Airport transfer and departure", location: "Da Nang → Da Nang International Airport", note: "Suggested only; no flight time or booking assertion is made.", kind: "transfer", status: "planned" },
+          { time: "Morning", title: "Hotel checkout", location: "Da Nang", note: "Enjoy a calm final morning before heading out.", kind: "stay", status: "planned" },
+          { time: "Travel", title: "Airport transfer", location: "Da Nang → Da Nang International Airport", note: "Make your way to the airport for departure.", kind: "transfer", status: "planned" },
         ],
       },
     ],
     attractions: [],
     reminders: [
-      "Illustrative plan only; availability, schedules, prices and inclusions require confirmation.",
-      "No flight, accommodation, transfer or activity is booked in this proposal.",
+      "We’ll confirm the final arrangements with you before anything is booked.",
+      "The package price will follow once the final trip details are clear.",
     ],
     expenses: [],
   },
