@@ -243,7 +243,7 @@ function DestinationRail() {
     }} role="region" aria-label="Browse destination inspiration" tabIndex={0}>
       <div className="destination-rail__track">
         {featuredDestinations.map((destination) => {
-          const isDreamTrip = destination.slug === "japan" || destination.slug === "thailand" || destination.slug === "south-korea";
+          const isDreamTrip = destination.slug === "japan" || destination.slug === "thailand" || destination.slug === "south-korea" || destination.slug === "hong-kong" || destination.slug === "bali" || destination.slug === "singapore" || destination.slug === "vietnam" || destination.slug === "malaysia";
           const destinationPath = isDreamTrip ? `/dream/${destination.slug}` : `/destinations/${destination.slug}`;
           return <Link className="destination-card" key={destination.slug} to={destinationPath} aria-label={`Explore ${destination.name}: ${destination.tagline}${isDreamTrip ? " Opens the sample Dream Trip itinerary" : ""}`}>
             <img src={destination.cardImage} alt="" loading="lazy" decoding="async" />

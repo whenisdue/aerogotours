@@ -4,6 +4,7 @@ import { Homepage } from "./pages/Homepage";
 import { CompanionPage } from "./pages/Companion";
 import { DestinationPage } from "./pages/DestinationPage";
 import { DreamTripNotFound, DreamTripPage } from "./pages/DreamTripPage";
+import { MyTripPage } from "./pages/MyTrip";
 import { findDestination } from "./data/destinations";
 import "./App.css";
 
@@ -14,6 +15,8 @@ function PageTitle() {
   useEffect(() => {
     document.title = pathname.startsWith("/companion")
       ? "Sample Trip Companion · AeroGo"
+      : pathname.startsWith("/trip/")
+        ? "AeroGo My Trip · Private trip space"
       : pathname.startsWith("/dream/")
         ? "Dream Trip Preview · AeroGo"
       : destination
@@ -22,6 +25,11 @@ function PageTitle() {
             ? "Destination inspiration · AeroGo"
           : "AeroGo Travel & Tours | From what if? to we're going.";
   }, [pathname, destination]);
+  useEffect(() => {
+    const robots = document.querySelector('meta[name="robots"]') ?? document.head.appendChild(document.createElement("meta"));
+    robots.setAttribute("name", "robots");
+    robots.setAttribute("content", pathname.startsWith("/trip/") ? "noindex, nofollow" : "index, follow");
+  }, [pathname]);
   return null;
 }
 
@@ -45,6 +53,7 @@ export default function App() {
   return <BrowserRouter><PageTitle /><ScrollToHash /><Routes>
     <Route path="/" element={<Homepage />} />
     <Route path="/companion" element={<CompanionPage />} />
+    <Route path="/trip/:token" element={<MyTripPage />} />
     <Route path="/destinations/:slug" element={<DestinationPage />} />
     <Route path="/dream/:slug" element={<DreamTripPage />} />
     <Route path="/dream/*" element={<DreamTripNotFound />} />

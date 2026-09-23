@@ -25,3 +25,7 @@ dist-ssr
 .vercel
 .env*
 !.env.example
+
+# Owner-managed private trip records must stay outside the public repository.
+private-trips/*.json
+!private-trips/template.json

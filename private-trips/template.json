@@ -1,0 +1,104 @@
+{
+  "status": "active",
+  "currentStage": "proposal",
+  "isDemo": false,
+  "travelerName": "Client name",
+  "destination": "Destination, country",
+  "destinationShort": "Destination",
+  "country": "Country",
+  "dates": "1–5 January 2027",
+  "duration": "5 days / 4 nights",
+  "travelerCount": 2,
+  "heroImage": {
+    "src": "https://images.unsplash.com/photo-1507524729347-5b42c0f7c3a0?auto=format&fit=crop&w=1600&q=85",
+    "alt": "Travel destination landscape"
+  },
+  "quote": {
+    "status": "Proposal ready to review",
+    "validity": "Valid until 15 October 2026",
+    "revision": "Quote v1",
+    "revisions": [
+      { "label": "Quote v1", "date": "20 September 2026", "status": "current" }
+    ],
+    "options": [
+      {
+        "id": "recommended",
+        "name": "Thoughtful escape",
+        "description": "A balanced first proposal for this journey.",
+        "amount": 100000,
+        "perTraveler": 50000,
+        "recommended": true,
+        "includes": ["Accommodation", "Airport transfers"],
+        "excludes": ["International airfare", "Travel insurance"]
+      }
+    ]
+  },
+  "booking": {
+    "selectedPackageName": "Thoughtful escape",
+    "agreedTotal": 100000,
+    "agreedDate": "20 September 2026",
+    "paymentStatus": "No payment recorded",
+    "paymentDetail": "Update this only with a verified payment status.",
+    "acceptedQuoteSnapshot": {
+      "revision": "Quote v1",
+      "packageName": "Thoughtful escape",
+      "total": 100000,
+      "date": "20 September 2026",
+      "note": "Keep this snapshot unchanged after acceptance. Create a new proposal revision for later changes."
+    },
+    "progress": [
+      { "label": "Proposal accepted", "detail": "Update with the verified date", "status": "upcoming" },
+      { "label": "Requirements check", "detail": "Add only non-sensitive requirements", "status": "current" },
+      { "label": "Supplier confirmation", "detail": "Only mark complete after confirmation", "status": "upcoming" }
+    ],
+    "requirements": [
+      { "label": "Traveler details", "detail": "Coordinate securely with AeroGo", "status": "needed" }
+    ],
+    "nextSteps": [
+      "Review the proposal with the customer.",
+      "Confirm supplier availability with AeroGo.",
+      "Keep sensitive documents and payment credentials out of this trip space."
+    ]
+  },
+  "companion": {
+    "flights": [
+      { "label": "Suggested flight out", "route": "Origin → Destination", "date": "Thu, 1 Jan", "times": "09:00 → 13:00", "note": "Illustrative schedule only. Not a confirmed reservation.", "status": "sample" }
+    ],
+    "hotel": {
+      "name": "Sample hotel",
+      "area": "Central area",
+      "dates": "1–5 January · 4 nights",
+      "address": "Sample address",
+      "note": "Sample stay details. Supplier confirmation is still required.",
+      "status": "sample"
+    },
+    "itinerary": [
+      {
+        "day": 1,
+        "date": "Thu, 1 Jan",
+        "title": "Arrive and settle in",
+        "summary": "A gentle arrival and first look around.",
+        "items": [
+          { "time": "Afternoon", "title": "Arrival and transfer", "location": "Airport → hotel", "note": "Suggested route only.", "kind": "transfer" }
+        ]
+      }
+    ],
+    "attractions": [],
+    "reminders": ["Check current entry requirements before travel.", "Keep your AeroGo contact details close."],
+    "expenses": [
+      { "label": "Meals and local transport", "amount": 20000, "note": "Illustrative estimate for planning only." }
+    ]
+  },
+  "completed": {
+    "message": "Welcome home.",
+    "note": "Thank you for letting AeroGo be part of the journey.",
+    "reviewUrl": "",
+    "retentionNote": "Archive this trip when your retention policy allows."
+  },
+  "contact": {
+    "label": "Contact AeroGo",
+    "href": "/#inquire",
+    "note": "Your AeroGo travel companion"
+  },
+  "archiveDate": ""
+}

@@ -156,7 +156,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (parsed.error || parsed.status) return res.status(parsed.status ?? 400).json({ ok: false, error: parsed.error });
 
   const validation = validateInquiry(parsed.body);
-  if (!validation.ok) return res.status(validation.status).json({ ok: false, error: validation.error });
+  if (validation.ok === false) return res.status(validation.status).json({ ok: false, error: validation.error });
 
   const apiKey = process.env.RESEND_API_KEY?.trim();
   const toEmail = process.env.INQUIRY_TO_EMAIL?.trim();

@@ -1,4 +1,4 @@
-import { ArrowLeft, ArrowRight, ArrowUpRight, Building2, CalendarDays, Check, Gauge, MapPin, Mountain, Sparkles, Utensils, Users, WalletCards } from "lucide-react";
+import { ArrowLeft, ArrowRight, ArrowUpRight, Building2, CalendarDays, Check, ChevronDown, Gauge, MapPin, Mountain, Sparkles, Utensils, Users, WalletCards } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { Brand } from "../components/Brand";
@@ -209,26 +209,20 @@ function DreamPreview({ config, answers, preview, personalized, openDecision, on
       </div>
     </section>
 
-    <section className="dream-duration-picker page-shell" aria-labelledby="dream-duration-title">
-      <div className="dream-duration-picker__intro"><span className="eyebrow">SHAPE THE LENGTH</span><h2 id="dream-duration-title">How long could you stay?</h2><p>{getDurationLabel(answers.duration)} · The first and last days leave room for the journey.</p></div>
+    <section className="dream-duration-picker dream-duration-picker--compact page-shell" aria-labelledby="dream-duration-title">
+      <div className="dream-duration-picker__intro"><span className="eyebrow">SHAPE THE LENGTH</span><h2 id="dream-duration-title">Your trip, your timing.</h2><p>{getDurationLabel(answers.duration)} · The first and last days leave room for the journey.</p></div>
       <div className="dream-duration-options" role="group" aria-label={`Choose ${config.name} trip duration`}>{durationOptions.map((option) => <button className={`dream-duration-option ${answers.duration === option.value ? "is-selected" : ""}`} key={option.value} type="button" aria-pressed={answers.duration === option.value} onClick={() => onDuration(option.value)}><strong>{option.shortLabel}</strong><span>{option.label}</span></button>)}</div>
     </section>
 
-    <section className="dream-preview__summary page-shell">
-      <div className="dream-preview__summary-copy"><span className="eyebrow">A STARTING POINT FOR YOUR IMAGINATION</span><p>{preview.intro}</p><p className="dream-preview__honesty">This is an illustrative itinerary, not a confirmed booking. Routes, activities, availability and prices can be refined with AeroGo.</p></div>
-      <div className="dream-facts" aria-label={personalized ? "Your selected trip details" : "Sample trip details"}><span><Users size={16} /> {preview.groupLabel}</span><span><CalendarDays size={16} /> {preview.durationLabel}</span><span><Sparkles size={16} /> {preview.interestLabel}</span><span><Gauge size={16} /> {preview.paceLabel}</span></div>
-    </section>
-
-    <section className="dream-stay-guide page-shell" aria-labelledby="dream-stay-title">
-      <div className="dream-stay-guide__heading"><span className="eyebrow">AREAS TO CONSIDER</span><h2 id="dream-stay-title">Where might you stay?</h2><p>Neighborhoods and areas are starting points, not confirmed accommodation.</p></div>
-      <div className="dream-stay-guide__list">{getStayAreas(config.slug).map((area) => <article className="dream-stay-area" key={area.name}><strong>{area.name}</strong><p>{area.description}</p><span>Accommodation option to consider</span></article>)}</div>
-    </section>
+    <DreamTripSnapshot preview={preview} personalized={personalized} />
 
     <section className="dream-customize-callout page-shell" aria-labelledby="dream-customize-title"><div><span className="eyebrow">MAKE IT YOURS</span><h2 id="dream-customize-title">Love the idea? Make it yours.</h2><p>{personalized ? "Your choices are shaping this version. You can change them whenever you like." : `Answer four quick questions to shape this ${config.name} sample around your people, pace and interests.`}</p></div><button className="button dream-button dream-button--forest" type="button" onClick={onCustomize}>Make this trip yours <ArrowRight size={17} /></button></section>
 
     <section className="dream-itinerary" aria-labelledby="dream-itinerary-title">
       <div className="page-shell"><div className="dream-section-heading"><div><span className="eyebrow">A LOOSE STARTING POINT</span><h2 id="dream-itinerary-title">A trip could look like…</h2></div><p>{preview.routeLabel}.</p></div><div className="dream-days">{preview.days.map((day) => <article className="dream-day" key={`${day.day}-${day.title}`}><div className="dream-day__image-wrap"><img src={day.image} alt={day.imageAlt} loading="lazy" decoding="async" /></div><div className="dream-day__body"><span className="dream-day__number">DAY {String(day.day).padStart(2, "0")}</span><span className="dream-day__location"><MapPin size={14} /> {day.location}</span><h3>{day.title}</h3><p>{day.overview}</p><ul>{day.experiences.map((experience) => <li key={experience}><Check size={14} /> {experience}</li>)}</ul>{day.practicalNote && <p className="dream-day__note"><WalletCards size={14} /> {day.practicalNote}</p>}</div></article>)}</div></div>
     </section>
+
+    <DreamAccommodationGuide config={config} preview={preview} />
 
     <section className="dream-decide page-shell" aria-labelledby="dream-decide-title"><div className="dream-section-heading"><div><span className="eyebrow">HELP ME DECIDE</span><h2 id="dream-decide-title">Still thinking about {config.name}?</h2></div><p>Here are a few things worth exploring before you decide.</p></div><div className="dream-decision-grid">
       <DecisionCard title="What could this trip cost?" description="A transparent way to think about the pieces." icon={<WalletCards size={21} />} open={openDecision === "budget"} onClick={() => onDecision("budget")}><div className="dream-decision-panel"><p>{getBudgetGuidance(config.slug)} Actual costs require dates, departure city, availability and live quotations.</p><ul><li><strong>Airfare</strong><span>Consider the route, season and flexibility together.</span></li><li><strong>Accommodation</strong><span>Choose a base and comfort level that fits your pace.</span></li><li><strong>Transport</strong><span>Include local travel and any regional journey between bases.</span></li><li><strong>Food and activities</strong><span>Leave room for planned highlights and small discoveries.</span></li></ul><p className="dream-decision-panel__tip">AeroGo can help compare the live options later. This framework is not a quotation.</p></div></DecisionCard>
@@ -241,6 +235,47 @@ function DreamPreview({ config, answers, preview, personalized, openDecision, on
   </main>;
 }
 
+function DreamTripSnapshot({ preview, personalized }: { preview: ReturnType<typeof createDreamTrip>; personalized: boolean }) {
+  const stayAreas = getStayAreas(preview.destination);
+  const routeNames = preview.overnightBases.map((baseId) => stayAreas.find((area) => area.id === baseId)?.name).filter((name): name is string => Boolean(name));
+  const highlightDays = preview.days.filter((day) => day.experiences.length > 0).slice(0, 3);
+  const imageDay = preview.days[Math.min(1, preview.days.length - 1)];
+
+  return <section className="dream-trip-snapshot page-shell" aria-labelledby="dream-trip-snapshot-title">
+    <div className="dream-trip-snapshot__copy">
+      <span className="eyebrow">A QUICK LOOK AT YOUR TRIP</span>
+      <h2 id="dream-trip-snapshot-title">{preview.destinationName} · {preview.durationLabel}</h2>
+      <p className="dream-trip-snapshot__intro">{preview.intro}</p>
+      <div className="dream-trip-snapshot__route"><MapPin size={16} /><span>Possible route</span><strong>{routeNames.length > 0 ? routeNames.join(" → ") : preview.routeLabel}</strong></div>
+      <div className="dream-trip-snapshot__highlights" aria-label={`${personalized ? "Your" : "Sample"} trip highlights`}>
+        {highlightDays.map((day) => <div className="dream-trip-snapshot__highlight" key={`${day.day}-${day.title}`}><span>DAY {String(day.day).padStart(2, "0")}</span><strong>{day.title}</strong><small>{day.experiences[0]}</small><em>{day.location}</em></div>)}
+      </div>
+      <p className="dream-trip-snapshot__disclaimer">Illustrative itinerary only. Routes, activities, availability and prices can be refined with AeroGo.</p>
+      <div className="dream-facts" aria-label={personalized ? "Your selected trip details" : "Sample trip details"}><span><Users size={16} /> {preview.groupLabel}</span><span><CalendarDays size={16} /> {preview.durationLabel}</span><span><Sparkles size={16} /> {preview.interestLabel}</span><span><Gauge size={16} /> {preview.paceLabel}</span></div>
+    </div>
+    <figure className="dream-trip-snapshot__visual"><img src={imageDay.image} alt={imageDay.imageAlt} loading="lazy" decoding="async" /><figcaption>One possible way {preview.destinationName} could feel.</figcaption></figure>
+  </section>;
+}
+
+function DreamAccommodationGuide({ config, preview }: { config: NonNullable<ReturnType<typeof getDreamDestination>>; preview: ReturnType<typeof createDreamTrip> }) {
+  const [showAlternatives, setShowAlternatives] = useState(false);
+  const allAreas = getStayAreas(config.slug);
+  const activeAreas = preview.overnightBases.map((baseId) => allAreas.find((area) => area.id === baseId)).filter((area): area is (typeof allAreas)[number] => Boolean(area));
+  const areas = activeAreas.length > 0 ? activeAreas : allAreas.slice(0, 1);
+  const [primary, ...alternatives] = areas;
+
+  if (!primary) return null;
+
+  return <section className="dream-stay-guide page-shell" aria-labelledby="dream-stay-title">
+    <div className="dream-stay-guide__heading"><span className="eyebrow">AREAS TO CONSIDER</span><h2 id="dream-stay-title">Where you could stay</h2><p>Possible home bases for this route above, not confirmed accommodation.</p></div>
+    <div className="dream-stay-guide__content">
+      <article className="dream-stay-area dream-stay-area--primary"><span className="dream-stay-area__kicker">PRIMARY POSSIBLE HOME BASE</span><strong>{primary.name}</strong><p>{primary.description}</p><span>Accommodation option to consider</span></article>
+      {alternatives.length > 0 && <button className="dream-stay-toggle" type="button" aria-expanded={showAlternatives} aria-controls="dream-stay-alternatives" onClick={() => setShowAlternatives((open) => !open)}>{showAlternatives ? "Hide other areas to stay" : "See other areas to stay"}<ChevronDown size={16} aria-hidden="true" /></button>}
+      {alternatives.length > 0 && <div className="dream-stay-alternatives" id="dream-stay-alternatives" hidden={!showAlternatives}>{alternatives.map((area) => <article className="dream-stay-area" key={area.id}><strong>{area.name}</strong><p>{area.description}</p><span>Accommodation option to consider</span></article>)}</div>}
+    </div>
+  </section>;
+}
+
 function DecisionCard({ title, description, icon, open, onClick, children }: { title: string; description: string; icon: React.ReactNode; open: boolean; onClick: () => void; children: React.ReactNode }) {
   return <article className={`dream-decision ${open ? "is-open" : ""}`}><button className="dream-decision__toggle" type="button" aria-expanded={open} onClick={onClick}><span className="dream-decision__icon">{icon}</span><span><strong>{title}</strong><small>{description}</small></span><ArrowRight className="dream-decision__arrow" size={17} /></button>{open && children}</article>;
 }
@@ -250,5 +285,5 @@ function DreamFooter() {
 }
 
 export function DreamTripNotFound() {
-  return <div className="public-site dream-page"><SiteHeader /><main className="dream-not-found page-shell"><span className="eyebrow">A LITTLE DETOUR</span><h1>That Dream Trip is not ready yet.</h1><p>Japan, Thailand and South Korea are the first places to imagine. More journeys will follow.</p><Link className="text-link" to="/">Back to AeroGo <ArrowRight size={15} /></Link></main><DreamFooter /></div>;
+  return <div className="public-site dream-page"><SiteHeader /><main className="dream-not-found page-shell"><span className="eyebrow">A LITTLE DETOUR</span><h1>That Dream Trip is not ready yet.</h1><p>Japan, Thailand, South Korea, Hong Kong, Bali, Singapore, Vietnam and Malaysia are the first places to imagine. More journeys will follow.</p><Link className="text-link" to="/">Back to AeroGo <ArrowRight size={15} /></Link></main><DreamFooter /></div>;
 }
