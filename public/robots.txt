@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /trip/
+Disallow: /api/
+
+Sitemap: https://aerogotours.com/sitemap.xml
