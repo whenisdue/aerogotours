@@ -1645,6 +1645,184 @@ button.trip-event:hover .trip-event__content > strong { color: #b76c4e; }
   .dream-stay-area p { font-size: 13px; }
 }
 
+/* Travel Updates V1: a current, useful layer for the public homepage. */
+.travel-updates-preview,
+.travel-updates-site { background: #f7f9f8; }
+.travel-updates-preview { padding: 44px 0 76px; }
+.travel-updates-preview__heading { display: flex; align-items: end; justify-content: space-between; gap: 32px; }
+.travel-updates-preview__heading h2,
+.travel-updates-page__intro h1,
+.travel-updates-page__listing-heading h2,
+.travel-update-article h1,
+.travel-update-article__body h2,
+.travel-update-sources h2,
+.travel-update-article__cta h2 { font-family: "DM Sans", "Avenir Next", Avenir, sans-serif; font-weight: 700; letter-spacing: -.035em; }
+.travel-updates-eyebrow { color: #004ba8; }
+.travel-updates-preview__heading h2 { max-width: 620px; margin: 11px 0 8px; color: #13342c; font-size: clamp(36px, 4.4vw, 56px); line-height: 1.04; }
+.travel-updates-preview__heading p { max-width: 510px; margin: 0; color: #66716d; font-size: 15px; line-height: 1.65; }
+.travel-updates-preview__all { display: inline-flex; min-height: 44px; align-items: center; gap: 8px; flex: 0 0 auto; color: #004ba8; font-size: 14px; font-weight: 700; text-decoration: none; }
+.travel-updates-preview__all:hover { color: #13342c; }
+.travel-updates-preview__grid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(300px, .65fr); gap: 16px; margin-top: 28px; }
+.travel-update-feature { display: grid; min-width: 0; grid-template-columns: minmax(260px, .93fr) minmax(0, 1.07fr); overflow: hidden; border: 1px solid #e2e9e6; border-radius: 22px; background: #fff; box-shadow: 0 16px 35px rgba(19, 52, 44, .08); }
+.travel-update-feature__image { min-height: 315px; overflow: hidden; background: #dce8e5; }
+.travel-update-feature__image img,
+.travel-update-card__image img,
+.travel-update-article__hero img { width: 100%; height: 100%; object-fit: cover; }
+.travel-update-feature__image img,
+.travel-update-card__image img { transition: transform .35s ease; }
+.travel-update-feature:hover .travel-update-feature__image img,
+.travel-update-card:hover .travel-update-card__image img { transform: scale(1.025); }
+.travel-update-feature__body { display: flex; min-width: 0; flex-direction: column; justify-content: center; padding: 30px 31px; }
+.travel-update-card__meta { display: flex; flex-wrap: wrap; gap: 7px 12px; color: #66716d; font-size: 11px; font-weight: 600; line-height: 1.4; }
+.travel-update-card__meta span:first-child { color: #004ba8; }
+.travel-update-card__meta span + span::before { margin-right: 12px; color: #b0beb9; content: "•"; }
+.travel-update-feature h3 { margin: 17px 0 10px; color: #13342c; font-size: clamp(25px, 2.3vw, 34px); line-height: 1.12; }
+.travel-update-feature h3 a,
+.travel-update-card h3 a { color: inherit; text-decoration: none; }
+.travel-update-feature h3 a:hover,
+.travel-update-card h3 a:hover { color: #004ba8; }
+.travel-update-feature__body > p { margin: 0; color: #66716d; font-size: 15px; line-height: 1.65; }
+.travel-update-card__footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: auto; padding-top: 20px; }
+.travel-update-card__footer time { color: #7b8782; font-size: 11px; }
+.travel-update-card__footer .text-link { color: #004ba8; font-size: 12px; }
+.travel-updates-preview__supporting { display: grid; min-width: 0; gap: 16px; }
+.travel-updates-preview__supporting .travel-update-card { display: grid; min-width: 0; grid-template-columns: 126px minmax(0, 1fr); overflow: hidden; border: 1px solid #e2e9e6; border-radius: 18px; background: #fff; }
+.travel-updates-preview__supporting .travel-update-card__image { min-height: 100%; }
+.travel-updates-preview__supporting .travel-update-card__body { display: flex; min-width: 0; flex-direction: column; padding: 19px 18px 17px; }
+.travel-update-card h3 { margin: 11px 0 7px; color: #13342c; font-size: 18px; line-height: 1.22; }
+.travel-update-card p { display: -webkit-box; overflow: hidden; margin: 0; color: #66716d; font-size: 13px; line-height: 1.5; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
+.travel-updates-preview__supporting .travel-update-card__footer { padding-top: 13px; }
+
+/* The rail is now a secondary discovery section below current updates. */
+.homepage-destination-section { background: #fff; padding: 56px 0 76px; }
+.homepage-destination-section .destination-rail { width: min(100% - 64px, 1240px); margin: 0 auto; background: transparent; padding: 0; }
+.homepage-destination-section .destination-rail__heading { align-items: end; margin-bottom: 20px; }
+.homepage-destination-section .destination-rail__title h2 { margin: 10px 0 7px; color: #13342c; font-family: "DM Sans", "Avenir Next", Avenir, sans-serif; font-size: clamp(32px, 4vw, 48px); font-weight: 700; letter-spacing: -.035em; line-height: 1.05; }
+.homepage-destination-section .destination-rail__title p { margin: 0; color: #66716d; font-size: 14px; line-height: 1.6; }
+.homepage-destination-section .destination-rail__intro { color: #3e78b2; }
+.homepage-destination-section .destination-rail__controls button { border-color: #d8e3df; background: #fff; color: #004ba8; }
+.homepage-destination-section .destination-rail__controls button:hover:not(:disabled) { background: #004ba8; }
+.homepage-destination-section .destination-card { height: 220px; border-radius: 18px; }
+.homepage-destination-section .destination-card__copy strong { font-family: "DM Sans", "Avenir Next", Avenir, sans-serif; font-size: 24px; font-weight: 700; }
+.homepage-destination-section .destination-card__arrow { border-radius: 12px; }
+
+/* Travel Updates listing and article pages. */
+.travel-updates-page__intro { background: #13342c; padding: 78px 0 84px; color: #fff; }
+.travel-updates-page__intro .eyebrow { color: #a9c8e3; }
+.travel-updates-page__intro h1 { max-width: 720px; margin: 14px 0 13px; color: #fff; font-size: clamp(42px, 6vw, 72px); line-height: 1.02; }
+.travel-updates-page__intro p { max-width: 550px; margin: 0; color: rgba(255,255,255,.76); font-size: 17px; line-height: 1.65; }
+.travel-updates-page__listing { padding: 64px 0 86px; }
+.travel-updates-page__listing-heading { display: flex; align-items: end; justify-content: space-between; gap: 30px; margin-bottom: 28px; }
+.travel-updates-page__listing-heading h2 { margin: 10px 0 0; color: #13342c; font-size: 38px; line-height: 1.05; }
+.travel-updates-filters { display: flex; gap: 10px; }
+.travel-updates-filters label { display: grid; gap: 6px; color: #66716d; font-size: 11px; font-weight: 700; }
+.travel-updates-filters select { min-height: 42px; border: 1px solid #d8e3df; border-radius: 10px; background: #fff; padding: 0 32px 0 12px; color: #13342c; font-size: 13px; }
+.travel-updates-listing-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.travel-updates-listing-grid .travel-update-card { display: flex; min-width: 0; flex-direction: column; overflow: hidden; border: 1px solid #e2e9e6; border-radius: 18px; background: #fff; }
+.travel-updates-listing-grid .travel-update-card__image { aspect-ratio: 1.55; overflow: hidden; background: #dce8e5; }
+.travel-updates-listing-grid .travel-update-card__body { display: flex; min-height: 214px; flex-direction: column; padding: 19px 19px 17px; }
+.travel-updates-empty { margin: 0; color: #66716d; font-size: 15px; }
+.travel-update-article { max-width: 900px; padding-top: 42px; padding-bottom: 78px; }
+.travel-update-article__back { display: inline-flex; min-height: 44px; align-items: center; gap: 8px; color: #004ba8; font-size: 14px; font-weight: 700; text-decoration: none; }
+.travel-update-article__meta { display: flex; flex-wrap: wrap; gap: 8px 14px; margin-top: 48px; color: #66716d; font-size: 12px; font-weight: 700; }
+.travel-update-article__meta span:first-child { color: #004ba8; }
+.travel-update-article__meta span + span::before { margin-right: 14px; color: #b0beb9; content: "•"; }
+.travel-update-article h1 { max-width: 820px; margin: 14px 0 15px; color: #13342c; font-size: clamp(40px, 5.8vw, 70px); line-height: 1.02; }
+.travel-update-article__summary { max-width: 700px; margin: 0; color: #52635c; font-size: 19px; line-height: 1.6; }
+.travel-update-article__dates { display: flex; flex-wrap: wrap; gap: 10px 18px; margin-top: 19px; color: #7b8782; font-size: 12px; }
+.travel-update-article__hero { height: clamp(260px, 48vw, 490px); margin: 37px 0 0; overflow: hidden; border-radius: 22px; background: #dce8e5; }
+.travel-update-article__hero figcaption { padding: 9px 0 0; color: #7b8782; font-size: 11px; }
+.travel-update-article__hero figcaption:empty { display: none; }
+.travel-update-article__status { margin: 25px 0 -5px; border-left: 3px solid #3e78b2; padding-left: 13px; color: #66716d; font-size: 13px; line-height: 1.6; }
+.travel-update-article__body { max-width: 700px; margin: 42px auto 0; color: #33423c; font-size: 17px; line-height: 1.8; }
+.travel-update-article__body h2 { margin: 35px 0 8px; color: #13342c; font-size: 25px; line-height: 1.2; }
+.travel-update-article__body p { margin: 0 0 18px; }
+.travel-update-article__body ul { margin: 0 0 22px; padding-left: 22px; }
+.travel-update-article__body li + li { margin-top: 7px; }
+.travel-update-sources { max-width: 700px; margin: 53px auto 0; border-radius: 18px; background: #edf4f2; padding: 25px 25px 22px; }
+.travel-update-sources .eyebrow { color: #3e78b2; }
+.travel-update-sources h2 { margin: 8px 0 8px; color: #13342c; font-size: 24px; line-height: 1.15; }
+.travel-update-sources p { margin: 0; color: #66716d; font-size: 13px; line-height: 1.6; }
+.travel-update-sources ul { display: grid; gap: 11px; margin: 18px 0 0; padding: 0; list-style: none; }
+.travel-update-sources li { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
+.travel-update-sources li a { display: inline-flex; align-items: center; gap: 6px; color: #004ba8; font-size: 13px; font-weight: 700; }
+.travel-update-sources li span { color: #7b8782; font-size: 11px; text-align: right; }
+.travel-update-article__cta { background: #13342c; padding: 62px 0 68px; color: #fff; }
+.travel-update-article__cta .eyebrow { color: rgba(255,255,255,.68); }
+.travel-update-article__cta h2 { max-width: 620px; margin: 12px 0 9px; color: #fff; font-size: clamp(34px, 4.5vw, 52px); line-height: 1.05; }
+.travel-update-article__cta p { max-width: 460px; margin: 0 0 24px; color: rgba(255,255,255,.72); font-size: 15px; line-height: 1.65; }
+.travel-update-not-found { min-height: 55vh; padding-top: 90px; padding-bottom: 90px; }
+.travel-update-not-found h1 { margin: 15px 0 8px; color: #13342c; font-family: "DM Sans", "Avenir Next", Avenir, sans-serif; font-size: clamp(40px, 6vw, 66px); line-height: 1.05; }
+.travel-update-not-found p { margin: 0 0 19px; color: #66716d; font-size: 16px; }
+
+@media (max-width: 900px) {
+  .travel-updates-preview__grid { grid-template-columns: 1fr; }
+  .travel-updates-preview__supporting { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .travel-updates-preview__supporting .travel-update-card { display: flex; flex-direction: column; }
+  .travel-updates-preview__supporting .travel-update-card__image { min-height: 165px; }
+  .travel-updates-listing-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .homepage-destination-section .destination-rail { width: min(100% - 48px, 760px); }
+}
+
+@media (max-width: 700px) {
+  .travel-updates-preview { padding: 32px 0 58px; }
+  .travel-updates-preview__heading { align-items: flex-start; flex-direction: column; gap: 16px; }
+  .travel-updates-preview__heading h2 { margin-top: 9px; font-size: 40px; }
+  .travel-updates-preview__heading p { font-size: 14px; }
+  .travel-updates-preview__grid { gap: 13px; margin-top: 23px; }
+  .travel-update-feature { display: block; border-radius: 18px; }
+  .travel-update-feature__image { min-height: 215px; max-height: 270px; }
+  .travel-update-feature__body { padding: 21px 18px 19px; }
+  .travel-update-feature h3 { margin-top: 13px; font-size: 25px; }
+  .travel-update-feature__body > p { font-size: 14px; }
+  .travel-updates-preview__supporting { display: grid; grid-template-columns: 1fr; gap: 10px; }
+  .travel-updates-preview__supporting .travel-update-card { display: grid; grid-template-columns: 104px minmax(0, 1fr); border-radius: 14px; }
+  .travel-updates-preview__supporting .travel-update-card__image { min-height: 100%; }
+  .travel-updates-preview__supporting .travel-update-card__body { padding: 14px 13px 12px; }
+  .travel-update-card h3 { margin: 7px 0 5px; font-size: 16px; }
+  .travel-update-card p { font-size: 12px; -webkit-line-clamp: 2; }
+  .travel-update-card__footer { padding-top: 10px; }
+  .travel-update-card__footer .text-link { font-size: 11px; }
+  .homepage-destination-section { padding: 46px 0 60px; }
+  .homepage-destination-section .destination-rail { width: min(100% - 38px, 520px); }
+  .homepage-destination-section .destination-rail__heading { align-items: flex-start; flex-direction: column; gap: 14px; margin-bottom: 17px; }
+  .homepage-destination-section .destination-rail__title h2 { margin-top: 7px; font-size: 36px; }
+  .homepage-destination-section .destination-rail__title p { font-size: 13px; }
+  .homepage-destination-section .destination-card { height: 220px; border-radius: 16px; }
+  .homepage-destination-section .destination-rail__track { grid-auto-columns: 78%; }
+  .travel-updates-page__intro { padding: 58px 0 62px; }
+  .travel-updates-page__intro h1 { margin-top: 12px; font-size: 45px; }
+  .travel-updates-page__intro p { font-size: 15px; }
+  .travel-updates-page__listing { padding: 47px 0 62px; }
+  .travel-updates-page__listing-heading { align-items: stretch; flex-direction: column; gap: 20px; margin-bottom: 22px; }
+  .travel-updates-page__listing-heading h2 { font-size: 32px; }
+  .travel-updates-filters { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .travel-updates-filters select { width: 100%; }
+  .travel-updates-listing-grid { grid-template-columns: 1fr; gap: 12px; }
+  .travel-updates-listing-grid .travel-update-card__body { min-height: 0; }
+  .travel-update-article { width: calc(100% - 30px); padding-top: 27px; padding-bottom: 62px; }
+  .travel-update-article__meta { margin-top: 32px; }
+  .travel-update-article h1 { margin-top: 12px; font-size: 42px; }
+  .travel-update-article__summary { font-size: 17px; }
+  .travel-update-article__hero { height: 250px; margin-top: 27px; border-radius: 16px; }
+  .travel-update-article__body { margin-top: 31px; font-size: 16px; line-height: 1.72; }
+  .travel-update-article__body h2 { font-size: 22px; }
+  .travel-update-sources { margin-top: 40px; padding: 21px 17px 18px; }
+  .travel-update-sources li { align-items: flex-start; flex-direction: column; gap: 3px; }
+  .travel-update-sources li span { text-align: left; }
+  .travel-update-article__cta { padding: 49px 0 56px; }
+  .travel-update-article__cta p { font-size: 14px; }
+  .travel-update-article__cta .button { width: 100%; }
+  .travel-update-not-found { width: calc(100% - 30px); min-height: 50vh; padding-top: 70px; }
+}
+
+@media (max-width: 375px) {
+  .homepage-destination-section .destination-rail { width: calc(100% - 30px); }
+  .homepage-destination-section .destination-rail__track { grid-auto-columns: 82%; }
+  .travel-updates-filters { grid-template-columns: 1fr; }
+  .travel-updates-preview__supporting .travel-update-card { grid-template-columns: 92px minmax(0, 1fr); }
+}
+
 /* Shared Dream Trip opening: a compact snapshot keeps the journey in view before details. */
 .dream-duration-picker--compact { gap: 24px; padding-top: 24px; padding-bottom: 24px; }
 .dream-duration-picker--compact .dream-duration-picker__intro h2 { font-size: clamp(29px, 2.7vw, 38px); }
@@ -2848,4 +3026,464 @@ button.trip-event:hover .trip-event__content > strong { color: #b76c4e; }
   .mytrip-app--illustrative .mytrip-vietnam-glance ol { grid-template-columns: 1fr; }
   .mytrip-app--illustrative .mytrip-vietnam-glance li { min-height: 0; }
   .mytrip-app--illustrative .mytrip-vietnam-day__heading h3 { font-size: 20px; }
+}
+
+/* Public AeroGo theme: keep the homepage and Travel Updates resource aligned without
+   changing the private trip surfaces or the public page structures. */
+:is(.public-site:has(#travel-updates), .travel-updates-site) {
+  background: #f7f9f8;
+  color: #17211e;
+}
+
+:is(.public-site:has(#travel-updates), .travel-updates-site) .site-header {
+  border-bottom-color: #e2e9e6;
+  background: #fff;
+}
+
+:is(.public-site:has(#travel-updates), .travel-updates-site) .brand {
+  color: #13342c;
+}
+
+:is(.public-site:has(#travel-updates), .travel-updates-site) .brand__sub {
+  color: #66716d;
+}
+
+:is(.public-site:has(#travel-updates), .travel-updates-site) .site-nav > a {
+  color: #17211e;
+}
+
+:is(.public-site:has(#travel-updates), .travel-updates-site) .site-nav > a:hover,
+:is(.public-site:has(#travel-updates), .travel-updates-site) .site-nav > a:focus-visible {
+  color: #004ba8;
+}
+
+:is(.public-site:has(#travel-updates), .travel-updates-site) .site-nav > .site-nav__cta {
+  border-color: #ec7357;
+  background: #ec7357;
+  color: #fff;
+}
+
+:is(.public-site:has(#travel-updates), .travel-updates-site) .site-nav > .site-nav__cta:hover,
+:is(.public-site:has(#travel-updates), .travel-updates-site) .site-nav > .site-nav__cta:focus-visible {
+  border-color: #d85d44;
+  background: #d85d44;
+  color: #fff;
+}
+
+:is(.public-site:has(#travel-updates), .travel-updates-site) .menu-toggle {
+  color: #13342c;
+}
+
+:is(.public-site:has(#travel-updates), .travel-updates-site) .menu-toggle:focus-visible,
+:is(.public-site:has(#travel-updates), .travel-updates-site) .site-nav a:focus-visible,
+:is(.public-site:has(#travel-updates), .travel-updates-site) .button:focus-visible,
+:is(.public-site:has(#travel-updates), .travel-updates-site) .text-link:focus-visible {
+  outline: 3px solid #3e78b2;
+  outline-offset: 3px;
+}
+
+:is(.public-site:has(#travel-updates), .travel-updates-site) .button--coral {
+  border-color: #ec7357;
+  background: #ec7357;
+  color: #fff;
+}
+
+:is(.public-site:has(#travel-updates), .travel-updates-site) .button--coral:hover {
+  border-color: #d85d44;
+  background: #d85d44;
+}
+
+:is(.public-site:has(#travel-updates), .travel-updates-site) .text-link {
+  color: #004ba8;
+}
+
+:is(.public-site:has(#travel-updates), .travel-updates-site) .text-link:hover {
+  color: #13342c;
+}
+
+/* Homepage hero identity. The existing image and dimensions stay intact. */
+.public-site:has(#travel-updates) .hero__visual {
+  background: #13342c;
+}
+
+.public-site:has(#travel-updates) .hero__image-shade {
+  background: linear-gradient(90deg, rgba(19, 52, 44, .2) 0%, rgba(19, 52, 44, .1) 42%, rgba(19, 52, 44, .02) 76%, transparent 100%), linear-gradient(0deg, rgba(19, 52, 44, .12), transparent 50%);
+}
+
+.public-site:has(#travel-updates) .hero__eyebrow,
+.public-site:has(#travel-updates) .hero__copy > p,
+.public-site:has(#travel-updates) .hero__actions .hero__secondary,
+.public-site:has(#travel-updates) .hero__copy > .hero__reassurance {
+  color: rgba(255, 255, 255, .88);
+}
+
+.public-site:has(#travel-updates) .hero h1 {
+  color: #fff;
+}
+
+.public-site:has(#travel-updates) .hero h1 em {
+  color: #3e78b2;
+}
+
+.public-site:has(#travel-updates) .hero__eyebrow .eyebrow-mark {
+  background: #ec7357;
+}
+
+.public-site:has(#travel-updates) .hero__actions .hero__secondary:hover {
+  color: #ec7357;
+}
+
+/* Homepage sections: cool surfaces, Evergreen headings, and restrained information accents. */
+.public-site:has(#travel-updates) .how-section,
+.public-site:has(#travel-updates) .trust-section {
+  background: #f1f5f4;
+}
+
+.public-site:has(#travel-updates) .services-section {
+  background: #f7f9f8;
+}
+
+.public-site:has(#travel-updates) .section-heading h2,
+.public-site:has(#travel-updates) .services-copy h2,
+.public-site:has(#travel-updates) .trust-heading h2,
+.public-site:has(#travel-updates) .step-card h3,
+.public-site:has(#travel-updates) .service-item,
+.public-site:has(#travel-updates) .trust-points h3 {
+  color: #13342c;
+}
+
+.public-site:has(#travel-updates) .section-heading > p,
+.public-site:has(#travel-updates) .services-copy > p,
+.public-site:has(#travel-updates) .step-card p,
+.public-site:has(#travel-updates) .trust-points p {
+  color: #66716d;
+}
+
+.public-site:has(#travel-updates) .step-card {
+  border-color: #e2e9e6;
+  background: #fff;
+}
+
+.public-site:has(#travel-updates) .step-card__num,
+.public-site:has(#travel-updates) .service-item__index,
+.public-site:has(#travel-updates) .trust-points__num {
+  color: #004ba8;
+}
+
+.public-site:has(#travel-updates) .step-card__icon,
+.public-site:has(#travel-updates) .service-item__icon {
+  border-color: #c5d8e7;
+  color: #3e78b2;
+}
+
+.public-site:has(#travel-updates) .step-card__bottom {
+  color: #66716d;
+}
+
+.public-site:has(#travel-updates) .service-item,
+.public-site:has(#travel-updates) .service-item:nth-child(-n+2),
+.public-site:has(#travel-updates) .trust-points,
+.public-site:has(#travel-updates) .trust-points article {
+  border-color: #dfe8e5;
+}
+
+.public-site:has(#travel-updates) .companion-section,
+.public-site:has(#travel-updates) .inquiry-section {
+  background: #13342c;
+}
+
+.public-site:has(#travel-updates) .companion-feature h2,
+.public-site:has(#travel-updates) .inquiry-copy h2 {
+  color: #fff;
+}
+
+.public-site:has(#travel-updates) .companion-feature h2 em,
+.public-site:has(#travel-updates) .inquiry-copy h2 em {
+  color: #3e78b2;
+}
+
+.public-site:has(#travel-updates) .companion-feature__copy > p,
+.public-site:has(#travel-updates) .inquiry-copy > p {
+  color: rgba(255, 255, 255, .76);
+}
+
+.public-site:has(#travel-updates) .companion-feature__points > span {
+  color: rgba(255, 255, 255, .86);
+}
+
+.public-site:has(#travel-updates) .companion-feature__points svg,
+.public-site:has(#travel-updates) .inquiry-note__icon,
+.public-site:has(#travel-updates) .inquiry-doodle svg {
+  color: #ec7357;
+}
+
+.public-site:has(#travel-updates) .companion-feature .button--light {
+  border-color: #ec7357;
+  background: #ec7357;
+  color: #fff;
+}
+
+.public-site:has(#travel-updates) .companion-feature .button--light:hover {
+  border-color: #d85d44;
+  background: #d85d44;
+}
+
+.public-site:has(#travel-updates) .feature-disclaimer,
+.public-site:has(#travel-updates) .feature-caption {
+  color: rgba(255, 255, 255, .58);
+}
+
+.public-site:has(#travel-updates) .floating-note {
+  border-color: #e2e9e6;
+  background: #fff;
+  color: #17211e;
+}
+
+.public-site:has(#travel-updates) .floating-note__icon {
+  background: #f1f5f4;
+  color: #004ba8;
+}
+
+.public-site:has(#travel-updates) .floating-note small {
+  color: #66716d;
+}
+
+.public-site:has(#travel-updates) .phone-preview {
+  border-color: #17211e;
+  background: #fff;
+  color: #17211e;
+}
+
+.public-site:has(#travel-updates) .phone-preview__next {
+  background: #13342c;
+}
+
+.public-site:has(#travel-updates) .phone-preview__today i {
+  background: #00a878;
+}
+
+.public-site:has(#travel-updates) .phone-preview__nav > span.is-active {
+  color: #00a878;
+}
+
+.public-site:has(#travel-updates) .inquiry-form {
+  background: #fff;
+  color: #17211e;
+}
+
+.public-site:has(#travel-updates) .inquiry-form label,
+.public-site:has(#travel-updates) .form-heading .eyebrow {
+  color: #17211e;
+}
+
+.public-site:has(#travel-updates) .inquiry-form input,
+.public-site:has(#travel-updates) .inquiry-form textarea,
+.public-site:has(#travel-updates) .inquiry-form select {
+  border-color: #d8e3df;
+  background: #fff;
+  color: #17211e;
+}
+
+.public-site:has(#travel-updates) .inquiry-form input:focus,
+.public-site:has(#travel-updates) .inquiry-form textarea:focus,
+.public-site:has(#travel-updates) .inquiry-form select:focus {
+  border-color: #004ba8;
+  box-shadow: 0 0 0 3px rgba(62, 120, 178, .2);
+}
+
+.public-site:has(#travel-updates) .form-success__icon {
+  background: #e1f4ed;
+  color: #00a878;
+}
+
+.public-site:has(#travel-updates) .form-success h3 {
+  color: #13342c;
+}
+
+.public-site:has(#travel-updates) .site-footer {
+  background: #13342c;
+}
+
+/* Travel Updates keeps the homepage's information accent system on listing and article views. */
+.travel-updates-site .travel-updates-page__listing-heading > div > .eyebrow {
+  color: #00a878;
+}
+
+.travel-updates-site .travel-update-card__meta span:first-child,
+.travel-updates-site .travel-update-article__meta span:first-child,
+.travel-updates-site .travel-update-card__footer .text-link,
+.travel-updates-site .travel-update-article__back,
+.travel-updates-site .travel-update-sources li a {
+  color: #004ba8;
+}
+
+.travel-updates-site .travel-update-feature,
+.travel-updates-site .travel-updates-listing-grid .travel-update-card {
+  border-color: #e2e9e6;
+  background: #fff;
+}
+
+.travel-updates-site .travel-update-feature h3,
+.travel-updates-site .travel-update-card h3,
+.travel-updates-site .travel-update-article h1,
+.travel-updates-site .travel-update-article__body h2,
+.travel-updates-site .travel-update-sources h2,
+.travel-updates-site .travel-updates-page__listing-heading h2 {
+  color: #13342c;
+}
+
+.travel-updates-site .travel-update-feature__body > p,
+.travel-updates-site .travel-update-card p,
+.travel-updates-site .travel-update-article__summary,
+.travel-updates-site .travel-update-article__body,
+.travel-updates-site .travel-update-sources p {
+  color: #66716d;
+}
+
+.travel-updates-site .travel-update-card__meta,
+.travel-updates-site .travel-update-card__footer time,
+.travel-updates-site .travel-update-article__dates,
+.travel-updates-site .travel-update-article__hero figcaption {
+  color: #66716d;
+}
+
+.travel-updates-site .travel-update-card__meta span + span::before,
+.travel-updates-site .travel-update-article__meta span + span::before {
+  color: #3e78b2;
+}
+
+.travel-updates-site .travel-update-article__status {
+  border-left-color: #00a878;
+}
+
+.travel-updates-site .travel-update-sources {
+  background: #f1f5f4;
+}
+
+.travel-updates-site .travel-update-sources .eyebrow {
+  color: #3e78b2;
+}
+
+.travel-updates-site .travel-update-article__cta {
+  background: #13342c;
+}
+
+.travel-updates-site .site-footer {
+  background: #13342c;
+}
+
+/* Homepage hero: a shorter, direct invitation with the custom travel illustration. */
+.public-site:has(#travel-updates) .hero__visual {
+  background-position: 50% center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: clamp(360px, 28vw, 420px);
+  min-height: 360px;
+  align-items: center;
+  padding: 0;
+}
+
+.public-site:has(#travel-updates) .hero__inner {
+  height: 100%;
+  align-items: center;
+  padding-top: 0;
+}
+
+.public-site:has(#travel-updates) .hero__copy {
+  max-width: 540px;
+}
+
+.public-site:has(#travel-updates) .hero h1 {
+  max-width: 530px;
+  margin: 0 0 14px;
+  color: #fff;
+  font-family: "DM Sans", "Avenir Next", Avenir, sans-serif;
+  font-size: clamp(48px, 5.2vw, 70px);
+  font-weight: 700;
+  letter-spacing: -.045em;
+  line-height: 1.02;
+}
+
+.public-site:has(#travel-updates) .hero__copy > p {
+  max-width: 390px;
+  margin: 0;
+  color: rgba(255, 255, 255, .88);
+  font-size: 19px;
+  line-height: 1.5;
+}
+
+.public-site:has(#travel-updates) .hero__actions {
+  align-items: flex-start;
+  gap: 0;
+  margin-top: 26px;
+}
+
+.public-site:has(#travel-updates) .hero__actions .hero__primary {
+  min-height: 54px;
+  border: 1px solid #ec7357;
+  border-radius: 12px;
+  background: #ec7357;
+  padding-inline: 22px;
+  color: #fff;
+  font-size: 15px;
+  box-shadow: 0 8px 22px rgba(19, 52, 44, .18);
+}
+
+.public-site:has(#travel-updates) .hero__actions .hero__primary:hover {
+  border-color: #d85d44;
+  background: #d85d44;
+}
+
+@media (max-width: 700px) {
+  .public-site:has(#travel-updates) .hero__visual {
+    background-position: 31% center;
+    height: auto;
+    min-height: 350px;
+    padding: 42px 0 46px;
+  }
+
+  .public-site:has(#travel-updates) .hero__inner {
+    height: auto;
+    align-items: flex-start;
+  }
+
+  .public-site:has(#travel-updates) .hero__copy {
+    max-width: 420px;
+  }
+
+  .public-site:has(#travel-updates) .hero h1 {
+    max-width: 360px;
+    margin-bottom: 12px;
+    font-size: clamp(44px, 12vw, 56px);
+    line-height: 1.03;
+  }
+
+  .public-site:has(#travel-updates) .hero__copy > p {
+    max-width: 310px;
+    font-size: 17px;
+    line-height: 1.5;
+  }
+
+  .public-site:has(#travel-updates) .hero__actions {
+    margin-top: 22px;
+  }
+
+  .public-site:has(#travel-updates) .hero__actions .hero__primary {
+    width: min(100%, 270px);
+    min-height: 52px;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 375px) {
+  .public-site:has(#travel-updates) .hero__visual {
+    background-position: 28% center;
+    min-height: 330px;
+    padding-block: 36px 40px;
+  }
+
+  .public-site:has(#travel-updates) .hero h1 {
+    max-width: 320px;
+    font-size: 43px;
+  }
 }

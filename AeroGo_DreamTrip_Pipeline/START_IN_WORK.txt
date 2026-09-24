@@ -1,0 +1,16 @@
+You have my approval to execute the AeroGo Dream Trip development pipeline locally, but NOT to commit, push, deploy, edit production settings, or make paid purchases.
+
+The project is on my Mac at:
+/Users/esguerra/Desktop/aerogotours
+
+The instructions are inside its tasks/ folder. Confirm that you have ACTUAL read/write access to this local project and can run terminal commands there. Do not assume that access to a cloud copy or a GitHub webpage equals access to my Mac. If this is unavailable, stop and explain the minimal supported way to grant access; do not claim to have edited my local files.
+
+Read tasks/MASTER.md and tasks/PROGRESS.md. Then execute the task files sequentially:
+tasks/01-bali.txt
+tasks/02-singapore.txt
+tasks/03-vietnam.txt
+tasks/04-malaysia.txt
+
+After each country, run the exact quality gate, document real results and verified sources in tasks/PROGRESS.md, and only advance if that country's gate PASSES. On failure, unexpected scope change, inaccessible essential research, or permission issue, stop safely at a resumable checkpoint and report it to me. Preserve all existing local changes and all other AeroGo functionality. Do not use a separate Codex agent unless I approve that workflow explicitly.
+
+When finished, provide a concise factual report and leave all changes local and uncommitted for my review. Do not tell me it is done until code, tests, sources and task statuses demonstrate that.

@@ -1,0 +1,17 @@
+TASK 01 — BALI DREAM TRIP
+Read `tasks/MASTER.md` first. Follow all shared rules and gates. Do not proceed to Singapore until Bali is marked PASS in `tasks/PROGRESS.md`.
+
+Destination display name: Bali (an island in Indonesia, NOT a sovereign country). Slug: `bali`. Destination inspiration route must remain `/destinations/bali`; Dream Trip route `/dream/bali`. Only update the existing homepage Bali card to direct to the real Dream Trip after it works; keep order, image and dimensions unchanged.
+
+Experience: introduce Bali with a complete, enticing but illustrative 7D6N itinerary before customization. Make it feel like a real trip by naming verifiable places and threading them into actual days. Curate actual suitable spots rather than generic 'relax on the beach' filler. Research candidates, not a mandatory checklist: Ubud town and surroundings, Campuhan Ridge Walk, Tegallalang, Tirta Empul, Sanur, Uluwatu Temple, Jimbaran, Nusa Dua, Tanah Lot. Check actual geography, cultural protocols and operational access. Don't portray ceremonies as performances available on demand. Avoid imposing sacred sites on unsuitable times or dressing advice without verification. Source official Indonesian tourism, attraction and local transport resources where possible.
+
+Route design requirements (verify before coding):
+- 3D2N: one base/compact area; account for arrival/departure; avoid long cross-island loops.
+- 4D3N: coherent south-Bali OR Ubud-focused stay based on interest, with credible travel effort.
+- 5D4N: choose one base or one carefully justified relocation; do not spend a whole holiday in traffic.
+- 7D6N: consider Ubud + a suitable south-coast base with a genuine transition day; vary for nature vs relaxation interests.
+- 10D9N: slower, meaningful extension; optional second/third base only when transit and weather make sense. Do not pad with ten vague sightseeing days.
+
+Bali-specific practical features: ground-traffic unpredictability and travel time uncertainty; realistic area-to-stay choices; temple etiquette and optional nature/beach experiences with weather/safety caveats. Do NOT assume an airport pickup is booked, a car/driver is included, or a boat trip is always safe/running. Do not invent lodging prices. No assumption about departure city, visa/passport eligibility or travel month.
+
+Implement through shared config, engine, UI and inquiry handoff (destination Bali), with all five durations, interest/pacing/group variations, tests and sources per MASTER.md. Ensure no Thailand-specific places in Bali data. Confirm original Bali inspiration page and all pre-existing Dream Trips still render. Run full gate and record PASS/BLOCKED; only PASS permits moving to `02-singapore.txt`.

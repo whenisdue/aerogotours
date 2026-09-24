@@ -3,8 +3,10 @@ import { ArrowDown, ArrowRight, ArrowUpRight, CalendarDays, Check, Compass, Hote
 import { Link } from "react-router-dom";
 import { SiteHeader } from "../components/SiteHeader";
 import { Brand } from "../components/Brand";
-import { destinations, featuredDestinations } from "../data/destinations";
+import { featuredDestinations } from "../data/destinations";
 import { japanDreamImages } from "../data/dreamTrips";
+import aerogoHeroImage from "../assets/aerogo-home-hero-illustration.png";
+import { TravelUpdatesPreview } from "./TravelUpdates";
 import type { DreamTripHandoff } from "../utils/dreamTripEngine";
 import { createDreamTrip } from "../utils/dreamTripEngine";
 
@@ -99,22 +101,19 @@ export function Homepage() {
     <SiteHeader />
     <main>
       <section className="hero" aria-labelledby="homepage-hero-title">
-        <div className="hero__visual">
-          <img className="hero__image" src={destinations[0].heroImage} alt={destinations[0].imageAlt} fetchPriority="high" />
+        <div className="hero__visual" role="img" aria-label="Illustrated airport and city travel scene with luggage and rail" style={{ backgroundImage: `url(${aerogoHeroImage})` }}>
           <div className="hero__image-shade" />
           <div className="page-shell hero__inner">
             <div className="hero__copy">
-              <span className="eyebrow hero__eyebrow"><span className="eyebrow-mark" /> AEROGO · TRAVEL INSPIRATION</span>
-              <h1 id="homepage-hero-title">Find somewhere worth dreaming about.</h1>
-              <p>Explore beautiful places, imagine what your trip could look like, and discover the possibilities at your own pace.</p>
-              <div className="hero__actions"><a className="text-link hero__secondary" href="#inquiry">Already planning a trip? Tell us about it <ArrowRight size={15} /></a></div>
-              <p className="hero__reassurance">Browse freely. No account or booking required.</p>
+              <h1 id="homepage-hero-title">Tell us where you want to go.</h1>
+              <p>We’ll help you figure out the rest.</p>
+              <div className="hero__actions"><a className="button button--coral hero__primary" href="#inquiry">Plan my trip <ArrowUpRight size={16} /></a></div>
             </div>
           </div>
         </div>
-        <section className="homepage-destination-section" id="destinations"><DestinationRail /></section>
       </section>
-      <HomepageDreamPreview />
+      <TravelUpdatesPreview />
+      <section className="homepage-destination-section" id="destinations"><DestinationRail /></section>
 
       <section className="how-section section-pad" id="how-it-works">
         <div className="page-shell">
@@ -188,7 +187,7 @@ export function Homepage() {
   </div>;
 }
 
-function HomepageDreamPreview() {
+export function HomepageDreamPreview() {
   const highlights = [homepageDreamTrip.days[0], homepageDreamTrip.days[2], homepageDreamTrip.days[4]];
 
   return <section className="homepage-dream-preview" aria-labelledby="homepage-dream-preview-title">
@@ -229,7 +228,7 @@ function DestinationRail() {
 
   return <section className="destination-rail page-shell" aria-labelledby="destination-rail-title">
     <div className="destination-rail__heading">
-      <div className="destination-rail__title"><span className="destination-rail__intro eyebrow">EXPLORE DESTINATIONS</span><h2 id="destination-rail-title">Explore Asian destinations</h2><p>Start with a little inspiration. See where it takes you.</p></div>
+      <div className="destination-rail__title"><span className="destination-rail__intro eyebrow">EXPLORE</span><h2 id="destination-rail-title">Where do you want to go next?</h2><p>Browse destinations and find a place that fits the trip you have in mind.</p></div>
       <div className="destination-rail__controls" aria-label="Destination browsing controls">
         <button type="button" onClick={() => scrollRail(-1)} disabled={!canScrollPrevious} aria-label="Show previous destinations"><ArrowRight size={18} className="destination-rail__arrow--back" /></button>
         <button type="button" onClick={() => scrollRail(1)} disabled={!canScrollNext} aria-label="Show more destinations"><ArrowRight size={18} /></button>

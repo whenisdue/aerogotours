@@ -1,0 +1,17 @@
+TASK 03 — VIETNAM DREAM TRIP
+Read `tasks/MASTER.md` and `tasks/PROGRESS.md` first. Begin ONLY if Bali and Singapore are PASS. Do not discard or duplicate earlier work.
+
+Destination: Vietnam. Slug `vietnam`; preserve `/destinations/vietnam`, implement `/dream/vietnam`, update existing featured card/badge only on successful completion.
+
+Key product issue: Vietnam is geographically long. Do NOT cram Hanoi, Ha Long, Da Nang, Hoi An, Ho Chi Minh City and Mekong Delta into every trip, especially 3D2N or 5D4N. Research candidates: Hanoi Old Quarter, Hoan Kiem Lake, Temple of Literature, Ninh Binh/Trang An, Da Nang, Hoi An Ancient Town, Hue, Ho Chi Minh City. Select feasible regional templates. Verify UNESCO/official Vietnam tourism, attraction and transport/operator material for named places, geographic sequences, weather/season dependence and travel transitions. Verify proper naming, opening constraints if cited, and whether actual movement needs substantial time; no invented air/train times, overnight-cruise availability or guaranteed weather. No visa eligibility guidance beyond 'verify official requirements for your passport and travel date'.
+
+Duration-specific curation (adjust when research shows a better plan):
+- 3D2N: one city/compact region, arrival/departure protected; Hanoi-focused default is reasonable.
+- 4D3N: focused Hanoi area or alternate region based on interests; no needless cross-country hop.
+- 5D4N: Hanoi plus ONE geographically/logistically plausible nearby excursion, OR Da Nang/Hoi An focused alternate. If Ninh Binh excursion included, validate day structure.
+- 7D6N: coherent north-only journey OR central-only journey based on interests; never force multiple domestic flights simply for variety.
+- 10D9N: optionally two regions if transport days are explicitly allocated; alternatively deep single-region journey. No forced end-to-end Vietnam checklist.
+
+Build real named daily experiences with culture, appropriate local foods/areas to eat, weather-sensitive excursions as optional, coherent transfers and free/rest time. Make route variation meaningful for interests/group/pace. Stay-area guidance by region; no booked hotels, prices, ticket claims, or unverified transportation guarantees. Centralize location-correct images and verify rights/source approach.
+
+Extend shared data/engine/UI with Vietnam-specific logistics and Help Me Decide; correct inquiry prefill (Vietnam, selected duration/profile, itinerary). Test all durations and especially that 3D2N avoids distant regions, 7D6N coherent, 10D9N allows transfers. Run full gate, document sources/date/limitations in `PROGRESS.md`. PASS only then proceed to `04-malaysia.txt`.

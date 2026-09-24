@@ -1,0 +1,17 @@
+TASK 02 — SINGAPORE DREAM TRIP
+Read `tasks/MASTER.md` and `tasks/PROGRESS.md` first. Begin ONLY if Bali = PASS; otherwise stop. Preserve its code and all earlier destinations.
+
+Destination: Singapore. Slug `singapore`. Preserve `/destinations/singapore`; implement `/dream/singapore`. Switch the existing Singapore homepage card and SAMPLE TRIP badge only after the actual experience works. Do not alter carousel dimensions/order or homepage hero.
+
+Create direct-to-itinerary illustrative 7D6N sample with a specific city journey, not brochure copy or an artificial multi-city route. Research candidates: Marina Bay promenade, Gardens by the Bay, Singapore Botanic Gardens, Chinatown, Little India, Kampong Gelam, National Gallery Singapore, Sentosa, Southern Ridges, hawker centres, Jewel Changi Airport. Identify actual official attraction/transit guidance and accurate location names; choose only what realistically fits. Verify any advice about airport stopovers, access, timed entry, closures, transfers, or attractions; no invented price/schedule/hawker stall operation. Prefer Singapore Tourism Board, official attraction websites and LTA/official public transport sources.
+
+Duration composition:
+- 3D2N: one compact urban introduction, arrival/departure protected; do not claim every major attraction fits.
+- 4D3N: add coherent neighborhood or garden-focused day.
+- 5D4N: more varied but geographically grouped experiences.
+- 7D6N: culture/food, greenery and selected city highlights with deliberate rest or optional day; not six days of repetitive Marina Bay.
+- 10D9N: Singapore-focused slow/deep version with optional alternatives and genuine free time, not fabricated cross-border trips to fill days; if content cannot sustain a credible longer version, disclose the constraint and curate a realistic slow-stay plan.
+
+Interests must alter selections (food/culture, nature, city, family), not merely titles. Parks and major paid attractions must be optional as appropriate; do not automatically include Universal Studios or other paid theme parks in every version. Group suitability caveats as needed. Explain sensible areas to stay without implying accommodation is booked. Travel can mention MRT/walking only where appropriate, without unverified precise journey durations.
+
+Implement via shared architecture and correct Singapore inquiry handoff; ensure Bali and prior destinations do not regress. Add tests for distinct itinerary versions, content, no cross-destination leakage and actual card/route availability. Record sources/checked dates and full quality gate in `PROGRESS.md`. PASS only then continue to `03-vietnam.txt`.

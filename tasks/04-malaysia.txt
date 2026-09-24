@@ -1,0 +1,17 @@
+TASK 04 — MALAYSIA DREAM TRIP
+Read `tasks/MASTER.md` and `tasks/PROGRESS.md` first. Begin ONLY if Bali, Singapore and Vietnam are PASS; preserve all their changes.
+
+Destination: Malaysia. Slug `malaysia`; preserve `/destinations/malaysia`, add `/dream/malaysia`, switch homepage card and SAMPLE TRIP availability only after fully functional.
+
+Research real Malaysia places and plausible routes. Candidates: Kuala Lumpur, KLCC/Petronas Towers area, Batu Caves, Central Market, Merdeka Square, Melaka historic centre, George Town/Penang, Penang Hill, Langkawi, Cameron Highlands. These are not all mandatory. Consult Tourism Malaysia, UNESCO for Melaka/George Town, official attractions and official transportation/operator sources for material logistical claims. Check regional distances, transfers, weather-sensitive beaches/highlands and whether different islands/regions belong in a given duration. No invented rates, opening times, train/flight times, or ferry operation.
+
+Build duration-specific routes:
+- 3D2N: focused Kuala Lumpur, protect arrival/departure.
+- 4D3N: Kuala Lumpur with additional city or one well-supported nearby outing.
+- 5D4N: compact KL-focused plan with Melaka if logistics justify it, or another coherent regional version based on interests.
+- 7D6N: KL + one second region such as Penang ONLY with justified travel/transition day; alternatives for nature/relaxation where verified.
+- 10D9N: optional extended KL + Penang + Langkawi ONLY if transport and season make sense; otherwise fewer bases and more depth/rest. Do not add a third region just to fill the template.
+
+Make each day concrete: actual named experiences, area and sequence, transportation considerations, appropriate local food options/areas, and real rest time. Meaningful interest/group/pace variations. Realistic lodging-area guidance, named hotels optional only if verified and plainly unbooked. Do not assume traveler citizenship or immigration eligibility.
+
+Use existing shared architecture (no new standalone page), all 5 durations, Help Me Decide and correct Malaysia inquiry handoff. Regress ALL earlier Dream Trips and routes, source log and complete quality gate. Update `PROGRESS.md` and produce final cumulative report as prescribed in MASTER.md. Do not deploy, commit or push. STOP after verification.
