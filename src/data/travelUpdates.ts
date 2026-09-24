@@ -45,6 +45,10 @@ export type TravelUpdate = {
 
 const accessedAt = "2026-09-23";
 const todayAccessedAt = "2026-09-24";
+const september25AccessedAt = "2026-09-25";
+
+const unsplash = (photoId: string, width: number) =>
+  `https://images.unsplash.com/${photoId}?auto=format&fit=crop&w=${width}&q=85`;
 
 const destinationImage = (slug: string) => {
   const destination = findDestination(slug);
@@ -136,10 +140,14 @@ export const travelUpdates: TravelUpdate[] = [
       { type: "paragraph", text: "The fire dragon is 67 metres long, decorated with about 12,000 burning incense sticks, and paraded by more than 300 performers. It is recognised as National Intangible Cultural Heritage." },
       { type: "heading", text: "Planning your visit" },
       { type: "list", items: ["Arrive early for a better viewing spot.", "Crowd-management measures may be introduced depending on conditions.", "From Causeway Bay, use MTR Exit E and continue toward Wun Sha Street.", "From Tin Hau, use Exit A2 and continue via Fire Dragon Path toward Wun Sha Street.", "Schedules may change, so follow on-site instructions."] },
+      { type: "heading", text: "Getting back after tonight's performance" },
+      { type: "paragraph", text: "On September 25, MTR is extending service hours on most local lines by around 1.5 hours, and Light Rail service is also extended. Airport Express and Disneyland Resort Line services are excluded, as are cross-boundary East Rail journeys to or from Lo Wu and Lok Ma Chau. MTR Bus routes 506, K51 and K54A also have extended service. This may help travelers leaving Tai Hang after evening celebrations, but exact last-train times differ by station and line, so check the MTR app or website for your specific journey." },
     ],
     sources: [
       { label: "Tai Hang Fire Dragon Dance", url: "https://www.discoverhongkong.com/eng/events/tai-hang-s-fire-dragon-dance.html", publisher: "Hong Kong Tourism Board", accessedAt: todayAccessedAt },
       { label: "Tai Hang Fire Dragon Dance", url: "https://partnernet.hktb.com/en/destination/events_festivals/index.html?eventID=87582", publisher: "Hong Kong Tourism Board PartnerNet", accessedAt: todayAccessedAt },
+      { label: "MTR Enhances Train Service for Mid-Autumn Festival Holidays — Extended Service Hours on Evening of Mid-Autumn Festival to Meet Passengers’ Travel Needs", url: "https://www.mtr.com.hk/archive/corporate/en/press_release/PR-26-063-E.pdf", publisher: "MTR Corporation", accessedAt: september25AccessedAt },
+      { label: "Mid-Autumn Festival transport and service information", url: "https://www.td.gov.hk/en/special_news/spnews.htm?id=80562", publisher: "Hong Kong Transport Department", accessedAt: september25AccessedAt },
     ],
     eventStartAt: "2026-09-24",
     eventEndAt: "2026-09-26",
@@ -244,6 +252,66 @@ export const travelUpdates: TravelUpdate[] = [
     eventStartAt: "2026-09-25",
     eventEndAt: "2026-10-04",
     expiresAt: "2026-10-05T00:00:00+08:00",
+  },
+  {
+    id: "macao-international-fireworks-september-25-2026",
+    slug: "macao-international-fireworks-september-25-2026",
+    headline: "Macao fireworks contest returns tonight with Portugal and Korea",
+    summary: "Two free waterfront fireworks displays are scheduled in Macao tonight at 9:00 PM and 9:40 PM, with teams from Portugal and South Korea competing near Macau Tower.",
+    destination: "Macao",
+    country: "Macao",
+    category: "events-experiences",
+    publishedAt: "2026-09-25",
+    image: {
+      src: unsplash("photo-1519501025264-65ba15a82390", 2200),
+      alt: "City skyline lights reflected across a waterfront at night",
+    },
+    body: [
+      { type: "paragraph", text: "Macao's International Fireworks Display Contest continues tonight with two free performances over the waterfront near Macau Tower. Travelers in Macao this evening can watch teams from Portugal and South Korea compete in the latest round of the annual event." },
+      { type: "heading", text: "Tonight's schedule" },
+      { type: "list", items: ["9:00 PM — Pirotecnia Duarte, Portugal", "9:40 PM — Faseecom, South Korea", "Each fireworks display lasts approximately 18 minutes.", "Admission and viewing are free."] },
+      { type: "heading", text: "Where to watch" },
+      { type: "paragraph", text: "The official firing and display area is the waterfront near Macau Tower. The Macao Government Tourism Office also lists several other viewing areas, including:" },
+      { type: "list", items: ["Anim'Arte NAM VAN and the Nam Van Lake area", "Avenida de Sagres near Mandarin Oriental Macau", "The waterfront near the Kun Iam Ecumenical Centre and Kun Iam Statue", "Macao Science Center Promenade", "Shoreline areas in Taipa"] },
+      { type: "heading", text: "Planning your evening" },
+      { type: "list", items: ["Arrive early for a comfortable viewing position.", "Expect larger crowds around popular waterfront viewing areas.", "Check local transport conditions before leaving.", "Event arrangements can still change, so check the official organizer page if weather or local conditions become uncertain."] },
+    ],
+    sources: [
+      { label: "34th Macao International Fireworks Display Contest", url: "https://www.macaotourism.gov.mo/en/events/whatson/13663/", publisher: "Macao Government Tourism Office", accessedAt: september25AccessedAt },
+    ],
+    eventStartAt: "2026-09-25",
+    eventEndAt: "2026-09-25",
+    expiresAt: "2026-09-26T00:00:00+08:00",
+    featured: false,
+  },
+  {
+    id: "kuala-lumpur-autumn-music-cultural-festival-2026",
+    slug: "kuala-lumpur-autumn-music-cultural-festival-2026",
+    headline: "Free cultural festival starts today in Bukit Bintang",
+    summary: "Kuala Lumpur's Autumn Music & Cultural Festival runs September 25–27 at Sungei Wang Plaza, with cultural performances, food, fashion and a fireworks highlight on Saturday.",
+    destination: "Kuala Lumpur",
+    country: "Malaysia",
+    category: "events-experiences",
+    publishedAt: "2026-09-25",
+    image: destinationImage("malaysia"),
+    body: [
+      { type: "paragraph", text: "Travelers in Kuala Lumpur this weekend have a free event to add to their plans. The Autumn Music & Cultural Festival begins today in Bukit Bintang and runs through Sunday, September 27." },
+      { type: "heading", text: "When and where" },
+      { type: "list", items: ["September 25–27, 2026", "Sungei Wang Plaza / Jalan Sultan Ismail, Bukit Bintang", "Free and open to all"] },
+      { type: "heading", text: "What visitors can expect" },
+      { type: "list", items: ["Cultural and musical performances", "Malaysian cultural dance", "Cultural fashion showcases", "Local food and bazaar activities", "Arts and interactive cultural activities"] },
+      { type: "heading", text: "Saturday's main program" },
+      { type: "paragraph", text: "Tourism Malaysia identifies Saturday, September 26, as the festival's main highlight, with music, cultural performances and a fireworks display. Check the official programme if the evening timing matters to your plans." },
+      { type: "heading", text: "How it could fit into your Kuala Lumpur trip" },
+      { type: "paragraph", text: "The festival is in Bukit Bintang, so it can fit relatively easily into an evening already planned around Kuala Lumpur's central shopping and dining district." },
+    ],
+    sources: [
+      { label: "Autumn Music & Cultural Festival 2026", url: "https://www.malaysia.travel/events/autumn-music-cultural-festival-2026", publisher: "Tourism Malaysia", accessedAt: september25AccessedAt },
+    ],
+    eventStartAt: "2026-09-25",
+    eventEndAt: "2026-09-27",
+    expiresAt: "2026-09-28T00:00:00+08:00",
+    featured: false,
   },
 ];
 

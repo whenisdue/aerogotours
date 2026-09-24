@@ -40,16 +40,18 @@ test("travel update slugs are unique and records have the required fields", () =
 
 test("active stories remain in current listings and the featured story is active", () => {
   const active = getActiveTravelUpdates(beforeAllExpiry);
-  assert.equal(active.length, 7);
+  assert.equal(active.length, 9);
   assert.equal(getFeaturedTravelUpdate(beforeAllExpiry)?.slug, "thailand-visa-free-stay-30-days-filipino-passports-2026");
   assert.deepEqual(active.slice(0, 3).map((update) => update.slug), [
+    "macao-international-fireworks-september-25-2026",
+    "kuala-lumpur-autumn-music-cultural-festival-2026",
     "thailand-visa-free-stay-30-days-filipino-passports-2026",
-    "japan-chiba-rail-disruptions-typhoon-25-2026",
-    "tai-hang-fire-dragon-dance-hong-kong-2026",
   ]);
   assert.equal(getTravelUpdateBySlug("japan-chiba-rail-disruptions-typhoon-25-2026")?.featured, false);
   assert.equal(getTravelUpdateBySlug("japan-chiba-rail-disruptions-typhoon-25-2026")?.expiresAt, undefined);
   assert.ok(active.some((update) => update.slug === "hong-kong-mid-autumn-k-festival-2026"));
+  assert.ok(active.some((update) => update.slug === "macao-international-fireworks-september-25-2026"));
+  assert.ok(active.some((update) => update.slug === "kuala-lumpur-autumn-music-cultural-festival-2026"));
 });
 
 test("expired stories are excluded while remaining retrievable by slug", () => {
