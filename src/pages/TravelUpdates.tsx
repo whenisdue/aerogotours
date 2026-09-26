@@ -7,6 +7,7 @@ import { getActiveTravelUpdates, getFeaturedTravelUpdate, getTravelUpdateBySlug,
 
 const categoryLabels: Record<TravelUpdateCategory, string> = {
   "events-experiences": "Events & experiences",
+  "food-experiences": "Food & experiences",
   "flights-airports": "Flights & airports",
   "travel-requirements": "Travel requirements",
   "deals-savings": "Deals & savings",

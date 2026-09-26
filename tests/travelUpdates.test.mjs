@@ -9,6 +9,7 @@ import {
 
 const validCategories = new Set([
   "events-experiences",
+  "food-experiences",
   "flights-airports",
   "travel-requirements",
   "deals-savings",
@@ -40,19 +41,19 @@ test("travel update slugs are unique and records have the required fields", () =
 
 test("active stories remain in current listings and the featured story is active", () => {
   const active = getActiveTravelUpdates(beforeAllExpiry);
-  assert.equal(active.length, 10);
+  assert.equal(active.length, 13);
   assert.equal(getFeaturedTravelUpdate(beforeAllExpiry)?.slug, "thailand-visa-free-stay-30-days-filipino-passports-2026");
   assert.deepEqual(active.slice(0, 3).map((update) => update.slug), [
-    "seoul-chuseok-free-attractions-holiday-schedule-2026",
-    "macao-international-fireworks-september-25-2026",
-    "kuala-lumpur-autumn-music-cultural-festival-2026",
+    "sandeq-silumba-west-sulawesi-2026",
+    "tourism-expo-japan-public-days-tokyo-2026",
+    "wonderful-indonesia-gastronomy-2026",
   ]);
   const featured = getFeaturedTravelUpdate(beforeAllExpiry);
   assert.ok(featured);
   assert.deepEqual([featured.slug, ...active.filter((update) => update.id !== featured.id).slice(0, 2).map((update) => update.slug)], [
     "thailand-visa-free-stay-30-days-filipino-passports-2026",
-    "seoul-chuseok-free-attractions-holiday-schedule-2026",
-    "macao-international-fireworks-september-25-2026",
+    "sandeq-silumba-west-sulawesi-2026",
+    "tourism-expo-japan-public-days-tokyo-2026",
   ]);
   assert.equal(getTravelUpdateBySlug("japan-chiba-rail-disruptions-typhoon-25-2026")?.featured, false);
   assert.equal(getTravelUpdateBySlug("japan-chiba-rail-disruptions-typhoon-25-2026")?.expiresAt, undefined);
@@ -61,6 +62,9 @@ test("active stories remain in current listings and the featured story is active
   assert.ok(active.some((update) => update.slug === "seoul-chuseok-free-attractions-holiday-schedule-2026"));
   assert.ok(active.some((update) => update.slug === "macao-international-fireworks-september-25-2026"));
   assert.ok(active.some((update) => update.slug === "kuala-lumpur-autumn-music-cultural-festival-2026"));
+  assert.ok(active.some((update) => update.slug === "sandeq-silumba-west-sulawesi-2026"));
+  assert.ok(active.some((update) => update.slug === "tourism-expo-japan-public-days-tokyo-2026"));
+  assert.ok(active.some((update) => update.slug === "wonderful-indonesia-gastronomy-2026"));
 });
 
 test("expired stories are excluded while remaining retrievable by slug", () => {
@@ -88,4 +92,20 @@ test("event end date and listing expiry can be different", () => {
   assert.equal(singapore.expiresAt, "2026-10-05T00:00:00+08:00");
   assert.ok(getActiveTravelUpdates(new Date("2026-10-04T20:00:00+08:00")).some((update) => update.id === singapore.id));
   assert.equal(getActiveTravelUpdates(new Date("2026-10-05T00:00:00+08:00")).some((update) => update.id === singapore.id), false);
+
+  for (const slug of ["sandeq-silumba-west-sulawesi-2026", "tourism-expo-japan-public-days-tokyo-2026"]) {
+    const update = getTravelUpdateBySlug(slug);
+    assert.ok(update);
+    assert.equal(update.eventEndAt, "2026-09-27");
+    assert.equal(update.expiresAt, "2026-09-28T00:00:00+08:00");
+    assert.ok(getActiveTravelUpdates(new Date("2026-09-27T23:59:59+08:00")).some((activeUpdate) => activeUpdate.id === update.id));
+    assert.equal(getActiveTravelUpdates(new Date("2026-09-28T00:00:00+08:00")).some((activeUpdate) => activeUpdate.id === update.id), false);
+  }
+
+  const gastronomy = getTravelUpdateBySlug("wonderful-indonesia-gastronomy-2026");
+  assert.ok(gastronomy);
+  assert.equal(gastronomy.eventEndAt, "2026-10-04");
+  assert.equal(gastronomy.expiresAt, "2026-10-05T00:00:00+08:00");
+  assert.ok(getActiveTravelUpdates(new Date("2026-10-04T23:59:59+08:00")).some((update) => update.id === gastronomy.id));
+  assert.equal(getActiveTravelUpdates(new Date("2026-10-05T00:00:00+08:00")).some((update) => update.id === gastronomy.id), false);
 });

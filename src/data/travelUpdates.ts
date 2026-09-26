@@ -2,6 +2,7 @@ import { findDestination } from "./destinations.ts";
 
 export type TravelUpdateCategory =
   | "events-experiences"
+  | "food-experiences"
   | "flights-airports"
   | "travel-requirements"
   | "deals-savings"
@@ -46,6 +47,7 @@ export type TravelUpdate = {
 const accessedAt = "2026-09-23";
 const todayAccessedAt = "2026-09-24";
 const september25AccessedAt = "2026-09-25";
+const september26AccessedAt = "2026-09-26";
 
 const unsplash = (photoId: string, width: number) =>
   `https://images.unsplash.com/${photoId}?auto=format&fit=crop&w=${width}&q=85`;
@@ -57,6 +59,106 @@ const destinationImage = (slug: string) => {
 };
 
 export const travelUpdates: TravelUpdate[] = [
+  {
+    id: "sandeq-silumba-west-sulawesi-2026",
+    slug: "sandeq-silumba-west-sulawesi-2026",
+    headline: "Indonesia’s 231-km traditional Sandeq sailboat event starts today",
+    summary: "Traditional Sandeq boats race across 231 km of West Sulawesi coastline this weekend, alongside music, dance and a night market.",
+    destination: "West Sulawesi",
+    country: "Indonesia",
+    category: "events-experiences",
+    publishedAt: "2026-09-26",
+    image: {
+      src: unsplash("photo-1500375592092-40eb2168fd21", 2200),
+      alt: "Blue ocean water along a tropical coastline",
+    },
+    body: [
+      { type: "paragraph", text: "Sandeq Silumba starts today, September 26, along the West Sulawesi coast. The two-day event combines a 231-kilometre traditional sailboat race with local food and cultural activities." },
+      { type: "heading", text: "What is a Sandeq?" },
+      { type: "paragraph", text: "A Sandeq is the fast traditional sailboat of the Mandar people. Each boat in Sandeq Silumba carries 14 crew members, known as Pa’sawi." },
+      { type: "heading", text: "Where the 231-km route goes" },
+      { type: "paragraph", text: "The route crosses three West Sulawesi areas: Polewali Mandar, Majene and Mamuju. It follows the coastline past beaches named by Indonesia Travel including Bahari, Pamboang, Sendana, Deking and Manakarra. Its length makes the event a multi-stop coastal race, rather than a short regatta at one harbor." },
+      { type: "heading", text: "More than the sailing race" },
+      { type: "list", items: ["Sandeq Night Market", "Traditional dance and music", "Local small businesses and products"] },
+      { type: "heading", text: "Cost and practical planning" },
+      { type: "paragraph", text: "Indonesia Travel lists the ticket price as free. The listing does not give a detailed daily timetable, route-side viewing plan or transport schedule, so check the official event page and local updates before setting out. If you plan to follow the boats between regencies, confirm local road and coastal transport arrangements rather than assuming the race can be followed from one base." },
+    ],
+    sources: [
+      { label: "Sandeq Silumba 2026", url: "https://www.indonesia.travel/id/en/events/event-detail/sandeq-silumba-2026", publisher: "Ministry of Tourism, Republic of Indonesia / Indonesia Travel", accessedAt: september26AccessedAt },
+    ],
+    eventStartAt: "2026-09-26",
+    eventEndAt: "2026-09-27",
+    expiresAt: "2026-09-28T00:00:00+08:00",
+    featured: false,
+  },
+  {
+    id: "tourism-expo-japan-public-days-tokyo-2026",
+    slug: "tourism-expo-japan-public-days-tokyo-2026",
+    headline: "Tourism EXPO Japan opens to the public in Tokyo this weekend",
+    summary: "Tourism EXPO Japan’s public days begin September 26 at Tokyo Big Sight, bringing destinations, travel experiences, culture and food together under one roof.",
+    destination: "Tokyo",
+    country: "Japan",
+    category: "events-experiences",
+    publishedAt: "2026-09-26",
+    image: {
+      src: unsplash("photo-1540959733332-eab4deabeeaf", 2200),
+      alt: "Tokyo skyline and city streets under a bright blue sky",
+    },
+    body: [
+      { type: "paragraph", text: "Yes. Tourism EXPO Japan opens to general visitors today, Saturday, September 26. The September 24 and 25 dates were for trade and press and were not open to the public." },
+      { type: "heading", text: "Public hours and venue" },
+      { type: "list", items: ["Saturday, September 26: 10:00 AM–6:00 PM", "Sunday, September 27: 10:00 AM–5:00 PM", "Tokyo Big Sight, 3-11-1 Ariake, Koto-ku, Tokyo"] },
+      { type: "heading", text: "What visitors can expect" },
+      { type: "paragraph", text: "The 2026 theme is “The Changing Nature of Travel.” The expo brings together travel destinations and organizations from Japan and overseas, with exhibits and ideas for trips, culture and travel experiences. It can be useful if you are already in Tokyo and want to compare places to visit around Japan or discover other destinations in one venue." },
+      { type: "paragraph", text: "The organizers are the Japan Travel and Tourism Association, the Japan Association of Travel Agents (JATA), and the Japan National Tourism Organization (JNTO)." },
+      { type: "heading", text: "Getting to Tokyo Big Sight" },
+      { type: "paragraph", text: "The organizer’s access page lists Kokusai-Tenjijo Station on the Rinkai Line, about a seven-minute walk away, and Tokyo Big Sight Station on the Yurikamome, about a three-minute walk away. Check the official access page and your transport operator for current service information before leaving." },
+      { type: "heading", text: "Before you go" },
+      { type: "paragraph", text: "The event page links to separate public-day ticket information. Check it for current entry requirements, ticket availability and prices before traveling to the venue." },
+    ],
+    sources: [
+      { label: "Tourism EXPO Japan — For Public", url: "https://www.t-expo.jp/en/public", publisher: "Tourism EXPO Japan", accessedAt: september26AccessedAt },
+      { label: "Tourism EXPO Japan 2026 — Event Outline", url: "https://www.t-expo.jp/en/biz/outline", publisher: "Tourism EXPO Japan", accessedAt: september26AccessedAt },
+      { label: "Tourism EXPO Japan — About", url: "https://www.t-expo.jp/en/public/about", publisher: "Tourism EXPO Japan", accessedAt: september26AccessedAt },
+      { label: "Tourism EXPO Japan — Access", url: "https://www.t-expo.jp/en/access", publisher: "Tourism EXPO Japan", accessedAt: september26AccessedAt },
+    ],
+    eventStartAt: "2026-09-26",
+    eventEndAt: "2026-09-27",
+    expiresAt: "2026-09-28T00:00:00+08:00",
+    featured: false,
+  },
+  {
+    id: "wonderful-indonesia-gastronomy-2026",
+    slug: "wonderful-indonesia-gastronomy-2026",
+    headline: "Indonesia begins a nine-day culinary journey across four destinations",
+    summary: "Wonderful Indonesia Gastronomy runs September 26–October 4 across Solo, Yogyakarta, Jakarta and Bali, combining food, heritage and local communities.",
+    destination: "Indonesia",
+    country: "Indonesia",
+    category: "food-experiences",
+    publishedAt: "2026-09-26",
+    image: {
+      src: unsplash("photo-1547592180-85f173990554", 2200),
+      alt: "A colorful meal served on a table",
+    },
+    body: [
+      { type: "paragraph", text: "Wonderful Indonesia Gastronomy (WIG) 2026 begins today, September 26, and runs through October 4. The Ministry of Tourism describes it as a program about Indonesian cuisine, heritage, ingredients, traditions and the communities connected to them." },
+      { type: "heading", text: "Four destinations, one national program" },
+      { type: "list", items: ["Solo", "Yogyakarta", "Jakarta", "Bali"] },
+      { type: "heading", text: "What begins today in Solo" },
+      { type: "paragraph", text: "The official program opens in Solo with a dinner at Pura Mangkunegaran on September 26. The page describes this as part of a Media & KOL Trip, so it does not establish that the dinner is open to general visitors. The itinerary also highlights Kampung Laweyan and Pasar Gede for their local food, producers and heritage." },
+      { type: "heading", text: "Food and cultural experiences" },
+      { type: "paragraph", text: "Across the program, the organizer lists chef collaborations, culinary festivals, restaurant promotions, heritage-focused experiences and local food traditions. It also identifies a WIG Artisan Market as open to all and free of charge. That detail applies to the market only; the page does not give general public access terms for every dinner, trip or forum." },
+      { type: "heading", text: "Planning around WIG" },
+      { type: "paragraph", text: "If your Indonesia itinerary already includes one of these cities, WIG may offer ways to connect local dishes with their history and producers. Check the official program for the date, location, booking or access details of the specific activity you want to attend. Do not assume the opening dinner or other listed experiences accept walk-in visitors." },
+    ],
+    sources: [
+      { label: "Wonderful Indonesia Gastronomy 2026", url: "https://www.indonesia.travel/de/en/events/event-detail/wig-2026", publisher: "Ministry of Tourism, Republic of Indonesia / Indonesia Travel", accessedAt: september26AccessedAt },
+    ],
+    eventStartAt: "2026-09-26",
+    eventEndAt: "2026-10-04",
+    expiresAt: "2026-10-05T00:00:00+08:00",
+    featured: false,
+  },
   {
     id: "thailand-visa-free-stay-30-days-filipino-passports-2026",
     slug: "thailand-visa-free-stay-30-days-filipino-passports-2026",
