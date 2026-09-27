@@ -48,6 +48,7 @@ const accessedAt = "2026-09-23";
 const todayAccessedAt = "2026-09-24";
 const september25AccessedAt = "2026-09-25";
 const september26AccessedAt = "2026-09-26";
+const september27AccessedAt = "2026-09-27";
 
 const unsplash = (photoId: string, width: number) =>
   `https://images.unsplash.com/${photoId}?auto=format&fit=crop&w=${width}&q=85`;
@@ -59,6 +60,94 @@ const destinationImage = (slug: string) => {
 };
 
 export const travelUpdates: TravelUpdate[] = [
+  {
+    id: "salo-karajae-festival-parepare-2026",
+    slug: "salo-karajae-festival-parepare-2026",
+    headline: "A free coastal cultural festival starts today in South Sulawesi",
+    summary: "Salo Karajae Festival begins September 27 along Parepare’s river and coastline, combining cultural activities, traditional fishing, markets and coastal experiences.",
+    destination: "Parepare",
+    country: "Indonesia",
+    category: "events-experiences",
+    publishedAt: "2026-09-27",
+    image: {
+      src: unsplash("photo-1500375592092-40eb2168fd21", 2200),
+      alt: "Open water along a tropical coastline",
+    },
+    body: [
+      { type: "paragraph", text: "Salo Karajae Festival begins today, September 27, and runs through October 1 in Parepare City, South Sulawesi. The coastal cultural event coincides with World Tourism Day." },
+      { type: "heading", text: "What is Salo Karajae?" },
+      { type: "paragraph", text: "The festival brings local culture and coastal life together along the Karajae River and nearby shore. Visitors can see cultural competitions, traditional fishing, local markets, and activities from micro, small and medium enterprises (MSMEs) and the creative economy." },
+      { type: "heading", text: "Where it happens" },
+      { type: "paragraph", text: "Parepare is a city in South Sulawesi. For 2026, the festival expands across both riverbanks and the beach, so activities are spread across a riverfront and coastal area rather than one single venue." },
+      { type: "heading", text: "Cost and planning" },
+      { type: "paragraph", text: "The official tourism listing gives the ticket price as free. It does not provide a detailed daily timetable, so check the official event page or local updates for the day’s activities, exact locations and transport arrangements before setting out." },
+    ],
+    sources: [
+      { label: "Festival Salo Karajae 2026", url: "https://www.travelindonesia.cn/th/en/events/event-detail/festival-salo-karajae-2026", publisher: "Ministry of Tourism, Republic of Indonesia / Indonesia Travel", accessedAt: september27AccessedAt },
+    ],
+    eventStartAt: "2026-09-27",
+    eventEndAt: "2026-10-01",
+    expiresAt: "2026-10-02T00:00:00+08:00",
+    featured: false,
+  },
+  {
+    id: "fukuro-matsuri-ikebukuro-tokyo-2026",
+    slug: "fukuro-matsuri-ikebukuro-tokyo-2026",
+    headline: "Sixteen mikoshi fill Ikebukuro for Fukuro Matsuri today",
+    summary: "Fukuro Matsuri’s free Mikoshi Festival runs through today in Ikebukuro, with 16 portable shrines in the parade and Japanese drumming among the weekend performances.",
+    destination: "Ikebukuro",
+    country: "Japan",
+    category: "events-experiences",
+    publishedAt: "2026-09-27",
+    image: {
+      src: unsplash("photo-1540959733332-eab4deabeeaf", 2200),
+      alt: "Tokyo city buildings in daylight",
+    },
+    body: [
+      { type: "paragraph", text: "Fukuro Matsuri’s September Mikoshi Festival runs September 26–27 in Ikebukuro. Today’s program includes a neighborhood mikoshi ceremony and a large portable-shrine parade." },
+      { type: "heading", text: "What happens today?" },
+      { type: "paragraph", text: "A mikoshi is a portable shrine carried in a festival procession. The national tourism listing identifies 16 mikoshi in today’s parade. Japanese drumming and other performances are also part of the weekend festival." },
+      { type: "heading", text: "Where to go and what it costs" },
+      { type: "list", items: ["Ikebukuro West Exit Station Square and nearby areas", "About a one-minute walk from JR Ikebukuro Station", "Admission is free"] },
+      { type: "heading", text: "Before you head out" },
+      { type: "paragraph", text: "The station-square area may be busy during the parade, so allow extra time and follow local staff directions. The tourism listing does not give today’s performance times; check the festival organizer’s latest notice before travelling. The separate dance festival and Tokyo Yosakoi events are scheduled for October 10–11, not today." },
+    ],
+    sources: [
+      { label: "Fukuro Matsuri Festival Mikoshi Festival", url: "https://www.japan47go.travel/en/detail/d2b82e3a-4ef3-49b5-9798-5cc84884ebd4", publisher: "Japan Travel and Tourism Association / JAPAN 47 GO", accessedAt: september27AccessedAt },
+      { label: "Fukuro Matsuri official site", url: "https://yosakoitokyo.gr.jp/", publisher: "Fukuro Matsuri Council", accessedAt: september27AccessedAt },
+    ],
+    eventStartAt: "2026-09-26",
+    eventEndAt: "2026-09-27",
+    expiresAt: "2026-09-28T00:00:00+08:00",
+    featured: false,
+  },
+  {
+    id: "free-royal-court-parade-hyundai-seoul-2026",
+    slug: "free-royal-court-parade-hyundai-seoul-2026",
+    headline: "Travelers can see a free Korean royal-court parade in Seoul today",
+    summary: "A free Korean royal-court ceremony parade runs at The Hyundai Seoul today, with performances scheduled at 2 PM, 3 PM and 4 PM.",
+    destination: "Seoul",
+    country: "South Korea",
+    category: "events-experiences",
+    publishedAt: "2026-09-27",
+    image: destinationImage("south-korea"),
+    body: [
+      { type: "paragraph", text: "A free royal-court ceremony parade is scheduled at The Hyundai Seoul today, Sunday, September 27. The parade is a continuing weekend program; the broader HELLO SEOUL shopping festa itself ended on September 20." },
+      { type: "heading", text: "Today’s performances" },
+      { type: "list", items: ["2:00 PM", "3:00 PM", "4:00 PM", "Each performance lasts about 30 minutes", "The parade takes place around the 1F area"] },
+      { type: "heading", text: "Where it is and how to get there" },
+      { type: "paragraph", text: "The Hyundai Seoul is at 108 Yeoui-daero, Yeongdeungpo-gu, Seoul. Visit Seoul lists Yeouido Station on Subway Lines 5 and 9, Exit 3, about 500 metres away." },
+      { type: "heading", text: "How long does the program continue?" },
+      { type: "paragraph", text: "The official listing says the parade continues every Saturday and Sunday through October 4. Check the venue or Visit Seoul’s official page before setting out in case event arrangements change." },
+    ],
+    sources: [
+      { label: "HELLO SEOUL (The Hyundai Seoul Shopping Festa)", url: "https://english.visitseoul.net/events/TheHyundaiSeoulShoppingFesta/ENPaecwqv", publisher: "Seoul Tourism Organization / Visit Seoul", accessedAt: september27AccessedAt },
+    ],
+    eventStartAt: "2026-09-12",
+    eventEndAt: "2026-10-04",
+    expiresAt: "2026-10-05T00:00:00+08:00",
+    featured: false,
+  },
   {
     id: "sandeq-silumba-west-sulawesi-2026",
     slug: "sandeq-silumba-west-sulawesi-2026",

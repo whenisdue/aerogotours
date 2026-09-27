@@ -41,19 +41,19 @@ test("travel update slugs are unique and records have the required fields", () =
 
 test("active stories remain in current listings and the featured story is active", () => {
   const active = getActiveTravelUpdates(beforeAllExpiry);
-  assert.equal(active.length, 13);
+  assert.equal(active.length, 16);
   assert.equal(getFeaturedTravelUpdate(beforeAllExpiry)?.slug, "thailand-visa-free-stay-30-days-filipino-passports-2026");
   assert.deepEqual(active.slice(0, 3).map((update) => update.slug), [
-    "sandeq-silumba-west-sulawesi-2026",
-    "tourism-expo-japan-public-days-tokyo-2026",
-    "wonderful-indonesia-gastronomy-2026",
+    "salo-karajae-festival-parepare-2026",
+    "fukuro-matsuri-ikebukuro-tokyo-2026",
+    "free-royal-court-parade-hyundai-seoul-2026",
   ]);
   const featured = getFeaturedTravelUpdate(beforeAllExpiry);
   assert.ok(featured);
   assert.deepEqual([featured.slug, ...active.filter((update) => update.id !== featured.id).slice(0, 2).map((update) => update.slug)], [
     "thailand-visa-free-stay-30-days-filipino-passports-2026",
-    "sandeq-silumba-west-sulawesi-2026",
-    "tourism-expo-japan-public-days-tokyo-2026",
+    "salo-karajae-festival-parepare-2026",
+    "fukuro-matsuri-ikebukuro-tokyo-2026",
   ]);
   assert.equal(getTravelUpdateBySlug("japan-chiba-rail-disruptions-typhoon-25-2026")?.featured, false);
   assert.equal(getTravelUpdateBySlug("japan-chiba-rail-disruptions-typhoon-25-2026")?.expiresAt, undefined);
@@ -65,6 +65,23 @@ test("active stories remain in current listings and the featured story is active
   assert.ok(active.some((update) => update.slug === "sandeq-silumba-west-sulawesi-2026"));
   assert.ok(active.some((update) => update.slug === "tourism-expo-japan-public-days-tokyo-2026"));
   assert.ok(active.some((update) => update.slug === "wonderful-indonesia-gastronomy-2026"));
+});
+
+test("September 27 event stories follow their verified expiry boundaries", () => {
+  const cases = [
+    { slug: "salo-karajae-festival-parepare-2026", eventEndAt: "2026-10-01", expiresAt: "2026-10-02T00:00:00+08:00" },
+    { slug: "fukuro-matsuri-ikebukuro-tokyo-2026", eventEndAt: "2026-09-27", expiresAt: "2026-09-28T00:00:00+08:00" },
+    { slug: "free-royal-court-parade-hyundai-seoul-2026", eventEndAt: "2026-10-04", expiresAt: "2026-10-05T00:00:00+08:00" },
+  ];
+
+  for (const { slug, eventEndAt, expiresAt } of cases) {
+    const update = getTravelUpdateBySlug(slug);
+    assert.ok(update);
+    assert.equal(update.eventEndAt, eventEndAt);
+    assert.equal(update.expiresAt, expiresAt);
+    assert.ok(getActiveTravelUpdates(new Date(new Date(expiresAt).getTime() - 1)).some((activeUpdate) => activeUpdate.id === update.id));
+    assert.equal(getActiveTravelUpdates(new Date(expiresAt)).some((activeUpdate) => activeUpdate.id === update.id), false);
+  }
 });
 
 test("expired stories are excluded while remaining retrievable by slug", () => {
