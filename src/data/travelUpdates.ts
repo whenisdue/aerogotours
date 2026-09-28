@@ -49,6 +49,7 @@ const todayAccessedAt = "2026-09-24";
 const september25AccessedAt = "2026-09-25";
 const september26AccessedAt = "2026-09-26";
 const september27AccessedAt = "2026-09-27";
+const september28AccessedAt = "2026-09-28";
 
 const unsplash = (photoId: string, width: number) =>
   `https://images.unsplash.com/${photoId}?auto=format&fit=crop&w=${width}&q=85`;
@@ -60,6 +61,90 @@ const destinationImage = (slug: string) => {
 };
 
 export const travelUpdates: TravelUpdate[] = [
+  {
+    id: "singapore-grand-prix-season-experiences-2026",
+    slug: "singapore-grand-prix-season-experiences-2026",
+    headline: "New Singapore Grand Prix Season experiences begin today",
+    summary: "New motorsport pop-ups begin in Singapore today, with Formula racing show cars and race-season experiences appearing at Raffles City and Funan.",
+    destination: "Singapore",
+    country: "Singapore",
+    category: "events-experiences",
+    publishedAt: "2026-09-28",
+    image: destinationImage("singapore"),
+    body: [
+      { type: "paragraph", text: "The adidas Motorsport pop-ups at Raffles City and Funan begin today, September 28. They are part of the build-up to Grand Prix Season Singapore, scheduled for October 2–11; the Formula 1 Singapore Grand Prix race weekend is October 9–11, not today." },
+      { type: "heading", text: "What visitors can see" },
+      { type: "paragraph", text: "Visit Singapore lists show-car displays for the Mercedes-AMG PETRONAS F1 Team and Audi Revolut F1 Team, alongside adidas Motorsport collections. The pop-ups are scheduled to run through October 12." },
+      { type: "heading", text: "More race-season activities ahead" },
+      { type: "list", items: ["Ray-Ban’s Beyond the Track at CQ@Clarke Quay, October 1–14, with race-themed challenges and a Scuderia Ferrari collection display", "Orchard Paddock at Ngee Ann City Civic Plaza, October 8–10, with an outdoor supper experience, live performances and race-film screenings", "The Formula 1 Singapore Grand Prix race weekend, October 9–11"] },
+      { type: "heading", text: "Tickets, hours and access" },
+      { type: "paragraph", text: "Visit Singapore’s listing does not state the admission price, opening hours or any booking requirement for the Raffles City and Funan pop-ups. It does identify Trackside Toasts at Marina Bay as an offer for race-ticket holders, but that condition is not stated for these mall pop-ups. Check the specific activation and venue details before heading out rather than assuming an F1 race ticket is—or is not—needed." },
+    ],
+    sources: [
+      { label: "Singapore Grand Prix Season 2026", url: "https://www.visitsingapore.com/whats-happening/all-happenings/events/singapore-grand-prix-season/", publisher: "Singapore Tourism Board / Visit Singapore", accessedAt: september28AccessedAt },
+    ],
+    eventStartAt: "2026-09-28",
+    eventEndAt: "2026-10-14",
+    expiresAt: "2026-10-15T00:00:00+08:00",
+    featured: false,
+  },
+  {
+    id: "lapay-bantigue-dance-festival-masbate-2026",
+    slug: "lapay-bantigue-dance-festival-masbate-2026",
+    headline: "Masbate celebrates a folk dance inspired by birds in flight today",
+    summary: "Masbate’s Lapay Bantigue Dance Festival is observed September 28, celebrating a local folk dance inspired by the graceful movements of lapay seabirds.",
+    destination: "Masbate City",
+    country: "Philippines",
+    category: "events-experiences",
+    publishedAt: "2026-09-28",
+    image: {
+      src: unsplash("photo-1500375592092-40eb2168fd21", 2200),
+      alt: "Open water along a tropical coastline",
+    },
+    body: [
+      { type: "paragraph", text: "The Tourism Promotions Board (TPB) lists the Lapay Bantigue Dance Festival on September 28 in Masbate City. Its listing gives the festival date and cultural background, but does not confirm a detailed 2026 program." },
+      { type: "heading", text: "A dance inspired by lapay" },
+      { type: "paragraph", text: "TPB traces the folk dance to Barangay Bantigue, where lapay—described in its listing as seagulls—were seen hovering and moving in flocks. Their movements inspired local elders to create a folk dance that became an important part of the community’s culture." },
+      { type: "heading", text: "What travelers should check" },
+      { type: "paragraph", text: "For travelers already in Masbate, the festival offers a way to learn about a local dance tradition and its connection to the birds around Bantigue. TPB does not list 2026 performance times, a specific venue within Masbate City, admission details or confirmed activities. Check with local tourism officials or event organizers before making a special trip." },
+    ],
+    sources: [
+      { label: "Lapay Bantigue Dance Festival", url: "https://tpb.gov.ph/events/lapay-bantigue-dance-festival/", publisher: "Tourism Promotions Board Philippines", accessedAt: september28AccessedAt },
+      { label: "Calendar of Philippine Festivals — September", url: "https://tpb.gov.ph/calendar-of-philippine-festivals-and-monthly-observances-theme/?month=09", publisher: "Tourism Promotions Board Philippines", accessedAt: september28AccessedAt },
+    ],
+    eventStartAt: "2026-09-28",
+    eventEndAt: "2026-09-28",
+    expiresAt: "2026-09-29T00:00:00+08:00",
+    featured: false,
+  },
+  {
+    id: "pal-manila-delhi-mumbai-flights-2026",
+    slug: "pal-manila-delhi-mumbai-flights-2026",
+    headline: "PAL plans new nonstop Manila flights to Delhi and Mumbai",
+    summary: "Philippine Airlines plans to start nonstop Manila services to Delhi and Mumbai in December, subject to Indian government approval.",
+    destination: "Manila–Delhi and Mumbai",
+    country: "Philippines / India",
+    category: "flights-airports",
+    publishedAt: "2026-09-28",
+    image: {
+      src: unsplash("photo-1436491865332-7a61a109cc05", 2200),
+      alt: "Passenger aircraft flying above the clouds",
+    },
+    body: [
+      { type: "paragraph", text: "Philippine Airlines announced on September 25 that it plans to launch nonstop Manila–Delhi and Manila–Mumbai services in December 2026. The proposed launch is subject to Indian government approval, so the routes should not be treated as confirmed until PAL announces that approval and launch arrangements are finalized." },
+      { type: "heading", text: "Planned Delhi schedule" },
+      { type: "list", items: ["Manila to Delhi: Monday, Wednesday and Friday, departing 10:40 PM and arriving 3:00 AM the next day", "Delhi to Manila: Tuesday, Thursday and Saturday, departing 8:15 AM and arriving 5:00 PM"] },
+      { type: "heading", text: "Planned Mumbai schedule" },
+      { type: "list", items: ["Manila to Mumbai: Tuesday, Thursday, Saturday and Sunday, departing 10:40 PM and arriving 3:05 AM the next day", "Mumbai to Manila: Monday, Wednesday, Friday and Sunday, departing 7:15 AM and arriving 5:00 PM"] },
+      { type: "paragraph", text: "PAL says all times are local. The schedules are the airline’s announced plan and remain subject to the stated approval condition." },
+      { type: "heading", text: "What this means for Filipino travelers" },
+      { type: "paragraph", text: "If approved and launched, the services would give travelers nonstop options from Manila to two major Indian cities. PAL says bookings may be made through its website, mobile app, ticket offices, hotline or accredited travel agents. Before paying or building a trip around these flights, check PAL’s latest announcement and booking channels for approval status, actual operating dates, availability and current schedules." },
+    ],
+    sources: [
+      { label: "PAL to Launch Delhi and Mumbai Services", url: "https://www.philippineairlines.com/us/en/newsevent-listingpage/press-releases-statements/pal-to-launch-delhi-and-mumbai-services.html", publisher: "Philippine Airlines", accessedAt: september28AccessedAt },
+    ],
+    featured: false,
+  },
   {
     id: "salo-karajae-festival-parepare-2026",
     slug: "salo-karajae-festival-parepare-2026",
