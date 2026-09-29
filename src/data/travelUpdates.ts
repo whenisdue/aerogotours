@@ -50,6 +50,7 @@ const september25AccessedAt = "2026-09-25";
 const september26AccessedAt = "2026-09-26";
 const september27AccessedAt = "2026-09-27";
 const september28AccessedAt = "2026-09-28";
+const september29AccessedAt = "2026-09-29";
 
 const unsplash = (photoId: string, width: number) =>
   `https://images.unsplash.com/${photoId}?auto=format&fit=crop&w=${width}&q=85`;
@@ -61,6 +62,99 @@ const destinationImage = (slug: string) => {
 };
 
 export const travelUpdates: TravelUpdate[] = [
+  {
+    id: "bangkok-airport-travel-update-september-2026",
+    slug: "bangkok-airport-travel-update-september-2026",
+    headline: "Bangkok airports remain open as some journeys take longer",
+    summary: "Bangkok’s airports and major visitor areas remain open and accessible, but some road journeys may take longer. Rail services and Don Mueang airport buses are operating.",
+    destination: "Bangkok",
+    country: "Thailand",
+    category: "destination-tips",
+    publishedAt: "2026-09-29",
+    image: {
+      src: "https://www.tatnews.org/wp-content/uploads/2026/09/SituationUpdate_Bangklok-Weather-Travel-Conditions_Update5-28Sep_13.00.jpg",
+      alt: "Tourism Authority of Thailand visitor information graphic for Bangkok travel conditions",
+      credit: "Tourism Authority of Thailand",
+    },
+    body: [
+      { type: "paragraph", text: "The latest detailed Tourism Authority of Thailand (TAT) travel-conditions notice is marked 28 September 2026, 13:00 Hrs. GMT+7. It says most tourism areas, attractions and visitor facilities across Bangkok continue to operate, while some road journeys in Bangkok and nearby areas may take longer." },
+      { type: "heading", text: "Airports, attractions and local transport" },
+      { type: "list", items: ["Suvarnabhumi Airport and Don Mueang International Airport remain open and operational.", "Siam, Ratchaprasong, Chinatown, Talat Noi and Song Wat remain accessible, as do the Grand Palace, Temple of the Emerald Buddha, Wat Pho and Wat Arun.", "The Airport Rail Link, SRT Red Line, BTS Skytrain and MRT are operating. BMTA airport buses A1–A4 at Don Mueang are also operating."] },
+      { type: "heading", text: "Intercity rail and road journeys" },
+      { type: "paragraph", text: "The SRT Northern Line has reopened, and Northeastern and Southern rail lines are operating. Some Eastern Line sections remain affected and services have been adjusted. TAT says some road journeys may take longer, with conditions varying by area." },
+      { type: "heading", text: "What to check before leaving your hotel" },
+      { type: "list", items: ["Check your flight status with your airline and review current weather, traffic, attraction opening information and public transport conditions.", "Allow sufficient time for the journey. TAT’s latest notice does not give a specific number of extra minutes or hours.", "Check your exact rail, bus or marine service with its operator before travelling; schedules may vary.", "TAT says 28–29 September are special public holidays in Bangkok, Nonthaburi, Pathum Thani and Samut Prakan under a weather-related measure."] },
+    ],
+    sources: [
+      { label: "Weather and travel conditions in Bangkok and surrounding areas – Visitor information", url: "https://www.tatnews.org/2026/09/weather-and-travel-conditions-in-bangkok-and-surrounding-areas-visitor-information/", publisher: "Tourism Authority of Thailand / TAT Newsroom", accessedAt: september29AccessedAt },
+      { label: "TAT announces special public holidays on 28–29 September 2026", url: "https://www.tatnews.org/2026/09/tat-announces-special-public-holidays-on-28-29-september-2026/", publisher: "Tourism Authority of Thailand / TAT Newsroom", accessedAt: september29AccessedAt },
+    ],
+    expiresAt: "2026-09-30T00:00:00+08:00",
+    featured: false,
+  },
+  {
+    id: "bangkok-royal-barge-rehearsal-october-2-2026",
+    slug: "bangkok-royal-barge-rehearsal-october-2-2026",
+    headline: "Travelers can watch Thailand’s Royal Barges rehearse this Friday",
+    summary: "A Royal Barge Procession rehearsal is scheduled on Bangkok’s Chao Phraya River on October 2, giving visitors a chance to see Thailand’s historic royal barges before the November ceremony.",
+    destination: "Bangkok",
+    country: "Thailand",
+    category: "events-experiences",
+    publishedAt: "2026-09-29",
+    image: {
+      src: "https://tatnews.org/wp-content/uploads/2026/08/The-Royal-Barge-Procession-2026-and-rehearsals-Cover-scaled.jpg",
+      alt: "Royal barges on Bangkok’s Chao Phraya River",
+      credit: "Tourism Authority of Thailand",
+    },
+    body: [
+      { type: "paragraph", text: "A minor rehearsal for the Royal Barge Procession is scheduled on Friday, 2 October. This is a rehearsal, not the actual procession, which is planned for 6 November as part of the Royal Kathin Ceremony at Wat Arun." },
+      { type: "heading", text: "What visitors can see" },
+      { type: "paragraph", text: "The Royal Thai Navy’s rehearsal is expected to begin at approximately 14:30. TAT invites the public and visitors to observe rehearsals along both banks of the Chao Phraya River between Krung Thon Bridge and Wat Arun Ratchawararam. Its notice identifies this stretch but does not recommend a particular viewing point." },
+      { type: "paragraph", text: "The official notice does not list ticket requirements, reserved viewing areas or exact road and riverfront closures. Check current event and local transport information before choosing how to reach the river." },
+      { type: "heading", text: "Other rehearsal dates and the November ceremony" },
+      { type: "list", items: ["Further minor rehearsals: 8 and 15 October", "Full-dress rehearsals: 21 and 28 October", "Royal Kathin Ceremony and Royal Barge Procession: 6 November"] },
+      { type: "paragraph", text: "For the 6 November procession, 52 royal barges carrying 2,200 Royal Thai Navy personnel will travel from Wasukri Pier to Wat Arun. The Royal Kathin Ceremony is a Buddhist merit-making tradition after Buddhist Lent, when robes and other offerings are presented to monks; when performed by the monarch, it brings royal and Buddhist traditions together." },
+    ],
+    sources: [
+      { label: "Thailand invites visitors to witness the Royal Barge Procession 2026 and rehearsals on Bangkok’s Chao Phraya River", url: "https://www.tatnews.org/2026/08/thailand-invites-visitors-to-witness-the-royal-barge-procession-2026-and-rehearsals-on-bangkoks-chao-phraya-river/", publisher: "Tourism Authority of Thailand / TAT Newsroom", accessedAt: september29AccessedAt },
+    ],
+    eventStartAt: "2026-10-02",
+    eventEndAt: "2026-10-02",
+    expiresAt: "2026-10-03T00:00:00+08:00",
+    featured: false,
+  },
+  {
+    id: "central-highlands-gong-culture-festival-vietnam-2026",
+    slug: "central-highlands-gong-culture-festival-vietnam-2026",
+    headline: "Vietnam’s Central Highlands gong culture festival begins October 1",
+    summary: "A festival celebrating the UNESCO-recognised Space of Gong Culture in Vietnam’s Central Highlands begins October 1, with cultural performances and heritage experiences.",
+    destination: "Gia Lai / Central Highlands",
+    country: "Vietnam",
+    category: "events-experiences",
+    publishedAt: "2026-09-29",
+    image: {
+      src: "https://image.vietnam.travel/sites/default/files/2026-03/3066-gia%20lai-nguyen%20van%20hop-0973138897-lua%20thieng%20cao%20nguyen.jpg?v=1789698687",
+      alt: "Cultural experience in Gia Lai, Vietnam, featured by Vietnam Tourism",
+      credit: "Vietnam National Authority of Tourism",
+    },
+    body: [
+      { type: "paragraph", text: "Vietnam Tourism lists the Central Highlands Gong Culture International Festival for 1–31 October as part of Visit Vietnam Year 2026 – Gia Lai. It says the festival promotes the UNESCO-recognised Space of Gong Culture through performances, rituals and cultural experiences." },
+      { type: "heading", text: "A living cultural space" },
+      { type: "paragraph", text: "Gia Lai is in Vietnam’s Central Highlands. UNESCO describes the Space of Gong Culture as spanning several provinces and communities, where gongs are closely linked to daily life, seasonal cycles and rituals." },
+      { type: "heading", text: "What travelers can plan" },
+      { type: "paragraph", text: "The official tourism listing describes performances, rituals and cultural experiences, but does not say which activities visitors can attend or provide daily schedules. It gives no individual venue, performance time, admission details or booking requirements." },
+      { type: "paragraph", text: "Before making a special trip, check Vietnam Tourism and Gia Lai’s official tourism or event channels for the exact venue, dates of public activities, access arrangements and transport. The current listing confirms the month-long event window, not a day-by-day program." },
+    ],
+    sources: [
+      { label: "Central Highlands Gong Culture International Festival", url: "https://vietnam.travel/things-to-do/festival-event/central-highlands-gong-culture-international-festival", publisher: "Vietnam National Authority of Tourism / Vietnam Tourism", accessedAt: september29AccessedAt },
+      { label: "Space of gong culture", url: "https://ich.unesco.org/en/RL/space-of-gong-culture-00120", publisher: "UNESCO Intangible Cultural Heritage", accessedAt: september29AccessedAt },
+      { label: "Gia Lai: A Hidden Highland Gem", url: "https://www.vietnam.travel/things-to-do/gia-lai-hidden-highland-gem", publisher: "Vietnam National Authority of Tourism / Vietnam Tourism", accessedAt: september29AccessedAt },
+    ],
+    eventStartAt: "2026-10-01",
+    eventEndAt: "2026-10-31",
+    expiresAt: "2026-11-01T00:00:00+08:00",
+    featured: false,
+  },
   {
     id: "singapore-grand-prix-season-experiences-2026",
     slug: "singapore-grand-prix-season-experiences-2026",

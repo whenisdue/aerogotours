@@ -41,23 +41,26 @@ test("travel update slugs are unique and records have the required fields", () =
 
 test("active stories remain in current listings and the featured story is active", () => {
   const active = getActiveTravelUpdates(beforeAllExpiry);
-  assert.equal(active.length, 19);
+  assert.equal(active.length, 22);
   assert.equal(getFeaturedTravelUpdate(beforeAllExpiry)?.slug, "thailand-visa-free-stay-30-days-filipino-passports-2026");
   assert.deepEqual(active.slice(0, 3).map((update) => update.slug), [
-    "singapore-grand-prix-season-experiences-2026",
-    "lapay-bantigue-dance-festival-masbate-2026",
-    "pal-manila-delhi-mumbai-flights-2026",
+    "bangkok-airport-travel-update-september-2026",
+    "bangkok-royal-barge-rehearsal-october-2-2026",
+    "central-highlands-gong-culture-festival-vietnam-2026",
   ]);
   const featured = getFeaturedTravelUpdate(beforeAllExpiry);
   assert.ok(featured);
   assert.deepEqual([featured.slug, ...active.filter((update) => update.id !== featured.id).slice(0, 2).map((update) => update.slug)], [
     "thailand-visa-free-stay-30-days-filipino-passports-2026",
-    "singapore-grand-prix-season-experiences-2026",
-    "lapay-bantigue-dance-festival-masbate-2026",
+    "bangkok-airport-travel-update-september-2026",
+    "bangkok-royal-barge-rehearsal-october-2-2026",
   ]);
   assert.equal(getTravelUpdateBySlug("japan-chiba-rail-disruptions-typhoon-25-2026")?.featured, false);
   assert.equal(getTravelUpdateBySlug("japan-chiba-rail-disruptions-typhoon-25-2026")?.expiresAt, undefined);
   assert.ok(active.some((update) => update.slug === "singapore-grand-prix-season-experiences-2026"));
+  assert.ok(active.some((update) => update.slug === "bangkok-airport-travel-update-september-2026"));
+  assert.ok(active.some((update) => update.slug === "bangkok-royal-barge-rehearsal-october-2-2026"));
+  assert.ok(active.some((update) => update.slug === "central-highlands-gong-culture-festival-vietnam-2026"));
   assert.ok(active.some((update) => update.slug === "lapay-bantigue-dance-festival-masbate-2026"));
   assert.ok(active.some((update) => update.slug === "pal-manila-delhi-mumbai-flights-2026"));
   assert.ok(active.some((update) => update.slug === "hong-kong-mid-autumn-k-festival-2026"));
@@ -68,6 +71,52 @@ test("active stories remain in current listings and the featured story is active
   assert.ok(active.some((update) => update.slug === "sandeq-silumba-west-sulawesi-2026"));
   assert.ok(active.some((update) => update.slug === "tourism-expo-japan-public-days-tokyo-2026"));
   assert.ok(active.some((update) => update.slug === "wonderful-indonesia-gastronomy-2026"));
+});
+
+test("September 29 updates use the official facts and Manila expiry boundaries", () => {
+  const bangkok = getTravelUpdateBySlug("bangkok-airport-travel-update-september-2026");
+  assert.ok(bangkok);
+  assert.equal(bangkok.headline, "Bangkok airports remain open as some journeys take longer");
+  assert.equal(bangkok.publishedAt, "2026-09-29");
+  assert.equal(bangkok.category, "destination-tips");
+  assert.equal(bangkok.expiresAt, "2026-09-30T00:00:00+08:00");
+  const bangkokCopy = [bangkok.summary, ...bangkok.body.map((block) => block.text ?? block.items?.join(" ") ?? "")].join(" ");
+  assert.match(bangkokCopy, /remain open and operational/);
+  assert.match(bangkokCopy, /Airport Rail Link, SRT Red Line, BTS Skytrain and MRT are operating/);
+  assert.match(bangkokCopy, /Some Eastern Line sections remain affected/);
+  assert.match(bangkokCopy, /does not give a specific number of extra minutes or hours/);
+  assert.doesNotMatch(bangkokCopy, /Lat Krabang|Motorway No\. 7|Burapha Withi|three hours|2–3 hours|locali[sz]ed flooding/i);
+  assert.ok(bangkok.sources.some((source) => source.url === "https://www.tatnews.org/2026/09/weather-and-travel-conditions-in-bangkok-and-surrounding-areas-visitor-information/"));
+
+  const barge = getTravelUpdateBySlug("bangkok-royal-barge-rehearsal-october-2-2026");
+  assert.ok(barge);
+  assert.equal(barge.headline, "Travelers can watch Thailand’s Royal Barges rehearse this Friday");
+  assert.equal(barge.eventStartAt, "2026-10-02");
+  assert.equal(barge.eventEndAt, "2026-10-02");
+  assert.equal(barge.expiresAt, "2026-10-03T00:00:00+08:00");
+  const bargeCopy = barge.body.map((block) => block.text ?? block.items?.join(" ") ?? "").join(" ");
+  assert.match(bargeCopy, /This is a rehearsal, not the actual procession/);
+  assert.match(bargeCopy, /approximately 14:30/);
+  assert.match(bargeCopy, /between Krung Thon Bridge and Wat Arun/);
+  assert.match(bargeCopy, /does not list ticket requirements, reserved viewing areas or exact road and riverfront closures/);
+  assert.match(bargeCopy, /52 royal barges carrying 2,200 Royal Thai Navy personnel/);
+
+  const gong = getTravelUpdateBySlug("central-highlands-gong-culture-festival-vietnam-2026");
+  assert.ok(gong);
+  assert.equal(gong.eventStartAt, "2026-10-01");
+  assert.equal(gong.eventEndAt, "2026-10-31");
+  assert.equal(gong.expiresAt, "2026-11-01T00:00:00+08:00");
+  assert.ok(gong.sources.some((source) => source.url === "https://ich.unesco.org/en/RL/space-of-gong-culture-00120"));
+  const gongCopy = gong.body.map((block) => block.text ?? block.items?.join(" ") ?? "").join(" ");
+  assert.match(gongCopy, /1–31 October/);
+  assert.match(gongCopy, /does not say which activities visitors can attend/);
+  assert.match(gongCopy, /provide daily schedules/);
+
+  for (const update of [bangkok, barge, gong]) {
+    const justBeforeExpiry = new Date(new Date(update.expiresAt).getTime() - 1);
+    assert.ok(getActiveTravelUpdates(justBeforeExpiry).some((activeUpdate) => activeUpdate.id === update.id));
+    assert.equal(getActiveTravelUpdates(new Date(update.expiresAt)).some((activeUpdate) => activeUpdate.id === update.id), false);
+  }
 });
 
 test("September 28 events expire after their covered dates while PAL remains current", () => {
@@ -121,6 +170,7 @@ test("expired stories are excluded while remaining retrievable by slug", () => {
 test("featured selection ignores expired featured stories", () => {
   const afterAllExpiry = new Date("2026-10-06T12:00:00+08:00");
   assert.deepEqual(getActiveTravelUpdates(afterAllExpiry).map((update) => update.slug), [
+    "central-highlands-gong-culture-festival-vietnam-2026",
     "singapore-grand-prix-season-experiences-2026",
     "pal-manila-delhi-mumbai-flights-2026",
     "thailand-visa-free-stay-30-days-filipino-passports-2026",
