@@ -41,22 +41,26 @@ test("travel update slugs are unique and records have the required fields", () =
 
 test("active stories remain in current listings and the featured story is active", () => {
   const active = getActiveTravelUpdates(beforeAllExpiry);
-  assert.equal(active.length, 22);
+  assert.equal(active.length, 26);
   assert.equal(getFeaturedTravelUpdate(beforeAllExpiry)?.slug, "thailand-visa-free-stay-30-days-filipino-passports-2026");
   assert.deepEqual(active.slice(0, 3).map((update) => update.slug), [
-    "bangkok-airport-travel-update-september-2026",
-    "bangkok-royal-barge-rehearsal-october-2-2026",
-    "central-highlands-gong-culture-festival-vietnam-2026",
+    "lego-experience-the-thrill-singapore-2026",
+    "festival-pesona-raja-ampat-2026",
+    "kasanggayahan-festival-sorsogon-2026",
   ]);
   const featured = getFeaturedTravelUpdate(beforeAllExpiry);
   assert.ok(featured);
   assert.deepEqual([featured.slug, ...active.filter((update) => update.id !== featured.id).slice(0, 2).map((update) => update.slug)], [
     "thailand-visa-free-stay-30-days-filipino-passports-2026",
-    "bangkok-airport-travel-update-september-2026",
-    "bangkok-royal-barge-rehearsal-october-2-2026",
+    "lego-experience-the-thrill-singapore-2026",
+    "festival-pesona-raja-ampat-2026",
   ]);
   assert.equal(getTravelUpdateBySlug("japan-chiba-rail-disruptions-typhoon-25-2026")?.featured, false);
   assert.equal(getTravelUpdateBySlug("japan-chiba-rail-disruptions-typhoon-25-2026")?.expiresAt, undefined);
+  assert.ok(active.some((update) => update.slug === "lego-experience-the-thrill-singapore-2026"));
+  assert.ok(active.some((update) => update.slug === "festival-pesona-raja-ampat-2026"));
+  assert.ok(active.some((update) => update.slug === "kasanggayahan-festival-sorsogon-2026"));
+  assert.ok(active.some((update) => update.slug === "wayang-jogja-night-carnival-2026"));
   assert.ok(active.some((update) => update.slug === "singapore-grand-prix-season-experiences-2026"));
   assert.ok(active.some((update) => update.slug === "bangkok-airport-travel-update-september-2026"));
   assert.ok(active.some((update) => update.slug === "bangkok-royal-barge-rehearsal-october-2-2026"));
@@ -71,6 +75,63 @@ test("active stories remain in current listings and the featured story is active
   assert.ok(active.some((update) => update.slug === "sandeq-silumba-west-sulawesi-2026"));
   assert.ok(active.some((update) => update.slug === "tourism-expo-japan-public-days-tokyo-2026"));
   assert.ok(active.some((update) => update.slug === "wonderful-indonesia-gastronomy-2026"));
+});
+
+test("September 30 festival updates distinguish each event window and expire after it", () => {
+  const cases = [
+    { slug: "lego-experience-the-thrill-singapore-2026", eventStartAt: "2026-09-30", eventEndAt: "2026-10-17", expiresAt: "2026-10-18T00:00:00+08:00" },
+    { slug: "festival-pesona-raja-ampat-2026", eventStartAt: "2026-10-01", eventEndAt: "2026-10-03", expiresAt: "2026-10-04T00:00:00+08:00" },
+    { slug: "kasanggayahan-festival-sorsogon-2026", eventStartAt: "2026-10-01", eventEndAt: "2026-10-31", expiresAt: "2026-11-01T00:00:00+08:00" },
+    { slug: "wayang-jogja-night-carnival-2026", eventStartAt: "2026-10-01", eventEndAt: "2026-10-07", expiresAt: "2026-10-08T00:00:00+08:00" },
+  ];
+
+  for (const { slug, eventStartAt, eventEndAt, expiresAt } of cases) {
+    const update = getTravelUpdateBySlug(slug);
+    assert.ok(update);
+    assert.equal(update.publishedAt, "2026-09-30");
+    assert.equal(update.category, "events-experiences");
+    assert.equal(update.eventStartAt, eventStartAt);
+    assert.equal(update.eventEndAt, eventEndAt);
+    assert.equal(update.expiresAt, expiresAt);
+    assert.ok(getActiveTravelUpdates(new Date(new Date(expiresAt).getTime() - 1)).some((activeUpdate) => activeUpdate.id === update.id));
+    assert.equal(getActiveTravelUpdates(new Date(expiresAt)).some((activeUpdate) => activeUpdate.id === update.id), false);
+  }
+
+  const lego = getTravelUpdateBySlug("lego-experience-the-thrill-singapore-2026");
+  assert.ok(lego);
+  assert.equal(lego.headline, "A life-size LEGO race car experience opens in Singapore today");
+  assert.ok(lego.sources.some((source) => source.url === "https://www.visitsingapore.com/whats-happening/all-happenings/events/singapore-grand-prix-season/"));
+  const legoCopy = [lego.summary, ...lego.body.map((block) => block.text ?? block.items?.join(" ") ?? "")].join(" ");
+  assert.match(legoCopy, /Grand Prix Season Singapore runs October 2–11/);
+  assert.match(legoCopy, /Formula 1 Singapore Airlines Singapore Grand Prix weekend is October 9–11/);
+  assert.match(legoCopy, /does not say whether admission charges apply.*or whether a Formula 1 race ticket is required/);
+
+  const rajaAmpat = getTravelUpdateBySlug("festival-pesona-raja-ampat-2026");
+  assert.ok(rajaAmpat);
+  assert.match(rajaAmpat.summary, /October 1–3/);
+  const rajaCopy = [rajaAmpat.summary, ...rajaAmpat.body.map((block) => block.text ?? block.items?.join(" ") ?? "")].join(" ");
+  assert.match(rajaCopy, /lists its ticket price as free/);
+  assert.match(rajaCopy, /marine-conservation activities/);
+  assert.match(rajaCopy, /does not provide a specific venue, daily schedule or transport arrangements/);
+
+  const kasanggayahan = getTravelUpdateBySlug("kasanggayahan-festival-sorsogon-2026");
+  assert.ok(kasanggayahan);
+  assert.match(kasanggayahan.summary, /festival month on October 1/);
+  const kasanggayahanCopy = [kasanggayahan.summary, ...kasanggayahan.body.map((block) => block.text ?? block.items?.join(" ") ?? "")].join(" ");
+  assert.match(kasanggayahanCopy, /October 12 at 3:00 PM/);
+  assert.match(kasanggayahanCopy, /from Plaza Rizal to the Sorsogon Sports Arena/);
+  assert.match(kasanggayahanCopy, /October 1 is not the parade date/);
+  assert.match(kasanggayahanCopy, /Pantomina sa Tinampo/);
+  assert.ok(kasanggayahan.sources.some((source) => source.url === "https://tpb.gov.ph/events/kasanggayahan-festival/"));
+
+  const wjnc = getTravelUpdateBySlug("wayang-jogja-night-carnival-2026");
+  assert.ok(wjnc);
+  assert.match(wjnc.headline, /Festival week ahead of its October 7 night carnival/);
+  const wjncCopy = [wjnc.summary, ...wjnc.body.map((block) => block.text ?? block.items?.join(" ") ?? "")].join(" ");
+  assert.match(wjncCopy, /WJNC Festival week begins October 1 and runs through October 7/);
+  assert.match(wjncCopy, /main Wayang Jogja Night Carnival takes place on October 7/);
+  assert.match(wjncCopy, /all 14 kemantren/);
+  assert.match(wjncCopy, /Gana Kalajaya/);
 });
 
 test("September 29 updates use the official facts and Manila expiry boundaries", () => {
@@ -170,6 +231,9 @@ test("expired stories are excluded while remaining retrievable by slug", () => {
 test("featured selection ignores expired featured stories", () => {
   const afterAllExpiry = new Date("2026-10-06T12:00:00+08:00");
   assert.deepEqual(getActiveTravelUpdates(afterAllExpiry).map((update) => update.slug), [
+    "lego-experience-the-thrill-singapore-2026",
+    "kasanggayahan-festival-sorsogon-2026",
+    "wayang-jogja-night-carnival-2026",
     "central-highlands-gong-culture-festival-vietnam-2026",
     "singapore-grand-prix-season-experiences-2026",
     "pal-manila-delhi-mumbai-flights-2026",

@@ -51,6 +51,7 @@ const september26AccessedAt = "2026-09-26";
 const september27AccessedAt = "2026-09-27";
 const september28AccessedAt = "2026-09-28";
 const september29AccessedAt = "2026-09-29";
+const september30AccessedAt = "2026-09-30";
 
 const unsplash = (photoId: string, width: number) =>
   `https://images.unsplash.com/${photoId}?auto=format&fit=crop&w=${width}&q=85`;
@@ -62,6 +63,127 @@ const destinationImage = (slug: string) => {
 };
 
 export const travelUpdates: TravelUpdate[] = [
+  {
+    id: "lego-experience-the-thrill-singapore-2026",
+    slug: "lego-experience-the-thrill-singapore-2026",
+    headline: "A life-size LEGO race car experience opens in Singapore today",
+    summary: "A new race-season LEGO experience opens at Suntec City today with a life-size race car, a huge racing mosaic and hands-on challenges.",
+    destination: "Singapore",
+    country: "Singapore",
+    category: "events-experiences",
+    publishedAt: "2026-09-30",
+    image: destinationImage("singapore"),
+    body: [
+      { type: "paragraph", text: "LEGO Experience the Thrill Event 2026 opens today, September 30, at Suntec City. Visit Singapore lists the experience through October 17. This is a race-season attraction opening today, not the Formula 1 race." },
+      { type: "heading", text: "What visitors can see and do" },
+      { type: "list", items: ["A life-sized LEGO race car", "Singapore’s largest LEGO race-themed mosaic, according to Visit Singapore", "Hands-on challenges and exclusive rewards; the listing does not explain reward eligibility or redemption"] },
+      { type: "heading", text: "Part of Singapore’s wider race season" },
+      { type: "paragraph", text: "The city’s Grand Prix Season Singapore runs October 2–11. The Formula 1 Singapore Airlines Singapore Grand Prix weekend is October 9–11, so the LEGO experience starts before race season and continues after the race weekend." },
+      { type: "heading", text: "Tickets and visiting information" },
+      { type: "paragraph", text: "Visit Singapore’s listing does not say whether admission charges apply, what the opening hours are, or whether a Formula 1 race ticket is required. Check the current event information before visiting rather than assuming either way." },
+    ],
+    sources: [
+      { label: "Singapore Grand Prix Season 2026", url: "https://www.visitsingapore.com/whats-happening/all-happenings/events/singapore-grand-prix-season/", publisher: "Singapore Tourism Board / Visit Singapore", accessedAt: september30AccessedAt },
+    ],
+    eventStartAt: "2026-09-30",
+    eventEndAt: "2026-10-17",
+    expiresAt: "2026-10-18T00:00:00+08:00",
+    featured: false,
+  },
+  {
+    id: "festival-pesona-raja-ampat-2026",
+    slug: "festival-pesona-raja-ampat-2026",
+    headline: "Raja Ampat’s culture and marine festival begins October 1",
+    summary: "Festival Pesona Raja Ampat runs October 1–3, combining local culture, food and marine-conservation activities in one of Indonesia’s most famous island destinations.",
+    destination: "Raja Ampat, Southwest Papua",
+    country: "Indonesia",
+    category: "events-experiences",
+    publishedAt: "2026-09-30",
+    image: {
+      src: "https://www.indonesia.travel/contentassets/9e49531d0c5f4465b2b7393a560e223c/festival-pesona-raja-ampat.jpg",
+      alt: "Raja Ampat islands featured on the Wonderful Indonesia festival listing",
+      credit: "Wonderful Indonesia",
+    },
+    body: [
+      { type: "paragraph", text: "Festival Pesona Raja Ampat takes place October 1–3 in Raja Ampat Regency, Southwest Papua. The official Wonderful Indonesia listing says the local government organizes the festival and lists its ticket price as free." },
+      { type: "heading", text: "What the festival includes" },
+      { type: "list", items: ["Traditional art and local cultural performances", "Exhibitions by MSMEs and local businesses", "Local cuisine", "Marine-conservation activities"] },
+      { type: "paragraph", text: "The listing describes the program as combining education and entertainment, with interactive experiences that introduce the archipelago’s history, stories and preservation efforts. It does not name specific conservation activities." },
+      { type: "heading", text: "What to check before you go" },
+      { type: "paragraph", text: "For travelers already planning Raja Ampat, the festival can add a local culture and food event to an island trip. The official listing gives the festival ticket price as free, but does not provide a specific venue, daily schedule or transport arrangements. Confirm those details locally before making plans around an activity." },
+    ],
+    sources: [
+      { label: "Festival Pesona Raja Ampat 2026", url: "https://www.indonesia.travel/fr/fr/events/event-detail/festival-pesona-raja-ampat-2026", publisher: "Ministry of Tourism of the Republic of Indonesia / Wonderful Indonesia", accessedAt: september30AccessedAt },
+    ],
+    eventStartAt: "2026-10-01",
+    eventEndAt: "2026-10-03",
+    expiresAt: "2026-10-04T00:00:00+08:00",
+    featured: false,
+  },
+  {
+    id: "kasanggayahan-festival-sorsogon-2026",
+    slug: "kasanggayahan-festival-sorsogon-2026",
+    headline: "Sorsogon’s Kasanggayahan festival month begins October 1",
+    summary: "Sorsogon begins its Kasanggayahan festival month on October 1, celebrating provincial history, Bicolano culture, local products and traditions throughout October.",
+    destination: "Sorsogon",
+    country: "Philippines",
+    category: "events-experiences",
+    publishedAt: "2026-09-30",
+    image: {
+      src: unsplash("photo-1500375592092-40eb2168fd21", 2200),
+      alt: "Open water along a tropical coastline",
+    },
+    body: [
+      { type: "paragraph", text: "The Tourism Promotions Board (TPB) lists Kasanggayahan Festival for October 1–31, 2026, in Sorsogon. The festival commemorates Sorsogon becoming a province separate from Albay; Kasanggayahan refers to prosperity and the celebration highlights local culture and agricultural products." },
+      { type: "heading", text: "October 1 starts the festival month, not the main parade" },
+      { type: "paragraph", text: "The TPB’s month-long listing is the broader festival period. Current 2026 announcements from Sorsogon’s Provincial Tourism, Culture and Arts Office place the provincial celebration on October 12–18, with the Grand Opening and Grand Parade scheduled for October 12 at 3:00 PM. The parade is announced to run from Plaza Rizal to the Sorsogon Sports Arena. October 1 is not the parade date." },
+      { type: "heading", text: "Culture, dance and local products" },
+      { type: "paragraph", text: "TPB says the festival showcases local products including pili-tree products and other agricultural goods. It also identifies Pantomina sa Tinampo as a distinctive feature: a regional courtship dance often called the dance of the doves, performed in the streets." },
+      { type: "heading", text: "Check the daily program before traveling" },
+      { type: "paragraph", text: "A festival period listed for the whole month does not mean major performances happen every day. The national listing does not provide a day-by-day program. If you are traveling specifically for a parade or performance, check the latest provincial tourism schedule and local event notices for that date, venue and any changes." },
+    ],
+    sources: [
+      { label: "Kasanggayahan Festival", url: "https://tpb.gov.ph/events/kasanggayahan-festival/", publisher: "Tourism Promotions Board Philippines", accessedAt: september30AccessedAt },
+      { label: "2026 festival announcements", url: "https://www.facebook.com/sorsogonprovincialtourismoffice/", publisher: "Sorsogon Provincial Tourism, Culture and Arts Office", accessedAt: september30AccessedAt },
+      { label: "Sorsogon Provincial Government", url: "https://sorsogon.gov.ph/", publisher: "Provincial Government of Sorsogon", accessedAt: september30AccessedAt },
+    ],
+    eventStartAt: "2026-10-01",
+    eventEndAt: "2026-10-31",
+    expiresAt: "2026-11-01T00:00:00+08:00",
+    featured: false,
+  },
+  {
+    id: "wayang-jogja-night-carnival-2026",
+    slug: "wayang-jogja-night-carnival-2026",
+    headline: "Yogyakarta begins WJNC Festival week ahead of its October 7 night carnival",
+    summary: "WJNC Festival activities begin October 1 in Yogyakarta, building toward the main Wayang Jogja Night Carnival along Malioboro on October 7.",
+    destination: "Yogyakarta",
+    country: "Indonesia",
+    category: "events-experiences",
+    publishedAt: "2026-09-30",
+    image: {
+      src: "https://hutkota.jogjakota.go.id/assets/instansi/warta/article/20260909172358_thumb.jpg",
+      alt: "Wayang Jogja Night Carnival in Yogyakarta",
+      credit: "Yogyakarta City Government",
+    },
+    body: [
+      { type: "paragraph", text: "WJNC Festival week begins October 1 and runs through October 7 as part of Yogyakarta’s 270th anniversary celebrations. The week-long festival is a series of activities; the main Wayang Jogja Night Carnival takes place on October 7." },
+      { type: "heading", text: "What happens during the week" },
+      { type: "paragraph", text: "The city says the wider WJNC Festival combines sports tourism, local-business activities, music, and arts and cultural performances. The week gives visitors more than one day to look for festival events, but the city announcement does not give a full day-by-day program." },
+      { type: "heading", text: "The main night carnival on October 7" },
+      { type: "list", items: ["The wayang-themed cultural parade is scheduled along Malioboro toward Titik Nol Kilometer, with the main performance at Titik Nol Kilometer.", "The city expects around 2,000 performers representing all 14 kemantren, or districts. Each district brings a connected theme that represents its cultural potential in the city's anniversary celebration.", "The latest city update identifies the 2026 theme as Gana Kalajaya. It says the story will carry messages about cleanliness, waste management and recycling."] },
+      { type: "paragraph", text: "For travelers, expect a large street procession built around wayang storytelling and performances from across the city. The city has said traffic measures and parking areas will be prepared, but its current notice does not give exact start times, road closures, parking arrangements or public viewing positions. Check the latest Yogyakarta City or WJNC information before heading to Malioboro." },
+    ],
+    sources: [
+      { label: "HUT ke-270 Kota Yogya Dorong Kolaborasi dan Gerakkan Ekonomi", url: "https://warta.jogjakota.go.id/detail/index/51063", publisher: "Yogyakarta City Government", accessedAt: september30AccessedAt },
+      { label: "WJNC Digelar di Malioboro, Ribuan Penampil Siap Bawakan Wayang Gana Kalajaya", url: "https://hutkota.jogjakota.go.id/detail/index/51794/wjnc-digelar-di-malioboro-ribuan-penampil-siap-bawakan-wayang-gana-kalajaya---2026-09-24", publisher: "Yogyakarta City Government", accessedAt: september30AccessedAt },
+      { label: "Wayang Jogja Night Carnival", url: "https://wjnc.jogjakota.go.id/", publisher: "Yogyakarta City Government", accessedAt: september30AccessedAt },
+    ],
+    eventStartAt: "2026-10-01",
+    eventEndAt: "2026-10-07",
+    expiresAt: "2026-10-08T00:00:00+08:00",
+    featured: false,
+  },
   {
     id: "bangkok-airport-travel-update-september-2026",
     slug: "bangkok-airport-travel-update-september-2026",
