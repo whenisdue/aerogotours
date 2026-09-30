@@ -848,7 +848,20 @@ const isExpired = (update: TravelUpdate, now: Date) =>
 export const getActiveTravelUpdates = (now = new Date()) =>
   travelUpdates
     .filter((update) => !isExpired(update, now))
+    // Stable sort keeps the existing data order when publication dates match.
     .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
+
+export const getHomepageTravelUpdates = (now = new Date()) =>
+  getActiveTravelUpdates(now).slice(0, 3);
+
+export const filterTravelUpdates = (
+  updates: TravelUpdate[],
+  destination: string,
+  category: TravelUpdateCategory | "all",
+) => updates.filter((update) =>
+  (destination === "all" || update.destination === destination) &&
+  (category === "all" || update.category === category),
+);
 
 export const getTravelUpdateBySlug = (slug: string | undefined) =>
   travelUpdates.find((update) => update.slug === slug);

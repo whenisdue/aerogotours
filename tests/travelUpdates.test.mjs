@@ -1,8 +1,10 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {
+  filterTravelUpdates,
   getActiveTravelUpdates,
   getFeaturedTravelUpdate,
+  getHomepageTravelUpdates,
   getTravelUpdateBySlug,
   travelUpdates,
 } from "../src/data/travelUpdates.ts";
@@ -17,6 +19,7 @@ const validCategories = new Set([
 ]);
 
 const beforeAllExpiry = new Date("2026-09-24T12:00:00+08:00");
+const september30Noon = new Date("2026-09-30T12:00:00+08:00");
 
 test("travel update slugs are unique and records have the required fields", () => {
   const slugs = travelUpdates.map((update) => update.slug);
@@ -39,21 +42,18 @@ test("travel update slugs are unique and records have the required fields", () =
   }
 });
 
-test("active stories remain in current listings and the featured story is active", () => {
+test("active stories remain in current listings and the homepage follows recency", () => {
   const active = getActiveTravelUpdates(beforeAllExpiry);
   assert.equal(active.length, 26);
-  assert.equal(getFeaturedTravelUpdate(beforeAllExpiry)?.slug, "thailand-visa-free-stay-30-days-filipino-passports-2026");
   assert.deepEqual(active.slice(0, 3).map((update) => update.slug), [
     "lego-experience-the-thrill-singapore-2026",
     "festival-pesona-raja-ampat-2026",
     "kasanggayahan-festival-sorsogon-2026",
   ]);
-  const featured = getFeaturedTravelUpdate(beforeAllExpiry);
-  assert.ok(featured);
-  assert.deepEqual([featured.slug, ...active.filter((update) => update.id !== featured.id).slice(0, 2).map((update) => update.slug)], [
-    "thailand-visa-free-stay-30-days-filipino-passports-2026",
+  assert.deepEqual(getHomepageTravelUpdates(september30Noon).map((update) => update.slug), [
     "lego-experience-the-thrill-singapore-2026",
     "festival-pesona-raja-ampat-2026",
+    "kasanggayahan-festival-sorsogon-2026",
   ]);
   assert.equal(getTravelUpdateBySlug("japan-chiba-rail-disruptions-typhoon-25-2026")?.featured, false);
   assert.equal(getTravelUpdateBySlug("japan-chiba-rail-disruptions-typhoon-25-2026")?.expiresAt, undefined);
@@ -75,6 +75,64 @@ test("active stories remain in current listings and the featured story is active
   assert.ok(active.some((update) => update.slug === "sandeq-silumba-west-sulawesi-2026"));
   assert.ok(active.some((update) => update.slug === "tourism-expo-japan-public-days-tokyo-2026"));
   assert.ok(active.some((update) => update.slug === "wonderful-indonesia-gastronomy-2026"));
+});
+
+test("an older featured flag cannot override the newest homepage story", () => {
+  const thailand = getTravelUpdateBySlug("thailand-visa-free-stay-30-days-filipino-passports-2026");
+  assert.equal(thailand?.featured, true);
+  assert.equal(getFeaturedTravelUpdate(september30Noon)?.slug, thailand.slug);
+  assert.equal(getHomepageTravelUpdates(september30Noon)[0]?.slug, "lego-experience-the-thrill-singapore-2026");
+});
+
+test("expired stories cannot be the homepage hero", () => {
+  const beforeExpiry = getHomepageTravelUpdates(new Date("2026-10-17T23:59:59+08:00"));
+  const atExpiry = getHomepageTravelUpdates(new Date("2026-10-18T00:00:00+08:00"));
+
+  assert.equal(beforeExpiry[0]?.slug, "lego-experience-the-thrill-singapore-2026");
+  assert.equal(atExpiry[0]?.slug, "kasanggayahan-festival-sorsogon-2026");
+  assert.equal(atExpiry.some((update) => update.slug === "lego-experience-the-thrill-singapore-2026"), false);
+});
+
+test("a newly added later update moves into the homepage hero automatically", () => {
+  const newUpdate = {
+    ...travelUpdates[0],
+    id: "hypothetical-october-1-update",
+    slug: "hypothetical-october-1-update",
+    publishedAt: "2026-10-01",
+    expiresAt: undefined,
+    featured: false,
+  };
+  const insertAt = travelUpdates.length;
+  travelUpdates.push(newUpdate);
+
+  try {
+    assert.deepEqual(getHomepageTravelUpdates(new Date("2026-10-01T12:00:00+08:00")).map((update) => update.slug), [
+      "hypothetical-october-1-update",
+      "lego-experience-the-thrill-singapore-2026",
+      "festival-pesona-raja-ampat-2026",
+    ]);
+  } finally {
+    travelUpdates.splice(insertAt, 1);
+  }
+});
+
+test("Travel Updates listing keeps its active order through destination and category filters", () => {
+  const active = getActiveTravelUpdates(september30Noon);
+  const singaporeEvents = filterTravelUpdates(active, "Singapore", "events-experiences");
+  const requirements = filterTravelUpdates(active, "all", "travel-requirements");
+
+  assert.deepEqual(active.slice(0, 4).map((update) => update.slug), [
+    "lego-experience-the-thrill-singapore-2026",
+    "festival-pesona-raja-ampat-2026",
+    "kasanggayahan-festival-sorsogon-2026",
+    "wayang-jogja-night-carnival-2026",
+  ]);
+  assert.deepEqual(singaporeEvents.slice(0, 2).map((update) => update.slug), [
+    "lego-experience-the-thrill-singapore-2026",
+    "singapore-grand-prix-season-experiences-2026",
+  ]);
+  assert.deepEqual(requirements.map((update) => update.slug), ["thailand-visa-free-stay-30-days-filipino-passports-2026"]);
+  assert.equal(active.some((update) => update.slug === "bangkok-airport-travel-update-september-2026"), false);
 });
 
 test("September 30 festival updates distinguish each event window and expire after it", () => {

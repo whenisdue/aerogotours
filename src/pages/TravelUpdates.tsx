@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Brand } from "../components/Brand";
 import { SiteHeader } from "../components/SiteHeader";
-import { getActiveTravelUpdates, getFeaturedTravelUpdate, getTravelUpdateBySlug, type TravelUpdate, type TravelUpdateCategory } from "../data/travelUpdates";
+import { filterTravelUpdates, getActiveTravelUpdates, getHomepageTravelUpdates, getTravelUpdateBySlug, type TravelUpdate, type TravelUpdateCategory } from "../data/travelUpdates";
 
 const categoryLabels: Record<TravelUpdateCategory, string> = {
   "events-experiences": "Events & experiences",
@@ -24,11 +24,8 @@ const formatDate = (date: string) => new Intl.DateTimeFormat("en-PH", {
 const formatCategory = (category: TravelUpdateCategory) => categoryLabels[category];
 
 export function TravelUpdatesPreview() {
-  const activeUpdates = getActiveTravelUpdates();
-  const featured = getFeaturedTravelUpdate();
+  const [featured, ...supporting] = getHomepageTravelUpdates();
   if (!featured) return null;
-
-  const supporting = activeUpdates.filter((update) => update.id !== featured.id).slice(0, 2);
 
   return <section className="travel-updates-preview" id="travel-updates" aria-labelledby="travel-updates-preview-title">
     <div className="page-shell travel-updates-preview__inner">
@@ -55,10 +52,7 @@ export function TravelUpdatesPage() {
   const [destinationFilter, setDestinationFilter] = useState("all");
   const [categoryFilter, setCategoryFilter] = useState<TravelUpdateCategory | "all">("all");
   const destinations = [...new Set(activeUpdates.map((update) => update.destination))];
-  const filteredUpdates = activeUpdates.filter((update) =>
-    (destinationFilter === "all" || update.destination === destinationFilter) &&
-    (categoryFilter === "all" || update.category === categoryFilter),
-  );
+  const filteredUpdates = filterTravelUpdates(activeUpdates, destinationFilter, categoryFilter);
 
   return <div className="public-site travel-updates-site">
     <SiteHeader />
