@@ -52,6 +52,7 @@ const september27AccessedAt = "2026-09-27";
 const september28AccessedAt = "2026-09-28";
 const september29AccessedAt = "2026-09-29";
 const september30AccessedAt = "2026-09-30";
+const october2AccessedAt = "2026-10-02";
 
 const unsplash = (photoId: string, width: number) =>
   `https://images.unsplash.com/${photoId}?auto=format&fit=crop&w=${width}&q=85`;
@@ -63,6 +64,111 @@ const destinationImage = (slug: string) => {
 };
 
 export const travelUpdates: TravelUpdate[] = [
+  {
+    id: "wakatobi-wave-festival-2026",
+    slug: "wakatobi-wave-festival-2026",
+    headline: "Wakatobi’s maritime festival begins today",
+    summary: "Wakatobi WAVE begins October 2 with three days of maritime culture, performances and tourism experiences in one of Indonesia’s celebrated island destinations.",
+    destination: "Wakatobi, Southeast Sulawesi",
+    country: "Indonesia",
+    category: "events-experiences",
+    publishedAt: "2026-10-02",
+    image: {
+      src: "https://www.indonesia.travel/contentassets/28c3ad99995a46d89b6cbce29baa904c/wakatobi-wave.webp",
+      alt: "Wakatobi WAVE image from the Wonderful Indonesia event listing",
+      credit: "Wonderful Indonesia",
+      creditUrl: "https://www.indonesia.travel/kr/en/events/event-detail/wakatobi-wonderful-festival-2026",
+    },
+    body: [
+      { type: "paragraph", text: "Wakatobi Wonderful Festival and Expo (Wakatobi WAVE) starts today, October 2, and runs through October 4 in Wakatobi Regency, Southeast Sulawesi. Wonderful Indonesia lists festival admission as free." },
+      { type: "heading", text: "What Wakatobi WAVE includes" },
+      { type: "paragraph", text: "Organized by the Wakatobi Regency Government, the annual event presents the islands’ maritime culture and tourism. The current 2026 Wonderful Indonesia listing describes cultural performances, tourism exhibitions, regional attractions, a Karia cultural procession, decorated boats, local food and small-business exhibits, and marine-conservation activities." },
+      { type: "heading", text: "Why Wakatobi is worth knowing" },
+      { type: "paragraph", text: "Wonderful Indonesia identifies Wakatobi as one of Indonesia’s National Priority Tourist Destinations. The festival gives visitors a way to learn about the region’s coastal traditions alongside its island and marine setting." },
+      { type: "heading", text: "Check the local details before you go" },
+      { type: "paragraph", text: "The 2026 event listing gives the three-day dates and general admission price, but not daily start times, a detailed venue map or transport arrangements. The Wakatobi Tourism Authority calendar lists WAVE in October 2026, while its standalone event description still says November. Use the dated 2026 Wonderful Indonesia listing for this year’s dates, then confirm the day-by-day program and transport with local tourism officials before making a special trip." },
+    ],
+    sources: [
+      { label: "Wakatobi Wonderful Festival (WAVE) 2026", url: "https://www.indonesia.travel/kr/en/events/event-detail/wakatobi-wonderful-festival-2026", publisher: "Ministry of Tourism, Republic of Indonesia / Wonderful Indonesia", accessedAt: october2AccessedAt },
+      { label: "Wakatobi Tourism Authority events calendar", url: "https://www.wakatobitourism.com/events/", publisher: "Wakatobi Tourism Authority", accessedAt: october2AccessedAt },
+      { label: "Wakatobi WAVE event information", url: "https://www.wakatobitourism.com/item/wakatobi-wave/", publisher: "Wakatobi Tourism Authority", accessedAt: october2AccessedAt },
+    ],
+    eventStartAt: "2026-10-02",
+    eventEndAt: "2026-10-04",
+    expiresAt: "2026-10-05T00:00:00+08:00",
+    featured: false,
+  },
+  {
+    id: "geumsan-world-k-insam-festival-2026",
+    slug: "geumsan-world-k-insam-festival-2026",
+    headline: "Korea’s Geumsan ginseng festival begins today",
+    summary: "Korea’s Geumsan World K-Insam Festival runs October 2–11, offering travelers hands-on experiences around one of Korea’s most famous agricultural products.",
+    destination: "Geumsan, Chungcheongnam-do",
+    country: "South Korea",
+    category: "events-experiences",
+    publishedAt: "2026-10-02",
+    image: {
+      src: "https://tong.visitkorea.or.kr/cms/resource/59/3524159_image2_1.JPG",
+      alt: "Geumsan World K-Insam Festival image from the VisitKorea listing",
+      credit: "Korea Tourism Organization / VisitKorea",
+      creditUrl: "https://english.visitkorea.or.kr/svc/sp/festivals/contentsView.do?dataSetId=297&menuSn=1040&vcontsId=104212",
+    },
+    body: [
+      { type: "paragraph", text: "The Geumsan World K-Insam Festival begins today, October 2, and runs through October 11 at Geumsan World Insam Expo Square in Geumsan, Chungcheongnam-do. The current VisitKorea listing shows performance hours of 10:00 a.m. to 9:00 p.m." },
+      { type: "heading", text: "What K-Insam means" },
+      { type: "paragraph", text: "Insam is the Korean word for ginseng. VisitKorea describes Geumsan as Korea’s largest ginseng-producing region and a place with more than 1,500 years of ginseng history." },
+      { type: "heading", text: "What visitors can do" },
+      { type: "list", items: ["Try hands-on ginseng digging and red-ginseng foot baths", "Sample dishes made with ginseng and medicinal herbs", "See the ginseng harvest ritual and ginseng-related cultural activities"] },
+      { type: "paragraph", text: "VisitKorea lists general festival admission as free, with fees varying by program. It does not give prices for individual activities, so check the linked festival information before budgeting for an experience." },
+      { type: "heading", text: "Could it fit into a Korea trip?" },
+      { type: "paragraph", text: "Geumsan is a regional stop in Chungcheongnam-do, so it is easiest to fit if your route already includes central Korea or if you set aside time for the trip. If your plans are based in Seoul, check intercity connections, local transfers and the return schedule before treating the festival as a same-day side trip. Confirm activity availability and any booking requirements with the organizer." },
+    ],
+    sources: [
+      { label: "Korea’s TOP 14 Autumn Festivals in 2026", url: "https://english.visitkorea.or.kr/svc/contents/contentsView.do?vcontsId=1593098", publisher: "Korea Tourism Organization / VisitKorea", accessedAt: october2AccessedAt },
+      { label: "Geumsan World K-Insam Festival", url: "https://english.visitkorea.or.kr/svc/sp/festivals/contentsView.do?dataSetId=297&menuSn=1040&vcontsId=104212", publisher: "Korea Tourism Organization / VisitKorea", accessedAt: october2AccessedAt },
+      { label: "Health and Happiness with Ginseng in Geumsan", url: "https://english.visitkorea.or.kr/svc/whereToGo/hdrdslt/hdrdsltView.do?crsSn=396230", publisher: "Korea Tourism Organization / VisitKorea", accessedAt: october2AccessedAt },
+    ],
+    eventStartAt: "2026-10-02",
+    eventEndAt: "2026-10-11",
+    expiresAt: "2026-10-12T00:00:00+08:00",
+    featured: false,
+  },
+  {
+    id: "asia-pacific-traditional-arts-festival-taiwan-2026",
+    slug: "asia-pacific-traditional-arts-festival-taiwan-2026",
+    headline: "Asia-Pacific Traditional Arts Festival begins in Taiwan October 3",
+    summary: "Traditional artists from across Asia gather in Yilan from October 3–11 for performances, markets and hands-on cultural experiences.",
+    destination: "Yilan",
+    country: "Taiwan",
+    category: "events-experiences",
+    publishedAt: "2026-10-02",
+    image: {
+      src: "https://themefile.culture.tw/siteimage/2026-07-27/c279f98b-b20d-4cc9-b8ee-f835132603b7/%E7%B6%B2%E7%AB%99%E7%94%A8%E5%9C%960727_%E8%97%9D%E8%A1%93%E7%AF%80%E5%AE%98%E7%B6%B2banner%201920x900.png",
+      alt: "Asia-Pacific Traditional Arts Festival 2026 banner, Where All Waters Meet",
+      credit: "National Center for Traditional Arts, Taiwan",
+      creditUrl: "https://festival.ncfta.gov.tw/APTAF/zh-tw",
+    },
+    body: [
+      { type: "paragraph", text: "The Asia-Pacific Traditional Arts Festival starts tomorrow, October 3, and runs through October 11 at National Center for Traditional Arts, Yilan Park, in Yilan, Taiwan. This year’s theme is “Where All Waters Meet.”" },
+      { type: "heading", text: "Performances and cultural experiences" },
+      { type: "paragraph", text: "The National Center for Traditional Arts lists participating traditions from Taiwan, India, Indonesia, Japan and South Korea. Visitors can look for indoor performances, cultural demonstrations, hands-on workshops, thematic markets and a Thai water-lantern activity at nightfall." },
+      { type: "heading", text: "Reserve activities and plan for park entry" },
+      { type: "paragraph", text: "The Center lists its indoor performances as free and provides a separate online registration page. The workshop listing also requires advance registration and says seats are limited; it lists the workshop itself as free but says Yilan Park admission must be purchased separately. The park’s current standard admission listing is NT$150 per person; check its latest notice before visiting because prices may change." },
+      { type: "heading", text: "Adding Yilan to a Taiwan itinerary" },
+      { type: "paragraph", text: "The festival can make a useful traditional-arts day for travelers already planning time in Yilan. Check the performance and workshop schedule first, reserve the indoor show or DIY session you want, then confirm the route from your Taiwan base and allow time for park entry." },
+    ],
+    sources: [
+      { label: "Asia-Pacific Traditional Arts Festival 2026: Where All Waters Meet", url: "https://festival.ncfta.gov.tw/APTAF/zh-tw", publisher: "National Center for Traditional Arts, Taiwan", accessedAt: october2AccessedAt },
+      { label: "2026 Asia-Pacific Traditional Arts Festival: Where All Waters Meet", url: "https://www.ncfta.gov.tw/News_Content3.aspx?n=2802&s=260535", publisher: "National Center for Traditional Arts, Taiwan", accessedAt: october2AccessedAt },
+      { label: "Asia-Pacific Traditional Arts Festival 2026", url: "https://www.px-sunmake.org.tw/activity/1041", publisher: "Yilan Park", accessedAt: october2AccessedAt },
+      { label: "Yilan Park ticket information", url: "https://www.px-sunmake.org.tw/info", publisher: "Yilan Park", accessedAt: october2AccessedAt },
+      { label: "2026 Festival DIY workshop registration", url: "https://www.accupass.com/event/2607150609041594653775", publisher: "Workshop registration platform linked by the event organizer", accessedAt: october2AccessedAt },
+    ],
+    eventStartAt: "2026-10-03",
+    eventEndAt: "2026-10-11",
+    expiresAt: "2026-10-12T00:00:00+08:00",
+    featured: false,
+  },
   {
     id: "lego-experience-the-thrill-singapore-2026",
     slug: "lego-experience-the-thrill-singapore-2026",
@@ -845,9 +951,12 @@ export const travelUpdates: TravelUpdate[] = [
 const isExpired = (update: TravelUpdate, now: Date) =>
   Boolean(update.expiresAt && new Date(update.expiresAt).getTime() <= now.getTime());
 
+const isPublished = (update: TravelUpdate, now: Date) =>
+  new Date(`${update.publishedAt.slice(0, 10)}T00:00:00+08:00`).getTime() <= now.getTime();
+
 export const getActiveTravelUpdates = (now = new Date()) =>
   travelUpdates
-    .filter((update) => !isExpired(update, now))
+    .filter((update) => isPublished(update, now) && !isExpired(update, now))
     // Stable sort keeps the existing data order when publication dates match.
     .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
 
@@ -868,5 +977,5 @@ export const getTravelUpdateBySlug = (slug: string | undefined) =>
 
 export const getFeaturedTravelUpdate = (now = new Date()) => {
   const active = getActiveTravelUpdates(now);
-  return active.find((update) => update.featured) ?? active[0];
+  return active[0];
 };

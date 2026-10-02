@@ -18,8 +18,8 @@ const validCategories = new Set([
   "destination-tips",
 ]);
 
-const beforeAllExpiry = new Date("2026-09-24T12:00:00+08:00");
 const september30Noon = new Date("2026-09-30T12:00:00+08:00");
+const october2Noon = new Date("2026-10-02T12:00:00+08:00");
 
 test("travel update slugs are unique and records have the required fields", () => {
   const slugs = travelUpdates.map((update) => update.slug);
@@ -42,14 +42,20 @@ test("travel update slugs are unique and records have the required fields", () =
   }
 });
 
-test("active stories remain in current listings and the homepage follows recency", () => {
-  const active = getActiveTravelUpdates(beforeAllExpiry);
-  assert.equal(active.length, 26);
-  assert.deepEqual(active.slice(0, 3).map((update) => update.slug), [
+test("published stories remain in current listings and the homepage follows recency", () => {
+  const active = getActiveTravelUpdates(october2Noon);
+  assert.deepEqual(active.slice(0, 4).map((update) => update.slug), [
+    "wakatobi-wave-festival-2026",
+    "geumsan-world-k-insam-festival-2026",
+    "asia-pacific-traditional-arts-festival-taiwan-2026",
     "lego-experience-the-thrill-singapore-2026",
-    "festival-pesona-raja-ampat-2026",
-    "kasanggayahan-festival-sorsogon-2026",
   ]);
+  assert.deepEqual(getHomepageTravelUpdates(october2Noon).map((update) => update.slug), [
+    "wakatobi-wave-festival-2026",
+    "geumsan-world-k-insam-festival-2026",
+    "asia-pacific-traditional-arts-festival-taiwan-2026",
+  ]);
+  assert.equal(getFeaturedTravelUpdate(october2Noon)?.slug, "wakatobi-wave-festival-2026");
   assert.deepEqual(getHomepageTravelUpdates(september30Noon).map((update) => update.slug), [
     "lego-experience-the-thrill-singapore-2026",
     "festival-pesona-raja-ampat-2026",
@@ -62,26 +68,103 @@ test("active stories remain in current listings and the homepage follows recency
   assert.ok(active.some((update) => update.slug === "kasanggayahan-festival-sorsogon-2026"));
   assert.ok(active.some((update) => update.slug === "wayang-jogja-night-carnival-2026"));
   assert.ok(active.some((update) => update.slug === "singapore-grand-prix-season-experiences-2026"));
-  assert.ok(active.some((update) => update.slug === "bangkok-airport-travel-update-september-2026"));
+  assert.equal(active.some((update) => update.slug === "bangkok-airport-travel-update-september-2026"), false);
   assert.ok(active.some((update) => update.slug === "bangkok-royal-barge-rehearsal-october-2-2026"));
   assert.ok(active.some((update) => update.slug === "central-highlands-gong-culture-festival-vietnam-2026"));
-  assert.ok(active.some((update) => update.slug === "lapay-bantigue-dance-festival-masbate-2026"));
+  assert.equal(active.some((update) => update.slug === "lapay-bantigue-dance-festival-masbate-2026"), false);
   assert.ok(active.some((update) => update.slug === "pal-manila-delhi-mumbai-flights-2026"));
-  assert.ok(active.some((update) => update.slug === "hong-kong-mid-autumn-k-festival-2026"));
-  assert.ok(active.some((update) => update.slug === "korea-chuseok-2026-travel-guide"));
-  assert.ok(active.some((update) => update.slug === "seoul-chuseok-free-attractions-holiday-schedule-2026"));
-  assert.ok(active.some((update) => update.slug === "macao-international-fireworks-september-25-2026"));
-  assert.ok(active.some((update) => update.slug === "kuala-lumpur-autumn-music-cultural-festival-2026"));
-  assert.ok(active.some((update) => update.slug === "sandeq-silumba-west-sulawesi-2026"));
-  assert.ok(active.some((update) => update.slug === "tourism-expo-japan-public-days-tokyo-2026"));
+  assert.equal(active.some((update) => update.slug === "hong-kong-mid-autumn-k-festival-2026"), false);
+  assert.equal(active.some((update) => update.slug === "korea-chuseok-2026-travel-guide"), false);
+  assert.equal(active.some((update) => update.slug === "seoul-chuseok-free-attractions-holiday-schedule-2026"), false);
+  assert.equal(active.some((update) => update.slug === "macao-international-fireworks-september-25-2026"), false);
+  assert.equal(active.some((update) => update.slug === "kuala-lumpur-autumn-music-cultural-festival-2026"), false);
+  assert.equal(active.some((update) => update.slug === "sandeq-silumba-west-sulawesi-2026"), false);
+  assert.equal(active.some((update) => update.slug === "tourism-expo-japan-public-days-tokyo-2026"), false);
   assert.ok(active.some((update) => update.slug === "wonderful-indonesia-gastronomy-2026"));
 });
 
 test("an older featured flag cannot override the newest homepage story", () => {
   const thailand = getTravelUpdateBySlug("thailand-visa-free-stay-30-days-filipino-passports-2026");
   assert.equal(thailand?.featured, true);
-  assert.equal(getFeaturedTravelUpdate(september30Noon)?.slug, thailand.slug);
+  assert.equal(getFeaturedTravelUpdate(september30Noon)?.slug, "lego-experience-the-thrill-singapore-2026");
   assert.equal(getHomepageTravelUpdates(september30Noon)[0]?.slug, "lego-experience-the-thrill-singapore-2026");
+});
+
+test("future-dated stories enter the homepage on their Manila publication date", () => {
+  const beforePublication = new Date("2026-10-01T23:59:59+08:00");
+  const newSlugs = [
+    "wakatobi-wave-festival-2026",
+    "geumsan-world-k-insam-festival-2026",
+    "asia-pacific-traditional-arts-festival-taiwan-2026",
+  ];
+
+  for (const slug of newSlugs) {
+    assert.ok(getTravelUpdateBySlug(slug));
+    assert.equal(getActiveTravelUpdates(beforePublication).some((update) => update.slug === slug), false);
+    assert.equal(getHomepageTravelUpdates(beforePublication).some((update) => update.slug === slug), false);
+    assert.equal(getActiveTravelUpdates(new Date("2026-10-02T00:00:00+08:00")).some((update) => update.slug === slug), true);
+  }
+  assert.deepEqual(getHomepageTravelUpdates(october2Noon).slice(0, 3).map((update) => update.slug), newSlugs);
+});
+
+test("October 2 festival updates use verified facts, preserve filters and expire after their final dates", () => {
+  const cases = [
+    { slug: "wakatobi-wave-festival-2026", headline: "Wakatobi’s maritime festival begins today", eventStartAt: "2026-10-02", eventEndAt: "2026-10-04", expiresAt: "2026-10-05T00:00:00+08:00", destination: "Wakatobi, Southeast Sulawesi" },
+    { slug: "geumsan-world-k-insam-festival-2026", headline: "Korea’s Geumsan ginseng festival begins today", eventStartAt: "2026-10-02", eventEndAt: "2026-10-11", expiresAt: "2026-10-12T00:00:00+08:00", destination: "Geumsan, Chungcheongnam-do" },
+    { slug: "asia-pacific-traditional-arts-festival-taiwan-2026", headline: "Asia-Pacific Traditional Arts Festival begins in Taiwan October 3", eventStartAt: "2026-10-03", eventEndAt: "2026-10-11", expiresAt: "2026-10-12T00:00:00+08:00", destination: "Yilan" },
+  ];
+
+  for (const { slug, headline, eventStartAt, eventEndAt, expiresAt, destination } of cases) {
+    const update = getTravelUpdateBySlug(slug);
+    assert.ok(update);
+    assert.equal(update.headline, headline);
+    assert.equal(update.publishedAt, "2026-10-02");
+    assert.equal(update.destination, destination);
+    assert.equal(update.category, "events-experiences");
+    assert.equal(update.eventStartAt, eventStartAt);
+    assert.equal(update.eventEndAt, eventEndAt);
+    assert.equal(update.expiresAt, expiresAt);
+    assert.ok(getActiveTravelUpdates(october2Noon).some((activeUpdate) => activeUpdate.id === update.id));
+    assert.ok(getActiveTravelUpdates(new Date(new Date(expiresAt).getTime() - 1)).some((activeUpdate) => activeUpdate.id === update.id));
+    assert.equal(getActiveTravelUpdates(new Date(expiresAt)).some((activeUpdate) => activeUpdate.id === update.id), false);
+  }
+
+  const active = getActiveTravelUpdates(october2Noon);
+  assert.deepEqual(filterTravelUpdates(active, "Wakatobi, Southeast Sulawesi", "events-experiences").map((update) => update.slug), ["wakatobi-wave-festival-2026"]);
+  assert.deepEqual(filterTravelUpdates(active, "Geumsan, Chungcheongnam-do", "events-experiences").map((update) => update.slug), ["geumsan-world-k-insam-festival-2026"]);
+  assert.deepEqual(filterTravelUpdates(active, "Yilan", "events-experiences").map((update) => update.slug), ["asia-pacific-traditional-arts-festival-taiwan-2026"]);
+
+  const wakatobi = getTravelUpdateBySlug("wakatobi-wave-festival-2026");
+  assert.ok(wakatobi);
+  const wakatobiCopy = [wakatobi.summary, ...wakatobi.body.map((block) => block.text ?? block.items?.join(" ") ?? "")].join(" ");
+  assert.match(wakatobiCopy, /admission as free/);
+  assert.match(wakatobiCopy, /tourism exhibitions/);
+  assert.match(wakatobiCopy, /National Priority Tourist Destinations/);
+  assert.match(wakatobiCopy, /standalone event description still says November/);
+  assert.ok(wakatobi.sources.some((source) => source.url === "https://www.indonesia.travel/kr/en/events/event-detail/wakatobi-wonderful-festival-2026"));
+  assert.ok(wakatobi.sources.some((source) => source.url === "https://www.wakatobitourism.com/events/"));
+
+  const geumsan = getTravelUpdateBySlug("geumsan-world-k-insam-festival-2026");
+  assert.ok(geumsan);
+  const geumsanCopy = geumsan.body.map((block) => block.text ?? block.items?.join(" ") ?? "").join(" ");
+  assert.match(geumsanCopy, /Insam is the Korean word for ginseng/);
+  assert.match(geumsanCopy, /performance hours of 10:00 a\.m\. to 9:00 p\.m\./);
+  assert.match(geumsanCopy, /fees varying by program/);
+  assert.doesNotMatch(geumsanCopy, /ginseng (?:cures?|treats?|prevents?) /i);
+  assert.ok(geumsan.sources.some((source) => source.url === "https://english.visitkorea.or.kr/svc/contents/contentsView.do?vcontsId=1593098"));
+  assert.ok(geumsan.sources.some((source) => source.url === "https://english.visitkorea.or.kr/svc/sp/festivals/contentsView.do?dataSetId=297&menuSn=1040&vcontsId=104212"));
+
+  const yilan = getTravelUpdateBySlug("asia-pacific-traditional-arts-festival-taiwan-2026");
+  assert.ok(yilan);
+  const yilanCopy = yilan.body.map((block) => block.text ?? block.items?.join(" ") ?? "").join(" ");
+  assert.match(yilanCopy, /Where All Waters Meet/);
+  assert.match(yilanCopy, /Taiwan, India, Indonesia, Japan and South Korea/);
+  assert.match(yilanCopy, /advance registration/);
+  assert.match(yilanCopy, /park admission must be purchased separately/i);
+  assert.match(yilanCopy, /NT\$150 per person/);
+  assert.ok(yilan.sources.some((source) => source.url === "https://festival.ncfta.gov.tw/APTAF/zh-tw"));
+  assert.ok(yilan.sources.some((source) => source.url === "https://www.px-sunmake.org.tw/info"));
+  assert.ok(yilan.sources.some((source) => source.url === "https://www.accupass.com/event/2607150609041594653775"));
 });
 
 test("expired stories cannot be the homepage hero", () => {
@@ -286,9 +369,11 @@ test("expired stories are excluded while remaining retrievable by slug", () => {
   assert.ok(getTravelUpdateBySlug("hong-kong-mid-autumn-k-festival-2026"));
 });
 
-test("featured selection ignores expired featured stories", () => {
+test("the newest active story leads after earlier events expire", () => {
   const afterAllExpiry = new Date("2026-10-06T12:00:00+08:00");
   assert.deepEqual(getActiveTravelUpdates(afterAllExpiry).map((update) => update.slug), [
+    "geumsan-world-k-insam-festival-2026",
+    "asia-pacific-traditional-arts-festival-taiwan-2026",
     "lego-experience-the-thrill-singapore-2026",
     "kasanggayahan-festival-sorsogon-2026",
     "wayang-jogja-night-carnival-2026",
@@ -298,7 +383,7 @@ test("featured selection ignores expired featured stories", () => {
     "thailand-visa-free-stay-30-days-filipino-passports-2026",
     "japan-chiba-rail-disruptions-typhoon-25-2026",
   ]);
-  assert.equal(getFeaturedTravelUpdate(afterAllExpiry)?.slug, "thailand-visa-free-stay-30-days-filipino-passports-2026");
+  assert.equal(getFeaturedTravelUpdate(afterAllExpiry)?.slug, "geumsan-world-k-insam-festival-2026");
   assert.equal(getTravelUpdateBySlug("singapore-lights-by-the-lake-2026")?.featured, false);
 });
 
