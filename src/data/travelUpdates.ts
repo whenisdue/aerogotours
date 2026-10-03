@@ -53,6 +53,7 @@ const september28AccessedAt = "2026-09-28";
 const september29AccessedAt = "2026-09-29";
 const september30AccessedAt = "2026-09-30";
 const october2AccessedAt = "2026-10-02";
+const october3AccessedAt = "2026-10-03";
 
 const unsplash = (photoId: string, width: number) =>
   `https://images.unsplash.com/${photoId}?auto=format&fit=crop&w=${width}&q=85`;
@@ -64,6 +65,127 @@ const destinationImage = (slug: string) => {
 };
 
 export const travelUpdates: TravelUpdate[] = [
+  {
+    id: "nantou-global-tea-expo-2026",
+    slug: "nantou-global-tea-expo-2026",
+    headline: "Nantou Global Tea Expo begins in Central Taiwan today",
+    summary: "Nantou Global Tea Expo runs October 3–11, giving travelers another reason to explore Taiwan’s tea-growing heartland beyond Taipei.",
+    destination: "Nantou County",
+    country: "Taiwan",
+    category: "events-experiences",
+    publishedAt: "2026-10-03",
+    image: {
+      src: unsplash("photo-1544787219-7f47ccb76574", 2200),
+      alt: "Tea prepared for tasting in a tea-growing region",
+    },
+    body: [
+      { type: "paragraph", text: "The 2026 Nantou Global Tea Expo runs October 3–11 in Chung Hsing New Village, Nantou County. The event area includes Chung Hsing Assembly Hall, Chung Hsing Grand Field and the Youth Activity Center." },
+      { type: "heading", text: "Why Nantou is Taiwan’s tea region" },
+      { type: "paragraph", text: "Taiwan’s Tourism Administration describes Nantou as the island’s main tea-producing area, with eight major tea regions. The expo brings that local industry into one visit, with tea-culture exhibitions, sales booths, performances and larger themed tea experiences." },
+      { type: "heading", text: "What to expect and when to go" },
+      { type: "paragraph", text: "Nantou County Government says this year’s expo has 35 themed exhibition halls and more than 200 sales booths. Official Nantou tourism information lists sales-area hours as 09:00–17:00 on weekdays and 09:00–18:00 on weekends and holidays." },
+      { type: "heading", text: "Plan the stop before leaving Taipei" },
+      { type: "paragraph", text: "The expo can add a tea-focused stop to a central Taiwan itinerary. If your trip is based in Taipei, check current transport connections and the return schedule before making this a day trip. The official listings do not set out one admission arrangement for every area or activity; check the current event programme for any separate sign-up, capacity limit or charge before planning around a tasting or large-group experience." },
+    ],
+    sources: [
+      { label: "2026 Nantou Global Tea Expo", url: "https://eng.taiwan.net.tw/m1.aspx?lid=081760&sNo=0002019", publisher: "Taiwan Tourism Administration", accessedAt: october3AccessedAt },
+      { label: "2026 Nantou Global Tea Expo: 35 themed halls and 200+ booths", url: "https://www.nantou.gov.tw/big5/news_content.php?cid=75&dptid=376480000&id=168742", publisher: "Nantou County Government", accessedAt: october3AccessedAt },
+      { label: "2026 Nantou Global Tea Expo visitor information", url: "https://travel.nantou.gov.tw/article/%E5%8D%97%E6%8A%95%E8%8C%B6%E5%8D%9A%E6%9C%83%E5%B7%A7%E5%92%96%E7%AF%80/", publisher: "Nantou Tourism Network", accessedAt: october3AccessedAt },
+      { label: "Nantou Tourism Network", url: "https://travel.nantou.gov.tw/", publisher: "Nantou County Government", accessedAt: october3AccessedAt },
+    ],
+    eventStartAt: "2026-10-03",
+    eventEndAt: "2026-10-11",
+    expiresAt: "2026-10-12T00:00:00+08:00",
+    featured: false,
+  },
+  {
+    id: "gangnam-festival-seoul-2026",
+    slug: "gangnam-festival-seoul-2026",
+    headline: "Gangnam Festival opens today with Grand Parade on Dosan-daero",
+    summary: "Gangnam Festival runs October 3–5, beginning with a Grand Parade on Dosan-daero today and continuing with food, fashion, beauty and K-culture events.",
+    destination: "Gangnam, Seoul",
+    country: "South Korea",
+    category: "events-experiences",
+    publishedAt: "2026-10-03",
+    image: destinationImage("south-korea"),
+    body: [
+      { type: "paragraph", text: "The 15th Gangnam Festival runs October 3–5. Its Grand Parade is scheduled for October 3, 16:00–18:00, along Dosan-daero from Cheongdam Intersection toward Dosan Park Intersection. The programme also includes K-pop, fashion, beauty, food and street events; Visit Seoul lists the Food Festa and Beer Festa from 10:00 to 22:00." },
+      { type: "heading", text: "Road controls start before the parade" },
+      { type: "paragraph", text: "Gangnam’s current traffic notice says controls vary by section. The main festival stretch from Hakdong Intersection to Dosan Park Intersection is closed to vehicles in both directions from 00:00 on October 3 until 05:00 on Monday, October 5. On October 3, six of the 12 lanes between the southern end of Yeongdong-daero and Cheongdam Intersection are reserved for parade staging all day; parade-direction lanes between Mongjungheon and Hakdong Intersection are controlled from 14:00 to 20:00. Some buses and stops are also diverted or suspended." },
+      { type: "heading", text: "Use public transport and check your route" },
+      { type: "paragraph", text: "The closure continues beyond the 16:00–18:00 parade, and nearby roads can be congested. Use the subway where possible and check the latest route and bus-stop notices before heading to Dosan-daero. The rest of the festival continues October 4–5 with K-culture, food and beauty programming, followed by events elsewhere in Gangnam on the final day." },
+    ],
+    sources: [
+      { label: "The 15th Gangnam Festival 2026 · HEY GANGNAM", url: "https://english.visitseoul.net/eventsx/The15thGangnamFestival/ENPpvlkiw", publisher: "Visit Seoul", accessedAt: october3AccessedAt },
+      { label: "2026 Gangnam Festival announcement", url: "https://www.gangnam.go.kr/board/B_000031/1075419/view.do?mid=ID01_0313", publisher: "Gangnam-gu Office", accessedAt: october3AccessedAt },
+      { label: "Gangnam Festival 2026 road closures and bus detours", url: "https://visitgangnam.net/en/festival/notice/traffic-control", publisher: "Visit Gangnam, official Gangnam tourism portal", accessedAt: october3AccessedAt },
+    ],
+    eventStartAt: "2026-10-03",
+    eventEndAt: "2026-10-05",
+    expiresAt: "2026-10-06T00:00:00+08:00",
+    featured: false,
+  },
+  {
+    id: "taichung-ocean-sightseeing-season-2026",
+    slug: "taichung-ocean-sightseeing-season-2026",
+    headline: "Taichung’s new coastal landmark takes center stage this weekend",
+    summary: "Taichung Ocean Sightseeing Season runs October 3–4 at Da’an Port Mazu Cultural Park, combining a major new coastal landmark with performances, markets and live music.",
+    destination: "Taichung",
+    country: "Taiwan",
+    category: "events-experiences",
+    publishedAt: "2026-10-03",
+    image: {
+      src: unsplash("photo-1500375592092-40eb2168fd21", 2200),
+      alt: "Open water along a coastal shoreline",
+    },
+    body: [
+      { type: "paragraph", text: "Taichung Ocean Sightseeing Season takes place October 3–4 at Da’an Port Mazu Cultural Park. The latest Taichung City Government update and current tourism schedule place the statue donation and festival ceremony on October 3 at 09:00. An earlier city programme listed 10:00, so use the newer time." },
+      { type: "heading", text: "A new landmark on Taichung’s coast" },
+      { type: "paragraph", text: "The park’s Mazu statue project took about 14 years to complete. Taichung City says the monument stands 53.6 metres high including its base, and describes it as the tallest Mazu statue on Taiwan’s main island. Weekend visitors can also access the park’s upper level for coastal views." },
+      { type: "heading", text: "Performances and markets this weekend" },
+      { type: "list", items: ["October 3: Ten Drum Art Percussion Group performs; Ming Hwa Yuan Arts & Cultural Group presents “The Great Immortal of Penglai” at 19:00.", "October 4: the Hi-An live-music festival is scheduled for the afternoon.", "Food, pastry and outdoor markets run during the two-day programme. The statue is lit from 17:30 to 22:00 on October 2–4."] },
+      { type: "heading", text: "Check access and registration details" },
+      { type: "paragraph", text: "The city’s listings do not state one general admission price. Tea and wine tasting sessions were registration-based, and the published registration deadline was September 25; do not count on joining unless the organiser posts a new opening. For a Taichung itinerary, check the latest access arrangements, performance times and transport before setting out." },
+    ],
+    sources: [
+      { label: "October 2 update: Mazu statue ceremony and Ocean Sightseeing Season", url: "https://www.taichung.gov.tw/3382489/post", publisher: "Taichung City Government", accessedAt: october3AccessedAt },
+      { label: "2026 Taichung Ocean Sightseeing Season programme", url: "https://travel.taichung.gov.tw/zh-tw/event/activitydetail/10372", publisher: "Taichung Tourism", accessedAt: october3AccessedAt },
+      { label: "Official programme notice with tea and wine registration deadline", url: "https://www.taichung.gov.tw/3374486/post", publisher: "Taichung City Government", accessedAt: october3AccessedAt },
+      { label: "Da’an Port Mazu Cultural Park information", url: "https://travel.taichung.gov.tw/", publisher: "Taichung Tourism", accessedAt: october3AccessedAt },
+    ],
+    eventStartAt: "2026-10-03",
+    eventEndAt: "2026-10-04",
+    expiresAt: "2026-10-05T00:00:00+08:00",
+    featured: false,
+  },
+  {
+    id: "jamsugyo-gourmet-road-seoul-2026",
+    slug: "jamsugyo-gourmet-road-seoul-2026",
+    headline: "More than 100 food trucks take over Seoul’s Jamsugyo Bridge Sunday",
+    summary: "Jamsugyo Bridge becomes a giant car-free food street on October 4, with more than 100 food trucks beside the Hangang River from 2 PM to 10 PM.",
+    destination: "Seoul",
+    country: "South Korea",
+    category: "events-experiences",
+    publishedAt: "2026-10-03",
+    image: destinationImage("south-korea"),
+    body: [
+      { type: "paragraph", text: "On Sunday, October 4, Jamsugyo Bridge hosts Jamsugyo Gourmet Road from 14:00 to 22:00, as part of Seoul’s fall Car-Free Jamsugyo Bridge Festival. The event is in the Jamsugyo Bridge and Banpo Hangang Park area." },
+      { type: "heading", text: "A one-day food street by the river" },
+      { type: "paragraph", text: "Seoul Metropolitan Government lists more than 100 food trucks serving dishes from around the world, with dining areas for up to 800 people at a time. Reusable containers will be used instead of single-use serving items. The riverside setting includes Hangang night views and the Moonlight Rainbow Fountain; check the current fountain schedule separately if you want to plan around a show." },
+      { type: "heading", text: "The bridge is closed to vehicles" },
+      { type: "paragraph", text: "Vehicle access is restricted every festival Sunday from 12:00 noon to midnight on about 1.1 km of the route, from the north end of Jamsugyo Bridge to Moonlight Square at the south end. Seoul expects nearby congestion and limited parking at Banpo Hangang Park, and strongly recommends public transport." },
+      { type: "heading", text: "Check the day-of notice before leaving" },
+      { type: "paragraph", text: "The city’s event listing does not give individual truck names, menu prices or a general admission arrangement. Before travelling, check the official Seoul festival notice for weather-related cancellation or a schedule change, then plan your transit and allow time to walk through the site." },
+    ],
+    sources: [
+      { label: "Fall 2026 Car-Free Jamsugyo Bridge Festival and Jamsugyo Gourmet Road", url: "https://english.seoul.go.kr/car-free-jamsugyo-bridge-festival-with-cumulative-visitors-of-6-47-million-returns-with-weekly-themes-for-fall-2026/", publisher: "Seoul Metropolitan Government", accessedAt: october3AccessedAt },
+      { label: "Official Car-Free Jamsugyo Bridge Festival notices", url: "https://festa-ddooddoo.com/", publisher: "Seoul Metropolitan Government / Hangang River Bureau", accessedAt: october3AccessedAt },
+    ],
+    eventStartAt: "2026-10-04",
+    eventEndAt: "2026-10-04",
+    expiresAt: "2026-10-05T00:00:00+08:00",
+    featured: false,
+  },
   {
     id: "wakatobi-wave-festival-2026",
     slug: "wakatobi-wave-festival-2026",

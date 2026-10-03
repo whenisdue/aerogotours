@@ -20,6 +20,7 @@ const validCategories = new Set([
 
 const september30Noon = new Date("2026-09-30T12:00:00+08:00");
 const october2Noon = new Date("2026-10-02T12:00:00+08:00");
+const october3Noon = new Date("2026-10-03T12:00:00+08:00");
 
 test("travel update slugs are unique and records have the required fields", () => {
   const slugs = travelUpdates.map((update) => update.slug);
@@ -165,6 +166,92 @@ test("October 2 festival updates use verified facts, preserve filters and expire
   assert.ok(yilan.sources.some((source) => source.url === "https://festival.ncfta.gov.tw/APTAF/zh-tw"));
   assert.ok(yilan.sources.some((source) => source.url === "https://www.px-sunmake.org.tw/info"));
   assert.ok(yilan.sources.some((source) => source.url === "https://www.accupass.com/event/2607150609041594653775"));
+});
+
+test("October 3 updates lead by publication date, preserve filters and expire after their event dates", () => {
+  const cases = [
+    { slug: "nantou-global-tea-expo-2026", headline: "Nantou Global Tea Expo begins in Central Taiwan today", destination: "Nantou County", country: "Taiwan", eventStartAt: "2026-10-03", eventEndAt: "2026-10-11", expiresAt: "2026-10-12T00:00:00+08:00" },
+    { slug: "gangnam-festival-seoul-2026", headline: "Gangnam Festival opens today with Grand Parade on Dosan-daero", destination: "Gangnam, Seoul", country: "South Korea", eventStartAt: "2026-10-03", eventEndAt: "2026-10-05", expiresAt: "2026-10-06T00:00:00+08:00" },
+    { slug: "taichung-ocean-sightseeing-season-2026", headline: "Taichung’s new coastal landmark takes center stage this weekend", destination: "Taichung", country: "Taiwan", eventStartAt: "2026-10-03", eventEndAt: "2026-10-04", expiresAt: "2026-10-05T00:00:00+08:00" },
+    { slug: "jamsugyo-gourmet-road-seoul-2026", headline: "More than 100 food trucks take over Seoul’s Jamsugyo Bridge Sunday", destination: "Seoul", country: "South Korea", eventStartAt: "2026-10-04", eventEndAt: "2026-10-04", expiresAt: "2026-10-05T00:00:00+08:00" },
+  ];
+  const slugs = cases.map(({ slug }) => slug);
+  const beforePublication = new Date("2026-10-02T23:59:59+08:00");
+
+  assert.deepEqual(getActiveTravelUpdates(october3Noon).slice(0, 4).map((update) => update.slug), slugs);
+  assert.deepEqual(getHomepageTravelUpdates(october3Noon).map((update) => update.slug), slugs.slice(0, 3));
+  assert.equal(getFeaturedTravelUpdate(october3Noon)?.slug, "nantou-global-tea-expo-2026");
+
+  for (const { slug, headline, destination, country, eventStartAt, eventEndAt, expiresAt } of cases) {
+    const update = getTravelUpdateBySlug(slug);
+    assert.ok(update);
+    assert.equal(update.headline, headline);
+    assert.equal(update.publishedAt, "2026-10-03");
+    assert.equal(update.destination, destination);
+    assert.equal(update.country, country);
+    assert.equal(update.category, "events-experiences");
+    assert.equal(update.eventStartAt, eventStartAt);
+    assert.equal(update.eventEndAt, eventEndAt);
+    assert.equal(update.expiresAt, expiresAt);
+    assert.equal(getActiveTravelUpdates(beforePublication).some((activeUpdate) => activeUpdate.id === update.id), false);
+    assert.ok(getActiveTravelUpdates(october3Noon).some((activeUpdate) => activeUpdate.id === update.id));
+    assert.ok(getActiveTravelUpdates(new Date(new Date(expiresAt).getTime() - 1)).some((activeUpdate) => activeUpdate.id === update.id));
+    assert.equal(getActiveTravelUpdates(new Date(expiresAt)).some((activeUpdate) => activeUpdate.id === update.id), false);
+    assert.ok(update.sources.every((source) => source.accessedAt === "2026-10-03"));
+  }
+
+  const active = getActiveTravelUpdates(october3Noon);
+  assert.deepEqual(filterTravelUpdates(active, "Nantou County", "events-experiences").map((update) => update.slug), ["nantou-global-tea-expo-2026"]);
+  assert.deepEqual(filterTravelUpdates(active, "Gangnam, Seoul", "events-experiences").map((update) => update.slug), ["gangnam-festival-seoul-2026"]);
+  assert.deepEqual(filterTravelUpdates(active, "Taichung", "events-experiences").map((update) => update.slug), ["taichung-ocean-sightseeing-season-2026"]);
+  assert.deepEqual(filterTravelUpdates(active, "Seoul", "events-experiences").map((update) => update.slug), [
+    "jamsugyo-gourmet-road-seoul-2026",
+    "free-royal-court-parade-hyundai-seoul-2026",
+  ]);
+
+  const nantou = getTravelUpdateBySlug("nantou-global-tea-expo-2026");
+  assert.ok(nantou);
+  const nantouCopy = [nantou.summary, ...nantou.body.map((block) => block.text ?? block.items?.join(" ") ?? "")].join(" ");
+  assert.match(nantouCopy, /Chung Hsing New Village/);
+  assert.match(nantouCopy, /main tea-producing area/);
+  assert.match(nantouCopy, /35 themed exhibition halls and more than 200 sales booths/);
+  assert.match(nantouCopy, /09:00–17:00 on weekdays and 09:00–18:00 on weekends and holidays/);
+  assert.match(nantouCopy, /do not set out one admission arrangement for every area or activity/);
+  assert.ok(nantou.sources.some((source) => source.url === "https://eng.taiwan.net.tw/m1.aspx?lid=081760&sNo=0002019"));
+  assert.ok(nantou.sources.some((source) => source.url === "https://www.nantou.gov.tw/big5/news_content.php?cid=75&dptid=376480000&id=168742"));
+
+  const gangnam = getTravelUpdateBySlug("gangnam-festival-seoul-2026");
+  assert.ok(gangnam);
+  const gangnamCopy = [gangnam.summary, ...gangnam.body.map((block) => block.text ?? block.items?.join(" ") ?? "")].join(" ");
+  assert.match(gangnamCopy, /Grand Parade is scheduled for October 3, 16:00–18:00/);
+  assert.match(gangnamCopy, /closed to vehicles in both directions from 00:00 on October 3 until 05:00 on Monday, October 5/);
+  assert.match(gangnamCopy, /Some buses and stops are also diverted or suspended/);
+  assert.match(gangnamCopy, /Use the subway where possible/);
+  assert.ok(gangnam.sources.some((source) => source.url === "https://english.visitseoul.net/eventsx/The15thGangnamFestival/ENPpvlkiw"));
+  assert.ok(gangnam.sources.some((source) => source.url === "https://visitgangnam.net/en/festival/notice/traffic-control"));
+
+  const taichung = getTravelUpdateBySlug("taichung-ocean-sightseeing-season-2026");
+  assert.ok(taichung);
+  const taichungCopy = [taichung.summary, ...taichung.body.map((block) => block.text ?? block.items?.join(" ") ?? "")].join(" ");
+  assert.match(taichungCopy, /latest Taichung City Government update and current tourism schedule place the statue donation and festival ceremony on October 3 at 09:00/);
+  assert.match(taichungCopy, /An earlier city programme listed 10:00, so use the newer time/);
+  assert.match(taichungCopy, /53.6 metres high including its base/);
+  assert.match(taichungCopy, /Ming Hwa Yuan Arts & Cultural Group presents “The Great Immortal of Penglai” at 19:00/);
+  assert.match(taichungCopy, /registration deadline was September 25/);
+  assert.doesNotMatch(taichungCopy, /all (?:activities|events|admission) (?:are|is) free/i);
+  assert.ok(taichung.sources.some((source) => source.url === "https://www.taichung.gov.tw/3382489/post"));
+  assert.ok(taichung.sources.some((source) => source.url === "https://travel.taichung.gov.tw/zh-tw/event/activitydetail/10372"));
+
+  const jamsugyo = getTravelUpdateBySlug("jamsugyo-gourmet-road-seoul-2026");
+  assert.ok(jamsugyo);
+  const jamsugyoCopy = [jamsugyo.summary, ...jamsugyo.body.map((block) => block.text ?? block.items?.join(" ") ?? "")].join(" ");
+  assert.match(jamsugyoCopy, /more than 100 food trucks serving dishes from around the world/);
+  assert.match(jamsugyoCopy, /dining areas for up to 800 people at a time/);
+  assert.match(jamsugyoCopy, /from 12:00 noon to midnight on about 1.1 km/);
+  assert.match(jamsugyoCopy, /strongly recommends public transport/);
+  assert.match(jamsugyoCopy, /check the official Seoul festival notice for weather-related cancellation/);
+  assert.doesNotMatch(jamsugyoCopy, /free admission|\$\d+|₩\d+/i);
+  assert.ok(jamsugyo.sources.some((source) => source.url === "https://english.seoul.go.kr/car-free-jamsugyo-bridge-festival-with-cumulative-visitors-of-6-47-million-returns-with-weekly-themes-for-fall-2026/"));
 });
 
 test("expired stories cannot be the homepage hero", () => {
@@ -372,6 +459,7 @@ test("expired stories are excluded while remaining retrievable by slug", () => {
 test("the newest active story leads after earlier events expire", () => {
   const afterAllExpiry = new Date("2026-10-06T12:00:00+08:00");
   assert.deepEqual(getActiveTravelUpdates(afterAllExpiry).map((update) => update.slug), [
+    "nantou-global-tea-expo-2026",
     "geumsan-world-k-insam-festival-2026",
     "asia-pacific-traditional-arts-festival-taiwan-2026",
     "lego-experience-the-thrill-singapore-2026",
@@ -383,7 +471,7 @@ test("the newest active story leads after earlier events expire", () => {
     "thailand-visa-free-stay-30-days-filipino-passports-2026",
     "japan-chiba-rail-disruptions-typhoon-25-2026",
   ]);
-  assert.equal(getFeaturedTravelUpdate(afterAllExpiry)?.slug, "geumsan-world-k-insam-festival-2026");
+  assert.equal(getFeaturedTravelUpdate(afterAllExpiry)?.slug, "nantou-global-tea-expo-2026");
   assert.equal(getTravelUpdateBySlug("singapore-lights-by-the-lake-2026")?.featured, false);
 });
 
