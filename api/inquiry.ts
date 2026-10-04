@@ -10,6 +10,8 @@ const TRAVELER_VALUES = new Set(["", "1", "2", "3", "4", "5+"]);
 const STYLE_VALUES = new Set(["", "family", "couple", "solo", "work", "other"]);
 const LINE_BREAKS = /[\r\n]/;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+const AMBIGUOUS_TRAVEL_DATES = /^\d{1,2}$/;
+const AMBIGUOUS_TRAVEL_DATES_MESSAGE = "Please add a month or a little more detail, e.g. Oct 17 or December 2026.";
 
 const STYLE_LABELS: Record<string, string> = {
   family: "Family / group",
@@ -82,6 +84,7 @@ export function validateInquiry(body: unknown, now = Date.now()): InquiryValidat
   if (!name || !email || !destination || dates === null || travelers === null || style === null || notes === null || website === null || !formStartedAt) {
     return invalid("Please check the inquiry details and try again.");
   }
+  if (AMBIGUOUS_TRAVEL_DATES.test(dates)) return invalid(AMBIGUOUS_TRAVEL_DATES_MESSAGE);
   if (!EMAIL_PATTERN.test(email) || email.length > 254) return invalid("Please enter a valid email address.");
   if (!TRAVELER_VALUES.has(travelers) || !STYLE_VALUES.has(style)) return invalid("Please check the inquiry details and try again.");
   if (website) return invalid("Please check the inquiry details and try again.");

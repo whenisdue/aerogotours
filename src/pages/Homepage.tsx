@@ -22,10 +22,13 @@ const services = [
 ];
 
 const homepageDreamTrip = createDreamTrip({ group: "sample", travelers: 4, duration: 7, interest: "mix", pace: "balanced" });
+const AMBIGUOUS_TRAVEL_DATES = /^\d{1,2}$/;
+const AMBIGUOUS_TRAVEL_DATES_MESSAGE = "Please add a month or a little more detail, e.g. Oct 17 or December 2026.";
 
 export function Homepage() {
   const [submissionState, setSubmissionState] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [submissionError, setSubmissionError] = useState("");
+  const [datesError, setDatesError] = useState("");
   const formStartedAt = useRef(0);
   const submissionInFlight = useRef(false);
   const inquiryFormRef = useRef<HTMLFormElement>(null);
@@ -67,6 +70,18 @@ export function Homepage() {
     event.preventDefault();
     const form = event.currentTarget;
     if (!form.reportValidity() || submissionInFlight.current) return;
+
+    const datesField = form.elements.namedItem("dates");
+    if (datesField instanceof HTMLInputElement) {
+      const dates = datesField.value.trim();
+      datesField.value = dates;
+      if (AMBIGUOUS_TRAVEL_DATES.test(dates)) {
+        setDatesError(AMBIGUOUS_TRAVEL_DATES_MESSAGE);
+        datesField.focus();
+        return;
+      }
+      setDatesError("");
+    }
 
     submissionInFlight.current = true;
     setSubmissionState("submitting");
@@ -171,7 +186,9 @@ export function Homepage() {
             {submissionState === "success" ? <div className="form-success" role="status"><span className="form-success__icon"><Check size={22} /></span><span className="eyebrow">THANKS FOR SHARING</span><h3>Your inquiry has been received.</h3><p>Thank you! We'll review your trip details and get back to you.</p><button className="text-link" type="button" onClick={() => { formStartedAt.current = Date.now(); setSubmissionState("idle"); }}>Send another inquiry <ArrowRight size={15} /></button></div> : <>
               <div className="form-heading"><span className="eyebrow">START WITH THE BASICS</span><span className="form-required">* Required</span></div>
               <div className="form-row"><label>Your name *<input required name="name" placeholder="e.g. Maria Santos" autoComplete="name" /></label><label>Your email *<input required type="email" name="email" placeholder="Where can we reach you?" autoComplete="email" /></label></div>
-              <div className="form-row"><label>Where would you like to go? *<input required name="destination" placeholder="City, country or 'not sure yet'" /></label><label>Approximate dates<input name="dates" placeholder="e.g. November 2026" /></label></div>
+              <div className="form-row"><label>Where would you like to go? *<input required name="destination" placeholder="City, country or 'not sure yet'" /></label><label>Approximate travel dates<input name="dates" placeholder="e.g. Oct 17–20, 2026 or December 2026" aria-invalid={datesError ? true : undefined} aria-describedby={datesError ? "inquiry-dates-error" : undefined} onChange={(event) => {
+                if (datesError && !AMBIGUOUS_TRAVEL_DATES.test(event.currentTarget.value.trim())) setDatesError("");
+              }} />{datesError && <span className="form-feedback form-feedback--error" id="inquiry-dates-error" role="alert">{datesError}</span>}</label></div>
               <div className="form-row form-row--small"><label>Travelers<select name="travelers" defaultValue="2"><option value="">Not specified</option><option value="1">1 traveler</option><option value="2">2 travelers</option><option value="3">3 travelers</option><option value="4">4 travelers</option><option value="5+">5 or more</option></select></label><label>Trip style<select name="style" defaultValue="family"><option value="">Not specified</option><option value="family">Family / group</option><option value="couple">Couple</option><option value="solo">Solo</option><option value="work">Work trip</option><option value="other">Other</option></select></label></div>
               <label>Anything you'd like us to know?<textarea name="notes" placeholder="What would make this trip feel easy for you?" rows={3} /></label>
               <div className="inquiry-form__honeypot" aria-hidden="true"><label>Leave this field empty<input name="website" tabIndex={-1} autoComplete="off" /></label></div>
