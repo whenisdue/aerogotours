@@ -21,6 +21,7 @@ const validCategories = new Set([
 const september30Noon = new Date("2026-09-30T12:00:00+08:00");
 const october2Noon = new Date("2026-10-02T12:00:00+08:00");
 const october3Noon = new Date("2026-10-03T12:00:00+08:00");
+const october5Noon = new Date("2026-10-05T12:00:00+08:00");
 
 test("travel update slugs are unique and records have the required fields", () => {
   const slugs = travelUpdates.map((update) => update.slug);
@@ -254,13 +255,82 @@ test("October 3 updates lead by publication date, preserve filters and expire af
   assert.ok(jamsugyo.sources.some((source) => source.url === "https://english.seoul.go.kr/car-free-jamsugyo-bridge-festival-with-cumulative-visitors-of-6-47-million-returns-with-weekly-themes-for-fall-2026/"));
 });
 
-test("expired stories cannot be the homepage hero", () => {
-  const beforeExpiry = getHomepageTravelUpdates(new Date("2026-10-17T23:59:59+08:00"));
-  const atExpiry = getHomepageTravelUpdates(new Date("2026-10-18T00:00:00+08:00"));
+test("October 5 updates use an intentional same-day order, preserve filters and expire after their event dates", () => {
+  const cases = [
+    { slug: "busan-international-film-festival-2026", headline: "Busan becomes a city of cinema tomorrow as BIFF begins", destination: "Busan", country: "South Korea", eventStartAt: "2026-10-06", eventEndAt: "2026-10-15", expiresAt: "2026-10-16T00:00:00+08:00" },
+    { slug: "jinju-namgang-yudeung-festival-2026", headline: "Jinju’s Namgang River is glowing nightly through October 18", destination: "Jinju", country: "South Korea", eventStartAt: "2026-10-03", eventEndAt: "2026-10-18", expiresAt: "2026-10-19T00:00:00+08:00" },
+    { slug: "matsuyama-autumn-festival-dogo-2026", headline: "Matsuyama’s autumn festival begins today, with Dogo’s famous mikoshi clash still to come", destination: "Matsuyama, Ehime", country: "Japan", eventStartAt: "2026-10-05", eventEndAt: "2026-10-07", expiresAt: "2026-10-08T00:00:00+08:00" },
+    { slug: "pelicula-pelikula-manila-2026", headline: "Free Spanish film festival begins its Makati cinema program today", destination: "Makati, Metro Manila", country: "Philippines", eventStartAt: "2026-10-05", eventEndAt: "2026-10-11", expiresAt: "2026-10-12T00:00:00+08:00" },
+  ];
+  const slugs = cases.map(({ slug }) => slug);
+  const beforePublication = new Date("2026-10-04T23:59:59+08:00");
+  const active = getActiveTravelUpdates(october5Noon);
 
-  assert.equal(beforeExpiry[0]?.slug, "lego-experience-the-thrill-singapore-2026");
+  assert.deepEqual(active.slice(0, 4).map((update) => update.slug), slugs);
+  assert.deepEqual(getHomepageTravelUpdates(october5Noon).map((update) => update.slug), slugs.slice(0, 3));
+  assert.equal(getFeaturedTravelUpdate(october5Noon)?.slug, "busan-international-film-festival-2026");
+
+  for (const { slug, headline, destination, country, eventStartAt, eventEndAt, expiresAt } of cases) {
+    const update = getTravelUpdateBySlug(slug);
+    assert.ok(update);
+    assert.equal(update.headline, headline);
+    assert.equal(update.publishedAt, "2026-10-05");
+    assert.equal(update.destination, destination);
+    assert.equal(update.country, country);
+    assert.equal(update.category, "events-experiences");
+    assert.equal(update.eventStartAt, eventStartAt);
+    assert.equal(update.eventEndAt, eventEndAt);
+    assert.equal(update.expiresAt, expiresAt);
+    assert.equal(getActiveTravelUpdates(beforePublication).some((activeUpdate) => activeUpdate.id === update.id), false);
+    assert.ok(active.some((activeUpdate) => activeUpdate.id === update.id));
+    assert.ok(getActiveTravelUpdates(new Date(new Date(expiresAt).getTime() - 1)).some((activeUpdate) => activeUpdate.id === update.id));
+    assert.equal(getActiveTravelUpdates(new Date(expiresAt)).some((activeUpdate) => activeUpdate.id === update.id), false);
+    assert.ok(update.sources.every((source) => source.accessedAt === "2026-10-05"));
+  }
+
+  assert.deepEqual(filterTravelUpdates(active, "Busan", "events-experiences").map((update) => update.slug), ["busan-international-film-festival-2026"]);
+  assert.deepEqual(filterTravelUpdates(active, "Jinju", "events-experiences").map((update) => update.slug), ["jinju-namgang-yudeung-festival-2026"]);
+  assert.deepEqual(filterTravelUpdates(active, "Matsuyama, Ehime", "events-experiences").map((update) => update.slug), ["matsuyama-autumn-festival-dogo-2026"]);
+  assert.deepEqual(filterTravelUpdates(active, "Makati, Metro Manila", "events-experiences").map((update) => update.slug), ["pelicula-pelikula-manila-2026"]);
+
+  const busan = getTravelUpdateBySlug("busan-international-film-festival-2026");
+  const busanCopy = busan?.body.map((block) => block.text ?? block.items?.join(" ") ?? "").join(" ") ?? "";
+  assert.match(busanCopy, /October 6–15/);
+  assert.match(busanCopy, /18:00 at Busan Cinema Center’s Roof Theater/);
+  assert.match(busanCopy, /Check the live portal for each screening’s current availability/);
+  assert.ok(busan?.sources.some((source) => source.url === "https://www.biff.kr/eng/addon/10000001/page.asp?page_num=11402"));
+
+  const jinju = getTravelUpdateBySlug("jinju-namgang-yudeung-festival-2026");
+  const jinjuCopy = jinju?.body.map((block) => block.text ?? block.items?.join(" ") ?? "").join(" ") ?? "";
+  assert.match(jinjuCopy, /18:00 to midnight/);
+  assert.match(jinjuCopy, /Fireworks: October 9 and 17 at 20:00/);
+  assert.match(jinjuCopy, /Drone light show: October 10 at 20:00 and October 17 at 19:50/);
+  assert.ok(jinju?.sources.some((source) => source.url === "https://yudeung.com/info/transport?lang=en"));
+
+  const matsuyama = getTravelUpdateBySlug("matsuyama-autumn-festival-dogo-2026");
+  const matsuyamaCopy = matsuyama?.body.map((block) => block.text ?? block.items?.join(" ") ?? "").join(" ") ?? "";
+  assert.match(matsuyamaCopy, /does not take place today/);
+  assert.match(matsuyamaCopy, /early morning of October 7 in front of Dogo Onsen Station/);
+  assert.match(matsuyamaCopy, /Public viewing is listed as free/);
+  assert.ok(matsuyama?.sources.some((source) => source.url === "https://ehime.travel/en/articles/matsuyama-event-map10/"));
+
+  const pelicula = getTravelUpdateBySlug("pelicula-pelikula-manila-2026");
+  const peliculaCopy = pelicula?.body.map((block) => block.text ?? block.items?.join(" ") ?? "").join(" ") ?? "";
+  assert.match(peliculaCopy, /Rondallas at 14:00, La cena at 17:00 and El cautivo at 19:30/);
+  assert.match(peliculaCopy, /selection of Filipino short films at Power Plant Cinema 2 on October 11/);
+  assert.match(peliculaCopy, /does not state the subtitle language/);
+  assert.match(peliculaCopy, /free film screenings do not mean every workshop or talk is free/);
+  assert.ok(pelicula?.sources.some((source) => source.url.includes("fbid0Qc2YEi3MLgc1mBNTtritTeQXjeSAaFxS5AwNfKVcYNzaaJdPyGeCMySmQKdyzDa4l")));
+});
+
+test("expired stories cannot be the homepage hero", () => {
+  const beforeExpiry = getHomepageTravelUpdates(new Date("2026-10-18T23:59:59+08:00"));
+  const atExpiry = getHomepageTravelUpdates(new Date("2026-10-19T00:00:00+08:00"));
+
+  assert.equal(beforeExpiry[0]?.slug, "jinju-namgang-yudeung-festival-2026");
   assert.equal(atExpiry[0]?.slug, "kasanggayahan-festival-sorsogon-2026");
-  assert.equal(atExpiry.some((update) => update.slug === "lego-experience-the-thrill-singapore-2026"), false);
+  assert.equal(beforeExpiry.some((update) => update.slug === "lego-experience-the-thrill-singapore-2026"), false);
+  assert.equal(atExpiry.some((update) => update.slug === "jinju-namgang-yudeung-festival-2026"), false);
 });
 
 test("a newly added later update moves into the homepage hero automatically", () => {
@@ -456,9 +526,13 @@ test("expired stories are excluded while remaining retrievable by slug", () => {
   assert.ok(getTravelUpdateBySlug("hong-kong-mid-autumn-k-festival-2026"));
 });
 
-test("the newest active story leads after earlier events expire", () => {
-  const afterAllExpiry = new Date("2026-10-06T12:00:00+08:00");
-  assert.deepEqual(getActiveTravelUpdates(afterAllExpiry).map((update) => update.slug), [
+test("the October 5 updates lead while earlier event stories expire", () => {
+  const afterOctober5Publication = new Date("2026-10-06T12:00:00+08:00");
+  assert.deepEqual(getActiveTravelUpdates(afterOctober5Publication).map((update) => update.slug), [
+    "busan-international-film-festival-2026",
+    "jinju-namgang-yudeung-festival-2026",
+    "matsuyama-autumn-festival-dogo-2026",
+    "pelicula-pelikula-manila-2026",
     "nantou-global-tea-expo-2026",
     "geumsan-world-k-insam-festival-2026",
     "asia-pacific-traditional-arts-festival-taiwan-2026",
@@ -471,7 +545,7 @@ test("the newest active story leads after earlier events expire", () => {
     "thailand-visa-free-stay-30-days-filipino-passports-2026",
     "japan-chiba-rail-disruptions-typhoon-25-2026",
   ]);
-  assert.equal(getFeaturedTravelUpdate(afterAllExpiry)?.slug, "nantou-global-tea-expo-2026");
+  assert.equal(getFeaturedTravelUpdate(afterOctober5Publication)?.slug, "busan-international-film-festival-2026");
   assert.equal(getTravelUpdateBySlug("singapore-lights-by-the-lake-2026")?.featured, false);
 });
 

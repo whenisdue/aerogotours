@@ -54,6 +54,7 @@ const september29AccessedAt = "2026-09-29";
 const september30AccessedAt = "2026-09-30";
 const october2AccessedAt = "2026-10-02";
 const october3AccessedAt = "2026-10-03";
+const october5AccessedAt = "2026-10-05";
 
 const unsplash = (photoId: string, width: number) =>
   `https://images.unsplash.com/${photoId}?auto=format&fit=crop&w=${width}&q=85`;
@@ -65,6 +66,118 @@ const destinationImage = (slug: string) => {
 };
 
 export const travelUpdates: TravelUpdate[] = [
+  {
+    id: "busan-international-film-festival-2026",
+    slug: "busan-international-film-festival-2026",
+    headline: "Busan becomes a city of cinema tomorrow as BIFF begins",
+    summary: "Busan International Film Festival begins October 6 across eight theaters, with screenings and audience events around the city through October 15. Check the official ticket portal for current availability.",
+    destination: "Busan",
+    country: "South Korea",
+    category: "events-experiences",
+    publishedAt: "2026-10-05",
+    image: destinationImage("south-korea"),
+    body: [
+      { type: "paragraph", text: "The 31st Busan International Film Festival (BIFF) runs October 6–15. Tomorrow’s opening ceremony and film are scheduled for 18:00 at Busan Cinema Center’s Roof Theater. The festival uses eight theaters around Busan, including venues in Centum City and additional Community BIFF venues." },
+      { type: "heading", text: "Check tickets before choosing a screening" },
+      { type: "paragraph", text: "Ordinary visitors can book standard screening tickets through BIFF’s official online system. First-time users need to register and verify an email, and BIFF requires new registration even for people who used the system in a previous year. The official guide lists general screenings at KRW 10,000 and opening or closing ceremony tickets at KRW 30,000. Check the live portal for each screening’s current availability before setting out; BIFF says Ticket Boxes can sell only seats that remain unsold online or have been cancelled." },
+      { type: "heading", text: "Venues and events around the city" },
+      { type: "paragraph", text: "The venue list includes Busan Cinema Center, CGV Centum City, LOTTE CINEMA Centum City, KOFIC Theater, Sohyang Theatre Woori Bank Hall and Busan Community Media Center Open Hall. Community BIFF screenings use MEGABOX Busan Theater and Catholic Center Space 101.1, so check the venue on each ticket rather than assuming everything is at the main center." },
+      { type: "paragraph", text: "BIFF also lists Open Talk, Special Talk, Actors’ House, Master Class and other audience events. Check each event’s listing for its time, venue and access rules; the screening ticket guide lists separate prices for some programs. If you hope to attend tomorrow, review the October 6 schedule and ticket portal today, then confirm the venue and remaining seats before travelling." },
+    ],
+    sources: [
+      { label: "31st Busan International Film Festival overview", url: "https://www.biff.kr/eng/addon/10000001/page.asp?page_num=11079", publisher: "Busan International Film Festival", accessedAt: october5AccessedAt },
+      { label: "October 6 BIFF screening schedule", url: "https://www.biff.kr/eng/html/schedule/date.asp?day1=6", publisher: "Busan International Film Festival", accessedAt: october5AccessedAt },
+      { label: "BIFF booking information", url: "https://www.biff.kr/eng/addon/10000001/page.asp?page_num=11402", publisher: "Busan International Film Festival", accessedAt: october5AccessedAt },
+      { label: "BIFF non-resident ticket portal", url: "https://biff.maketicket.co.kr/", publisher: "Busan International Film Festival", accessedAt: october5AccessedAt },
+    ],
+    eventStartAt: "2026-10-06",
+    eventEndAt: "2026-10-15",
+    expiresAt: "2026-10-16T00:00:00+08:00",
+  },
+  {
+    id: "jinju-namgang-yudeung-festival-2026",
+    slug: "jinju-namgang-yudeung-festival-2026",
+    headline: "Jinju’s Namgang River is glowing nightly through October 18",
+    summary: "Jinju’s lantern festival lights the Namgang River nightly through October 18, with riverside displays, bridges and special drone or fireworks nights on selected dates.",
+    destination: "Jinju",
+    country: "South Korea",
+    category: "events-experiences",
+    publishedAt: "2026-10-05",
+    image: destinationImage("south-korea"),
+    body: [
+      { type: "paragraph", text: "The 2026 Jinju Namgang Yudeung Festival runs October 3–18 around the Namgang River and Jinjuseong Fortress. Lantern displays are lit from 18:00 to midnight; bridges and booths operate from 13:00 to 23:00. Use the official venue map to choose a starting point along the river and fortress grounds." },
+      { type: "heading", text: "Special shows are on selected dates" },
+      { type: "list", items: ["Fireworks: October 9 and 17 at 20:00, between Jinju Bridge and Cheonsu Bridge.", "Drone light show: October 10 at 20:00 and October 17 at 19:50 over the Namgang River."] },
+      { type: "paragraph", text: "These shows are not nightly. Check the festival’s current notices before planning around one, as schedules can change with weather or event operations." },
+      { type: "heading", text: "Plan transport beyond Seoul" },
+      { type: "paragraph", text: "Jinju can be a festival stop on a South Korea itinerary beyond Seoul. The organizer advises visitors to avoid driving to the grounds: traffic restrictions are listed for October 3–5, 9–11 and 16–18, with free park-and-ride shuttles on those dates from 16:00 to 23:00. Check the current traffic map and last-bus times before travelling, especially on a fireworks night." },
+    ],
+    sources: [
+      { label: "2026 Jinju Namgang Yudeung Festival", url: "https://yudeung.com/?lang=en", publisher: "Jinju Namgang Yudeung Festival", accessedAt: october5AccessedAt },
+      { label: "Festival special events", url: "https://yudeung.com/events/special?lang=en", publisher: "Jinju Namgang Yudeung Festival", accessedAt: october5AccessedAt },
+      { label: "Festival venue layout", url: "https://yudeung.com/info/map?lang=en", publisher: "Jinju Namgang Yudeung Festival", accessedAt: october5AccessedAt },
+      { label: "Festival traffic and shuttle information", url: "https://yudeung.com/info/transport?lang=en", publisher: "Jinju Namgang Yudeung Festival", accessedAt: october5AccessedAt },
+    ],
+    eventStartAt: "2026-10-03",
+    eventEndAt: "2026-10-18",
+    expiresAt: "2026-10-19T00:00:00+08:00",
+  },
+  {
+    id: "matsuyama-autumn-festival-dogo-2026",
+    slug: "matsuyama-autumn-festival-dogo-2026",
+    headline: "Matsuyama’s autumn festival begins today, with Dogo’s famous mikoshi clash still to come",
+    summary: "Matsuyama’s autumn festivals run October 5–7, with mikoshi processions across the city and Dogo’s famous hachiawase tradition taking place on October 7.",
+    destination: "Matsuyama, Ehime",
+    country: "Japan",
+    category: "events-experiences",
+    publishedAt: "2026-10-05",
+    image: destinationImage("japan"),
+    body: [
+      { type: "paragraph", text: "Matsuyama’s autumn festival period begins today and runs through October 7, with shrine festivals and mikoshi processions in several parts of the city. A mikoshi is a portable shrine carried in a procession. Dogo Onsen is one of the main festival areas, with events associated with Isaniwa Shrine." },
+      { type: "heading", text: "October 7 is the key date for Dogo hachiawase" },
+      { type: "paragraph", text: "Hachiawase is the meeting and clash of portable shrines. The famous Dogo hachiawase is scheduled for the early morning of October 7 in front of Dogo Onsen Station; it does not take place today. Exact times are not stated in the current official event listing, so check the latest notice before travelling." },
+      { type: "heading", text: "Watch respectfully and plan for road controls" },
+      { type: "paragraph", text: "Public viewing is listed as free, and traffic restrictions apply around Dogo. These are local shrine and community traditions. Stay in public viewing areas, leave the procession route clear, and follow shrine staff and police directions; crowds and moving mikoshi can make the station area busy. Check current traffic and access notices before visiting Dogo Onsen." },
+    ],
+    sources: [
+      { label: "Matsuyama Autumn Festival and Dogo Hachiawase: October 2026 event guide", url: "https://ehime.travel/en/articles/matsuyama-event-map10/", publisher: "Ehime Travel", accessedAt: october5AccessedAt },
+      { label: "Matsuyama Autumn Festival", url: "https://matsuyama-sightseeing.com/event/2-2/", publisher: "Matsuyama City Official Tourism Website", accessedAt: october5AccessedAt },
+    ],
+    eventStartAt: "2026-10-05",
+    eventEndAt: "2026-10-07",
+    expiresAt: "2026-10-08T00:00:00+08:00",
+  },
+  {
+    id: "pelicula-pelikula-manila-2026",
+    slug: "pelicula-pelikula-manila-2026",
+    headline: "Free Spanish film festival begins its Makati cinema program today",
+    summary: "PELÍCULA>PELIKULA begins its Power Plant Cinema program today, bringing free screenings from Spain, Latin America and the Philippines to Makati through October 11.",
+    destination: "Makati, Metro Manila",
+    country: "Philippines",
+    category: "events-experiences",
+    publishedAt: "2026-10-05",
+    image: {
+      src: unsplash("photo-1489599849927-2ee91cede3ba", 2200),
+      alt: "Rows of seats inside a cinema auditorium",
+    },
+    body: [
+      { type: "paragraph", text: "The 25th PELÍCULA>PELIKULA Manila Spanish Film Festival starts its Power Plant Cinema program today, October 5, and runs through October 11 at Power Plant Cinema 2 in Rockwell Center, Makati. The organizer lists free screenings of films from Spain, Latin America and the Philippines. Today’s schedule lists Rondallas at 14:00, La cena at 17:00 and El cautivo at 19:30." },
+      { type: "heading", text: "Tickets and subtitles" },
+      { type: "paragraph", text: "The organizer has directed visitors to collect a ticket at the Festival table beside the Cinema 2 entrance; its current post does not describe an advance reservation process. The October 5 schedule does not state the subtitle language, so check with the organizer if English subtitles are important for your choice of film." },
+      { type: "heading", text: "More festival events on October 6" },
+      { type: "paragraph", text: "The wider program includes talks, workshops and Filipino shorts. The organizer lists a 09:00 recycling art workshop for adults at SOFA Design Institute in Proscenium Retail Row and a 13:00 talk on Hispanic influences in Filipino cinema at Power Plant Cinema 2 on October 6. Its En Corto announcement also lists a selection of Filipino short films at Power Plant Cinema 2 on October 11, without a time in the post. Check each listing for registration and access details; free film screenings do not mean every workshop or talk is free." },
+    ],
+    sources: [
+      { label: "Instituto Cervantes de Manila", url: "https://manila.cervantes.es/", publisher: "Instituto Cervantes", accessedAt: october5AccessedAt },
+      { label: "Official PELÍCULA>PELIKULA 2026 screening schedule", url: "https://www.facebook.com/InstitutoCervantesManila/posts/pfbid0Qc2YEi3MLgc1mBNTtritTeQXjeSAaFxS5AwNfKVcYNzaaJdPyGeCMySmQKdyzDa4l", publisher: "Instituto Cervantes de Manila", accessedAt: october5AccessedAt },
+      { label: "Official PELÍCULA>PELIKULA festival event", url: "https://www.facebook.com/events/1060389459705609/", publisher: "Instituto Cervantes de Manila", accessedAt: october5AccessedAt },
+      { label: "Official PELÍCULA>PELIKULA workshop and talk details", url: "https://www.facebook.com/photo/?fbid=1556033759897643&set=a.556794169821612", publisher: "Instituto Cervantes de Manila", accessedAt: october5AccessedAt },
+      { label: "Official En Corto Filipino shorts announcement", url: "https://www.facebook.com/photo/?fbid=1524144803086539&set=a.556794169821612", publisher: "Instituto Cervantes de Manila", accessedAt: october5AccessedAt },
+    ],
+    eventStartAt: "2026-10-05",
+    eventEndAt: "2026-10-11",
+    expiresAt: "2026-10-12T00:00:00+08:00",
+  },
   {
     id: "nantou-global-tea-expo-2026",
     slug: "nantou-global-tea-expo-2026",
