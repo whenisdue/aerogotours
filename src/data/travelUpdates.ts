@@ -55,6 +55,7 @@ const september30AccessedAt = "2026-09-30";
 const october2AccessedAt = "2026-10-02";
 const october3AccessedAt = "2026-10-03";
 const october5AccessedAt = "2026-10-05";
+const october6AccessedAt = "2026-10-06";
 
 const unsplash = (photoId: string, width: number) =>
   `https://images.unsplash.com/${photoId}?auto=format&fit=crop&w=${width}&q=85`;
@@ -66,6 +67,110 @@ const destinationImage = (slug: string) => {
 };
 
 export const travelUpdates: TravelUpdate[] = [
+  {
+    id: "singapore-f1-road-closures-transport-2026",
+    slug: "singapore-f1-road-closures-transport-2026",
+    headline: "Singapore F1 bus changes begin today before major road closures",
+    summary: "Selected bus services begin being affected October 6, while major road closures around Marina Centre and Padang start at 12:01 AM October 7 ahead of Singapore’s Formula 1 weekend.",
+    destination: "Singapore",
+    country: "Singapore",
+    category: "events-experiences",
+    publishedAt: "2026-10-06",
+    image: destinationImage("singapore"),
+    body: [
+      { type: "paragraph", text: "Selected bus services are affected from today, October 6, through October 12. Some stops will be skipped, and LTA says arrival information for diverted services may be unavailable. Check the live affected-stop list and the official road-access guide before travelling; do not assume a familiar stop or live arrival estimate is available." },
+      { type: "heading", text: "Road closures start just after midnight" },
+      { type: "paragraph", text: "Road closures around Marina Centre and Padang begin at 12:01 AM on Wednesday, October 7, and run until 5:30 AM on Tuesday, October 13. The Singapore Grand Prix itself is October 9–11. The area remains accessible, but walking routes, hotel driveways and vehicle access vary by location and day. LTA strongly recommends public transport." },
+      { type: "heading", text: "Use the station nearest your destination" },
+      { type: "paragraph", text: "LTA’s guide maps walking routes from stations including City Hall, Esplanade, Promenade, Bayfront, Nicoll Highway and Raffles Place to specific hotels, buildings and event gates. Check the map for your exact address. On race nights, the last North-South and East-West Line trains from City Hall are at 12:30 AM on October 9 and 10, and 12:45 AM on October 11. Other lines, except the Changi Airport service, and selected connecting buses also run later." },
+      { type: "heading", text: "Check hotel and ride-hail access" },
+      { type: "paragraph", text: "During the closure period, taxis and private-hire cars can pick up and drop off only at designated locations. If you are staying around Marina Centre, confirm your hotel driveway or nearest permitted pick-up point in LTA’s guide before setting out. LTA says all roads will reopen at 5:30 AM on October 13." },
+    ],
+    sources: [
+      { label: "F1 2026 Road Access and Public Transport Guide", url: "https://onemotoring.lta.gov.sg/content/dam/onemotoring/Driving/f1/2026/pdf/FA_LTA_F1_2026_Brochure.pdf", publisher: "Land Transport Authority, Singapore", accessedAt: october6AccessedAt },
+      { label: "Live list of bus services and skipped stops", url: "https://onemotoring.lta.gov.sg/content/dam/onemotoring/Driving/f1/2026/pdf/List%20of%20Skipped%20Bus%20Stops%20-%20F1%202026.pdf", publisher: "Land Transport Authority, Singapore", accessedAt: october6AccessedAt },
+      { label: "Formula 1 Singapore Grand Prix 2026 transport information", url: "https://go.gov.sg/f1", publisher: "Land Transport Authority, Singapore / OneMotoring", accessedAt: october6AccessedAt },
+    ],
+    eventStartAt: "2026-10-06",
+    eventEndAt: "2026-10-13",
+    expiresAt: "2026-10-14T00:00:00+08:00",
+  },
+  {
+    id: "hangeul-week-seoul-2026",
+    slug: "hangeul-week-seoul-2026",
+    headline: "Hangeul Week begins in Seoul today as Hangeul Day marks 100 years",
+    summary: "Hangeul Week begins October 6, with performances, exhibitions and hands-on experiences at Gwanghwamun Square during a year marking 100 years since Hangeul Day was established.",
+    destination: "Seoul",
+    country: "South Korea",
+    category: "events-experiences",
+    publishedAt: "2026-10-06",
+    image: destinationImage("south-korea"),
+    body: [
+      { type: "paragraph", text: "Hangeul Week opens today and runs through October 17. The 2026 theme is “Hangeul by My Side.” This year marks 580 years since Hunminjeongeum was promulgated and 100 years since Hangeul Day was established." },
+      { type: "heading", text: "What is happening at Gwanghwamun Square" },
+      { type: "paragraph", text: "The opening program, Hangeul Hanmadang–Gwanghwamun, and the Hangeul Cultural Industry Exhibition run October 6–8 at Gwanghwamun Square. The Ministry of Culture, Sports and Tourism describes performances, exhibitions and around 20 hands-on activities. Its announcement does not give a day-by-day timetable, admission details or registration instructions, so check the latest ministry notice before travelling." },
+      { type: "heading", text: "More begins on October 8" },
+      { type: "paragraph", text: "A Hangeul Day Eve Celebration is scheduled for October 8 at 7 PM. The “Twenty-Four, Universe” media façade is also later, not today: it is scheduled on Gwanghwamun Gate from October 8–11, 8–11 PM. Hangeul Week activities also take place elsewhere in Korea; use the ministry’s current program for updates and access information." },
+    ],
+    sources: [
+      { label: "2026 Hangeul Week program and announcement", url: "https://www.mcst.go.kr/english/policy/pressView.jsp?pSeq=669", publisher: "Republic of Korea Ministry of Culture, Sports and Tourism", accessedAt: october6AccessedAt },
+    ],
+    eventStartAt: "2026-10-06",
+    eventEndAt: "2026-10-17",
+    expiresAt: "2026-10-18T00:00:00+08:00",
+  },
+  {
+    id: "phuket-vegetarian-festival-2026",
+    slug: "phuket-vegetarian-festival-2026",
+    headline: "Phuket festival listings differ on its 2026 opening date",
+    summary: "Thailand’s government reports October 9–18 and a 5:09 PM opening pole ceremony on October 9; the Tourism Authority of Thailand currently lists October 10–18.",
+    destination: "Phuket",
+    country: "Thailand",
+    category: "events-experiences",
+    publishedAt: "2026-10-06",
+    image: destinationImage("thailand"),
+    body: [
+      { type: "paragraph", text: "Official listings currently differ on when the 2026 Phuket Vegetarian Festival begins. Thailand’s Government Public Relations Department says the Phuket Provincial Government is hosting it October 9–18, with a Go Teng pole-raising ceremony at 5:09 PM on October 9. The Tourism Authority of Thailand’s event calendar lists October 10–18. The listings do not explain the difference, so confirm the opening date with a local shrine or Phuket authority before planning around October 9." },
+      { type: "heading", text: "A Thai-Chinese religious and cultural observance" },
+      { type: "paragraph", text: "Known as Jia Chai, the festival reflects the faith and traditions of Phuket’s Thai-Chinese communities. The government announcement describes nine days of vegetarian observance and rituals at more than 40 Chinese shrines. It is a religious and community observance, not only a food event." },
+      { type: "heading", text: "Processions and respectful viewing" },
+      { type: "paragraph", text: "The government announcement lists street processions for October 11–18 and says nighttime processions are new for 2026. It does not provide this year’s individual shrine schedules, procession routes, traffic advisories or cancellation notices. Check current local notices before crossing Phuket Town; expect crowds, follow shrine guidance, dress appropriately at religious sites and remain behind procession barriers." },
+    ],
+    sources: [
+      { label: "Phuket Vegetarian Festival 2026 announcement", url: "https://thailand.go.th/public/issue-focus-detail/phuket-vegetarian-festival-2026-set-for-918-oct-with-night-processions", publisher: "Government Public Relations Department, Thailand", accessedAt: october6AccessedAt },
+      { label: "Tourism Authority of Thailand events calendar", url: "https://www.tourismthailand.org/Search-result/event?category_id=168", publisher: "Tourism Authority of Thailand", accessedAt: october6AccessedAt },
+    ],
+    eventStartAt: "2026-10-09",
+    eventEndAt: "2026-10-18",
+    expiresAt: "2026-10-19T00:00:00+08:00",
+  },
+  {
+    id: "mambulawan-festival-camarines-norte-2026",
+    slug: "mambulawan-festival-camarines-norte-2026",
+    headline: "Mambulawan Festival is listed for October 6–7 in Camarines Norte",
+    summary: "The Tourism Promotions Board lists Mambulawan Festival for October 6–7 in Jose Panganiban, a community celebration connected with local culture, arts and the Feast of Our Lady of the Most Holy Rosary.",
+    destination: "Jose Panganiban, Camarines Norte",
+    country: "Philippines",
+    category: "events-experiences",
+    publishedAt: "2026-10-06",
+    image: {
+      src: unsplash("photo-1500375592092-40eb2168fd21", 2200),
+      alt: "Open water along a tropical coastline",
+    },
+    body: [
+      { type: "paragraph", text: "The Tourism Promotions Board (TPB) lists Mambulawan Festival for October 6–7 in Jose Panganiban, Camarines Norte. The municipality is the location named in TPB’s listing; it is connected with the Feast of Our Lady of the Most Holy Rosary." },
+      { type: "heading", text: "What the official listing says" },
+      { type: "paragraph", text: "TPB describes the festival as a way to build unity and cooperation in the local community, promote culture and arts, and support the town’s advancement and economic growth." },
+      { type: "heading", text: "The 2026 daily program is not confirmed here" },
+      { type: "paragraph", text: "TPB’s page is a general festival listing and does not give a detailed 2026 schedule. I could not verify current official details for parade times, performers, admission, road closures or religious activities. Before making a same-day trip, check directly with the Municipality of Jose Panganiban or Camarines Norte Provincial Government for local advisories." },
+    ],
+    sources: [
+      { label: "Mambulawan Festival", url: "https://tpb.gov.ph/events/mambulawan-festival/", publisher: "Tourism Promotions Board Philippines", accessedAt: october6AccessedAt },
+    ],
+    eventStartAt: "2026-10-06",
+    eventEndAt: "2026-10-07",
+    expiresAt: "2026-10-08T00:00:00+08:00",
+  },
   {
     id: "busan-international-film-festival-2026",
     slug: "busan-international-film-festival-2026",

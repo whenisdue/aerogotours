@@ -327,10 +327,11 @@ test("expired stories cannot be the homepage hero", () => {
   const beforeExpiry = getHomepageTravelUpdates(new Date("2026-10-18T23:59:59+08:00"));
   const atExpiry = getHomepageTravelUpdates(new Date("2026-10-19T00:00:00+08:00"));
 
-  assert.equal(beforeExpiry[0]?.slug, "jinju-namgang-yudeung-festival-2026");
+  assert.equal(beforeExpiry[0]?.slug, "phuket-vegetarian-festival-2026");
   assert.equal(atExpiry[0]?.slug, "kasanggayahan-festival-sorsogon-2026");
   assert.equal(beforeExpiry.some((update) => update.slug === "lego-experience-the-thrill-singapore-2026"), false);
   assert.equal(atExpiry.some((update) => update.slug === "jinju-namgang-yudeung-festival-2026"), false);
+  assert.equal(atExpiry.some((update) => update.slug === "phuket-vegetarian-festival-2026"), false);
 });
 
 test("a newly added later update moves into the homepage hero automatically", () => {
@@ -526,9 +527,13 @@ test("expired stories are excluded while remaining retrievable by slug", () => {
   assert.ok(getTravelUpdateBySlug("hong-kong-mid-autumn-k-festival-2026"));
 });
 
-test("the October 5 updates lead while earlier event stories expire", () => {
+test("October 6 updates lead in their intentional same-day order while earlier event stories expire", () => {
   const afterOctober5Publication = new Date("2026-10-06T12:00:00+08:00");
   assert.deepEqual(getActiveTravelUpdates(afterOctober5Publication).map((update) => update.slug), [
+    "singapore-f1-road-closures-transport-2026",
+    "hangeul-week-seoul-2026",
+    "phuket-vegetarian-festival-2026",
+    "mambulawan-festival-camarines-norte-2026",
     "busan-international-film-festival-2026",
     "jinju-namgang-yudeung-festival-2026",
     "matsuyama-autumn-festival-dogo-2026",
@@ -545,8 +550,69 @@ test("the October 5 updates lead while earlier event stories expire", () => {
     "thailand-visa-free-stay-30-days-filipino-passports-2026",
     "japan-chiba-rail-disruptions-typhoon-25-2026",
   ]);
-  assert.equal(getFeaturedTravelUpdate(afterOctober5Publication)?.slug, "busan-international-film-festival-2026");
+  assert.equal(getFeaturedTravelUpdate(afterOctober5Publication)?.slug, "singapore-f1-road-closures-transport-2026");
   assert.equal(getTravelUpdateBySlug("singapore-lights-by-the-lake-2026")?.featured, false);
+});
+
+test("October 6 updates preserve same-day order, filters, official details and expiry boundaries", () => {
+  const beforePublication = new Date("2026-10-05T23:59:59+08:00");
+  const publishedToday = new Date("2026-10-06T12:00:00+08:00");
+  const cases = [
+    { slug: "singapore-f1-road-closures-transport-2026", headline: "Singapore F1 bus changes begin today before major road closures", destination: "Singapore", country: "Singapore", eventEndAt: "2026-10-13", expiresAt: "2026-10-14T00:00:00+08:00" },
+    { slug: "hangeul-week-seoul-2026", headline: "Hangeul Week begins in Seoul today as Hangeul Day marks 100 years", destination: "Seoul", country: "South Korea", eventEndAt: "2026-10-17", expiresAt: "2026-10-18T00:00:00+08:00" },
+    { slug: "phuket-vegetarian-festival-2026", headline: "Phuket festival listings differ on its 2026 opening date", destination: "Phuket", country: "Thailand", eventEndAt: "2026-10-18", expiresAt: "2026-10-19T00:00:00+08:00" },
+    { slug: "mambulawan-festival-camarines-norte-2026", headline: "Mambulawan Festival is listed for October 6–7 in Camarines Norte", destination: "Jose Panganiban, Camarines Norte", country: "Philippines", eventEndAt: "2026-10-07", expiresAt: "2026-10-08T00:00:00+08:00" },
+  ];
+  const active = getActiveTravelUpdates(publishedToday);
+  const expectedOrder = cases.map(({ slug }) => slug);
+
+  assert.deepEqual(active.slice(0, 4).map((update) => update.slug), expectedOrder);
+  assert.deepEqual(getHomepageTravelUpdates(publishedToday).map((update) => update.slug), expectedOrder.slice(0, 3));
+  assert.equal(getFeaturedTravelUpdate(publishedToday)?.slug, "singapore-f1-road-closures-transport-2026");
+
+  for (const { slug, headline, destination, country, eventEndAt, expiresAt } of cases) {
+    const update = getTravelUpdateBySlug(slug);
+    assert.ok(update);
+    assert.equal(update.headline, headline);
+    assert.equal(update.publishedAt, "2026-10-06");
+    assert.equal(update.destination, destination);
+    assert.equal(update.country, country);
+    assert.equal(update.category, "events-experiences");
+    assert.equal(update.eventEndAt, eventEndAt);
+    assert.equal(update.expiresAt, expiresAt);
+    assert.equal(getActiveTravelUpdates(beforePublication).some((item) => item.id === update.id), false);
+    assert.ok(active.some((item) => item.id === update.id));
+    assert.ok(getActiveTravelUpdates(new Date(new Date(expiresAt).getTime() - 1)).some((item) => item.id === update.id));
+    assert.equal(getActiveTravelUpdates(new Date(expiresAt)).some((item) => item.id === update.id), false);
+    assert.ok(update.sources.length > 0);
+    assert.ok(update.sources.every((source) => source.accessedAt === "2026-10-06"));
+    assert.ok(filterTravelUpdates(active, destination, "events-experiences").some((item) => item.id === update.id));
+  }
+
+  const singapore = getTravelUpdateBySlug("singapore-f1-road-closures-transport-2026");
+  const singaporeCopy = singapore?.body.map((block) => block.text ?? block.items?.join(" ") ?? "").join(" ") ?? "";
+  assert.match(singaporeCopy, /12:01 AM on Wednesday, October 7/);
+  assert.match(singaporeCopy, /last North-South and East-West Line trains from City Hall/);
+  assert.ok(singapore?.sources.some((source) => source.url.endsWith("FA_LTA_F1_2026_Brochure.pdf")));
+  assert.ok(singapore?.sources.some((source) => source.url.includes("List%20of%20Skipped%20Bus%20Stops")));
+
+  const hangeul = getTravelUpdateBySlug("hangeul-week-seoul-2026");
+  const hangeulCopy = hangeul?.body.map((block) => block.text ?? block.items?.join(" ") ?? "").join(" ") ?? "";
+  assert.match(hangeulCopy, /Hangeul Week opens today and runs through October 17/);
+  assert.match(hangeulCopy, /media façade is also later, not today/);
+  assert.ok(hangeul?.sources.some((source) => source.url === "https://www.mcst.go.kr/english/policy/pressView.jsp?pSeq=669"));
+
+  const phuket = getTravelUpdateBySlug("phuket-vegetarian-festival-2026");
+  const phuketCopy = phuket?.body.map((block) => block.text ?? block.items?.join(" ") ?? "").join(" ") ?? "";
+  assert.match(phuketCopy, /listings currently differ/);
+  assert.match(phuketCopy, /does not provide this year’s individual shrine schedules/);
+  assert.ok(phuket?.sources.some((source) => source.url.includes("thailand.go.th")));
+  assert.ok(phuket?.sources.some((source) => source.publisher === "Tourism Authority of Thailand"));
+
+  const mambulawan = getTravelUpdateBySlug("mambulawan-festival-camarines-norte-2026");
+  const mambulawanCopy = mambulawan?.body.map((block) => block.text ?? block.items?.join(" ") ?? "").join(" ") ?? "";
+  assert.match(mambulawanCopy, /does not give a detailed 2026 schedule/);
+  assert.ok(mambulawan?.sources.some((source) => source.url === "https://tpb.gov.ph/events/mambulawan-festival/"));
 });
 
 test("event end date and listing expiry can be different", () => {

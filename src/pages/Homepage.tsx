@@ -3,6 +3,7 @@ import { ArrowDown, ArrowRight, ArrowUpRight, CalendarDays, Check, Compass, Hote
 import { Link } from "react-router-dom";
 import { SiteHeader } from "../components/SiteHeader";
 import { Brand } from "../components/Brand";
+import { HomepageReels } from "../components/HomepageReels";
 import { featuredDestinations } from "../data/destinations";
 import { japanDreamImages } from "../data/dreamTrips";
 import aerogoHeroImage from "../assets/aerogo-home-hero-illustration.png";
@@ -122,12 +123,16 @@ export function Homepage() {
             <div className="hero__copy">
               <h1 id="homepage-hero-title">Tell us where you want to go.</h1>
               <p>We’ll help you figure out the rest.</p>
-              <div className="hero__actions"><a className="button button--coral hero__primary" href="#inquiry">Plan my trip <ArrowUpRight size={16} /></a></div>
+              <div className="hero__actions">
+                <a className="button button--coral hero__primary" href="#inquiry">Plan my trip <ArrowUpRight size={16} /></a>
+                <a className="hero__secondary hero__secondary--updates" href="#travel-updates">Today’s Travel Update <ArrowRight size={15} aria-hidden="true" /></a>
+              </div>
             </div>
           </div>
         </div>
       </section>
       <TravelUpdatesPreview />
+      <HomepageReels />
       <section className="homepage-destination-section" id="destinations"><DestinationRail /></section>
 
       <section className="how-section section-pad" id="how-it-works">

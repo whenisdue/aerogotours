@@ -1648,8 +1648,11 @@ button.trip-event:hover .trip-event__content > strong { color: #b76c4e; }
 /* Travel Updates V1: a current, useful layer for the public homepage. */
 .travel-updates-preview,
 .travel-updates-site { background: #f7f9f8; }
-.travel-updates-preview { padding: 44px 0 76px; }
+.travel-updates-preview { padding: 54px 0 82px; }
 .travel-updates-preview__heading { display: flex; align-items: end; justify-content: space-between; gap: 32px; }
+.travel-updates-preview__heading-copy { min-width: 0; }
+.travel-updates-preview__label-row { display: flex; flex-wrap: wrap; align-items: center; gap: 7px 16px; }
+.travel-updates-preview__updated { color: #7b8782; font-size: 12px; font-weight: 600; line-height: 1.4; }
 .travel-updates-preview__heading h2,
 .travel-updates-page__intro h1,
 .travel-updates-page__listing-heading h2,
@@ -1767,8 +1770,8 @@ button.trip-event:hover .trip-event__content > strong { color: #b76c4e; }
 @media (max-width: 700px) {
   .travel-updates-preview { padding: 32px 0 58px; }
   .travel-updates-preview__heading { align-items: flex-start; flex-direction: column; gap: 16px; }
-  .travel-updates-preview__heading h2 { margin-top: 9px; font-size: 40px; }
-  .travel-updates-preview__heading p { font-size: 14px; }
+  .travel-updates-preview__heading h2 { margin-top: 9px; font-size: clamp(36px, 9.3vw, 40px); }
+  .travel-updates-preview__heading p { font-size: 15px; }
   .travel-updates-preview__grid { gap: 13px; margin-top: 23px; }
   .travel-update-feature { display: block; border-radius: 18px; }
   .travel-update-feature__image { min-height: 215px; max-height: 270px; }
@@ -1821,6 +1824,44 @@ button.trip-event:hover .trip-event__content > strong { color: #b76c4e; }
   .homepage-destination-section .destination-rail__track { grid-auto-columns: 82%; }
   .travel-updates-filters { grid-template-columns: 1fr; }
   .travel-updates-preview__supporting .travel-update-card { grid-template-columns: 92px minmax(0, 1fr); }
+}
+
+/* Ready-to-publish travel Reels only; incomplete media stays hidden on the homepage. */
+.homepage-reels { background: #fff; padding: 58px 0 72px; }
+.homepage-reels__heading { margin-bottom: 26px; }
+.homepage-reels__eyebrow { color: #b76c4e; }
+.homepage-reels__heading h2 { margin: 10px 0 8px; color: #13342c; font-family: "DM Sans", "Avenir Next", Avenir, sans-serif; font-size: clamp(34px, 4vw, 48px); font-weight: 700; letter-spacing: -.035em; line-height: 1.05; }
+.homepage-reels__heading p { margin: 0; color: #66716d; font-size: 15px; line-height: 1.6; }
+.homepage-reels__viewport { min-width: 0; }
+.homepage-reels__viewport:focus-visible { outline: 3px solid #d1785a; outline-offset: 4px; border-radius: 12px; }
+.homepage-reels__grid { display: grid; width: min(100%, 800px); grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin: 0 auto; }
+.homepage-reel-card { display: flex; min-width: 0; flex-direction: column; color: #13342c; text-decoration: none; }
+.homepage-reel-card__poster { position: relative; display: block; overflow: hidden; aspect-ratio: 9 / 16; border: 1px solid #e2e9e6; border-radius: 18px; background: #f1f4f1; }
+.homepage-reel-card__poster img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .35s ease; }
+.homepage-reel-card:hover .homepage-reel-card__poster img { transform: scale(1.025); }
+.homepage-reel-card__play { position: absolute; right: 13px; bottom: 13px; display: grid; width: 38px; height: 38px; place-items: center; border: 1px solid rgba(255,255,255,.72); border-radius: 50%; background: rgba(19,52,44,.7); color: #fff; }
+.homepage-reel-card__body { display: flex; min-height: 126px; flex-direction: column; padding: 15px 2px 0; }
+.homepage-reel-card__meta { display: flex; flex-wrap: wrap; gap: 6px 11px; color: #66716d; font-size: 11px; font-weight: 700; letter-spacing: .035em; line-height: 1.4; }
+.homepage-reel-card__meta span:first-child { color: #004ba8; }
+.homepage-reel-card__body h3 { min-height: 3.7em; margin: 8px 0 0; color: #13342c; font-size: 18px; font-weight: 600; line-height: 1.23; }
+.homepage-reel-card:hover .homepage-reel-card__body h3 { color: #004ba8; }
+.homepage-reel-card:focus-visible { outline: 3px solid #d1785a; outline-offset: 5px; border-radius: 18px; }
+
+@media (max-width: 700px) {
+  .homepage-reels { padding: 42px 0 52px; }
+  .homepage-reels__heading { margin-bottom: 20px; }
+  .homepage-reels__heading h2 { font-size: clamp(34px, 9vw, 40px); }
+  .homepage-reels__viewport { overflow-x: auto; overscroll-behavior-x: contain; padding-bottom: 8px; scroll-padding-inline: 2px; scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .homepage-reels__viewport::-webkit-scrollbar { display: none; }
+  .homepage-reels__grid { width: max-content; grid-template-columns: none; grid-auto-columns: min(74vw, 260px); grid-auto-flow: column; gap: 15px; margin: 0; }
+  .homepage-reel-card { scroll-snap-align: start; }
+  .homepage-reel-card__body { min-height: 120px; }
+  .homepage-reel-card__body h3 { font-size: 17px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .homepage-reel-card__poster img { transition: none; }
+  .homepage-reels__viewport { scroll-behavior: auto; scroll-snap-type: x proximity; }
 }
 
 /* Shared Dream Trip opening: a compact snapshot keeps the journey in view before details. */
@@ -3414,7 +3455,7 @@ button.trip-event:hover .trip-event__content > strong { color: #b76c4e; }
 
 .public-site:has(#travel-updates) .hero__actions {
   align-items: flex-start;
-  gap: 0;
+  gap: 14px;
   margin-top: 26px;
 }
 
@@ -3432,6 +3473,22 @@ button.trip-event:hover .trip-event__content > strong { color: #b76c4e; }
 .public-site:has(#travel-updates) .hero__actions .hero__primary:hover {
   border-color: #d85d44;
   background: #d85d44;
+}
+
+.public-site:has(#travel-updates) .hero__actions .hero__secondary--updates {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 7px;
+  color: rgba(255, 255, 255, .9);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.35;
+  text-decoration: none;
+}
+
+.public-site:has(#travel-updates) .hero__actions .hero__secondary--updates:hover {
+  color: #f0b28f;
 }
 
 @media (max-width: 700px) {
@@ -3465,6 +3522,9 @@ button.trip-event:hover .trip-event__content > strong { color: #b76c4e; }
   }
 
   .public-site:has(#travel-updates) .hero__actions {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
     margin-top: 22px;
   }
 
@@ -3472,6 +3532,10 @@ button.trip-event:hover .trip-event__content > strong { color: #b76c4e; }
     width: min(100%, 270px);
     min-height: 52px;
     justify-content: center;
+  }
+
+  .public-site:has(#travel-updates) .hero__actions .hero__secondary--updates {
+    align-self: flex-start;
   }
 }
 

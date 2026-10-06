@@ -21,19 +21,49 @@ const formatDate = (date: string) => new Intl.DateTimeFormat("en-PH", {
   timeZone: "Asia/Manila",
 }).format(new Date(`${date.slice(0, 10)}T00:00:00+08:00`));
 
+const formatPublishedUpdateDay = (publishedAt: string) => {
+  const dateOnly = publishedAt.slice(0, 10);
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(dateOnly);
+  if (!match) return null;
+
+  const [, yearText, monthText, dayText] = match;
+  const year = Number(yearText);
+  const month = Number(monthText);
+  const day = Number(dayText);
+  const calendarDate = new Date(Date.UTC(year, month - 1, day));
+  if (
+    calendarDate.getUTCFullYear() !== year ||
+    calendarDate.getUTCMonth() !== month - 1 ||
+    calendarDate.getUTCDate() !== day
+  ) return null;
+
+  const date = new Date(`${dateOnly}T00:00:00+08:00`);
+  if (!Number.isFinite(date.getTime())) return null;
+
+  return new Intl.DateTimeFormat("en-PH", {
+    day: "numeric",
+    month: "long",
+    timeZone: "Asia/Manila",
+  }).format(date);
+};
+
 const formatCategory = (category: TravelUpdateCategory) => categoryLabels[category];
 
 export function TravelUpdatesPreview() {
   const [featured, ...supporting] = getHomepageTravelUpdates();
   if (!featured) return null;
+  const updatedDay = formatPublishedUpdateDay(featured.publishedAt);
 
-  return <section className="travel-updates-preview" id="travel-updates" aria-labelledby="travel-updates-preview-title">
+  return <section className="travel-updates-preview" id="travel-updates" tabIndex={-1} aria-labelledby="travel-updates-preview-title">
     <div className="page-shell travel-updates-preview__inner">
       <div className="travel-updates-preview__heading">
-        <div>
-          <span className="eyebrow travel-updates-eyebrow">TRAVEL UPDATES</span>
-          <h2 id="travel-updates-preview-title">What’s happening in travel</h2>
-          <p>Useful events, destination news and travel updates worth knowing before your next trip.</p>
+        <div className="travel-updates-preview__heading-copy">
+          <div className="travel-updates-preview__label-row">
+            <span className="eyebrow travel-updates-eyebrow">AEROGO TRAVEL UPDATE</span>
+            {updatedDay && <time className="travel-updates-preview__updated" dateTime={`${featured.publishedAt.slice(0, 10)}T00:00:00+08:00`}>Updated {updatedDay}</time>}
+          </div>
+          <h2 id="travel-updates-preview-title">Today’s Travel Update</h2>
+          <p>Events, destination news and useful things worth knowing before your next trip.</p>
         </div>
         <Link className="travel-updates-preview__all" to="/travel-updates">View all updates <ArrowRight size={16} /></Link>
       </div>
