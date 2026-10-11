@@ -41,6 +41,7 @@ export function DestinationPage() {
         <span className="eyebrow">A FEELING, NOT A CHECKLIST</span>
         <div className="destination-intro__copy">
           {destination.intro.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+          {destination.slug === "singapore" && <Link className="destination-guide-link" to="/guides/singapore/gardens-by-the-bay">Read our Gardens by the Bay visitor guide <ArrowUpRight size={15} /></Link>}
         </div>
       </section>
 

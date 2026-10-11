@@ -8,6 +8,7 @@ import { MyTripPage } from "./pages/MyTrip";
 import { findDestination } from "./data/destinations";
 import { getTravelUpdateBySlug } from "./data/travelUpdates";
 import { TravelUpdateArticlePage, TravelUpdatesPage } from "./pages/TravelUpdates";
+import { GardensByTheBayGuide } from "./pages/GardensByTheBayGuide";
 import { VietnamProposalPage } from "./pages/VietnamProposal";
 import "./App.css";
 
@@ -19,8 +20,11 @@ function PageTitle() {
   const travelUpdate = getTravelUpdateBySlug(travelUpdateSlug);
   const isTravelUpdatesRoute = pathname === "/travel-updates" || pathname.startsWith("/travel-updates/");
   const isTravelUpdateArticle = Boolean(travelUpdate);
+  const isGardensGuide = pathname === "/guides/singapore/gardens-by-the-bay";
   const isVietnamProposal = pathname === "/trip/vietnam-danang-hanoi";
-  const pageTitle = travelUpdate
+  const pageTitle = isGardensGuide
+    ? "Gardens by the Bay Visitor Guide · Singapore · AeroGo"
+    : travelUpdate
     ? `${travelUpdate.headline} · AeroGo Travel Updates`
     : pathname.startsWith("/companion")
       ? "Sample Trip Companion · AeroGo"
@@ -37,7 +41,8 @@ function PageTitle() {
           : isTravelUpdatesRoute
             ? "AeroGo Travel Updates · AeroGo"
           : "AeroGo Travel & Tours | From what if? to we're going.";
-  const pageDescription = travelUpdate?.summary
+  const pageDescription = (isGardensGuide ? "A practical visitor guide to Gardens by the Bay in Singapore: free and ticketed areas, Cloud Forest, changing floral displays, Supertrees and planning tips." : undefined)
+    ?? travelUpdate?.summary
     ?? (isVietnamProposal ? "A six-day Vietnam itinerary through Da Nang and Hanoi, with guided tours, free time and confirmed package inclusions." : undefined)
     ?? (isTravelUpdatesRoute ? "Useful events, travel changes and destination ideas for your next trip." : "AeroGo Travel & Tours helps make your trip feel easy. Thoughtful travel planning, booking organization, and a private trip companion.");
 
@@ -45,27 +50,34 @@ function PageTitle() {
     document.title = pageTitle;
     setMeta("name", "description", pageDescription);
 
-    if (isTravelUpdatesRoute) {
+    if (isTravelUpdatesRoute || isGardensGuide) {
       const canonicalUrl = new URL(pathname, window.location.origin).href;
       setCanonical(canonicalUrl);
       setMeta("property", "og:title", pageTitle);
       setMeta("property", "og:description", pageDescription);
       setMeta("property", "og:url", canonicalUrl);
-      setMeta("property", "og:type", isTravelUpdateArticle ? "article" : "website");
-      setMeta("name", "twitter:card", isTravelUpdateArticle ? "summary_large_image" : "summary");
+      setMeta("property", "og:type", isTravelUpdateArticle || isGardensGuide ? "article" : "website");
+      setMeta("name", "twitter:card", isTravelUpdateArticle || isGardensGuide ? "summary_large_image" : "summary");
       setMeta("name", "twitter:title", pageTitle);
       setMeta("name", "twitter:description", pageDescription);
       if (travelUpdate) {
         setMeta("property", "og:image", travelUpdate.image.src);
         setMeta("name", "twitter:image", travelUpdate.image.src);
+        setMeta("property", "og:image:alt", travelUpdate.image.alt);
+      } else if (isGardensGuide) {
+        const shareImage = new URL("/images/gardens-by-the-bay/optimized/S25-1440.jpg", window.location.origin).href;
+        setMeta("property", "og:image", shareImage);
+        setMeta("name", "twitter:image", shareImage);
+        setMeta("property", "og:image:alt", "An elevated daytime view of Supertree Grove and the conservatories at Gardens by the Bay");
       } else {
         removeMeta("property", "og:image");
         removeMeta("name", "twitter:image");
+        removeMeta("property", "og:image:alt");
       }
     } else {
       removeTravelUpdatesMeta();
     }
-  }, [isTravelUpdateArticle, isTravelUpdatesRoute, pageDescription, pageTitle, pathname, travelUpdate]);
+  }, [isGardensGuide, isTravelUpdateArticle, isTravelUpdatesRoute, pageDescription, pageTitle, pathname, travelUpdate]);
   useEffect(() => {
     const robots = document.querySelector('meta[name="robots"]') ?? document.head.appendChild(document.createElement("meta"));
     robots.setAttribute("name", "robots");
@@ -92,7 +104,7 @@ function setCanonical(url: string) {
 }
 
 function removeTravelUpdatesMeta() {
-  ["og:title", "og:description", "og:url", "og:type", "og:image"].forEach((key) => removeMeta("property", key));
+  ["og:title", "og:description", "og:url", "og:type", "og:image", "og:image:alt"].forEach((key) => removeMeta("property", key));
   ["twitter:card", "twitter:title", "twitter:description", "twitter:image"].forEach((key) => removeMeta("name", key));
   document.head.querySelector('link[rel="canonical"]')?.remove();
 }
@@ -121,6 +133,7 @@ export default function App() {
     <Route path="/trip/:token" element={<MyTripPage />} />
     <Route path="/travel-updates" element={<TravelUpdatesPage />} />
     <Route path="/travel-updates/:slug" element={<TravelUpdateArticlePage />} />
+    <Route path="/guides/singapore/gardens-by-the-bay" element={<GardensByTheBayGuide />} />
     <Route path="/destinations/:slug" element={<DestinationPage />} />
     <Route path="/dream/:slug" element={<DreamTripPage />} />
     <Route path="/dream/*" element={<DreamTripNotFound />} />
