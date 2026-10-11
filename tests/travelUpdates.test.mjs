@@ -323,12 +323,12 @@ test("October 5 updates use an intentional same-day order, preserve filters and 
   assert.ok(pelicula?.sources.some((source) => source.url.includes("fbid0Qc2YEi3MLgc1mBNTtritTeQXjeSAaFxS5AwNfKVcYNzaaJdPyGeCMySmQKdyzDa4l")));
 });
 
-test("expired stories cannot be the homepage hero", () => {
+test("older expired stories stay out while the newest active story remains the homepage hero", () => {
   const beforeExpiry = getHomepageTravelUpdates(new Date("2026-10-18T23:59:59+08:00"));
   const atExpiry = getHomepageTravelUpdates(new Date("2026-10-19T00:00:00+08:00"));
 
-  assert.equal(beforeExpiry[0]?.slug, "phuket-vegetarian-festival-2026");
-  assert.equal(atExpiry[0]?.slug, "kasanggayahan-festival-sorsogon-2026");
+  assert.equal(beforeExpiry[0]?.slug, "tokyo-bay-grand-fireworks-festival-2026");
+  assert.equal(atExpiry[0]?.slug, "tokyo-bay-grand-fireworks-festival-2026");
   assert.equal(beforeExpiry.some((update) => update.slug === "lego-experience-the-thrill-singapore-2026"), false);
   assert.equal(atExpiry.some((update) => update.slug === "jinju-namgang-yudeung-festival-2026"), false);
   assert.equal(atExpiry.some((update) => update.slug === "phuket-vegetarian-festival-2026"), false);
@@ -638,4 +638,70 @@ test("event end date and listing expiry can be different", () => {
   assert.equal(gastronomy.expiresAt, "2026-10-05T00:00:00+08:00");
   assert.ok(getActiveTravelUpdates(new Date("2026-10-04T23:59:59+08:00")).some((update) => update.id === gastronomy.id));
   assert.equal(getActiveTravelUpdates(new Date("2026-10-05T00:00:00+08:00")).some((update) => update.id === gastronomy.id), false);
+});
+
+test("October 11 adds exactly three official-source updates with automatic homepage selection", () => {
+  const slugs = [
+    "tokyo-bay-grand-fireworks-festival-2026",
+    "sunchang-jangryu-food-festival-2026",
+    "pal-manila-saipan-flights-october-2026",
+  ];
+  const beforePublication = new Date("2026-10-10T23:59:59+08:00");
+  const publishedToday = new Date("2026-10-11T12:00:00+08:00");
+  const newArticles = travelUpdates.filter((update) => update.publishedAt === "2026-10-11");
+
+  assert.deepEqual(newArticles.map((update) => update.slug), slugs);
+  assert.deepEqual(getHomepageTravelUpdates(publishedToday).map((update) => update.slug), slugs);
+  assert.equal(getFeaturedTravelUpdate(publishedToday)?.slug, slugs[0]);
+
+  const cases = [
+    { slug: slugs[0], headline: "Tokyo Bay's Grand Fireworks Festival returns after 11 years: What travelers should know", destination: "Tokyo", country: "Japan", category: "events-experiences", eventStartAt: "2026-10-24", eventEndAt: "2026-10-24", expiresAt: "2026-10-25T00:00:00+08:00" },
+    { slug: slugs[1], headline: "Korea's Sunchang food festival begins October 15 with traditional gochujang-making experiences", destination: "Sunchang, Jeonbuk", country: "South Korea", category: "food-experiences", eventStartAt: "2026-10-15", eventEndAt: "2026-10-18", expiresAt: "2026-10-19T00:00:00+08:00" },
+    { slug: slugs[2], headline: "Philippine Airlines to restore nonstop Manila–Saipan flights October 25", destination: "Manila / Saipan", country: "Philippines / Northern Mariana Islands", category: "flights-airports", eventStartAt: "2026-10-25", eventEndAt: undefined, expiresAt: undefined },
+  ];
+
+  for (const expected of cases) {
+    const update = getTravelUpdateBySlug(expected.slug);
+    assert.ok(update);
+    assert.equal(update.headline, expected.headline);
+    assert.equal(update.publishedAt, "2026-10-11");
+    assert.equal(update.destination, expected.destination);
+    assert.equal(update.country, expected.country);
+    assert.equal(update.category, expected.category);
+    assert.equal(update.eventStartAt, expected.eventStartAt);
+    assert.equal(update.eventEndAt, expected.eventEndAt);
+    assert.equal(update.expiresAt, expected.expiresAt);
+    assert.equal(update.featured, undefined);
+    assert.equal(getActiveTravelUpdates(beforePublication).some((item) => item.id === update.id), false);
+    assert.ok(getActiveTravelUpdates(publishedToday).some((item) => item.id === update.id));
+    assert.ok(update.sources.every((source) => source.accessedAt === "2026-10-11"));
+    assert.ok(filterTravelUpdates(getActiveTravelUpdates(publishedToday), update.destination, update.category).some((item) => item.id === update.id));
+  }
+
+  const tokyo = getTravelUpdateBySlug(slugs[0]);
+  const tokyoCopy = tokyo?.body.map((block) => block.text ?? block.items?.join(" ") ?? "").join(" ") ?? "";
+  assert.match(tokyoCopy, /ticket-only/);
+  assert.match(tokyoCopy, /Do not stop on sidewalks/);
+  assert.match(tokyoCopy, /after 2:00 PM on October 24/);
+  assert.ok(tokyo?.sources.some((source) => source.publisher === "Tokyo Metropolitan Government"));
+
+  const sunchang = getTravelUpdateBySlug(slugs[1]);
+  const sunchangCopy = sunchang?.body.map((block) => block.text ?? block.items?.join(" ") ?? "").join(" ") ?? "";
+  assert.match(sunchangCopy, /Global Gochujang Making/);
+  assert.match(sunchangCopy, /Global Jang Culture School/);
+  assert.match(sunchangCopy, /end time/);
+  assert.match(sunchangCopy, /General admission is free/);
+  assert.ok(sunchang?.sources.some((source) => source.publisher === "Korea Tourism Organization"));
+
+  const pal = getTravelUpdateBySlug(slugs[2]);
+  const palCopy = pal?.body.map((block) => block.text ?? block.items?.join(" ") ?? "").join(" ") ?? "";
+  assert.match(palCopy, /Philippine passport holders are not among the nationalities listed/);
+  assert.match(palCopy, /do not assume Saipan is visa-free/);
+  assert.match(palCopy, /effective only through October 24/);
+  assert.ok(pal?.sources.some((source) => source.publisher === "U.S. Department of State"));
+  assert.ok(pal?.sources.some((source) => source.publisher === "U.S. Customs and Border Protection"));
+
+  assert.equal(getActiveTravelUpdates(new Date("2026-10-19T00:00:00+08:00")).some((item) => item.slug === slugs[1]), false);
+  assert.equal(getActiveTravelUpdates(new Date("2026-10-25T00:00:00+08:00")).some((item) => item.slug === slugs[0]), false);
+  assert.ok(getActiveTravelUpdates(new Date("2027-01-01T00:00:00+08:00")).some((item) => item.slug === slugs[2]));
 });

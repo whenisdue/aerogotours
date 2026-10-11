@@ -56,6 +56,7 @@ const october2AccessedAt = "2026-10-02";
 const october3AccessedAt = "2026-10-03";
 const october5AccessedAt = "2026-10-05";
 const october6AccessedAt = "2026-10-06";
+const october11AccessedAt = "2026-10-11";
 
 const unsplash = (photoId: string, width: number) =>
   `https://images.unsplash.com/${photoId}?auto=format&fit=crop&w=${width}&q=85`;
@@ -67,6 +68,113 @@ const destinationImage = (slug: string) => {
 };
 
 export const travelUpdates: TravelUpdate[] = [
+  {
+    id: "tokyo-bay-grand-fireworks-festival-2026",
+    slug: "tokyo-bay-grand-fireworks-festival-2026",
+    headline: "Tokyo Bay's Grand Fireworks Festival returns after 11 years: What travelers should know",
+    summary: "Tokyo Bay's fireworks festival returns October 24 after an 11-year absence, with approximately 12,000 fireworks and important ticketing and transport restrictions for visitors.",
+    destination: "Tokyo",
+    country: "Japan",
+    category: "events-experiences",
+    publishedAt: "2026-10-11",
+    image: destinationImage("japan"),
+    body: [
+      { type: "paragraph", text: "Tokyo Bay's Grand Fireworks Festival is scheduled to return on Saturday, October 24, 2026, for its first edition since 2015. It is part of the 80th-anniversary celebrations of Chuo City and Minato City. For travelers in Tokyo that day, the main planning point is access: official viewing venues are ticket-only, and traffic restrictions will affect the waterfront." },
+      { type: "heading", text: "When and where are the fireworks?" },
+      { type: "paragraph", text: "The organizer plans approximately 12,000 fireworks from 5:30 PM to 7:00 PM, launched over Tokyo Port waters offshore from Harumi Pier. The gates are scheduled to open at 3:30 PM. The event will be cancelled in severe weather and has no postponement date." },
+      { type: "heading", text: "Can tourists attend?" },
+      { type: "paragraph", text: "Yes, visitors may attend an official viewing venue with a valid ticket for that venue. The festival is completely ticket-only, there are no same-day ticket sales, and the official site does not confirm that advance tickets remain available. Some venues are reserved for residents of the relevant ward; other general venues are open to anyone who obtains a ticket. Check your ticket area and entry instructions before travelling. The organizer's October 9 notice says a paper ticket must be brought to the venue; a purchase history or confirmation email alone will not admit you." },
+      { type: "heading", text: "Waterfront access and transport" },
+      { type: "paragraph", text: "Do not stop on sidewalks or other public areas to watch. The festival's current traffic information lists road and pedestrian restrictions around the waterfront from about 3:00 PM to 9:00 PM, with exact times varying by location. The viewing venues have no parking or bicycle parking, and organizers advise visitors to use public transport. The official transport page lists temporary schedules for several train and bus services and says other routes may also change. Check its English traffic map and the relevant operators' live notices shortly before setting out, allow extra time, and avoid driving into the area." },
+      { type: "heading", text: "Toyosu Market has earlier closing access" },
+      { type: "paragraph", text: "Tokyo Metropolitan Government says entry to Toyosu Market's Visitor Course stops after 2:00 PM on October 24, and visitors already inside must leave by 3:00 PM. The restaurant and retail areas have the same 2:00 PM entry cutoff and 3:00 PM departure deadline. Green Roof Plaza is closed from 11:00 PM on Friday, October 23 through the end of Saturday, October 24. Toyosu Senkyaku Banrai is listed as open as usual. Move a Toyosu Market visit earlier in the day and check the latest notices for the specific places you plan to visit." },
+      { type: "heading", text: "Plan for October 24" },
+      { type: "list", items: [
+        "Confirm that you have a valid ticket for an official viewing venue; do not rely on same-day sales or a public sidewalk viewing.",
+        "Bring the required paper ticket and follow the gate and venue instructions printed on it.",
+        "Check the festival's English traffic map and live train or bus information before leaving your hotel. Restrictions and service changes vary by location.",
+        "Visit Toyosu Market before its 2:00 PM entry cutoff and leave the Visitor Course and restaurant or retail areas by 3:00 PM.",
+        "Check the organizer's weather notice on the day. Severe weather cancels the event, with no replacement date."
+      ] },
+    ],
+    sources: [
+      { label: "Festival overview, latest attendee notice and ticket information", url: "https://tokyo-hanabi-festival.com/about/", publisher: "Tokyo Bay Grand Fireworks Festival", accessedAt: october11AccessedAt },
+      { label: "Current official ticket terms and sales schedule", url: "https://tokyo-hanabi-festival.com/ticket/", publisher: "Tokyo Bay Grand Fireworks Festival", accessedAt: october11AccessedAt },
+      { label: "Venue, traffic restrictions and transport information", url: "https://tokyo-hanabi-festival.com/venue/", publisher: "Tokyo Bay Grand Fireworks Festival", accessedAt: october11AccessedAt },
+      { label: "Tokyo Hanabi Festival visitor information", url: "https://www.city.minato.tokyo.jp/kuse/koho/minatomonthly/261001/tokyo-hanabi-festival-2026.html", publisher: "Minato City", accessedAt: october11AccessedAt },
+      { label: "Toyosu Market entry restrictions for October 24", url: "https://www.english.metro.tokyo.lg.jp/w/016-101-011706", publisher: "Tokyo Metropolitan Government", accessedAt: october11AccessedAt },
+    ],
+    eventStartAt: "2026-10-24",
+    eventEndAt: "2026-10-24",
+    expiresAt: "2026-10-25T00:00:00+08:00",
+  },
+  {
+    id: "sunchang-jangryu-food-festival-2026",
+    slug: "sunchang-jangryu-food-festival-2026",
+    headline: "Korea's Sunchang food festival begins October 15 with traditional gochujang-making experiences",
+    summary: "Sunchang celebrates Korea's traditional fermented foods October 15–18, with gochujang-making experiences, cultural performances and local specialties.",
+    destination: "Sunchang, Jeonbuk",
+    country: "South Korea",
+    category: "food-experiences",
+    publishedAt: "2026-10-11",
+    image: destinationImage("south-korea"),
+    body: [
+      { type: "paragraph", text: "The 21st Sunchang Jangryu Festival runs October 15–18 at Sunchang Gochujang Village and Sunchang Fermentation Theme Park. It is a practical stop for travelers interested in Korean food culture: visitors can see performances and exhibitions and join selected food-making activities. General admission is free, but some programs have separate fees or registration, so check the current schedule before building a day around a workshop." },
+      { type: "heading", text: "What are gochujang and doenjang?" },
+      { type: "paragraph", text: "The festival celebrates Korean jang, a family of traditional fermented sauces and pastes. Gochujang is a fermented red chili paste with a savory, spicy taste; doenjang is a fermented soybean paste used in Korean cooking. Sunchang is known for its gochujang-making tradition, which is why the festival combines food experiences with local history and performances. This year's theme is “A World of Flavors, Captured in Sunchang.”" },
+      { type: "heading", text: "Activities to look for" },
+      { type: "paragraph", text: "The current program lists Global Gochujang Making, the Global Jang Culture School, traditional food-making activities, fermentation-culture displays and performances. The Global Jang Culture School is listed for October 15–18 and includes hands-on making activities; the organizer currently lists advance registration and a KRW 15,000 participation fee. Global Gochujang Making is listed for October 16 and 17, with advance or on-site registration and a KRW 10,000 fee. The organizer's detailed program page and daily calendar disagree about the October 17 session's end time, so confirm the latest schedule before travelling for that session." },
+      { type: "paragraph", text: "The Royal Gochujang Tribute Procession recreates a historical tradition associated with Sunchang gochujang. The organizer lists it for October 17 and 18 from 2:00 PM to 4:00 PM. Its program page lists advance registration and a KRW 20,000 participation fee; check whether that registration is needed if you only want to watch. The festival listing also describes kimchi, rice-cake, and other jang-related activities, but participation and availability can vary by program." },
+      { type: "heading", text: "Admission, fees and getting there" },
+      { type: "paragraph", text: "The Korea Tourism Organization lists festival admission as free, with fees applying to some programs. A paid workshop or procession registration is separate from general admission. The organizer's current transport page lists festival shuttles from Jeonju and Gwangju and a free shuttle from Namwon Station; its 2026 schedule and fares may change with on-site conditions. If you are travelling from Seoul or another base, arrange a connection to one of those points and check pickup locations, operating times and fares before departure." },
+      { type: "heading", text: "What to check before attending" },
+      { type: "list", items: [
+        "Use the organizer's 2026 day-by-day calendar for performance and workshop times; one October 17 gochujang session has inconsistent end times on two official pages.",
+        "Confirm whether a chosen activity requires advance registration, has on-site sign-up, and what it costs. Do not assume a place will be available on arrival.",
+        "Check the shuttle page for current pickup points, dates, times and fares, especially if connecting through Jeonju, Gwangju or Namwon.",
+        "Check the organizer's latest notices for changes to program details and confirm food or product prices at the venue."
+      ] },
+    ],
+    sources: [
+      { label: "2026 Sunchang Jangryu Festival visitor information", url: "https://english.visitkorea.or.kr/svc/contents/contentsView.do?vcontsId=92546", publisher: "Korea Tourism Organization", accessedAt: october11AccessedAt },
+      { label: "Festival schedule and daily program", url: "https://www.jangfestival.co.kr/index.do?menuUid=ff808081970b44b101970b648b670042", publisher: "Sunchang Jangryu Festival", accessedAt: october11AccessedAt },
+      { label: "Official activity details, registration and fees", url: "https://www.jangfestival.co.kr/index.do?menuUid=ff808081970b44b101970b64c5650046", publisher: "Sunchang Jangryu Festival", accessedAt: october11AccessedAt },
+      { label: "2026 festival transport and shuttle information", url: "https://www.jangfestival.co.kr/index.do?menuUid=ff808081970b44b101970b643b8b003e", publisher: "Sunchang Jangryu Festival", accessedAt: october11AccessedAt },
+    ],
+    eventStartAt: "2026-10-15",
+    eventEndAt: "2026-10-18",
+    expiresAt: "2026-10-19T00:00:00+08:00",
+  },
+  {
+    id: "pal-manila-saipan-flights-october-2026",
+    slug: "pal-manila-saipan-flights-october-2026",
+    headline: "Philippine Airlines to restore nonstop Manila–Saipan flights October 25",
+    summary: "Philippine Airlines has announced the return of nonstop Manila–Saipan flights on October 25, providing eligible travelers with another direct route to the Northern Mariana Islands.",
+    destination: "Manila / Saipan",
+    country: "Philippines / Northern Mariana Islands",
+    category: "flights-airports",
+    publishedAt: "2026-10-11",
+    image: {
+      src: unsplash("photo-1436491865332-7a61a109cc05", 2200),
+      alt: "Passenger aircraft flying above the clouds",
+    },
+    body: [
+      { type: "paragraph", text: "Philippine Airlines announced on October 1 that it plans to restore nonstop flights between Manila and Saipan beginning October 25, 2026. The route would give eligible travelers another direct option to the Commonwealth of the Northern Mariana Islands. PAL describes Saipan as a destination for beaches, diving, snorkeling, historical landmarks and nature parks." },
+      { type: "heading", text: "Entry requirements matter for Filipino passport holders" },
+      { type: "paragraph", text: "Saipan is in the Commonwealth of the Northern Mariana Islands, a U.S. territory. Philippine passport holders are not among the nationalities listed for the Guam–CNMI Visa Waiver Program. A Philippine passport alone therefore does not qualify a traveler under that program; do not assume Saipan is visa-free. Before buying a ticket, check the U.S. visa or other entry documents that apply to your nationality, passport and immigration status with the U.S. Department of State and U.S. Customs and Border Protection. Different rules may apply to dual nationals, people holding a valid U.S. visa, permanent residents and other immigration statuses. Meeting document requirements does not guarantee admission." },
+      { type: "heading", text: "Check your actual flight before paying" },
+      { type: "paragraph", text: "PAL's October 1 announcement confirms the planned October 25 resumption and says flights may be booked through its website, mobile app, reservations hotline, ticket offices and accredited travel agents. It does not list flight numbers, operating days, departure or arrival times, terminals or fare conditions. The PAL international timetable available when this update was checked is effective only through October 24, so it does not verify the schedule after service resumes. PAL's live route page showed a sample round trip departing October 25 when checked on October 11, but displayed inventory and fare information can change; search your exact dates and review the current itinerary before booking." },
+      { type: "paragraph", text: "Before payment, confirm that the itinerary is nonstop, the flight dates and local departure and arrival times fit your plans, which terminals apply, what the fare allows for changes or refunds, and what baggage is included. Check entry documents first, then recheck the PAL itinerary and relevant U.S. guidance close to departure." },
+    ],
+    sources: [
+      { label: "PAL announcement: Manila–Saipan service beginning October 25", url: "https://www.philippineairlines.com/us/en/newsevent-listingpage/press-releases-statements/pal-reconnects-manila-and-saipan.html", publisher: "Philippine Airlines", accessedAt: october11AccessedAt },
+      { label: "PAL Manila–Saipan live route search", url: "https://flights.philippineairlines.com/en-ph/flights-from-manila-to-saipan", publisher: "Philippine Airlines", accessedAt: october11AccessedAt },
+      { label: "PAL international timetable effective through October 24, 2026", url: "https://www.philippineairlines.com/content/dam/palportal/migration/feature/timetable/260327-INTL-Summr-as-of-Mar-27-2026.pdf", publisher: "Philippine Airlines", accessedAt: october11AccessedAt },
+      { label: "Guam–CNMI Visa Waiver Program and U.S. visa guidance", url: "https://travel.state.gov/content/travel/en/us-visas/tourism-visit/visa-waiver-program.html", publisher: "U.S. Department of State", accessedAt: october11AccessedAt },
+      { label: "CBP guidance on travel authorization and status", url: "https://www.help.cbp.gov/s/article/Article-1441?language=en_US", publisher: "U.S. Customs and Border Protection", accessedAt: october11AccessedAt },
+    ],
+    eventStartAt: "2026-10-25",
+  },
   {
     id: "singapore-f1-road-closures-transport-2026",
     slug: "singapore-f1-road-closures-transport-2026",
