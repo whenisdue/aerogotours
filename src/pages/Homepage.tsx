@@ -1,25 +1,22 @@
-import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
-import { ArrowDown, ArrowRight, ArrowUpRight, CalendarDays, Check, Compass, Hotel, Luggage, MessageCircle, Plane, Sparkles, Ticket, TrainFront, WalletCards } from "lucide-react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
+import { ArrowDown, ArrowRight, ArrowUpRight, Check, MessageCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { SiteHeader } from "../components/SiteHeader";
-import { Brand } from "../components/Brand";
-import { HomepageReels } from "../components/HomepageReels";
-import { featuredDestinations } from "../data/destinations";
+import { EditorialFooter } from "../components/EditorialFooter";
+import { EditorialPhoto } from "../components/EditorialPhoto";
+import { TravelGuideFeature } from "../components/TravelGuideFeature";
+import { travelGuides } from "../data/travelGuides";
+import "./Discovery.css";
 import { japanDreamImages } from "../data/dreamTrips";
-import aerogoHeroImage from "../assets/aerogo-home-hero-illustration.png";
 import { TravelUpdatesPreview } from "./TravelUpdates";
 import type { DreamTripHandoff } from "../utils/dreamTripEngine";
 import { createDreamTrip } from "../utils/dreamTripEngine";
+import vietnamHeroPhoto from "../assets/vietnam-hero.webp";
 
-const services = [
-  { icon: <Plane size={19} />, label: "Flights" },
-  { icon: <Hotel size={19} />, label: "Hotels" },
-  { icon: <TrainFront size={19} />, label: "Transfers" },
-  { icon: <Ticket size={19} />, label: "Activities" },
-  { icon: <CalendarDays size={19} />, label: "Day-by-day plans" },
-  { icon: <WalletCards size={19} />, label: "Booking organization" },
-  { icon: <Luggage size={19} />, label: "Pre-trip reminders" },
-  { icon: <MessageCircle size={19} />, label: "Travel support" },
+const discoveryDestinations = [
+  { slug: "japan", name: "Japan", region: "Asia", summary: "Quiet gardens, neighborhood discoveries and city nights." },
+  { slug: "greece", name: "Greece", region: "Europe", summary: "Island lanes, long lunches and blue horizons." },
+  { slug: "australia", name: "Australia", region: "Oceania", summary: "Coastal cities, open-air days and room to roam." },
 ];
 
 const homepageDreamTrip = createDreamTrip({ group: "sample", travelers: 4, duration: 7, interest: "mix", pace: "balanced" });
@@ -113,74 +110,61 @@ export function Homepage() {
     }
   };
 
-  return <div className="public-site">
+  return <div className="public-site media-homepage" id="discovery-home">
     <SiteHeader />
     <main>
-      <section className="hero" aria-labelledby="homepage-hero-title">
-        <div className="hero__visual" role="img" aria-label="Illustrated airport and city travel scene with luggage and rail" style={{ backgroundImage: `url(${aerogoHeroImage})` }}>
-          <div className="hero__image-shade" />
-          <div className="page-shell hero__inner">
-            <div className="hero__copy">
-              <h1 id="homepage-hero-title">Tell us where you want to go.</h1>
-              <p>We’ll help you figure out the rest.</p>
-              <div className="hero__actions">
-                <a className="button button--coral hero__primary" href="#inquiry">Plan my trip <ArrowUpRight size={16} /></a>
-                <a className="hero__secondary hero__secondary--updates" href="#travel-updates">Today’s Travel Update <ArrowRight size={15} aria-hidden="true" /></a>
-              </div>
-            </div>
+      <section className="discovery-hero page-shell" aria-labelledby="homepage-hero-title">
+        <div className="discovery-hero__copy">
+          <span className="discovery-eyebrow">The world, a little closer</span>
+          <h1 id="homepage-hero-title">See more of<br />the world.</h1>
+          <p>Travel stories, useful guides, and places worth exploring — whenever you’re ready.</p>
+          <div className="discovery-hero__actions">
+            <Link className="discovery-button" to="/guides">Explore Travel Guides <ArrowUpRight size={18} aria-hidden="true" /></Link>
+            <a className="discovery-text-link" href="#travel-updates">Latest Travel Updates <ArrowRight size={17} aria-hidden="true" /></a>
           </div>
+        </div>
+        <figure className="discovery-hero__figure">
+          <Link to="/guides/singapore/gardens-by-the-bay" aria-label="Explore our Gardens by the Bay visitor guide">
+            <EditorialPhoto image="S25" alt="An elevated daytime view of Supertree Grove, glass conservatories and the waterfront at Gardens by the Bay" priority />
+          </Link>
+          <figcaption><span>Singapore</span> Gardens by the Bay <ArrowUpRight size={14} aria-hidden="true" /></figcaption>
+        </figure>
+      </section>
+      <section className="discovery-featured page-shell" aria-labelledby="featured-guide-title">
+        <div className="discovery-section-label"><h2 id="featured-guide-title">Featured guide</h2><Link to="/guides">All travel guides <ArrowRight size={16} aria-hidden="true" /></Link></div>
+        {travelGuides.slice(0, 1).map((guide) => <TravelGuideFeature key={guide.path} guide={guide} />)}
+      </section>
+      <section className="discovery-destinations page-shell" id="destinations" aria-labelledby="discovery-destinations-title">
+        <header className="discovery-destinations__heading">
+          <div><span className="discovery-eyebrow">A different place, a different pace</span><h2 id="discovery-destinations-title">Explore Destinations</h2></div>
+          <p>A few places to spark your next idea. These destination pages offer inspiration for the journey ahead.</p>
+        </header>
+        <div className="discovery-destinations__grid">
+          <article className="discovery-destination-feature">
+            <Link to="/destinations/vietnam" aria-label="Explore Vietnam destination inspiration">
+              <img src={vietnamHeroPhoto} width={1600} height={850} alt="Da Nang’s illuminated Dragon Bridge stretching across the river at dusk" loading="lazy" decoding="async" />
+              <div className="discovery-destination-feature__copy"><span className="discovery-eyebrow">Asia</span><h3 id="discovery-vietnam-title">Vietnam</h3><p>Coffee mornings, old town lanes and life by the river.</p><span className="discovery-text-link">Explore destination <ArrowUpRight size={17} aria-hidden="true" /></span></div>
+            </Link>
+            {/* Existing local photo; provenance is also recorded in VietnamProposal.tsx. */}
+            <small className="discovery-destination-credit">Da Nang · Photo by <a href="https://unsplash.com/photos/lighted-bridge-B76nvP51iew" target="_blank" rel="noopener noreferrer">Ngô Thanh Tùng / Unsplash</a></small>
+          </article>
+          <ul className="discovery-destination-list">
+            {discoveryDestinations.map((destination) => <li key={destination.slug}>
+              <Link to={`/destinations/${destination.slug}`} aria-label={`Explore ${destination.name} destination inspiration`}>
+                <div><span className="discovery-eyebrow">{destination.region}</span><h3 id={`discovery-${destination.slug}-title`}>{destination.name}</h3><p>{destination.summary}</p><span className="discovery-text-link">Explore destination</span></div>
+                <ArrowUpRight size={20} aria-hidden="true" />
+              </Link>
+            </li>)}
+          </ul>
         </div>
       </section>
       <TravelUpdatesPreview />
-      <HomepageReels />
-      <section className="homepage-destination-section" id="destinations"><DestinationRail /></section>
-
-      <section className="how-section section-pad" id="how-it-works">
-        <div className="page-shell">
-          <div className="section-heading section-heading--split"><div><span className="eyebrow">HOW IT WORKS</span><h2>A clearer way to get there.</h2></div><p>From your first idea to your return home, we help keep the details organized so you can travel with confidence.</p></div>
-          <div className="steps-grid">
-            <article className="step-card"><span className="step-card__num">01</span><div className="step-card__icon"><MessageCircle size={21} /></div><h3>Tell us about your trip</h3><p>Share your destination, dates, who is traveling, and what matters most to you.</p><span className="step-card__bottom">Your goals, our starting point</span></article>
-            <article className="step-card"><span className="step-card__num">02</span><div className="step-card__icon"><Compass size={21} /></div><h3>We research and organize it</h3><p>We compare public flight and stay options, shape your itinerary, and bring the important details together.</p><span className="step-card__bottom">Thoughtfully put together</span></article>
-            <article className="step-card"><span className="step-card__num">03</span><div className="step-card__icon"><Luggage size={21} /></div><h3>Travel with a clear plan</h3><p>Keep your itinerary, booking details, reminders, and AeroGo support together in one place.</p><span className="step-card__bottom">Ready when you are</span></article>
-          </div>
-        </div>
-      </section>
-
-      <section className="services-section section-pad" id="services">
-        <div className="page-shell services-layout">
-          <div className="services-copy"><span className="eyebrow">THE PIECES THAT MAKE A TRIP</span><h2>We can help with<br />the whole picture.</h2><p>We compare publicly available options and help you make sense of the details. You stay in control of the choices; we help keep everything moving.</p><a className="text-link" href="#inquiry">Tell us what you need <ArrowRight size={15} /></a></div>
-          <div className="service-list">{services.map((service, i) => <div className="service-item" key={service.label}><span className="service-item__icon">{service.icon}</span><span>{service.label}</span><span className="service-item__index">0{i + 1}</span></div>)}</div>
-        </div>
-      </section>
-
-      <section className="companion-section section-pad" id="companion">
-        <div className="page-shell companion-feature">
-          <div className="companion-feature__copy"><span className="eyebrow eyebrow--light">THE AEROGO TRAVEL COMPANION</span><h2>Everything you need.<br /><em>Right when you need it.</em></h2><p>For qualifying trips booked with AeroGo, your private Travel Companion keeps your itinerary, booking details, helpful reminders, and a way to reach us together in one simple place.</p>
-            <div className="companion-feature__points"><span><Check size={15} /> Your day-by-day plans</span><span><Check size={15} /> Booking details &amp; documents</span><span><Check size={15} /> Helpful reminders &amp; support</span></div>
-            <Link className="button button--light" to="/companion">Preview a sample trip <ArrowUpRight size={16} /></Link>
-            <small className="feature-disclaimer">The trip shown is a fictional demo.</small>
-          </div>
-          <div className="companion-feature__visual">
-            <div className="feature-orbit feature-orbit--one" /><div className="feature-orbit feature-orbit--two" />
-            <div className="floating-note floating-note--left"><span className="floating-note__icon"><CalendarDays size={15} /></span><span><strong>Today, all sorted</strong><small>Your plans at a glance</small></span></div>
-            <div className="phone-preview">
-              <div className="phone-preview__notch" />
-              <div className="phone-preview__status"><span>9:41</span><span>●●● ◖</span></div>
-              <div className="phone-preview__header"><span>YOUR TRIP · DAY 3</span><strong>Tokyo, Japan</strong><small>Saturday, November 14</small></div>
-              <div className="phone-preview__next"><span>NEXT UP</span><strong>teamLab Planets</strong><small>10:30 AM · Toyosu</small><div className="phone-preview__leave"><ClockBadge /> Leave by 9:20 AM</div></div>
-              <div className="phone-preview__today"><span>TODAY</span><span><i /> Odaiba waterfront <small>1:00 PM</small></span><span><i /> Shibuya &amp; dinner <small>6:00 PM</small></span></div>
-              <div className="phone-preview__nav"><span className="is-active">⌂<small>Home</small></span><span>▤<small>Trip</small></span><span>▧<small>Docs</small></span><span>◌<small>Messages</small></span></div>
-            </div>
-            <div className="floating-note floating-note--right"><span className="floating-note__icon"><Check size={15} /></span><span><strong>One less thing to remember</strong><small>Your ticket is right here</small></span></div>
-            <div className="feature-caption"><Sparkles size={13} /> A CALMER WAY TO TRAVEL</div>
-          </div>
-        </div>
-      </section>
-
-      <section className="trust-section section-pad">
-        <div className="page-shell trust-layout">
-          <div className="trust-heading"><span className="eyebrow">A GOOD TRAVEL PARTNER</span><h2>Clear choices.<br /><em>Considered details.</em></h2></div>
-          <div className="trust-points"><article><span className="trust-points__num">01</span><div><h3>Options you can understand</h3><p>We work with publicly available travel choices and explain the trade-offs plainly.</p></div></article><article><span className="trust-points__num">02</span><div><h3>Your trip, shaped around you</h3><p>Plans built around your pace, your people, and the way you like to travel.</p></div></article><article><span className="trust-points__num">03</span><div><h3>Details that stay easy to find</h3><p>One clear place for the information you need before and during the trip.</p></div></article></div>
+      <section className="discovery-planning page-shell" aria-labelledby="planning-title">
+        <div className="discovery-planning__heading"><div><span className="discovery-eyebrow">Personal travel planning</span><h2 id="planning-title">Ready to turn an idea into a trip?</h2><p>If you’d like a hand with the details, AeroGo can help you shape a plan around your pace and priorities.</p></div><a className="discovery-text-link" href="#inquiry">Plan my trip <ArrowUpRight size={17} aria-hidden="true" /></a></div>
+        <div className="discovery-planning__details">
+          <article id="how-it-works"><h3>How it works</h3><p>Share your destination, dates and travel style. We research public options and bring the details together so you can make informed choices.</p></article>
+          <article id="services"><h3>What we help with</h3><p>Flights, hotels, transfers, activities, day-by-day plans, booking organization and pre-trip reminders.</p><a className="discovery-text-link" href="#inquiry">Tell us what you need <ArrowRight size={15} aria-hidden="true" /></a></article>
+          <article id="companion"><h3>The Companion</h3><p>For qualifying trips booked with AeroGo, a private space for your itinerary, booking details, reminders and support.</p><Link className="discovery-text-link" to="/companion">Preview a sample trip <ArrowUpRight size={15} aria-hidden="true" /></Link><small>The sample trip is a fictional demo.</small></article>
         </div>
       </section>
 
@@ -205,7 +189,7 @@ export function Homepage() {
         </div>
       </section>
     </main>
-    <footer className="site-footer"><div className="page-shell site-footer__inner"><Brand light /><span>Thoughtful travel planning, made simpler.</span><span className="site-footer__domain">aerogotours.com</span><span className="site-footer__legal">© 2026 AeroGo Travel &amp; Tours · Sample prototype</span></div></footer>
+    <EditorialFooter />
   </div>;
 }
 
@@ -221,64 +205,4 @@ export function HomepageDreamPreview() {
       </div>
     </div>
   </section>;
-}
-
-function DestinationRail() {
-  const railRef = useRef<HTMLDivElement>(null);
-  const [canScrollPrevious, setCanScrollPrevious] = useState(false);
-  const [canScrollNext, setCanScrollNext] = useState(true);
-
-  const syncScrollControls = useCallback(() => {
-    const rail = railRef.current;
-    if (!rail) return;
-    setCanScrollPrevious(rail.scrollLeft > 4);
-    setCanScrollNext(rail.scrollLeft + rail.clientWidth < rail.scrollWidth - 4);
-  }, []);
-
-  useEffect(() => {
-    syncScrollControls();
-    window.addEventListener("resize", syncScrollControls);
-    return () => window.removeEventListener("resize", syncScrollControls);
-  }, [syncScrollControls]);
-
-  const scrollRail = (direction: -1 | 1) => {
-    const rail = railRef.current;
-    if (!rail) return;
-    const behavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
-    rail.scrollBy({ left: direction * rail.clientWidth * 0.76, behavior });
-  };
-
-  return <section className="destination-rail page-shell" aria-labelledby="destination-rail-title">
-    <div className="destination-rail__heading">
-      <div className="destination-rail__title"><span className="destination-rail__intro eyebrow">EXPLORE</span><h2 id="destination-rail-title">Where do you want to go next?</h2><p>Browse destinations and find a place that fits the trip you have in mind.</p></div>
-      <div className="destination-rail__controls" aria-label="Destination browsing controls">
-        <button type="button" onClick={() => scrollRail(-1)} disabled={!canScrollPrevious} aria-label="Show previous destinations"><ArrowRight size={18} className="destination-rail__arrow--back" /></button>
-        <button type="button" onClick={() => scrollRail(1)} disabled={!canScrollNext} aria-label="Show more destinations"><ArrowRight size={18} /></button>
-      </div>
-    </div>
-    <div className="destination-rail__viewport" ref={railRef} onScroll={syncScrollControls} onWheel={(event) => {
-      if (Math.abs(event.deltaY) > Math.abs(event.deltaX) && event.currentTarget.scrollWidth > event.currentTarget.clientWidth) {
-        event.preventDefault();
-        event.currentTarget.scrollLeft += event.deltaY;
-      }
-    }} role="region" aria-label="Browse destination inspiration" tabIndex={0}>
-      <div className="destination-rail__track">
-        {featuredDestinations.map((destination) => {
-          const isDreamTrip = destination.slug === "japan" || destination.slug === "thailand" || destination.slug === "south-korea" || destination.slug === "hong-kong" || destination.slug === "bali" || destination.slug === "singapore" || destination.slug === "vietnam" || destination.slug === "malaysia";
-          const destinationPath = isDreamTrip ? `/dream/${destination.slug}` : `/destinations/${destination.slug}`;
-          return <Link className="destination-card" key={destination.slug} to={destinationPath} aria-label={`Explore ${destination.name}: ${destination.tagline}${isDreamTrip ? " Opens the sample Dream Trip itinerary" : ""}`}>
-            <img src={destination.cardImage} alt="" loading="lazy" decoding="async" />
-            <span className="destination-card__shade" />
-            {isDreamTrip && <span className="destination-card__label">SAMPLE TRIP</span>}
-            <span className="destination-card__copy"><strong>{destination.name}</strong><span>{destination.tagline}</span></span>
-            <span className="destination-card__arrow" aria-hidden="true"><ArrowUpRight size={18} /></span>
-          </Link>;
-        })}
-      </div>
-    </div>
-  </section>;
-}
-
-function ClockBadge() {
-  return <span className="clock-badge">◷</span>;
 }

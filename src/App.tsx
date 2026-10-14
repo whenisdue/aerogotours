@@ -9,6 +9,7 @@ import { findDestination } from "./data/destinations";
 import { getTravelUpdateBySlug } from "./data/travelUpdates";
 import { TravelUpdateArticlePage, TravelUpdatesPage } from "./pages/TravelUpdates";
 import { GardensByTheBayGuide } from "./pages/GardensByTheBayGuide";
+import { TravelGuidesPage } from "./pages/TravelGuides";
 import { VietnamProposalPage } from "./pages/VietnamProposal";
 import "./App.css";
 
@@ -21,8 +22,10 @@ function PageTitle() {
   const isTravelUpdatesRoute = pathname === "/travel-updates" || pathname.startsWith("/travel-updates/");
   const isTravelUpdateArticle = Boolean(travelUpdate);
   const isGardensGuide = pathname === "/guides/singapore/gardens-by-the-bay";
+  const isGuidesDirectory = pathname === "/guides";
+  const isDiscoveryPage = pathname === "/" || isGuidesDirectory;
   const isVietnamProposal = pathname === "/trip/vietnam-danang-hanoi";
-  const pageTitle = isGardensGuide
+  const pageTitle = isGuidesDirectory ? "Travel Guides · AeroGo Travel & Tours" : isGardensGuide
     ? "Gardens by the Bay Visitor Guide · Singapore · AeroGo"
     : travelUpdate
     ? `${travelUpdate.headline} · AeroGo Travel Updates`
@@ -40,8 +43,10 @@ function PageTitle() {
             ? "Destination inspiration · AeroGo"
           : isTravelUpdatesRoute
             ? "AeroGo Travel Updates · AeroGo"
-          : "AeroGo Travel & Tours | From what if? to we're going.";
-  const pageDescription = (isGardensGuide ? "A practical visitor guide to Gardens by the Bay in Singapore: free and ticketed areas, Cloud Forest, changing floral displays, Supertrees and planning tips." : undefined)
+          : "AeroGo Travel & Tours | See more of the world.";
+  const pageDescription = (isGuidesDirectory ? "Explore AeroGo’s travel guides, with original photography and practical visitor information. Start with Gardens by the Bay in Singapore." : undefined)
+    ?? (pathname === "/" ? "Travel stories, useful guides, and places worth exploring. Discover the AeroGo travel journal, destination inspiration and the latest travel updates." : undefined)
+    ?? (isGardensGuide ? "A practical visitor guide to Gardens by the Bay in Singapore: free and ticketed areas, Cloud Forest, changing floral displays, Supertrees and planning tips." : undefined)
     ?? travelUpdate?.summary
     ?? (isVietnamProposal ? "A six-day Vietnam itinerary through Da Nang and Hanoi, with guided tours, free time and confirmed package inclusions." : undefined)
     ?? (isTravelUpdatesRoute ? "Useful events, travel changes and destination ideas for your next trip." : "AeroGo Travel & Tours helps make your trip feel easy. Thoughtful travel planning, booking organization, and a private trip companion.");
@@ -50,21 +55,21 @@ function PageTitle() {
     document.title = pageTitle;
     setMeta("name", "description", pageDescription);
 
-    if (isTravelUpdatesRoute || isGardensGuide) {
+    if (isTravelUpdatesRoute || isGardensGuide || isDiscoveryPage) {
       const canonicalUrl = new URL(pathname, window.location.origin).href;
       setCanonical(canonicalUrl);
       setMeta("property", "og:title", pageTitle);
       setMeta("property", "og:description", pageDescription);
       setMeta("property", "og:url", canonicalUrl);
       setMeta("property", "og:type", isTravelUpdateArticle || isGardensGuide ? "article" : "website");
-      setMeta("name", "twitter:card", isTravelUpdateArticle || isGardensGuide ? "summary_large_image" : "summary");
+      setMeta("name", "twitter:card", isTravelUpdateArticle || isGardensGuide || isDiscoveryPage ? "summary_large_image" : "summary");
       setMeta("name", "twitter:title", pageTitle);
       setMeta("name", "twitter:description", pageDescription);
       if (travelUpdate) {
         setMeta("property", "og:image", travelUpdate.image.src);
         setMeta("name", "twitter:image", travelUpdate.image.src);
         setMeta("property", "og:image:alt", travelUpdate.image.alt);
-      } else if (isGardensGuide) {
+      } else if (isGardensGuide || isDiscoveryPage) {
         const shareImage = new URL("/images/gardens-by-the-bay/optimized/S25-1440.jpg", window.location.origin).href;
         setMeta("property", "og:image", shareImage);
         setMeta("name", "twitter:image", shareImage);
@@ -77,7 +82,7 @@ function PageTitle() {
     } else {
       removeTravelUpdatesMeta();
     }
-  }, [isGardensGuide, isTravelUpdateArticle, isTravelUpdatesRoute, pageDescription, pageTitle, pathname, travelUpdate]);
+  }, [isDiscoveryPage, isGardensGuide, isTravelUpdateArticle, isTravelUpdatesRoute, pageDescription, pageTitle, pathname, travelUpdate]);
   useEffect(() => {
     const robots = document.querySelector('meta[name="robots"]') ?? document.head.appendChild(document.createElement("meta"));
     robots.setAttribute("name", "robots");
@@ -133,6 +138,7 @@ export default function App() {
     <Route path="/trip/:token" element={<MyTripPage />} />
     <Route path="/travel-updates" element={<TravelUpdatesPage />} />
     <Route path="/travel-updates/:slug" element={<TravelUpdateArticlePage />} />
+    <Route path="/guides" element={<TravelGuidesPage />} />
     <Route path="/guides/singapore/gardens-by-the-bay" element={<GardensByTheBayGuide />} />
     <Route path="/destinations/:slug" element={<DestinationPage />} />
     <Route path="/dream/:slug" element={<DreamTripPage />} />

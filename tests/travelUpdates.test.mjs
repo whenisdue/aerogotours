@@ -22,6 +22,7 @@ const september30Noon = new Date("2026-09-30T12:00:00+08:00");
 const october2Noon = new Date("2026-10-02T12:00:00+08:00");
 const october3Noon = new Date("2026-10-03T12:00:00+08:00");
 const october5Noon = new Date("2026-10-05T12:00:00+08:00");
+const october14Noon = new Date("2026-10-14T12:00:00+08:00");
 
 test("travel update slugs are unique and records have the required fields", () => {
   const slugs = travelUpdates.map((update) => update.slug);
@@ -324,11 +325,13 @@ test("October 5 updates use an intentional same-day order, preserve filters and 
 });
 
 test("older expired stories stay out while the newest active story remains the homepage hero", () => {
-  const beforeExpiry = getHomepageTravelUpdates(new Date("2026-10-18T23:59:59+08:00"));
+  const beforeExpiry = getHomepageTravelUpdates(new Date("2026-10-18T21:59:59+08:00"));
   const atExpiry = getHomepageTravelUpdates(new Date("2026-10-19T00:00:00+08:00"));
 
-  assert.equal(beforeExpiry[0]?.slug, "tokyo-bay-grand-fireworks-festival-2026");
-  assert.equal(atExpiry[0]?.slug, "tokyo-bay-grand-fireworks-festival-2026");
+  assert.equal(beforeExpiry[0]?.slug, "sunchang-jangryu-festival-2026");
+  assert.equal(atExpiry[0]?.slug, "buglasan-festival-negros-oriental-2026");
+  assert.equal(atExpiry.some((update) => update.slug === "sunchang-jangryu-festival-2026"), false);
+  assert.equal(atExpiry.some((update) => update.slug === "festival-pinisi-bulukumba-2026"), false);
   assert.equal(beforeExpiry.some((update) => update.slug === "lego-experience-the-thrill-singapore-2026"), false);
   assert.equal(atExpiry.some((update) => update.slug === "jinju-namgang-yudeung-festival-2026"), false);
   assert.equal(atExpiry.some((update) => update.slug === "phuket-vegetarian-festival-2026"), false);
@@ -640,10 +643,9 @@ test("event end date and listing expiry can be different", () => {
   assert.equal(getActiveTravelUpdates(new Date("2026-10-05T00:00:00+08:00")).some((update) => update.id === gastronomy.id), false);
 });
 
-test("October 11 adds exactly three official-source updates with automatic homepage selection", () => {
+test("October 11 updates retain automatic homepage selection", () => {
   const slugs = [
     "tokyo-bay-grand-fireworks-festival-2026",
-    "sunchang-jangryu-food-festival-2026",
     "pal-manila-saipan-flights-october-2026",
   ];
   const beforePublication = new Date("2026-10-10T23:59:59+08:00");
@@ -651,13 +653,12 @@ test("October 11 adds exactly three official-source updates with automatic homep
   const newArticles = travelUpdates.filter((update) => update.publishedAt === "2026-10-11");
 
   assert.deepEqual(newArticles.map((update) => update.slug), slugs);
-  assert.deepEqual(getHomepageTravelUpdates(publishedToday).map((update) => update.slug), slugs);
+  assert.deepEqual(getHomepageTravelUpdates(publishedToday).slice(0, 2).map((update) => update.slug), slugs);
   assert.equal(getFeaturedTravelUpdate(publishedToday)?.slug, slugs[0]);
 
   const cases = [
     { slug: slugs[0], headline: "Tokyo Bay's Grand Fireworks Festival returns after 11 years: What travelers should know", destination: "Tokyo", country: "Japan", category: "events-experiences", eventStartAt: "2026-10-24", eventEndAt: "2026-10-24", expiresAt: "2026-10-25T00:00:00+08:00" },
-    { slug: slugs[1], headline: "Korea's Sunchang food festival begins October 15 with traditional gochujang-making experiences", destination: "Sunchang, Jeonbuk", country: "South Korea", category: "food-experiences", eventStartAt: "2026-10-15", eventEndAt: "2026-10-18", expiresAt: "2026-10-19T00:00:00+08:00" },
-    { slug: slugs[2], headline: "Philippine Airlines to restore nonstop Manila–Saipan flights October 25", destination: "Manila / Saipan", country: "Philippines / Northern Mariana Islands", category: "flights-airports", eventStartAt: "2026-10-25", eventEndAt: undefined, expiresAt: undefined },
+    { slug: slugs[1], headline: "Philippine Airlines to restore nonstop Manila–Saipan flights October 25", destination: "Manila / Saipan", country: "Philippines / Northern Mariana Islands", category: "flights-airports", eventStartAt: "2026-10-25", eventEndAt: undefined, expiresAt: undefined },
   ];
 
   for (const expected of cases) {
@@ -685,15 +686,7 @@ test("October 11 adds exactly three official-source updates with automatic homep
   assert.match(tokyoCopy, /after 2:00 PM on October 24/);
   assert.ok(tokyo?.sources.some((source) => source.publisher === "Tokyo Metropolitan Government"));
 
-  const sunchang = getTravelUpdateBySlug(slugs[1]);
-  const sunchangCopy = sunchang?.body.map((block) => block.text ?? block.items?.join(" ") ?? "").join(" ") ?? "";
-  assert.match(sunchangCopy, /Global Gochujang Making/);
-  assert.match(sunchangCopy, /Global Jang Culture School/);
-  assert.match(sunchangCopy, /end time/);
-  assert.match(sunchangCopy, /General admission is free/);
-  assert.ok(sunchang?.sources.some((source) => source.publisher === "Korea Tourism Organization"));
-
-  const pal = getTravelUpdateBySlug(slugs[2]);
+  const pal = getTravelUpdateBySlug(slugs[1]);
   const palCopy = pal?.body.map((block) => block.text ?? block.items?.join(" ") ?? "").join(" ") ?? "";
   assert.match(palCopy, /Philippine passport holders are not among the nationalities listed/);
   assert.match(palCopy, /do not assume Saipan is visa-free/);
@@ -701,7 +694,88 @@ test("October 11 adds exactly three official-source updates with automatic homep
   assert.ok(pal?.sources.some((source) => source.publisher === "U.S. Department of State"));
   assert.ok(pal?.sources.some((source) => source.publisher === "U.S. Customs and Border Protection"));
 
-  assert.equal(getActiveTravelUpdates(new Date("2026-10-19T00:00:00+08:00")).some((item) => item.slug === slugs[1]), false);
   assert.equal(getActiveTravelUpdates(new Date("2026-10-25T00:00:00+08:00")).some((item) => item.slug === slugs[0]), false);
-  assert.ok(getActiveTravelUpdates(new Date("2027-01-01T00:00:00+08:00")).some((item) => item.slug === slugs[2]));
+  assert.ok(getActiveTravelUpdates(new Date("2027-01-01T00:00:00+08:00")).some((item) => item.slug === slugs[1]));
+});
+
+test("October 14 festival updates resolve, preserve filters and expire in their local time zones", () => {
+  const slugs = [
+    "sunchang-jangryu-festival-2026",
+    "festival-pinisi-bulukumba-2026",
+    "buglasan-festival-negros-oriental-2026",
+  ];
+  const beforePublication = new Date("2026-10-13T23:59:59+08:00");
+  const newArticles = travelUpdates.filter((update) => update.publishedAt === "2026-10-14");
+  const active = getActiveTravelUpdates(october14Noon);
+
+  assert.deepEqual(newArticles.map((update) => update.slug), slugs);
+  assert.deepEqual(getHomepageTravelUpdates(october14Noon).map((update) => update.slug), slugs);
+  assert.equal(getFeaturedTravelUpdate(october14Noon)?.slug, slugs[0]);
+  assert.equal(getTravelUpdateBySlug("sunchang-jangryu-food-festival-2026"), undefined);
+
+  const cases = [
+    { slug: slugs[0], headline: "Korea's famous gochujang festival begins this week in Sunchang", destination: "Sunchang, Jeonbuk", country: "South Korea", category: "food-experiences", eventStartAt: "2026-10-15", eventEndAt: "2026-10-18", expiresAt: "2026-10-19T00:00:00+09:00" },
+    { slug: slugs[1], headline: "Indonesia's traditional sailing heritage takes center stage at Festival Pinisi", destination: "Bulukumba, South Sulawesi", country: "Indonesia", category: "events-experiences", eventStartAt: "2026-10-15", eventEndAt: "2026-10-17", expiresAt: "2026-10-18T00:00:00+08:00" },
+    { slug: slugs[2], headline: "Negros Oriental celebrates Buglasan Festival with parades, culture and a provincial holiday", destination: "Dumaguete City, Negros Oriental", country: "Philippines", category: "events-experiences", eventStartAt: "2026-10-15", eventEndAt: "2026-10-25", expiresAt: "2026-10-26T00:00:00+08:00" },
+  ];
+
+  for (const expected of cases) {
+    const update = getTravelUpdateBySlug(expected.slug);
+    assert.ok(update);
+    assert.equal(update.headline, expected.headline);
+    assert.equal(update.publishedAt, "2026-10-14");
+    assert.equal(update.destination, expected.destination);
+    assert.equal(update.country, expected.country);
+    assert.equal(update.category, expected.category);
+    assert.equal(update.eventStartAt, expected.eventStartAt);
+    assert.equal(update.eventEndAt, expected.eventEndAt);
+    assert.equal(update.expiresAt, expected.expiresAt);
+    assert.equal(update.featured, undefined);
+    assert.equal(getActiveTravelUpdates(beforePublication).some((item) => item.id === update.id), false);
+    assert.ok(active.some((item) => item.id === update.id));
+    assert.ok(filterTravelUpdates(active, update.destination, update.category).some((item) => item.id === update.id));
+    assert.ok(update.sources.every((source) => source.accessedAt === "2026-10-14"));
+    assert.ok(update.sources.every((source) => source.url.startsWith("https://")));
+  }
+
+  const sunchang = getTravelUpdateBySlug(slugs[0]);
+  assert.ok(sunchang);
+  const sunchangCopy = sunchang.body.map((block) => block.text ?? block.items?.join(" ") ?? "").join(" ");
+  assert.match(sunchangCopy, /older listing on the county's legacy tourism site still shows October 16–18/);
+  assert.match(sunchangCopy, /newer county and organizer information confirms the October 15 opening/);
+  assert.match(sunchangCopy, /Global Gochujang Making/);
+  assert.match(sunchangCopy, /disagree about whether it ends at 5:00 or 6:00 PM/);
+  assert.match(sunchangCopy, /not for this festival/);
+  assert.ok(sunchang.sources.some((source) => source.publisher === "Sunchang Jangryu Festival"));
+  assert.ok(sunchang.sources.some((source) => source.publisher === "UNESCO Intangible Cultural Heritage"));
+
+  const pinisi = getTravelUpdateBySlug(slugs[1]);
+  assert.ok(pinisi);
+  const pinisiCopy = pinisi.body.map((block) => block.text ?? block.items?.join(" ") ?? "").join(" ");
+  assert.match(pinisiCopy, /not Festival Pinisi itself/);
+  assert.match(pinisiCopy, /do not publish a day-by-day 2026 programme/);
+  assert.match(pinisiCopy, /general festival admission as free/);
+  assert.ok(pinisi.sources.some((source) => source.publisher === "Bulukumba Tourism, Youth and Sports Department"));
+  assert.ok(pinisi.sources.some((source) => source.publisher === "UNESCO Intangible Cultural Heritage"));
+
+  const buglasan = getTravelUpdateBySlug(slugs[2]);
+  assert.ok(buglasan);
+  const buglasanCopy = buglasan.body.map((block) => block.text ?? block.items?.join(" ") ?? "").join(" ");
+  assert.match(buglasanCopy, /not the whole Philippines/);
+  assert.match(buglasanCopy, /traffic advisories cover festival-related downtown adjustments from October 15–25/);
+  assert.match(buglasanCopy, /street dancing from 2:00 PM that day/);
+  assert.match(buglasanCopy, /check the official advisories for affected streets and alternatives/);
+  assert.doesNotMatch(buglasanCopy, /parade route is .+? to .+?/i);
+  assert.ok(buglasan.sources.some((source) => source.publisher === "Philippine Information Agency / Presidential Communications Office"));
+  assert.ok(buglasan.sources.some((source) => source.publisher === "Dumaguete City Public Information Office / Traffic Management Office"));
+
+  assert.ok(getActiveTravelUpdates(new Date("2026-10-18T23:59:59+09:00")).some((item) => item.slug === slugs[0]));
+  assert.equal(getActiveTravelUpdates(new Date("2026-10-19T00:00:00+09:00")).some((item) => item.slug === slugs[0]), false);
+  assert.ok(getActiveTravelUpdates(new Date("2026-10-17T23:59:59+08:00")).some((item) => item.slug === slugs[1]));
+  assert.equal(getActiveTravelUpdates(new Date("2026-10-18T00:00:00+08:00")).some((item) => item.slug === slugs[1]), false);
+  assert.ok(getActiveTravelUpdates(new Date("2026-10-25T23:59:59+08:00")).some((item) => item.slug === slugs[2]));
+  assert.equal(getActiveTravelUpdates(new Date("2026-10-26T00:00:00+08:00")).some((item) => item.slug === slugs[2]), false);
+  const afterFestivalExpiry = getActiveTravelUpdates(new Date("2026-10-26T00:00:00+08:00"));
+  assert.equal(getFeaturedTravelUpdate(new Date("2026-10-26T00:00:00+08:00"))?.slug, "pal-manila-saipan-flights-october-2026");
+  assert.equal(afterFestivalExpiry.some((item) => slugs.includes(item.slug)), false);
 });

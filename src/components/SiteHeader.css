@@ -1,0 +1,14 @@
+.site-header.site-header--editorial { background: var(--paper); }
+.site-header--editorial .site-nav { gap: 30px; }
+.site-header--editorial .site-nav > a { display: inline-flex; min-height: 44px; align-items: center; color: var(--forest); font-size: 14px; }
+.site-header--editorial .site-nav > .site-nav__guides { font-weight: 700; }
+.site-header--editorial .site-nav > .site-nav__secondary { color: #647169; font-size: 13px; }
+.site-header--editorial .site-nav > .site-nav__mobile { display: none; }
+.site-header--editorial .site-nav > a:hover { color: #a55e45; }
+.site-header--editorial .site-nav a:focus-visible, .site-header--editorial .menu-toggle:focus-visible { outline: 3px solid #b87559; outline-offset: 4px; }
+@media (max-width: 700px) {
+  .site-header--editorial .menu-toggle { width: 44px; height: 44px; }
+  .site-header--editorial .site-nav { gap: 0; }
+  .site-header--editorial .site-nav > a { min-height: 48px; font-size: 15px; }
+  .site-header--editorial .site-nav > .site-nav__mobile { display: inline-flex; color: #647169; }
+}

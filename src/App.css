@@ -3089,34 +3089,10 @@ button.trip-event:hover .trip-event__content > strong { color: #b76c4e; }
   color: #66716d;
 }
 
-:is(.public-site:has(#travel-updates), .travel-updates-site) .site-nav > a {
-  color: #17211e;
-}
-
-:is(.public-site:has(#travel-updates), .travel-updates-site) .site-nav > a:hover,
-:is(.public-site:has(#travel-updates), .travel-updates-site) .site-nav > a:focus-visible {
-  color: #004ba8;
-}
-
-:is(.public-site:has(#travel-updates), .travel-updates-site) .site-nav > .site-nav__cta {
-  border-color: #ec7357;
-  background: #ec7357;
-  color: #fff;
-}
-
-:is(.public-site:has(#travel-updates), .travel-updates-site) .site-nav > .site-nav__cta:hover,
-:is(.public-site:has(#travel-updates), .travel-updates-site) .site-nav > .site-nav__cta:focus-visible {
-  border-color: #d85d44;
-  background: #d85d44;
-  color: #fff;
-}
-
 :is(.public-site:has(#travel-updates), .travel-updates-site) .menu-toggle {
   color: #13342c;
 }
 
-:is(.public-site:has(#travel-updates), .travel-updates-site) .menu-toggle:focus-visible,
-:is(.public-site:has(#travel-updates), .travel-updates-site) .site-nav a:focus-visible,
 :is(.public-site:has(#travel-updates), .travel-updates-site) .button:focus-visible,
 :is(.public-site:has(#travel-updates), .travel-updates-site) .text-link:focus-visible {
   outline: 3px solid #3e78b2;

@@ -24,6 +24,7 @@ const escapeXml = (value: string) =>
 const entries: SitemapEntry[] = [
   { path: "/" },
   { path: "/companion" },
+  { path: "/guides" },
   { path: "/guides/singapore/gardens-by-the-bay", lastmod: "2026-10-11" },
   { path: "/travel-updates" },
   ...travelUpdates.map((update) => ({
