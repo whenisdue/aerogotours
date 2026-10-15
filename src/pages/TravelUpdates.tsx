@@ -139,7 +139,7 @@ export function TravelUpdateArticlePage() {
         <h1 id="travel-update-article-title">{update.headline}</h1>
         <p className="travel-update-article__summary">{update.summary}</p>
         <div className="travel-update-article__dates"><time dateTime={update.publishedAt}>Published {formatDate(update.publishedAt)}</time>{update.updatedAt && <time dateTime={update.updatedAt}>Updated {formatDate(update.updatedAt)}</time>}</div>
-        <figure className="travel-update-article__hero"><img src={update.image.src} alt={update.image.alt} fetchPriority="high" /><figcaption>{update.image.credit}</figcaption></figure>
+        <figure className="travel-update-article__hero"><img src={update.image.src} alt={update.image.alt} fetchPriority="high" /><figcaption>{update.image.creditUrl ? <a href={update.image.creditUrl} target="_blank" rel="noopener noreferrer">{update.image.credit}</a> : update.image.credit}</figcaption></figure>
         <div className="travel-update-article__body">{update.body.map((block, index) => <TravelUpdateBlock key={`${block.type}-${index}`} block={block} />)}</div>
         <section className="travel-update-sources" aria-labelledby="travel-update-sources-title">
           <span className="eyebrow">CHECK THE DETAILS</span>

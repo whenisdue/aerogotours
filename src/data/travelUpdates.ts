@@ -58,6 +58,7 @@ const october5AccessedAt = "2026-10-05";
 const october6AccessedAt = "2026-10-06";
 const october11AccessedAt = "2026-10-11";
 const october14AccessedAt = "2026-10-14";
+const october15AccessedAt = "2026-10-15";
 
 const unsplash = (photoId: string, width: number) =>
   `https://images.unsplash.com/${photoId}?auto=format&fit=crop&w=${width}&q=85`;
@@ -69,6 +70,130 @@ const destinationImage = (slug: string) => {
 };
 
 export const travelUpdates: TravelUpdate[] = [
+  {
+    id: "masskara-festival-bacolod-grand-weekend-2026",
+    slug: "masskara-festival-bacolod-grand-weekend-2026",
+    headline: "MassKara's biggest weekend begins Friday in Bacolod",
+    summary: "Bacolod's MassKara Festival reaches its biggest weekend October 16–18, with Electric MassKara, street-dancing competitions and major celebrations across the City of Smiles.",
+    destination: "Bacolod City, Negros Occidental",
+    country: "Philippines",
+    category: "events-experiences",
+    publishedAt: "2026-10-15",
+    image: {
+      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Masskara_Festival_of_Bacolod_City.jpg/1280px-Masskara_Festival_of_Bacolod_City.jpg",
+      alt: "MassKara dancers in colorful costumes and smiling masks during a 2016 Bacolod parade",
+      credit: "Photo by Ranieljosecastaneda / Wikimedia Commons · 2016 · CC BY-SA 4.0",
+      creditUrl: "https://commons.wikimedia.org/wiki/File:Masskara_Festival_of_Bacolod_City.jpg",
+    },
+    body: [
+      { type: "paragraph", text: "MassKara's main 2026 weekend runs Friday to Sunday, October 16–18, within Bacolod's October 1–18 festival period. The city's signature celebration is known for its smiling masks, community dancing and colorful performances. Each day has a different focus, and the main events are spread across separate parts of the city." },
+      { type: "heading", text: "Friday, October 16: Electric MassKara" },
+      { type: "paragraph", text: "Electric MassKara is scheduled at The Upper East. This is the Friday choice for visitors looking for the festival's illuminated night performances. The organizer-based program reports a date and venue, but check the current event notice for the start time, route and viewing arrangements." },
+      { type: "heading", text: "Saturday, October 17: school competitions" },
+      { type: "paragraph", text: "Saturday is the school-category street-dancing and arena competition day. The street-dance activity is reported along Araneta Street, while the arena competition is set in the reclamation area near SM City Bacolod. These are related events in different viewing areas, so use the latest festival map before choosing where to watch." },
+      { type: "heading", text: "Sunday, October 18: barangay competitions" },
+      { type: "paragraph", text: "Sunday switches the competition focus to barangay contingents, with street dancing along Araneta Street and the arena competition near SM City Bacolod. Choose Saturday for the school performances or Sunday for the barangay groups; the official festival channels should be checked for current program details." },
+      { type: "heading", text: "Use the correct 2026 venues" },
+      { type: "paragraph", text: "The 2026 arena competition has moved to the reclamation area by SM City Bacolod, around its bridgeways. Older venue information may point to Paglaum Sports Complex, which is not the 2026 arena site. The Upper East, the Lacson Tourism Strip, Araneta Street, the SM City Bacolod arena area and Bacolod Public Plaza are separate locations for different activities; do not treat them as one festival ground. Closing and awarding activities are scheduled for October 25, after this grand weekend." },
+      { type: "heading", text: "Plan around changing road access" },
+      { type: "paragraph", text: "The published traffic plan reports two different closures: the Lacson Tourism Strip, from B.S. Aquino Drive to SSS-Cottage Road, is scheduled to close from 2:00 PM to 5:00 AM on October 16–18; the competition route from Hernaez Street near Jollibee through Araneta, Gonzaga, Gatuslao, Rizal and Palanca streets toward SM City Bacolod is scheduled to close from 10:00 AM to 9:00 PM on October 17–18. These affect separate areas and do not mean every Bacolod road is closed. Check current Bacolod Traffic and Transport Management Department (BTTMD) and city advisories before leaving, because routes and timings may change." },
+      { type: "paragraph", text: "The sources reviewed do not confirm a general admission price, free viewing area, entry gate or final performance timetable for every activity. Confirm those details with the organizer before setting out, especially if you are travelling to a specific venue." },
+      { type: "heading", text: "Official information" },
+      { type: "paragraph", text: "Use Bacolod City Government and Bacolod Tourism for the festival context, then check the latest organizer program and BTTMD traffic notice for the exact location and access arrangements on your chosen day." },
+    ],
+    sources: [
+      { label: "MassKara Festival 2026 dates and closing activities", url: "https://bacolodcity.gov.ph/masskara-festival-2026-set-on-october-1-18/", publisher: "Bacolod City Government", accessedAt: october15AccessedAt },
+      { label: "Bacolod City Tourism: MassKara and city visitor information", url: "https://tourism.bacolodcity.gov.ph/", publisher: "Bacolod City Tourism", accessedAt: october15AccessedAt },
+      { label: "2026 festival launch, competition program and new venues", url: "https://digicastnegros.com/bacolod-launches-masskara-festival-2026-announces-new-venues-activities/", publisher: "Digicast Negros, reporting the festival organizer", accessedAt: october15AccessedAt },
+      { label: "October 17–18 street-dance and arena locations", url: "https://digicastnegros.com/masskara-streetdance-returns-with-three-category-competition-at-new-arena-venue/", publisher: "Digicast Negros, reporting the festival organizer", accessedAt: october15AccessedAt },
+      { label: "Finalized MassKara road-closure plan", url: "https://bacolod.bomboradyo.com/road-closures-sa-mga-aktibidad-sa-masskara-festival-2026-naplastar-na/", publisher: "Bombo Radyo Bacolod, reporting the local traffic plan", accessedAt: october15AccessedAt },
+      { label: "BTTMD closure areas for the October 17–18 competitions", url: "https://www.panaynews.net/major-road-closures-set-in-bacolod-for-masskara-2026/", publisher: "Panay News, reporting the Bacolod Traffic and Transport Management Department", accessedAt: october15AccessedAt },
+    ],
+    eventStartAt: "2026-10-16",
+    eventEndAt: "2026-10-18",
+    expiresAt: "2026-10-19T00:00:00+08:00",
+  },
+  {
+    id: "sun-moon-lake-fireworks-music-october-2026",
+    slug: "sun-moon-lake-fireworks-music-october-2026",
+    headline: "Fireworks and live music return to Sun Moon Lake this Saturday",
+    summary: "Sun Moon Lake hosts its 18Light fireworks concert on October 17, with live music beside the water and a black-tea cultural event over the weekend.",
+    destination: "Sun Moon Lake, Nantou County",
+    country: "Taiwan",
+    category: "events-experiences",
+    publishedAt: "2026-10-15",
+    image: {
+      src: "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d5/Sun_Moon_Lake_View_from_Fleur_de_Chine_Hotel.JPG/1280px-Sun_Moon_Lake_View_from_Fleur_de_Chine_Hotel.JPG",
+      alt: "Sun Moon Lake seen from the Fleur de Chine Hotel in Nantou",
+      credit: "Photo by WeiHsiang Wang / Wikimedia Commons · CC BY-SA 4.0",
+      creditUrl: "https://commons.wikimedia.org/wiki/File:Sun_Moon_Lake_View_from_Fleur_de_Chine_Hotel.JPG",
+    },
+    body: [
+      { type: "paragraph", text: "The Taiwan Mobile 18Light concert is scheduled for Saturday, October 17, from 6:30 to 9:30 PM at Zhongxing Parking Lot in the Shuishe area of Sun Moon Lake. Plan around the concert's listed start, but do not expect a separate fixed fireworks time: the display is coordinated with the live music and the ending depends on performance conditions." },
+      { type: "heading", text: "What the concert includes" },
+      { type: "paragraph", text: "The official program describes symphonic arrangements, vocal performances and fireworks. It names the 75-member Philharmonia Moments Musicaux and several Taiwanese vocalists among the performers. The organizer may change the program, and its listing does not state a general admission price or confirm that entry is free; check the current event notice before travelling." },
+      { type: "heading", text: "A separate black-tea event at Xiangshan" },
+      { type: "paragraph", text: "The Sun Moon Lake Black Tea Culture Festival runs October 17–18, 10:00 AM–4:00 PM at Xiangshan Visitor Center. Its listed activities include a farmers' market, tea and local-produce displays, tastings and hands-on experiences. Xiangshan Visitor Center and the 18Light concert's Zhongxing Parking Lot are different places; the latter is in Shuishe." },
+      { type: "paragraph", text: "You can plan for both events on Saturday, but leave time for the transfer. The administration currently lists a free event shuttle for October 17, including an entry route from Xiangshan Visitor Center to Shuishe Comprehensive Mall between 4:30 and 6:00 PM and an exit window from 9:00 to 11:00 PM. The shuttle has flexible timing, may be adjusted for traffic and stops running outside its published windows. Confirm the stop and final approach to the concert venue with event staff." },
+      { type: "heading", text: "Road and parking restrictions on October 17" },
+      { type: "paragraph", text: "From 8:00 AM to 11:00 PM, roadside parking is prohibited on designated sections of Provincial Highway 21 between the Nine Dragon Spot junction and Shuishe Dam, on a short outer-lane section of Highway 21 near Youshui Lane, and on Highway 21A between Nine Dragon Spot and the Sun Moon Lake sewage treatment plant. Limited roadside parking is permitted on other specified sections, but this is not confirmation that a space will be available." },
+      { type: "paragraph", text: "In Shuishe, Mingsheng Street and Zhongxing Road are subject to vehicle restrictions during the same window, with listed exceptions for certain authorized, accessibility-related and service vehicles. Follow police directions. These controls affect named roads and parking sections; they do not mean every road around Sun Moon Lake is closed." },
+      { type: "heading", text: "Before setting out" },
+      { type: "list", items: [
+        "Check the official event page and traffic announcement on October 17 for changes to times, shuttle stops and restrictions.",
+        "Do not plan on roadside parking along the designated no-parking sections or assume the concert venue has public parking available.",
+        "If combining the tea festival and concert, use the correct venue names and leave a transfer buffer; the posted shuttle timetable is flexible.",
+        "Keep the concert's 6:30 PM start in view, but do not rely on a promised fireworks launch time."
+      ] },
+    ],
+    sources: [
+      { label: "2026 Sun Moon Lake Music & Fireworks Festival and October 17 program", url: "https://www.sunmoonlake.gov.tw/en/events/Activitys?a=24&id=7", publisher: "Sun Moon Lake National Scenic Area Administration", accessedAt: october15AccessedAt },
+      { label: "October 17 traffic controls for Provincial Highways 21 and 21A", url: "https://www.sunmoonlake.gov.tw/en/News/News?A=13&Id=1475&P=1", publisher: "Sun Moon Lake National Scenic Area Administration", accessedAt: october15AccessedAt },
+      { label: "2026 Sun Moon Lake Music & Fireworks Festival", url: "https://eng.taiwan.net.tw/m1.aspx?lid=081765&sNo=0002019", publisher: "Taiwan Tourism Administration", accessedAt: october15AccessedAt },
+    ],
+    eventStartAt: "2026-10-17",
+    eventEndAt: "2026-10-18",
+    expiresAt: "2026-10-19T00:00:00+08:00",
+  },
+  {
+    id: "nagoya-festival-2026-parade-change-free-attractions",
+    slug: "nagoya-festival-2026-parade-change-free-attractions",
+    headline: "Nagoya Festival is on this weekend, but its famous parade is canceled",
+    summary: "Nagoya Festival runs October 17–18, but its traditional street parade will not take place in 2026. Visitors can still enjoy cultural activities and selected free attraction admissions.",
+    destination: "Nagoya, Aichi Prefecture",
+    country: "Japan",
+    category: "events-experiences",
+    publishedAt: "2026-10-15",
+    image: {
+      src: "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e3/Nagoya_skyline.jpg/1280px-Nagoya_skyline.jpg",
+      alt: "Nagoya Castle and Nagoya Station in a 2026 skyline photograph",
+      credit: "Photo by なごやか / Wikimedia Commons · CC0 1.0",
+      creditUrl: "https://commons.wikimedia.org/wiki/File:Nagoya_skyline.jpg",
+    },
+    body: [
+      { type: "paragraph", text: "The 72nd Nagoya Festival is scheduled for Saturday and Sunday, October 17–18, with its main event site at Hisaya Odori Park. The festival is still happening, but its traditional street parade is canceled this year. Visitors should plan for the park program and selected city attractions, not a parade route." },
+      { type: "heading", text: "Why the parade is canceled" },
+      { type: "paragraph", text: "The organizer says the parade will not be held for safety reasons because its dates overlap with the Aichi-Nagoya 2026 Asian Para Games torch relay and opening ceremony. The usual public recruitment for the Three Heroes and the Oasis 21 venue event are also not taking place in 2026." },
+      { type: "heading", text: "What visitors can still experience" },
+      { type: "paragraph", text: "Nagoya City's October 10 update lists stages, booths, street performances and cultural activities at Hisaya Odori Park. Visitors can see kagura music and dances, festival-drum and karakuri puppet demonstrations, and the Three Heroes floats on display as a photo spot. The floats are a static display, not a street procession. The city lists the park program from 11:00 AM–8:00 PM on Saturday and 10:00 AM–8:00 PM on Sunday; some activities may stop in rain, and the site may close in severe weather." },
+      { type: "heading", text: "Free attraction admission" },
+      { type: "paragraph", text: "Nagoya Castle is free to enter on both October 17 and 18. The city's current list names two venues with free admission on Saturday: Nagoya Castle and the Toyotomi Brothers! Nagoya Nakamura Taiga Drama Museum." },
+      { type: "paragraph", text: "On Sunday, the city lists 12 free-admission facilities: Nagoya Castle; FUJI Nagoya Science Museum's permanent exhibition; Tokugawaen; Cultural Path Futaba Museum; Cultural Path Shumokukan; Shirotori Garden; Higashiyama Zoo and Botanical Gardens, including Higashiyama Sky Tower; Nagoya City Art Museum's permanent collection; Yōkisō's Chōshōkaku in the South Garden; Shidami Kofun Museum's exhibition room; the Toyotomi Brothers! Nagoya Nakamura Taiga Drama Museum; and Higashiyama Fruit Park's tropical fruit greenhouse. The planetarium and special exhibitions at the Science Museum are not included in its free entry, and the other venues' free access applies to the listed facility or area." },
+      { type: "heading", text: "Discounts are separate from free admission" },
+      { type: "paragraph", text: "The festival guidebook or its website PDF also gives discounts at selected facilities. For example, the official list offers 10% off at Noritake Forest on both dates and 20% off at the Toyota Commemorative Museum of Industry and Technology on October 18. The guidebook discount covers up to five people per copy and cannot be combined with other offers. Check each venue's hours and conditions before visiting." },
+      { type: "heading", text: "Where to go and what to check" },
+      { type: "paragraph", text: "For festival stages and cultural demonstrations, head to Hisaya Odori Park in central Nagoya. Go to Nagoya Castle for its separate autumn-festival program and free entry; do not wait along last year's parade route, because no 2026 procession is planned. Check the official festival or Nagoya City site on the day for weather-related changes and individual attraction conditions. A free admission offer at a named facility does not make every Nagoya attraction or separate experience free." },
+    ],
+    sources: [
+      { label: "72nd Nagoya Festival dates and parade cancellation", url: "https://www.nagoya-festival.jp/en/news_list/stage-event/the-dates-for-the-72nd-nagoya-festival-have-been-decided/", publisher: "Nagoya Festival Cooperation Association", accessedAt: october15AccessedAt },
+      { label: "Current program, schedule and 12 Sunday free-admission facilities (Japanese)", url: "https://www.city.nagoya.jp/shisei/kouhou/1017531/1017619/1017620/1054481.html", publisher: "Nagoya City Government", accessedAt: october15AccessedAt },
+      { label: "Free facility and guidebook discount list (Japanese)", url: "https://www.nagoya-festival.jp/openplace/", publisher: "Nagoya Festival Cooperation Association", accessedAt: october15AccessedAt },
+      { label: "Nagoya Castle's October 17–18 free-admission notice", url: "https://www.nagoya-festival.jp/en/event-venue/nagoya-castle/", publisher: "Nagoya Festival Cooperation Association", accessedAt: october15AccessedAt },
+    ],
+    eventStartAt: "2026-10-17",
+    eventEndAt: "2026-10-18",
+    expiresAt: "2026-10-19T00:00:00+09:00",
+  },
   {
     id: "tokyo-bay-grand-fireworks-festival-2026",
     slug: "tokyo-bay-grand-fireworks-festival-2026",

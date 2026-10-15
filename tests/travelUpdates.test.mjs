@@ -23,6 +23,7 @@ const october2Noon = new Date("2026-10-02T12:00:00+08:00");
 const october3Noon = new Date("2026-10-03T12:00:00+08:00");
 const october5Noon = new Date("2026-10-05T12:00:00+08:00");
 const october14Noon = new Date("2026-10-14T12:00:00+08:00");
+const october15Noon = new Date("2026-10-15T12:00:00+08:00");
 
 test("travel update slugs are unique and records have the required fields", () => {
   const slugs = travelUpdates.map((update) => update.slug);
@@ -108,6 +109,83 @@ test("future-dated stories enter the homepage on their Manila publication date",
     assert.equal(getActiveTravelUpdates(new Date("2026-10-02T00:00:00+08:00")).some((update) => update.slug === slug), true);
   }
   assert.deepEqual(getHomepageTravelUpdates(october2Noon).slice(0, 3).map((update) => update.slug), newSlugs);
+});
+
+test("October 15 event updates lead deterministically and expire at destination-local midnight", () => {
+  const cases = [
+    { slug: "masskara-festival-bacolod-grand-weekend-2026", headline: "MassKara's biggest weekend begins Friday in Bacolod", destination: "Bacolod City, Negros Occidental", country: "Philippines", eventStartAt: "2026-10-16", eventEndAt: "2026-10-18", expiresAt: "2026-10-19T00:00:00+08:00", zone: "+08:00" },
+    { slug: "sun-moon-lake-fireworks-music-october-2026", headline: "Fireworks and live music return to Sun Moon Lake this Saturday", destination: "Sun Moon Lake, Nantou County", country: "Taiwan", eventStartAt: "2026-10-17", eventEndAt: "2026-10-18", expiresAt: "2026-10-19T00:00:00+08:00", zone: "+08:00" },
+    { slug: "nagoya-festival-2026-parade-change-free-attractions", headline: "Nagoya Festival is on this weekend, but its famous parade is canceled", destination: "Nagoya, Aichi Prefecture", country: "Japan", eventStartAt: "2026-10-17", eventEndAt: "2026-10-18", expiresAt: "2026-10-19T00:00:00+09:00", zone: "+09:00" },
+  ];
+  const slugs = cases.map(({ slug }) => slug);
+  const beforePublication = new Date("2026-10-14T23:59:59+08:00");
+  const active = getActiveTravelUpdates(october15Noon);
+
+  assert.deepEqual(active.slice(0, 3).map((update) => update.slug), slugs);
+  assert.deepEqual(getHomepageTravelUpdates(october15Noon).map((update) => update.slug), slugs);
+  assert.equal(getFeaturedTravelUpdate(october15Noon)?.slug, slugs[0]);
+
+  for (const { slug, headline, destination, country, eventStartAt, eventEndAt, expiresAt, zone } of cases) {
+    const update = getTravelUpdateBySlug(slug);
+    assert.ok(update);
+    assert.equal(update.headline, headline);
+    assert.equal(update.publishedAt, "2026-10-15");
+    assert.equal(update.destination, destination);
+    assert.equal(update.country, country);
+    assert.equal(update.category, "events-experiences");
+    assert.equal(update.eventStartAt, eventStartAt);
+    assert.equal(update.eventEndAt, eventEndAt);
+    assert.equal(update.expiresAt, expiresAt);
+    assert.equal(getActiveTravelUpdates(beforePublication).some((activeUpdate) => activeUpdate.slug === slug), false);
+    assert.ok(getTravelUpdateBySlug(slug));
+    assert.ok(getActiveTravelUpdates(new Date(`2026-10-18T23:59:59${zone}`)).some((activeUpdate) => activeUpdate.slug === slug));
+    assert.equal(getActiveTravelUpdates(new Date(expiresAt)).some((activeUpdate) => activeUpdate.slug === slug), false);
+    assert.ok(update.sources.every((source) => source.accessedAt === "2026-10-15"));
+    assert.ok(update.sources.every((source) => source.url.startsWith("https://")));
+    assert.deepEqual(filterTravelUpdates(active, destination, "events-experiences").map((filtered) => filtered.slug), [slug]);
+    assert.ok(filterTravelUpdates(active, "all", "events-experiences").some((filtered) => filtered.slug === slug));
+  }
+
+  const masskara = getTravelUpdateBySlug(cases[0].slug);
+  const masskaraCopy = [masskara?.summary, ...(masskara?.body.map((block) => block.text ?? block.items?.join(" ") ?? "") ?? [])].join(" ");
+  assert.match(masskaraCopy, /October 16–18/);
+  assert.match(masskaraCopy, /The Upper East/);
+  assert.match(masskaraCopy, /Araneta Street/);
+  assert.match(masskaraCopy, /reclamation area by SM City Bacolod/);
+  assert.match(masskaraCopy, /not the 2026 arena site/);
+  assert.match(masskaraCopy, /October 25/);
+  assert.match(masskaraCopy, /B.S. Aquino Drive to SSS-Cottage Road/);
+  assert.match(masskaraCopy, /10:00 AM to 9:00 PM/);
+  assert.match(masskaraCopy, /separate areas and do not mean every Bacolod road is closed/);
+  assert.match(masskaraCopy, /do not confirm a general admission price/);
+
+  const sunMoonLake = getTravelUpdateBySlug(cases[1].slug);
+  const sunMoonLakeCopy = [sunMoonLake?.summary, ...(sunMoonLake?.body.map((block) => block.text ?? block.items?.join(" ") ?? "") ?? [])].join(" ");
+  assert.match(sunMoonLakeCopy, /6:30 to 9:30 PM at Zhongxing Parking Lot/);
+  assert.match(sunMoonLakeCopy, /coordinated with the live music/);
+  assert.match(sunMoonLakeCopy, /Xiangshan Visitor Center/);
+  assert.match(sunMoonLakeCopy, /8:00 AM to 11:00 PM/);
+  assert.match(sunMoonLakeCopy, /not mean every road around Sun Moon Lake is closed/);
+  assert.match(sunMoonLakeCopy, /flexible timing/);
+
+  const nagoya = getTravelUpdateBySlug(cases[2].slug);
+  const nagoyaCopy = [nagoya?.summary, ...(nagoya?.body.map((block) => block.text ?? block.items?.join(" ") ?? "") ?? [])].join(" ");
+  assert.match(nagoyaCopy, /festival is still happening/);
+  assert.match(nagoyaCopy, /street parade is canceled/);
+  assert.match(nagoyaCopy, /Asian Para Games torch relay and opening ceremony/);
+  assert.match(nagoyaCopy, /Nagoya Castle is free to enter on both October 17 and 18/);
+  assert.match(nagoyaCopy, /city lists 12 free-admission facilities/);
+  assert.match(nagoyaCopy, /Noritake Forest/);
+  assert.match(nagoyaCopy, /Toyota Commemorative Museum/);
+  assert.match(nagoyaCopy, /no 2026 procession is planned/);
+
+  const afterWeekend = new Date("2026-10-19T01:00:00+09:00");
+  for (const slug of slugs) {
+    assert.equal(getActiveTravelUpdates(afterWeekend).some((update) => update.slug === slug), false);
+    assert.equal(getHomepageTravelUpdates(afterWeekend).some((update) => update.slug === slug), false);
+  }
+  assert.equal(getFeaturedTravelUpdate(afterWeekend)?.slug, getActiveTravelUpdates(afterWeekend)[0]?.slug);
+  assert.equal(getFeaturedTravelUpdate(afterWeekend)?.slug, "buglasan-festival-negros-oriental-2026");
 });
 
 test("October 2 festival updates use verified facts, preserve filters and expire after their final dates", () => {
@@ -325,7 +403,7 @@ test("October 5 updates use an intentional same-day order, preserve filters and 
 });
 
 test("older expired stories stay out while the newest active story remains the homepage hero", () => {
-  const beforeExpiry = getHomepageTravelUpdates(new Date("2026-10-18T21:59:59+08:00"));
+  const beforeExpiry = getHomepageTravelUpdates(new Date("2026-10-14T23:59:59+08:00"));
   const atExpiry = getHomepageTravelUpdates(new Date("2026-10-19T00:00:00+08:00"));
 
   assert.equal(beforeExpiry[0]?.slug, "sunchang-jangryu-festival-2026");
