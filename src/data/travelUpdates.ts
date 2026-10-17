@@ -59,6 +59,7 @@ const october6AccessedAt = "2026-10-06";
 const october11AccessedAt = "2026-10-11";
 const october14AccessedAt = "2026-10-14";
 const october15AccessedAt = "2026-10-15";
+const october17AccessedAt = "2026-10-17";
 
 const unsplash = (photoId: string, width: number) =>
   `https://images.unsplash.com/${photoId}?auto=format&fit=crop&w=${width}&q=85`;
@@ -70,6 +71,112 @@ const destinationImage = (slug: string) => {
 };
 
 export const travelUpdates: TravelUpdate[] = [
+  {
+    id: "cordillera-festival-of-festivals-baguio-2026",
+    slug: "cordillera-festival-of-festivals-baguio-2026",
+    headline: "Baguio brings the Cordillera's festivals together in one grand parade",
+    summary: "Baguio hosts the Cordillera Festival of Festivals on October 17, bringing together cultural performers from the region's six provinces and two cities.",
+    destination: "Baguio City",
+    country: "Philippines",
+    category: "events-experiences",
+    publishedAt: "2026-10-17",
+    image: {
+      src: "https://pia.gov.ph/wp-content/uploads/2026/10/DOT-CAR-FOF-Logo-1024x683.jpg",
+      alt: "Official Cordillera Festival of Festivals 2026 logo",
+      credit: "Logo by Joseph Domirez Jr. / PIA-CAR",
+      creditUrl: "https://pia.gov.ph/news/luzon/car/cordillera-festival-of-festivals-2026-set-on-oct-17-in-baguio-city/",
+    },
+    body: [
+      { type: "paragraph", text: "On Saturday, October 17, Baguio hosts the Cordillera Festival of Festivals, bringing traditions from the region's six provinces and two cities into one central-city celebration. The Philippine Information Agency reports hundreds of cultural performers and describes the festival as a chance to share the stories, heritage and community life behind the region's different traditions. For visitors, it is a chance to see several Cordillera festival expressions together without making separate trips to each province; watch with respect for the communities whose culture is being presented." },
+      { type: "heading", text: "When and where to watch" },
+      { type: "paragraph", text: "The event begins at 8:00 AM. DOT-CAR's current event listing gives the parade route as Harrison Road, along Session Road, and ending at Post Office Park on Upper Session Road. PIA's October 12 preview separately says participants gather at Melvin Jones Grounds and describes a route via Maharlika Livelihood Center toward Session Road. Those descriptions do not fully align, so check DOT-CAR's latest route notice and Baguio City advisories before choosing a viewing point. Treat Melvin Jones Grounds, Maharlika Livelihood Center and Post Office Park as distinct locations, not interchangeable venue names." },
+      { type: "heading", text: "What the parade celebrates" },
+      { type: "paragraph", text: "The showcase brings regional festivals together under a shared Cordillera identity while keeping their individual stories visible. PIA names examples including Abra's Kawayan Festival, Apayao's Say-am, Kabayan's Bindiyan, Ifugao's Gotad, Kalinga's Tachok-Salip, Mountain Province's Lang-ay and Tabuk City's Gabbok. The performances are cultural expressions, not just a costume display, so give performers space and follow event marshals' instructions." },
+      { type: "heading", text: "Roads and practical advice" },
+      { type: "paragraph", text: "The listed parade area includes Harrison Road, Session Road and Upper Session Road around Post Office Park. Traffic controls or pedestrian changes may affect access nearby, but the event listing does not give current closure times or a detailed spectator map. Check the Baguio VISITA Local Advisories page and DOT-CAR's event listing shortly before setting out, then follow city traffic officers and event marshals on the day." },
+      { type: "list", items: [
+        "Choose October 17 if you want to see the regional festival parade; it is a one-day event, starting at 8:00 AM.",
+        "Confirm the route and road advisory before travelling downtown. Do not assume Melvin Jones Grounds, Maharlika Livelihood Center and Post Office Park refer to one venue.",
+        "DOT-CAR's event listing shows a price of ₱0 for the parade. It does not describe separate stands or reserved viewing areas, so confirm any special access conditions with the organizer.",
+      ] },
+    ],
+    sources: [
+      { label: "Festival date, cultural context and participant gathering information", url: "https://pia.gov.ph/news/luzon/car/cordillera-festival-of-festivals-2026-set-on-oct-17-in-baguio-city/", publisher: "Philippine Information Agency", accessedAt: october17AccessedAt },
+      { label: "DOT-CAR event route listing", url: "https://alammobabaguio.com/listing/parade-of-festivals-2026/", publisher: "Department of Tourism - Cordillera Administrative Region Office, via Alam Mo Ba Baguio", accessedAt: october17AccessedAt },
+      { label: "Baguio City visitor advisories", url: "https://visita.baguio.gov.ph/bulletin/announcements", publisher: "Baguio VISITA / City Tourism, Culture and Arts Office", accessedAt: october17AccessedAt },
+    ],
+    eventStartAt: "2026-10-17",
+    eventEndAt: "2026-10-17",
+    expiresAt: "2026-10-18T00:00:00+08:00",
+  },
+  {
+    id: "kinmen-tunnel-music-festival-2026",
+    slug: "kinmen-tunnel-music-festival-2026",
+    headline: "Taiwan's Kinmen turns a former military tunnel into a concert hall",
+    summary: "Kinmen Tunnel Music Festival runs October 17–18 inside historic Zhaishan Tunnel, combining classical performances with a remarkable wartime setting.",
+    destination: "Kinmen",
+    country: "Taiwan",
+    category: "events-experiences",
+    publishedAt: "2026-10-17",
+    image: {
+      src: "https://s3.resource.opentix.life/upload/program/1778486677975FdOcSpzo8p.png",
+      alt: "Official artwork for the 2026 Kinmen Tunnel Music Festival",
+      credit: "Kinmen Tunnel Music Festival / OPENTIX listing artwork",
+      creditUrl: "https://www.opentix.life/event/2053748358025170945",
+    },
+    body: [
+      { type: "paragraph", text: "The Kinmen Tunnel Music Festival places classical performances inside Zhaishan Tunnel, an underground military waterway built to move landing craft and supplies. The tunnel's granite walls and waterway give the performance a natural echo, connecting live music with the island's wartime history. It is an unusual concert setting, but the festival period is not an ordinary sightseeing visit." },
+      { type: "heading", text: "Concert dates, sessions and tickets" },
+      { type: "paragraph", text: "Concerts are scheduled for October 17 and 18 at 10:00 AM, 11:30 AM and 2:00 PM at Zhaishan Tunnel. The program pairs classical vocalists and instrumentalists with a string ensemble. OPENTIX listed each session at NT$200 and marked all six sessions sold out when checked on October 17. Check OPENTIX for any later ticket-status update; do not travel expecting walk-in admission." },
+      { type: "heading", text: "Sightseeing is closed during the festival" },
+      { type: "paragraph", text: "The Kinmen National Park Administration has closed the whole Zhaishan Tunnel site to general sightseeing from October 16 through 18, including its outdoor weapons display and coastal walkway. Normal sightseeing is scheduled to resume October 19. A concert ticket is for the specific performance, not general access to explore the site; ticket holders should follow their entry instructions." },
+      { type: "heading", text: "Plan access carefully" },
+      { type: "paragraph", text: "Vehicle controls apply during the event. OPENTIX asks concertgoers to make their own way to the tunnel and follow on-site staff. The approach has many stairs, the floor can be wet and slippery, there are no accessible facilities, and the concert is watched standing. The ticketing notice recommends attendance for ages 7 and older; children aged 7–12 need an accompanying adult. Check the national park notice and event website before setting out, especially if you need step-free access or are planning a sightseeing stop." },
+    ],
+    sources: [
+      { label: "2026 festival dates, venue and event overview", url: "https://kinmen.travel/zh-tw/event-calendar/details/4239", publisher: "Kinmen County Tourism Department", accessedAt: october17AccessedAt },
+      { label: "Sessions, ticket status and visitor conditions", url: "https://www.opentix.life/event/2053748358025170945", publisher: "OPENTIX / Kinmen Tunnel Music Festival organizers", accessedAt: october17AccessedAt },
+      { label: "Zhaishan Tunnel sightseeing closure and vehicle controls", url: "https://www.kmnp.gov.tw/ch/titlelist/latest-news/4596", publisher: "Kinmen National Park Administration", accessedAt: october17AccessedAt },
+      { label: "Tunnel history and natural acoustic setting", url: "https://www.kinmentunnelmusic.com.tw/", publisher: "Kinmen Tunnel Music Festival", accessedAt: october17AccessedAt },
+      { label: "Why Zhaishan Tunnel was built", url: "https://www.kmnp.gov.tw/en/titlelist/faq/2882", publisher: "Kinmen National Park Administration", accessedAt: october17AccessedAt },
+    ],
+    eventStartAt: "2026-10-17",
+    eventEndAt: "2026-10-18",
+    expiresAt: "2026-10-19T00:00:00+08:00",
+  },
+  {
+    id: "taipei-tourism-market-day-2026",
+    slug: "taipei-tourism-market-day-2026",
+    headline: "Explore Taiwan in one stop at Taipei's Tourism Market Day",
+    summary: "Taipei's Tourism Market Day runs October 16–19, bringing around 200 tourism businesses together to showcase food, culture, destinations and local experiences from across Taiwan.",
+    destination: "Taipei",
+    country: "Taiwan",
+    category: "events-experiences",
+    publishedAt: "2026-10-17",
+    image: {
+      src: "https://www.taiwan.net.tw/pic.ashx?qp=event%2F033798ef-c467-44bc-bae2-7a6098d21189.jpg&sizetype=3",
+      alt: "Official poster for Taiwan's 2026 Tourism Market Day",
+      credit: "Taiwan Tourism Administration",
+      creditUrl: "https://www.taiwan.net.tw/m1.aspx?lid=081954&sNo=0001019",
+    },
+    body: [
+      { type: "paragraph", text: "Taiwan's 2026 Tourism Market Day runs October 16–19 at the Zhongshan Cultural Park of National Sun Yat-sen Memorial Hall in Taipei's Xinyi District. Around 200 tourism businesses represent 18 tourism regions, including offshore islands, with products and ideas covering food, accommodation, sightseeing, shopping and travel. It gives travelers a practical way to compare Taiwan destinations while already in the capital." },
+      { type: "heading", text: "Hours and location" },
+      { type: "paragraph", text: "The market is open 2:00–8:00 PM from October 16 through 18, then 2:00–6:00 PM on October 19. The venue is the Sun Yat-sen Memorial Hall Zhongshan Cultural Park, 505 Ren'ai Road, Section 4, Taipei. Plan around the shorter Monday hours if visiting on the final day." },
+      { type: "heading", text: "Use the market to plan beyond Taipei" },
+      { type: "paragraph", text: "The official event information groups the displays into Northern Taiwan and Matsu, Central Taiwan and Kinmen, Southern Taiwan and Penghu, and Eastern Taiwan. Browse the regional booths for local food, products and itinerary ideas, then ask about the places and travel arrangements that interest you. The program also lists regional performances, itinerary-sharing displays and local DIY activities. Use the market to compare places, then check the opening hours and transport details of each destination before making a separate trip." },
+      { type: "heading", text: "Admission and international visitor gift" },
+      { type: "paragraph", text: "The official event notices checked do not state a general admission price, so confirm entry terms with the Taiwan Tourism Administration before visiting. The organizer says international visitors may show a foreign passport to redeem a limited welcome gift. Gifts and promotions depend on stock and applicable conditions; ask at the event rather than planning around a guaranteed item or discount." },
+    ],
+    sources: [
+      { label: "Tourism Market Day event details, regional zones and official poster", url: "https://www.taiwan.net.tw/m1.aspx?lid=081954&sNo=0001019", publisher: "Taiwan Tourism Administration", accessedAt: october17AccessedAt },
+      { label: "Event dates, hours, participating regions and visitor gift information", url: "https://www.taiwan.net.tw/m1.aspx?sNo=0044578", publisher: "Taiwan Tourism Administration", accessedAt: october17AccessedAt },
+      { label: "October 16 opening and current event information", url: "https://www.motc.gov.tw/ch/app/news_list/view?id=14&module=news&serno=14c312ce-e481-45cb-86e9-856e25c1aa70", publisher: "Ministry of Transportation and Communications, Taiwan", accessedAt: october17AccessedAt },
+    ],
+    eventStartAt: "2026-10-16",
+    eventEndAt: "2026-10-19",
+    expiresAt: "2026-10-20T00:00:00+08:00",
+  },
   {
     id: "masskara-festival-bacolod-grand-weekend-2026",
     slug: "masskara-festival-bacolod-grand-weekend-2026",

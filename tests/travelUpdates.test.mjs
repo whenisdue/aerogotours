@@ -24,6 +24,7 @@ const october3Noon = new Date("2026-10-03T12:00:00+08:00");
 const october5Noon = new Date("2026-10-05T12:00:00+08:00");
 const october14Noon = new Date("2026-10-14T12:00:00+08:00");
 const october15Noon = new Date("2026-10-15T12:00:00+08:00");
+const october17Noon = new Date("2026-10-17T12:00:00+08:00");
 
 test("travel update slugs are unique and records have the required fields", () => {
   const slugs = travelUpdates.map((update) => update.slug);
@@ -185,7 +186,7 @@ test("October 15 event updates lead deterministically and expire at destination-
     assert.equal(getHomepageTravelUpdates(afterWeekend).some((update) => update.slug === slug), false);
   }
   assert.equal(getFeaturedTravelUpdate(afterWeekend)?.slug, getActiveTravelUpdates(afterWeekend)[0]?.slug);
-  assert.equal(getFeaturedTravelUpdate(afterWeekend)?.slug, "buglasan-festival-negros-oriental-2026");
+  assert.equal(getFeaturedTravelUpdate(afterWeekend)?.slug, "taipei-tourism-market-day-2026");
 });
 
 test("October 2 festival updates use verified facts, preserve filters and expire after their final dates", () => {
@@ -407,7 +408,7 @@ test("older expired stories stay out while the newest active story remains the h
   const atExpiry = getHomepageTravelUpdates(new Date("2026-10-19T00:00:00+08:00"));
 
   assert.equal(beforeExpiry[0]?.slug, "sunchang-jangryu-festival-2026");
-  assert.equal(atExpiry[0]?.slug, "buglasan-festival-negros-oriental-2026");
+  assert.equal(atExpiry[0]?.slug, "taipei-tourism-market-day-2026");
   assert.equal(atExpiry.some((update) => update.slug === "sunchang-jangryu-festival-2026"), false);
   assert.equal(atExpiry.some((update) => update.slug === "festival-pinisi-bulukumba-2026"), false);
   assert.equal(beforeExpiry.some((update) => update.slug === "lego-experience-the-thrill-singapore-2026"), false);
@@ -856,4 +857,79 @@ test("October 14 festival updates resolve, preserve filters and expire in their 
   const afterFestivalExpiry = getActiveTravelUpdates(new Date("2026-10-26T00:00:00+08:00"));
   assert.equal(getFeaturedTravelUpdate(new Date("2026-10-26T00:00:00+08:00"))?.slug, "pal-manila-saipan-flights-october-2026");
   assert.equal(afterFestivalExpiry.some((item) => slugs.includes(item.slug)), false);
+});
+
+test("October 17 event updates lead deterministically, preserve filters and expire in destination time", () => {
+  const cases = [
+    { slug: "cordillera-festival-of-festivals-baguio-2026", headline: "Baguio brings the Cordillera's festivals together in one grand parade", destination: "Baguio City", country: "Philippines", eventStartAt: "2026-10-17", eventEndAt: "2026-10-17", expiresAt: "2026-10-18T00:00:00+08:00" },
+    { slug: "kinmen-tunnel-music-festival-2026", headline: "Taiwan's Kinmen turns a former military tunnel into a concert hall", destination: "Kinmen", country: "Taiwan", eventStartAt: "2026-10-17", eventEndAt: "2026-10-18", expiresAt: "2026-10-19T00:00:00+08:00" },
+    { slug: "taipei-tourism-market-day-2026", headline: "Explore Taiwan in one stop at Taipei's Tourism Market Day", destination: "Taipei", country: "Taiwan", eventStartAt: "2026-10-16", eventEndAt: "2026-10-19", expiresAt: "2026-10-20T00:00:00+08:00" },
+  ];
+  const slugs = cases.map(({ slug }) => slug);
+  const beforePublication = new Date("2026-10-16T23:59:59+08:00");
+  const sameDayArticles = travelUpdates.filter((update) => update.publishedAt === "2026-10-17");
+  const active = getActiveTravelUpdates(october17Noon);
+
+  assert.deepEqual(sameDayArticles.map((update) => update.slug), slugs);
+  assert.deepEqual(active.slice(0, 3).map((update) => update.slug), slugs);
+  assert.deepEqual(getHomepageTravelUpdates(october17Noon).map((update) => update.slug), slugs);
+  assert.equal(getFeaturedTravelUpdate(october17Noon)?.slug, slugs[0]);
+
+  for (const expected of cases) {
+    const update = getTravelUpdateBySlug(expected.slug);
+    assert.ok(update);
+    assert.equal(update.headline, expected.headline);
+    assert.equal(update.publishedAt, "2026-10-17");
+    assert.equal(update.destination, expected.destination);
+    assert.equal(update.country, expected.country);
+    assert.equal(update.category, "events-experiences");
+    assert.equal(update.eventStartAt, expected.eventStartAt);
+    assert.equal(update.eventEndAt, expected.eventEndAt);
+    assert.equal(update.expiresAt, expected.expiresAt);
+    assert.equal(update.featured, undefined);
+    assert.equal(getActiveTravelUpdates(beforePublication).some((item) => item.slug === expected.slug), false);
+    assert.ok(active.some((item) => item.slug === expected.slug));
+    assert.ok(filterTravelUpdates(active, expected.destination, "events-experiences").some((item) => item.slug === expected.slug));
+    assert.ok(update.sources.length > 0);
+    assert.ok(update.sources.every((source) => source.accessedAt === "2026-10-17"));
+    assert.ok(update.sources.every((source) => source.url.startsWith("https://")));
+    assert.ok(getActiveTravelUpdates(new Date(new Date(expected.expiresAt).getTime() - 1)).some((item) => item.slug === expected.slug));
+    assert.equal(getActiveTravelUpdates(new Date(expected.expiresAt)).some((item) => item.slug === expected.slug), false);
+  }
+
+  const baguio = getTravelUpdateBySlug(slugs[0]);
+  const baguioCopy = [baguio?.summary, ...(baguio?.body.map((block) => block.text ?? block.items?.join(" ") ?? "") ?? [])].join(" ");
+  assert.match(baguioCopy, /begins at 8:00 AM/);
+  assert.match(baguioCopy, /Harrison Road, along Session Road, and ending at Post Office Park/);
+  assert.match(baguioCopy, /Melvin Jones Grounds/);
+  assert.match(baguioCopy, /descriptions do not fully align/);
+  assert.match(baguioCopy, /Baguio VISITA Local Advisories/);
+  assert.match(baguioCopy, /price of ₱0 for the parade/);
+  assert.ok(baguio?.sources.some((source) => source.publisher === "Philippine Information Agency"));
+
+  const kinmen = getTravelUpdateBySlug(slugs[1]);
+  const kinmenCopy = kinmen?.body.map((block) => block.text ?? block.items?.join(" ") ?? "").join(" ") ?? "";
+  assert.match(kinmenCopy, /10:00 AM, 11:30 AM and 2:00 PM/);
+  assert.match(kinmenCopy, /all six sessions sold out/);
+  assert.match(kinmenCopy, /NT\$200/);
+  assert.match(kinmenCopy, /closed the whole Zhaishan Tunnel site to general sightseeing from October 16 through 18/);
+  assert.match(kinmenCopy, /Vehicle controls apply/);
+  assert.match(kinmenCopy, /wet and slippery/);
+  assert.ok(kinmen?.sources.some((source) => source.publisher === "Kinmen National Park Administration"));
+  assert.ok(kinmen?.sources.some((source) => source.publisher === "OPENTIX / Kinmen Tunnel Music Festival organizers"));
+
+  const taipei = getTravelUpdateBySlug(slugs[2]);
+  const taipeiCopy = taipei?.body.map((block) => block.text ?? block.items?.join(" ") ?? "").join(" ") ?? "";
+  assert.match(taipeiCopy, /Around 200 tourism businesses represent 18 tourism regions/);
+  assert.match(taipeiCopy, /2:00–8:00 PM/);
+  assert.match(taipeiCopy, /2:00–6:00 PM on October 19/);
+  assert.match(taipeiCopy, /show a foreign passport to redeem a limited welcome gift/);
+  assert.match(taipeiCopy, /do not state a general admission price/);
+  assert.ok(taipei?.sources.some((source) => source.publisher === "Taiwan Tourism Administration"));
+
+  assert.equal(getFeaturedTravelUpdate(new Date("2026-10-18T00:00:00+08:00"))?.slug, slugs[1]);
+  assert.equal(getFeaturedTravelUpdate(new Date("2026-10-19T00:00:00+08:00"))?.slug, slugs[2]);
+  const afterAllExpiries = new Date("2026-10-20T00:00:00+08:00");
+  assert.equal(getFeaturedTravelUpdate(afterAllExpiries)?.slug, "buglasan-festival-negros-oriental-2026");
+  assert.ok(slugs.every((slug) => !getHomepageTravelUpdates(afterAllExpiries).some((update) => update.slug === slug)));
 });

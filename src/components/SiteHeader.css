@@ -5,7 +5,12 @@
 .site-header--editorial .site-nav > .site-nav__secondary { color: #647169; font-size: 13px; }
 .site-header--editorial .site-nav > .site-nav__mobile { display: none; }
 .site-header--editorial .site-nav > a:hover { color: #a55e45; }
+.site-header--editorial .site-nav > a[aria-current="page"] { color: var(--forest-deep); text-decoration: underline; text-decoration-color: var(--coral); text-underline-offset: 7px; }
 .site-header--editorial .site-nav a:focus-visible, .site-header--editorial .menu-toggle:focus-visible { outline: 3px solid #b87559; outline-offset: 4px; }
+@media (max-width: 1000px) and (min-width: 701px) {
+  .site-header--editorial .site-nav { gap: 14px; }
+  .site-header--editorial .site-nav > a { font-size: 12px; }
+}
 @media (max-width: 700px) {
   .site-header--editorial .menu-toggle { width: 44px; height: 44px; }
   .site-header--editorial .site-nav { gap: 0; }

@@ -65,6 +65,7 @@ export function SiteHeader() {
       <nav ref={nav} id="main-navigation" className={`site-nav${menuOpen ? " site-nav--open" : ""}`} aria-label="Main navigation">
         <Link className="site-nav__guides" to="/guides" aria-current={pathname.startsWith("/guides") ? "page" : undefined} onClick={() => closeMenu()}>Travel Guides</Link>
         <Link to={sectionLink("#travel-updates")} onClick={() => closeMenu("#travel-updates")}>Travel Updates</Link>
+        <Link to="/trip-planner" aria-current={pathname === "/trip-planner" ? "page" : undefined} onClick={() => closeMenu()}>Free Trip Planner</Link>
         <Link className="site-nav__secondary" to="/companion" onClick={() => closeMenu()}>The Companion</Link>
         <Link className="site-nav__secondary" to={sectionLink("#inquiry")} onClick={() => closeMenu("#inquiry")}>Plan my trip</Link>
         <Link className="site-nav__mobile" to={sectionLink("#how-it-works")} onClick={() => closeMenu("#how-it-works")}>How it works</Link>

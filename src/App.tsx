@@ -10,6 +10,7 @@ import { getTravelUpdateBySlug } from "./data/travelUpdates";
 import { TravelUpdateArticlePage, TravelUpdatesPage } from "./pages/TravelUpdates";
 import { GardensByTheBayGuide } from "./pages/GardensByTheBayGuide";
 import { TravelGuidesPage } from "./pages/TravelGuides";
+import { TripPlanner } from "./features/tripPlanner/TripPlanner";
 import { VietnamProposalPage } from "./pages/VietnamProposal";
 import "./App.css";
 
@@ -23,9 +24,10 @@ function PageTitle() {
   const isTravelUpdateArticle = Boolean(travelUpdate);
   const isGardensGuide = pathname === "/guides/singapore/gardens-by-the-bay";
   const isGuidesDirectory = pathname === "/guides";
+  const isTripPlanner = pathname === "/trip-planner";
   const isDiscoveryPage = pathname === "/" || isGuidesDirectory;
   const isVietnamProposal = pathname === "/trip/vietnam-danang-hanoi";
-  const pageTitle = isGuidesDirectory ? "Travel Guides · AeroGo Travel & Tours" : isGardensGuide
+  const pageTitle = isTripPlanner ? "Free Singapore Trip Planner · AeroGo Travel & Tours" : isGuidesDirectory ? "Travel Guides · AeroGo Travel & Tours" : isGardensGuide
     ? "Gardens by the Bay Visitor Guide · Singapore · AeroGo"
     : travelUpdate
     ? `${travelUpdate.headline} · AeroGo Travel Updates`
@@ -44,7 +46,8 @@ function PageTitle() {
           : isTravelUpdatesRoute
             ? "AeroGo Travel Updates · AeroGo"
           : "AeroGo Travel & Tours | See more of the world.";
-  const pageDescription = (isGuidesDirectory ? "Explore AeroGo’s travel guides, with original photography and practical visitor information. Start with Gardens by the Bay in Singapore." : undefined)
+  const pageDescription = (isTripPlanner ? "Create a free three, four or five day Singapore itinerary with a travel checklist. No account needed; save, share or print your plan." : undefined)
+    ?? (isGuidesDirectory ? "Explore AeroGo’s travel guides, with original photography and practical visitor information. Start with Gardens by the Bay in Singapore." : undefined)
     ?? (pathname === "/" ? "Travel stories, useful guides, and places worth exploring. Discover the AeroGo travel journal, destination inspiration and the latest travel updates." : undefined)
     ?? (isGardensGuide ? "A practical visitor guide to Gardens by the Bay in Singapore: free and ticketed areas, Cloud Forest, changing floral displays, Supertrees and planning tips." : undefined)
     ?? travelUpdate?.summary
@@ -55,7 +58,7 @@ function PageTitle() {
     document.title = pageTitle;
     setMeta("name", "description", pageDescription);
 
-    if (isTravelUpdatesRoute || isGardensGuide || isDiscoveryPage) {
+    if (isTravelUpdatesRoute || isGardensGuide || isDiscoveryPage || isTripPlanner) {
       const canonicalUrl = new URL(pathname, window.location.origin).href;
       setCanonical(canonicalUrl);
       setMeta("property", "og:title", pageTitle);
@@ -82,7 +85,7 @@ function PageTitle() {
     } else {
       removeTravelUpdatesMeta();
     }
-  }, [isDiscoveryPage, isGardensGuide, isTravelUpdateArticle, isTravelUpdatesRoute, pageDescription, pageTitle, pathname, travelUpdate]);
+  }, [isDiscoveryPage, isGardensGuide, isTravelUpdateArticle, isTravelUpdatesRoute, isTripPlanner, pageDescription, pageTitle, pathname, travelUpdate]);
   useEffect(() => {
     const robots = document.querySelector('meta[name="robots"]') ?? document.head.appendChild(document.createElement("meta"));
     robots.setAttribute("name", "robots");
@@ -134,6 +137,7 @@ export default function App() {
   return <BrowserRouter><PageTitle /><ScrollToHash /><Routes>
     <Route path="/" element={<Homepage />} />
     <Route path="/companion" element={<CompanionPage />} />
+    <Route path="/trip-planner" element={<TripPlanner />} />
     <Route path="/trip/vietnam-danang-hanoi" element={<VietnamProposalPage />} />
     <Route path="/trip/:token" element={<MyTripPage />} />
     <Route path="/travel-updates" element={<TravelUpdatesPage />} />
