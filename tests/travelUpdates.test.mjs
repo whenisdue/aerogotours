@@ -186,7 +186,7 @@ test("October 15 event updates lead deterministically and expire at destination-
     assert.equal(getHomepageTravelUpdates(afterWeekend).some((update) => update.slug === slug), false);
   }
   assert.equal(getFeaturedTravelUpdate(afterWeekend)?.slug, getActiveTravelUpdates(afterWeekend)[0]?.slug);
-  assert.equal(getFeaturedTravelUpdate(afterWeekend)?.slug, "taipei-tourism-market-day-2026");
+  assert.equal(getFeaturedTravelUpdate(afterWeekend)?.slug, "pal-riyadh-flight-suspension-november-2026");
 });
 
 test("October 2 festival updates use verified facts, preserve filters and expire after their final dates", () => {
@@ -408,7 +408,7 @@ test("older expired stories stay out while the newest active story remains the h
   const atExpiry = getHomepageTravelUpdates(new Date("2026-10-19T00:00:00+08:00"));
 
   assert.equal(beforeExpiry[0]?.slug, "sunchang-jangryu-festival-2026");
-  assert.equal(atExpiry[0]?.slug, "taipei-tourism-market-day-2026");
+  assert.equal(atExpiry[0]?.slug, "pal-riyadh-flight-suspension-november-2026");
   assert.equal(atExpiry.some((update) => update.slug === "sunchang-jangryu-festival-2026"), false);
   assert.equal(atExpiry.some((update) => update.slug === "festival-pinisi-bulukumba-2026"), false);
   assert.equal(beforeExpiry.some((update) => update.slug === "lego-experience-the-thrill-singapore-2026"), false);
@@ -855,7 +855,7 @@ test("October 14 festival updates resolve, preserve filters and expire in their 
   assert.ok(getActiveTravelUpdates(new Date("2026-10-25T23:59:59+08:00")).some((item) => item.slug === slugs[2]));
   assert.equal(getActiveTravelUpdates(new Date("2026-10-26T00:00:00+08:00")).some((item) => item.slug === slugs[2]), false);
   const afterFestivalExpiry = getActiveTravelUpdates(new Date("2026-10-26T00:00:00+08:00"));
-  assert.equal(getFeaturedTravelUpdate(new Date("2026-10-26T00:00:00+08:00"))?.slug, "pal-manila-saipan-flights-october-2026");
+  assert.equal(getFeaturedTravelUpdate(new Date("2026-10-26T00:00:00+08:00"))?.slug, "pal-riyadh-flight-suspension-november-2026");
   assert.equal(afterFestivalExpiry.some((item) => slugs.includes(item.slug)), false);
 });
 
@@ -928,8 +928,85 @@ test("October 17 event updates lead deterministically, preserve filters and expi
   assert.ok(taipei?.sources.some((source) => source.publisher === "Taiwan Tourism Administration"));
 
   assert.equal(getFeaturedTravelUpdate(new Date("2026-10-18T00:00:00+08:00"))?.slug, slugs[1]);
-  assert.equal(getFeaturedTravelUpdate(new Date("2026-10-19T00:00:00+08:00"))?.slug, slugs[2]);
+  assert.equal(getFeaturedTravelUpdate(new Date("2026-10-19T00:00:00+08:00"))?.slug, "pal-riyadh-flight-suspension-november-2026");
   const afterAllExpiries = new Date("2026-10-20T00:00:00+08:00");
-  assert.equal(getFeaturedTravelUpdate(afterAllExpiries)?.slug, "buglasan-festival-negros-oriental-2026");
+  assert.equal(getFeaturedTravelUpdate(afterAllExpiries)?.slug, "pal-riyadh-flight-suspension-november-2026");
   assert.ok(slugs.every((slug) => !getHomepageTravelUpdates(afterAllExpiries).some((update) => update.slug === slug)));
+});
+
+test("October 19 updates resolve, lead in stable order, preserve filters and use correct lifecycles", () => {
+  const cases = [
+    { slug: "pal-riyadh-flight-suspension-november-2026", headline: "PAL Riyadh Flights Suspended Until November 29: What Filipino Passengers Should Know", destination: "Riyadh / Manila", country: "Saudi Arabia / Philippines", category: "flights-airports", eventStartAt: undefined, eventEndAt: undefined, expiresAt: undefined },
+    { slug: "south-korea-iksan-chrysanthemum-festival-2026", headline: "South Korea's Free Iksan Chrysanthemum Festival Opens October 23: Dates and Visitor Guide", destination: "Iksan, Jeonbuk State", country: "South Korea", category: "events-experiences", eventStartAt: "2026-10-23", eventEndAt: "2026-11-01", expiresAt: "2026-11-02T00:00:00+09:00" },
+    { slug: "malaysia-mhlife-festival-2026", headline: "Malaysia's Free MHLife Festival Begins October 23: Food, Culture and Family Activities", destination: "Shah Alam, Selangor", country: "Malaysia", category: "events-experiences", eventStartAt: "2026-10-23", eventEndAt: "2026-10-25", expiresAt: "2026-10-26T00:00:00+08:00" },
+  ];
+  const slugs = cases.map(({ slug }) => slug);
+  const beforePublication = new Date("2026-10-18T23:59:59+08:00");
+  const publicationNoon = new Date("2026-10-19T12:00:00+08:00");
+  const sameDayArticles = travelUpdates.filter((update) => update.publishedAt === "2026-10-19");
+  const active = getActiveTravelUpdates(publicationNoon);
+
+  assert.deepEqual(sameDayArticles.map((update) => update.slug), slugs);
+  assert.deepEqual(active.slice(0, 3).map((update) => update.slug), slugs);
+  assert.deepEqual(getHomepageTravelUpdates(publicationNoon).map((update) => update.slug), slugs);
+  assert.equal(getFeaturedTravelUpdate(publicationNoon)?.slug, slugs[0]);
+
+  for (const expected of cases) {
+    const update = getTravelUpdateBySlug(expected.slug);
+    assert.ok(update);
+    assert.equal(update.headline, expected.headline);
+    assert.equal(update.publishedAt, "2026-10-19");
+    assert.equal(update.destination, expected.destination);
+    assert.equal(update.country, expected.country);
+    assert.equal(update.category, expected.category);
+    assert.equal(update.eventStartAt, expected.eventStartAt);
+    assert.equal(update.eventEndAt, expected.eventEndAt);
+    assert.equal(update.expiresAt, expected.expiresAt);
+    assert.equal(update.featured, undefined);
+    assert.equal(getActiveTravelUpdates(beforePublication).some((item) => item.slug === expected.slug), false);
+    assert.ok(active.some((item) => item.slug === expected.slug));
+    assert.ok(filterTravelUpdates(active, expected.destination, expected.category).some((item) => item.slug === expected.slug));
+    assert.ok(update.body.length >= 8);
+    assert.ok(update.sources.every((source) => source.accessedAt === "2026-10-19"));
+    assert.ok(update.sources.every((source) => source.url.startsWith("https://")));
+  }
+
+  const pal = getTravelUpdateBySlug(slugs[0]);
+  const palCopy = pal?.body.map((block) => block.text ?? block.items?.join(" ") ?? "").join(" ") ?? "";
+  assert.match(palCopy, /October 12/);
+  assert.match(palCopy, /PR654 and PR655/);
+  assert.match(palCopy, /evolving security situation at King Khalid International Airport/);
+  assert.match(palCopy, /does not confirm a service restart on November 30/);
+  assert.match(palCopy, /does not announce that other airlines' flights/);
+  assert.match(palCopy, /refund entitlement, rebooking waiver/);
+  assert.ok(pal?.sources.some((source) => source.publisher === "Philippine Airlines" && source.url.includes("riyadh-flights-pr654-pr655-suspended")));
+
+  const iksan = getTravelUpdateBySlug(slugs[1]);
+  const iksanCopy = iksan?.body.map((block) => block.text ?? block.items?.join(" ") ?? "").join(" ") ?? "";
+  assert.match(iksanCopy, /Iksan Central Sports Park/);
+  assert.match(iksanCopy, /10:00 AM to 9:00 PM/);
+  assert.match(iksanCopy, /600 chrysanthemum sculptures/);
+  assert.match(iksanCopy, /60,000 autumn flowering plants/);
+  assert.match(iksanCopy, /October 24/);
+  assert.match(iksanCopy, /does not mean food, shopping or every hands-on activity is free/);
+  assert.match(iksanCopy, /rather than a Seoul venue/);
+
+  const mhlife = getTravelUpdateBySlug(slugs[2]);
+  const mhlifeCopy = mhlife?.body.map((block) => block.text ?? block.items?.join(" ") ?? "").join(" ") ?? "";
+  assert.match(mhlifeCopy, /Dataran Karnival, Stadium Shah Alam/);
+  assert.match(mhlifeCopy, /10:00 AM to 10:00 PM/);
+  assert.match(mhlifeCopy, /16 food-and-beverage pavilions/);
+  assert.match(mhlifeCopy, /Harmony Night Concert/);
+  assert.match(mhlifeCopy, /does not give a separate Harmony Night schedule/);
+  assert.match(mhlifeCopy, /That covers entry to the festival, not food, drinks, shopping or paid activities/);
+  assert.ok(mhlife?.sources.some((source) => source.publisher === "MHLife 2026 official event website"));
+
+  const iksanExpiry = new Date("2026-11-02T00:00:00+09:00");
+  const mhlifeExpiry = new Date("2026-10-26T00:00:00+08:00");
+  assert.ok(getActiveTravelUpdates(new Date(iksanExpiry.getTime() - 1)).some((item) => item.slug === slugs[1]));
+  assert.equal(getActiveTravelUpdates(iksanExpiry).some((item) => item.slug === slugs[1]), false);
+  assert.ok(getActiveTravelUpdates(new Date(mhlifeExpiry.getTime() - 1)).some((item) => item.slug === slugs[2]));
+  assert.equal(getActiveTravelUpdates(mhlifeExpiry).some((item) => item.slug === slugs[2]), false);
+  assert.ok(getActiveTravelUpdates(new Date("2026-11-29T23:59:59+08:00")).some((item) => item.slug === slugs[0]));
+  assert.equal(getFeaturedTravelUpdate(new Date("2026-10-26T12:00:00+08:00"))?.slug, slugs[0]);
 });

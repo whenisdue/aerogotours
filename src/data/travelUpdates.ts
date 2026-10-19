@@ -60,6 +60,7 @@ const october11AccessedAt = "2026-10-11";
 const october14AccessedAt = "2026-10-14";
 const october15AccessedAt = "2026-10-15";
 const october17AccessedAt = "2026-10-17";
+const october19AccessedAt = "2026-10-19";
 
 const unsplash = (photoId: string, width: number) =>
   `https://images.unsplash.com/${photoId}?auto=format&fit=crop&w=${width}&q=85`;
@@ -71,6 +72,110 @@ const destinationImage = (slug: string) => {
 };
 
 export const travelUpdates: TravelUpdate[] = [
+  {
+    id: "pal-riyadh-flight-suspension-november-2026",
+    slug: "pal-riyadh-flight-suspension-november-2026",
+    headline: "PAL Riyadh Flights Suspended Until November 29: What Filipino Passengers Should Know",
+    summary: "Philippine Airlines confirms that Riyadh flights PR654 and PR655 remain suspended through November 29. Affected passengers should verify their booking status and available options.",
+    destination: "Riyadh / Manila",
+    country: "Saudi Arabia / Philippines",
+    category: "flights-airports",
+    publishedAt: "2026-10-19",
+    image: {
+      src: unsplash("photo-1436491865332-7a61a109cc05", 2200),
+      alt: "Passenger aircraft flying above the clouds",
+    },
+    body: [
+      { type: "paragraph", text: "Philippine Airlines (PAL) issued a travel advisory on October 12 confirming that its Riyadh services, flights PR654 and PR655, remain suspended until November 29, 2026. This matters to Filipinos travelling between Manila and Riyadh, including overseas Filipino workers and families arranging return trips. Check your own booking directly with PAL or the travel agent that issued it before making airport plans." },
+      { type: "heading", text: "Which flights are affected, and why?" },
+      { type: "paragraph", text: "The advisory applies to PAL flights PR654 and PR655 on the Riyadh route. PAL says the suspension is due to the evolving security situation at King Khalid International Airport. The airline says it is monitoring developments and assessing conditions affecting the operation of its flights. It will provide further updates as necessary." },
+      { type: "heading", text: "What November 29 means" },
+      { type: "paragraph", text: "PAL's notice says the flights remain suspended until November 29. It does not confirm a service restart on November 30, or name a first flight that will operate after the suspension period. Any resumption remains subject to PAL's assessment and a later airline update. Treat November 29 as the current suspension endpoint in the notice, not a guaranteed restart timetable." },
+      { type: "heading", text: "Does this affect every airline or Riyadh airport?" },
+      { type: "paragraph", text: "No broader closure is stated in this notice. It covers the named PAL flights only; it does not announce that other airlines' flights or all services at King Khalid International Airport are suspended. Check directly with the carrier on your ticket for any other itinerary, and do not assume that another airline's schedule or status matches PAL's." },
+      { type: "heading", text: "What passengers and returning OFWs should do" },
+      { type: "paragraph", text: "If your booking includes PR654 or PR655, look up the reservation and flight status using PAL's official channels. Contact PAL through its listed reservation and assistance channels, or contact the travel agent that issued your ticket, to ask what options apply to your booking. The October 12 advisory does not set out a refund entitlement, rebooking waiver, alternative flight schedule or other ticket terms, so confirm these before changing plans." },
+      { type: "list", items: [
+        "Keep your booking reference and ticket details available when checking with PAL or the agent that issued the ticket.",
+        "If you are an OFW coordinating a return, confirm the itinerary with your employer or family after PAL verifies the booking; do not rely on an older ticket email alone.",
+        "Recheck PAL's travel advisories and live flight status close to departure, since the airline says it is monitoring conditions and may issue further updates.",
+      ] },
+      { type: "heading", text: "Before going to the airport" },
+      { type: "paragraph", text: "Do not travel to the airport expecting PR654 or PR655 to operate based only on an earlier itinerary. Confirm the flight's status and any replacement arrangement with PAL first, then follow the instructions attached to your booking. The situation and schedules can change; use PAL's current advisory and status pages for official assistance rather than assuming a date in this notice guarantees service." },
+    ],
+    sources: [
+      { label: "Riyadh flights PR654 and PR655 suspension notice, October 12", url: "https://www.philippineairlines.com/us/en/newsevent-listingpage/travel-advisory/riyadh-flights-pr654-pr655-suspended.html", publisher: "Philippine Airlines", accessedAt: october19AccessedAt },
+      { label: "PAL flight status", url: "https://www.philippineairlines.com/en/flight-status", publisher: "Philippine Airlines", accessedAt: october19AccessedAt },
+      { label: "PAL reservation hotline and customer assistance", url: "https://www.philippineairlines.com/en/about-us/contact-us/global-reservation-hotline", publisher: "Philippine Airlines", accessedAt: october19AccessedAt },
+    ],
+  },
+  {
+    id: "south-korea-iksan-chrysanthemum-festival-2026",
+    slug: "south-korea-iksan-chrysanthemum-festival-2026",
+    headline: "South Korea's Free Iksan Chrysanthemum Festival Opens October 23: Dates and Visitor Guide",
+    summary: "Iksan's Chrysanthemum Festival opens October 23 with free admission, autumn flower sculptures, illuminated displays and family activities.",
+    destination: "Iksan, Jeonbuk State",
+    country: "South Korea",
+    category: "events-experiences",
+    publishedAt: "2026-10-19",
+    image: destinationImage("south-korea"),
+    body: [
+      { type: "paragraph", text: "Iksan's Gukhwa (Chrysanthemum) Festival runs October 23 to November 1 at Iksan Central Sports Park in Jeonbuk State, outside Seoul. General festival admission is free. For Filipino visitors planning an autumn trip around South Korea, it offers a chance to see a large flower display and local performances in a regional city. It is a separate trip from Seoul, so confirm transport and the day's program before setting out." },
+      { type: "heading", text: "Dates, hours and location" },
+      { type: "paragraph", text: "The Korea Tourism Organization lists the festival hours as 10:00 AM to 9:00 PM Korea local time. The venue is Iksan Central Sports Park, 322 Hana-ro, Iksan-si, Jeonbuk State. Iksan City names its Agricultural Technology Service Center as the organizer. Check the city's festival page for updated venue guidance, performance listings and visitor notices." },
+      { type: "heading", text: "What is on display?" },
+      { type: "paragraph", text: "The city's 2026 program lists about 600 chrysanthemum sculptures, around 60,000 autumn flowering plants, roughly 200 chrysanthemum bonsai works and more than 100 light sculptures. The Korea Tourism Organization also describes an evening lightscape; the city lists visiting hours through 9:00 PM but does not give the exact time the lights switch on. The festival's translated name is not a verified count of ten million flowers." },
+      { type: "heading", text: "Performances and family activities" },
+      { type: "paragraph", text: "The official program includes cultural performances, a mobile stamp tour, flower-themed crafts, children's activities and an insect experience. One listed performance is the Jeonbuk RedCon Music Creation Center's 10th-anniversary show at 5:00 PM on October 24. Other performance times and activity arrangements can change, so use the official calendar rather than relying on a single event listing." },
+      { type: "heading", text: "Admission is free; check activity costs" },
+      { type: "paragraph", text: "The Korea Tourism Organization confirms free general admission to the festival. That does not mean food, shopping or every hands-on activity is free. The city lists activities and a food area, and its latest notices include vendor menus and prices, but the pages checked do not give a full cost or registration rule for every workshop. Ask the organizer or check the specific activity notice before budgeting for a family visit." },
+      { type: "heading", text: "Planning a visit beyond Seoul" },
+      { type: "paragraph", text: "Iksan is a regional destination rather than a Seoul venue. Use the festival's official directions page to check access options for Central Sports Park, then verify current rail or local transport schedules with the relevant operator. The festival pages do not confirm a visitor fare or journey time from Seoul, so plan the connection separately instead of assuming a quick day trip." },
+      { type: "paragraph", text: "Before leaving, check the official festival program for event changes, the Iksan City notice board for current vendor and venue updates, and the Korea Tourism Organization listing for general visitor information. This helps confirm hours, specific activities and any conditions that matter to your visit." },
+    ],
+    sources: [
+      { label: "Iksan Gukhwa Festival dates, hours, venue, organizer and free admission", url: "https://english.visitkorea.or.kr/svc/contents/contentsView.do?vcontsId=78731", publisher: "Korea Tourism Organization", accessedAt: october19AccessedAt },
+      { label: "KTO's 2026 festival overview and evening-lighting information", url: "https://english.visitkorea.or.kr/svc/contents/contentsView.do?vcontsId=97028", publisher: "Korea Tourism Organization", accessedAt: october19AccessedAt },
+      { label: "2026 festival displays, activities, performance calendar and current notices", url: "https://www.iksan.go.kr/gukhwa", publisher: "Iksan City", accessedAt: october19AccessedAt },
+      { label: "Festival venue directions and transport information", url: "https://www.iksan.go.kr/gukhwa/index.do?menuUid=ff808081975e28f701979a7714c956b9", publisher: "Iksan City", accessedAt: october19AccessedAt },
+      { label: "KORAIL official ticketing service for current train information", url: "https://www.korail.com/", publisher: "Korea Railroad Corporation (KORAIL)", accessedAt: october19AccessedAt },
+    ],
+    eventStartAt: "2026-10-23",
+    eventEndAt: "2026-11-01",
+    expiresAt: "2026-11-02T00:00:00+09:00",
+  },
+  {
+    id: "malaysia-mhlife-festival-2026",
+    slug: "malaysia-mhlife-festival-2026",
+    headline: "Malaysia's Free MHLife Festival Begins October 23: Food, Culture and Family Activities",
+    summary: "Malaysia's inaugural MHLife festival brings food, cultural performances, family activities and Muslim-friendly lifestyle experiences to Shah Alam from October 23–25. General admission is free.",
+    destination: "Shah Alam, Selangor",
+    country: "Malaysia",
+    category: "events-experiences",
+    publishedAt: "2026-10-19",
+    image: destinationImage("malaysia"),
+    body: [
+      { type: "paragraph", text: "Malaysia's first Halal Lifestyle Festival, MHLife 2026, runs October 23–25 at Dataran Karnival, Stadium Shah Alam in Selangor. General admission is free, and the official event site recommends pre-registration. For Filipino travelers, it is a chance to explore Malaysian food, heritage, crafts and Muslim-friendly travel offerings at one venue. The festival is open to all visitors, with a program focused on Muslim-friendly lifestyle and tourism." },
+      { type: "heading", text: "Where and when" },
+      { type: "paragraph", text: "The current MHLife visitor site lists daily hours of 10:00 AM to 10:00 PM Malaysia local time and gives the address as Dataran Karnival, Stadium Shah Alam, Jalan Lontar Peluru 13/39, Seksyen 13, 40100 Shah Alam, Selangor. It links to map directions for the venue. Check the event website before leaving for any access or schedule updates; its pre-registration is recommended, not stated as a requirement for general entry." },
+      { type: "heading", text: "Food, culture and local experiences" },
+      { type: "paragraph", text: "The Islamic Tourism Centre says 16 food-and-beverage pavilions represent Malaysia's 13 states and three federal territories. They showcase local food alongside fashion, culture and heritage under the theme Rasa, Gaya, Warisan. The current event website also lists food and beverage producers, modest-wear and wellness businesses, Malaysian crafts such as batik and songket, tourism exhibitors, family and children's activities, live entertainment and shopping." },
+      { type: "heading", text: "What is the Harmony Night Concert?" },
+      { type: "paragraph", text: "ITC's September 24 launch announcement described a planned Harmony Night Concert featuring contemporary and traditional Malaysian performers. The current event website lists Cultural Night and Buskers, but does not give a separate Harmony Night schedule, lineup or admission conditions. Treat the concert as a program item to verify, not a performance with a confirmed time or artist list. Check the organizer's latest program if you want to plan an evening around live music." },
+      { type: "heading", text: "What is free, and what may cost extra?" },
+      { type: "paragraph", text: "The organizer confirms free public admission. That covers entry to the festival, not food, drinks, shopping or paid activities. The sources checked do not list prices for individual workshops or other experiences, so ask the vendor or organizer before participating. Pre-registration is recommended by the event website; review its visitor-registration information for current entry instructions." },
+      { type: "heading", text: "Planning a trip to Shah Alam" },
+      { type: "paragraph", text: "The venue address and official map links are available on MHLife's visitor page. For a journey from Kuala Lumpur, use those current directions and check official Malaysian transport-operator updates for any public-transport options that fit your plans; the festival announcement does not specify fares, routes or travel times. Confirm road access and the daily program before you leave, especially if attending for a particular performance or activity." },
+      { type: "paragraph", text: "MHLife may interest travelers who want to learn about Malaysia's halal food ecosystem and Muslim-friendly travel experiences, as well as visitors interested in Malaysian culture, crafts and family activities. It is a public festival with a Muslim-friendly focus; check the official site for the latest activity details rather than assuming a particular vendor, performer or free giveaway." },
+    ],
+    sources: [
+      { label: "MHLife 2026 announcement, festival focus and planned Harmony Night Concert", url: "https://www.itc.gov.my/mhlife-2026-raikan-kepelbagaian-gaya-hidup-dan-pelancongan-mesra-muslim-malaysia/", publisher: "Islamic Tourism Centre, Ministry of Tourism, Arts and Culture Malaysia", accessedAt: october19AccessedAt },
+      { label: "Current visitor information, hours, admission, address and activities", url: "https://www.mhlife.com.my/", publisher: "MHLife 2026 official event website", accessedAt: october19AccessedAt },
+    ],
+    eventStartAt: "2026-10-23",
+    eventEndAt: "2026-10-25",
+    expiresAt: "2026-10-26T00:00:00+08:00",
+  },
   {
     id: "cordillera-festival-of-festivals-baguio-2026",
     slug: "cordillera-festival-of-festivals-baguio-2026",
