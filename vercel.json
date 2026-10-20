@@ -1,4 +1,11 @@
 {
+  "redirects": [
+    {
+      "source": "/travel-updates/sunchang-jangryu-food-festival-2026",
+      "destination": "/travel-updates/sunchang-jangryu-festival-2026",
+      "permanent": true
+    }
+  ],
   "rewrites": [{ "source": "/((?!api(?:/|$)).*)", "destination": "/" }],
   "functions": {
     "api/trips/**/*.ts": {

@@ -3,10 +3,10 @@
 #discovery-home.media-homepage .site-header--editorial.site-header { background: var(--paper); border-bottom-color: var(--line); }
 #discovery-home.media-homepage.public-site .page-shell, .guides-directory .page-shell { width: min(100% - 80px, 1160px); }
 .discovery-eyebrow { display: block; color: #766b5e; font-size: 11px; font-weight: 700; letter-spacing: .13em; line-height: 1.6; text-transform: uppercase; }
-.discovery-hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; gap: 8%; padding-block: 52px 72px; }
-.discovery-hero__copy { padding-bottom: 35px; }
-.discovery-hero h1 { margin: 22px 0 24px; color: var(--forest-deep); font-family: var(--serif); font-size: clamp(58px, 7.2vw, 94px); font-weight: 400; letter-spacing: -.045em; line-height: 1.02; }
-.discovery-hero__copy > p { max-width: 375px; margin: 0; color: #637067; font-size: 18px; line-height: 1.75; }
+.discovery-hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; gap: 8%; padding-block: 52px 58px; }
+.discovery-hero__copy { padding-bottom: 22px; }
+.discovery-hero h1 { max-width: 560px; margin: 18px 0 22px; color: var(--forest-deep); font-family: var(--serif); font-size: clamp(56px, 6.5vw, 82px); font-weight: 400; letter-spacing: -.045em; line-height: 1.02; }
+.discovery-hero__copy > p { max-width: 500px; margin: 0; color: #637067; font-size: 18px; line-height: 1.65; }
 .discovery-hero__actions { display: flex; align-items: flex-start; flex-direction: column; gap: 16px; margin-top: 30px; }
 .discovery-button { display: inline-flex; min-height: 50px; align-items: center; justify-content: center; gap: 16px; border: 1px solid var(--forest); padding: 13px 22px; background: var(--forest); color: #fff; font-size: 14px; font-weight: 600; line-height: 1.5; text-decoration: none; transition: background .2s; }
 .discovery-button:hover { background: var(--forest-deep); }
@@ -59,16 +59,19 @@
 #discovery-home.media-homepage.public-site .travel-update-feature, #discovery-home.media-homepage.public-site .travel-updates-preview__supporting .travel-update-card { border-radius: 3px; box-shadow: none; }
 #discovery-home.media-homepage.public-site .travel-updates-eyebrow, #discovery-home.media-homepage.public-site .travel-update-card__meta span:first-child { color: #a05b43; }
 #discovery-home.media-homepage.public-site .travel-update-feature h3 a:hover, #discovery-home.media-homepage.public-site .travel-update-card h3 a:hover, #discovery-home.media-homepage.public-site .travel-update-feature .text-link { color: var(--forest); }
-.discovery-planning { padding-block: 76px; }
+.discovery-planning { border-block: 1px solid var(--line); margin-bottom: 68px; background: var(--cream); padding-block: 32px 34px; }
 .discovery-planning__heading { display: flex; align-items: center; justify-content: space-between; gap: 48px; }
 .discovery-planning__heading > div { max-width: 650px; }
-.discovery-planning h2 { margin: 15px 0; color: var(--forest-deep); font-family: var(--serif); font-size: clamp(32px, 3.3vw, 44px); font-weight: 400; letter-spacing: -.03em; line-height: 1.15; }
-.discovery-planning p { margin: 0; color: #637067; font-size: 15px; line-height: 1.75; }
+.discovery-planning h2 { margin: 5px 0 4px; color: var(--forest-deep); font-family: var(--serif); font-size: clamp(32px, 3.3vw, 42px); font-weight: 400; letter-spacing: -.03em; line-height: 1.15; }
+.discovery-planning p { margin: 0; color: #637067; font-size: 14px; line-height: 1.65; }
 .discovery-planning__heading > a { flex-shrink: 0; border-bottom: 1px solid #a4b1a7; }
-.discovery-planning__details { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; margin-top: 40px; border-top: 1px solid var(--line); padding-top: 25px; }
-.discovery-planning__details h3 { margin: 0 0 12px; color: var(--forest); font-size: 16px; font-weight: 600; }
-.discovery-planning__details p { font-size: 14px; }
-.discovery-planning__details small { display: block; color: #737b72; font-size: 12px; line-height: 1.6; }
+.discovery-planning__details { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; margin-top: 22px; border-top: 1px solid var(--line); padding-top: 19px; }
+.discovery-planning__number { color: #a05b43; font-size: 10px; font-weight: 700; letter-spacing: .1em; }
+.discovery-planning__details h3 { margin: 7px 0 6px; color: var(--forest); font-family: var(--serif); font-size: 19px; font-weight: 400; line-height: 1.25; }
+.discovery-planning__details p { font-size: 13px; }
+.discovery-planning__companion { margin-top: 18px !important; border-top: 1px solid var(--line); padding-top: 14px; font-size: 12px !important; }
+.discovery-planning__companion strong { color: var(--forest); }
+.discovery-planning__companion a { color: var(--forest); font-weight: 600; text-underline-offset: 3px; }
 #discovery-home.media-homepage.public-site .inquiry-section { background: #eef0e9; color: var(--ink); padding-block: 64px; }
 #discovery-home.media-homepage.public-site .inquiry-copy h2, #discovery-home.media-homepage.public-site .inquiry-copy h2 em { color: var(--forest-deep); font-weight: 400; }
 #discovery-home.media-homepage.public-site .inquiry-copy > p, #discovery-home.media-homepage.public-site .inquiry-copy .eyebrow, #discovery-home.media-homepage.public-site .inquiry-note small { color: #637067; }
@@ -97,8 +100,8 @@
 #discovery-home.media-homepage.public-site .editorial-footer .brand__sub { color: #c0c9c0; }
 @media (max-width: 900px) {
   #discovery-home.media-homepage.public-site .page-shell, .guides-directory .page-shell { width: calc(100% - 48px); }
-  .discovery-hero { gap: 5%; padding-block: 40px 58px; }
-  .discovery-hero h1 { font-size: clamp(54px, 7.6vw, 68px); }
+  .discovery-hero { gap: 5%; padding-block: 40px 48px; }
+  .discovery-hero h1 { font-size: clamp(52px, 6.5vw, 66px); }
   .discovery-hero__copy > p { font-size: 16px; }
   .guide-feature__link { gap: 36px; }
   .guide-feature h2 { font-size: 38px; }
@@ -106,12 +109,13 @@
 }
 @media (max-width: 700px) {
   #discovery-home.media-homepage.public-site .page-shell, .guides-directory .page-shell { width: calc(100% - 40px); }
-  .discovery-hero { grid-template-columns: 1fr; gap: 18px; padding-block: 24px 36px; }
+  .discovery-hero { grid-template-columns: 1fr; gap: 18px; padding-block: 24px 32px; }
   .discovery-hero__copy { padding-bottom: 0; }
-  .discovery-hero h1 { margin-block: 12px; font-size: clamp(44px, 12vw, 60px); line-height: 1.02; }
-  .discovery-hero__copy > p { max-width: 390px; font-size: 16px; line-height: 1.6; }
-  .discovery-hero__actions { gap: 4px; margin-top: 16px; }
-  .discovery-button { width: fit-content; max-width: 100%; gap: 12px; padding-inline: 18px; }
+  .discovery-hero h1 { margin-block: 10px 15px; font-size: clamp(42px, 11vw, 54px); line-height: 1.02; }
+  .discovery-hero__copy > p { max-width: 390px; font-size: 16px; line-height: 1.55; }
+  .discovery-hero__actions { align-items: stretch; gap: 3px; margin-top: 17px; }
+  .discovery-button { width: 100%; max-width: 360px; gap: 12px; padding-inline: 16px; }
+  .discovery-hero__actions .discovery-text-link { align-self: flex-start; }
   .discovery-featured { padding-bottom: 46px; }
   .discovery-section-label { padding-block: 16px 20px; gap: 10px; }
   .guide-feature__link { grid-template-columns: 1fr; gap: 27px; }
@@ -124,10 +128,14 @@
   .discovery-destinations__grid { grid-template-columns: 1fr; gap: 28px; }
   .discovery-destination-list li > a { padding-block: 20px 15px; }
   #discovery-home.media-homepage.public-site .travel-updates-preview { padding-block: 40px 46px; }
-  .discovery-planning { padding-block: 44px; }
-  .discovery-planning__heading { align-items: flex-start; flex-direction: column; gap: 18px; }
-  .discovery-planning__details { grid-template-columns: 1fr; gap: 25px; margin-top: 30px; }
-  .discovery-planning__details > article + article { border-top: 1px solid var(--line); padding-top: 22px; }
+  .discovery-planning { margin-bottom: 44px; padding-block: 23px 22px; }
+  .discovery-planning__details { grid-template-columns: 1fr; gap: 0; margin-top: 12px; padding-top: 10px; }
+  .discovery-planning__details > article { display: grid; grid-template-columns: 26px minmax(0, 1fr); column-gap: 8px; padding-block: 10px; }
+  .discovery-planning__details > article + article { border-top: 1px solid var(--line); }
+  .discovery-planning__number { grid-column: 1; grid-row: 1 / span 2; margin-top: 4px; }
+  .discovery-planning__details h3 { grid-column: 2; margin: 0 0 3px; font-size: 17px; }
+  .discovery-planning__details p { grid-column: 2; line-height: 1.5; }
+  .discovery-planning__companion { margin-top: 7px !important; padding-top: 10px; }
   #discovery-home.media-homepage.public-site .inquiry-section { padding-block: 44px; }
   .guides-directory__main { padding-block: 39px 48px; }
   .guides-directory__heading { margin-bottom: 34px; }

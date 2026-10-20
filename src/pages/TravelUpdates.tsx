@@ -1,5 +1,5 @@
 import { ArrowLeft, ArrowRight, ArrowUpRight, ExternalLink } from "lucide-react";
-import { useMemo, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Brand } from "../components/Brand";
 import { SiteHeader } from "../components/SiteHeader";
@@ -129,6 +129,7 @@ export function TravelUpdateArticlePage() {
   const update = getTravelUpdateBySlug(slug);
 
   if (!update) return <TravelUpdateNotFound />;
+  const isThailandVisaUpdate = update.id === "thailand-visa-free-stay-30-days-filipino-passports-2026";
 
   return <div className="public-site travel-updates-site">
     <SiteHeader />
@@ -140,20 +141,20 @@ export function TravelUpdateArticlePage() {
         <p className="travel-update-article__summary">{update.summary}</p>
         <div className="travel-update-article__dates"><time dateTime={update.publishedAt}>Published {formatDate(update.publishedAt)}</time>{update.updatedAt && <time dateTime={update.updatedAt}>Updated {formatDate(update.updatedAt)}</time>}</div>
         <figure className="travel-update-article__hero"><img src={update.image.src} alt={update.image.alt} fetchPriority="high" /><figcaption>{update.image.creditUrl ? <a href={update.image.creditUrl} target="_blank" rel="noopener noreferrer">{update.image.credit}</a> : update.image.credit}</figcaption></figure>
-        <div className="travel-update-article__body">{update.body.map((block, index) => <TravelUpdateBlock key={`${block.type}-${index}`} block={block} />)}</div>
+        <div className="travel-update-article__body">{update.body.map((block, index) => <Fragment key={`${block.type}-${index}`}><TravelUpdateBlock block={block} />{isThailandVisaUpdate && index === 0 && <p className="travel-update-inline-planning">Planning a Thailand trip? <Link to="/#inquiry">Share your dates and preferences with AeroGo to discuss options and shape an itinerary.</Link></p>}</Fragment>)}</div>
         <section className="travel-update-sources" aria-labelledby="travel-update-sources-title">
           <span className="eyebrow">CHECK THE DETAILS</span>
           <h2 id="travel-update-sources-title">Official information &amp; sources</h2>
-          <p>AeroGo has summarised the information for planning purposes. Check the original source for the latest programme details before travelling.</p>
+          <p>AeroGo has summarised the information for planning purposes. Check the original sources for the latest official details before travelling.</p>
           <ul>{update.sources.map((source) => <li key={source.url}><a href={source.url} target="_blank" rel="noopener noreferrer">{source.label} <ExternalLink size={14} /></a>{source.publisher && <span>{source.publisher}</span>}</li>)}</ul>
         </section>
       </article>
       <section className="travel-update-article__cta" aria-labelledby="travel-update-cta-title">
         <div className="page-shell">
           <span className="eyebrow eyebrow--light">PLANNING A TRIP?</span>
-          <h2 id="travel-update-cta-title">Want help shaping the route?</h2>
-          <p>Tell AeroGo what you are considering and we can help you organise the details.</p>
-          <Link className="button button--coral" to="/#inquiry">Tell us about your trip <ArrowUpRight size={16} /></Link>
+          <h2 id="travel-update-cta-title">{isThailandVisaUpdate ? "Planning a Thailand itinerary?" : "Want help shaping the route?"}</h2>
+          <p>{isThailandVisaUpdate ? "Share your dates and preferences with AeroGo to talk through options and organize the trip details." : "Tell AeroGo what you are considering and we can help you organise the details."}</p>
+          <Link className="button button--coral" to="/#inquiry">{isThailandVisaUpdate ? "Plan a Thailand trip with AeroGo" : "Tell us about your trip"} <ArrowUpRight size={16} /></Link>
         </div>
       </section>
     </main>
@@ -196,6 +197,7 @@ function formatLocation(update: TravelUpdate) {
 function TravelUpdateBlock({ block }: { block: TravelUpdate["body"][number] }) {
   if (block.type === "heading") return <h2>{block.text}</h2>;
   if (block.type === "list") return <ul>{block.items.map((item) => <li key={item}>{item}</li>)}</ul>;
+  if (block.type === "citation") return <p className="travel-update-inline-citation">Official source: <a href={block.url} target="_blank" rel="noopener noreferrer">{block.label}</a></p>;
   return <p>{block.text}</p>;
 }
 

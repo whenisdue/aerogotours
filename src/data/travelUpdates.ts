@@ -11,7 +11,8 @@ export type TravelUpdateCategory =
 export type TravelUpdateBlock =
   | { type: "paragraph"; text: string }
   | { type: "heading"; text: string }
-  | { type: "list"; items: string[] };
+  | { type: "list"; items: string[] }
+  | { type: "citation"; label: string; url: string };
 
 export type TravelUpdateSource = {
   label: string;
@@ -25,6 +26,8 @@ export type TravelUpdate = {
   slug: string;
   headline: string;
   summary: string;
+  seoTitle?: string;
+  seoDescription?: string;
   destination: string;
   country: string;
   category: TravelUpdateCategory;
@@ -61,6 +64,7 @@ const october14AccessedAt = "2026-10-14";
 const october15AccessedAt = "2026-10-15";
 const october17AccessedAt = "2026-10-17";
 const october19AccessedAt = "2026-10-19";
+const october20AccessedAt = "2026-10-20";
 
 const unsplash = (photoId: string, width: number) =>
   `https://images.unsplash.com/${photoId}?auto=format&fit=crop&w=${width}&q=85`;
@@ -1523,26 +1527,32 @@ export const travelUpdates: TravelUpdate[] = [
   {
     id: "thailand-visa-free-stay-30-days-filipino-passports-2026",
     slug: "thailand-visa-free-stay-30-days-filipino-passports-2026",
-    headline: "Thailand visa-free stays for Filipino passport holders are now 30 days",
-    summary: "Thailand's updated entry rules took effect on September 15, shortening the visa-free tourism stay for Philippine passport holders from 60 days to up to 30 days.",
+    headline: "Thailand Visa-Free Entry for Filipinos (2026): Stay Length and Requirements",
+    summary: "Filipino ordinary passport holders can enter Thailand visa-free for tourism for up to 30 days under rules effective September 15, 2026. Check the latest entry conditions before travel.",
+    seoTitle: "Thailand Visa-Free Entry for Filipinos (2026): Stay Length and Requirements",
+    seoDescription: "Filipino ordinary passport holders can enter Thailand visa-free for tourism for up to 30 days under rules effective September 15, 2026. Check the latest entry conditions before travel.",
     destination: "Thailand",
     country: "Thailand",
     category: "travel-requirements",
     publishedAt: "2026-09-24",
+    updatedAt: "2026-10-20",
     image: destinationImage("thailand"),
     body: [
-      { type: "paragraph", text: "Thailand’s revised visa-exemption arrangements took effect on 15 September 2026, replacing the previous 60-day tourism exemption with new 30-day and 15-day categories." },
+      { type: "paragraph", text: "Filipino travelers holding ordinary passports can enter Thailand visa-free for tourism for up to 30 days. The Thai Department of Consular Affairs’ current 30-day list includes the Philippines and is dated 15 September 2026. This replaced the former 60-day tourism-exemption scheme for new entries under the previous arrangement." },
       { type: "heading", text: "What this means for Filipino travelers" },
-      { type: "paragraph", text: "Philippine passport holders are included among the 60 countries and territories eligible for visa-free tourism entry for up to 30 days. The new framework took effect on 15 September, and the former 60-day exemption ended on the same date." },
-      { type: "list", items: ["Philippine passport holders are included in the 30-day tourism-exemption list.", "Travelers already admitted under the previous arrangement before 15 September may remain until the final date shown on their immigration stamp.", "These exemption provisions concern tourism; other travel purposes use different visa categories and rules."] },
-      { type: "heading", text: "If you're entering through a land border" },
-      { type: "paragraph", text: "Travelers using the 30-day exemption through land-border immigration checkpoints may generally make no more than two such entries per calendar year. The official Thai source lists Malaysia, Brunei Darussalam, Indonesia and Singapore as exceptions; the Philippines is not listed among those exceptions." },
+      { type: "paragraph", text: "Philippine ordinary passport holders are included among the 60 countries and territories eligible for visa-free tourism entry for up to 30 days. The new framework took effect on 15 September, and the former 60-day exemption ended on the same date." },
+      { type: "list", items: ["Philippine ordinary passport holders are included in the 30-day tourism-exemption list.", "Travelers already admitted under the previous arrangement before 15 September may remain until the final date shown on their immigration stamp.", "These exemption provisions concern tourism; other travel purposes use different visa categories and rules."] },
+      { type: "heading", text: "If you're entering through a land or sea border checkpoint" },
+      { type: "paragraph", text: "Under Thailand’s tourist visa-exemption scheme, entry through land or sea border checkpoints is permitted only twice per calendar year. Nationals of Malaysia, Brunei Darussalam, Indonesia and Singapore may enter through such checkpoints more than twice; the Philippines is not among these exceptions." },
+      { type: "paragraph", text: "Travelers entering under Thailand’s tourist visa-exemption scheme must have funds equivalent to 20,000 baht per person or 40,000 baht per family. Any extension of the permitted stay is at the discretion of the immigration officer." },
+      { type: "citation", label: "Royal Thai Embassy, Doha: Tourist Visa Exemption & Visa-on-Arrival (updated 16 September 2026)", url: "https://doha.thaiembassy.org/en/publicservice/tourist-visa-exemption-visa-on-arrival?menu=5d7e6a3c15e39c032c006dbb&page=5d7e6a3c15e39c032c006dba" },
       { type: "heading", text: "Before you travel" },
       { type: "paragraph", text: "Check Thailand’s current official entry conditions again before departure, especially for stays longer than 30 days or travel for purposes other than tourism. Eligibility can depend on the passport and circumstances presented at entry." },
     ],
     sources: [
-      { label: "Summary of the Weekly Press Briefing by the Director-General of the Department of Information and MFA Spokesperson on 3 September 2026 at 14:00 hrs.", url: "https://www.mfa.go.th/en/content/pb-summary-03092026-en", publisher: "Ministry of Foreign Affairs, Kingdom of Thailand", accessedAt: todayAccessedAt },
-      { label: "Thailand introduces new 30-day and 15-day visa exemption rules from 15 September", url: "https://www.tatnews.org/2026/09/thailand-introduces-new-30-day-and-15-day-visa-exemption-rules-from-15-september/", publisher: "Tourism Authority of Thailand / TAT Newsroom", accessedAt: todayAccessedAt },
+      { label: "Tourist Visa Exemption & Visa-on-Arrival (updated 16 September 2026)", url: "https://doha.thaiembassy.org/en/publicservice/tourist-visa-exemption-visa-on-arrival?menu=5d7e6a3c15e39c032c006dbb&page=5d7e6a3c15e39c032c006dba", publisher: "Royal Thai Embassy, Doha", accessedAt: october20AccessedAt },
+      { label: "Thailand visa exemption list for tourism up to 30 days (ordinary passports)", url: "https://image.mfa.go.th/mfa/0/zE6021nSnu/%E0%B8%9A%E0%B8%A3%E0%B8%B4%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%8A%E0%B8%B2%E0%B8%8A%E0%B8%99/%E0%B8%9C.30.pdf", publisher: "Department of Consular Affairs, Ministry of Foreign Affairs, Thailand", accessedAt: october20AccessedAt },
+      { label: "Summary of the Weekly Press Briefing by the Director-General of the Department of Information and MFA Spokesperson on 3 September 2026 at 14:00 hrs.", url: "https://www.mfa.go.th/en/content/pb-summary-03092026-en", publisher: "Ministry of Foreign Affairs, Kingdom of Thailand", accessedAt: october20AccessedAt },
     ],
     featured: true,
   },

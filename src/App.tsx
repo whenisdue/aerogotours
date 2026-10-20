@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { Homepage } from "./pages/Homepage";
 import { CompanionPage } from "./pages/Companion";
@@ -30,7 +30,7 @@ function PageTitle() {
   const pageTitle = isTripPlanner ? "Free Singapore Trip Planner · AeroGo Travel & Tours" : isGuidesDirectory ? "Travel Guides · AeroGo Travel & Tours" : isGardensGuide
     ? "Gardens by the Bay Visitor Guide · Singapore · AeroGo"
     : travelUpdate
-    ? `${travelUpdate.headline} · AeroGo Travel Updates`
+    ? travelUpdate.seoTitle ?? `${travelUpdate.headline} · AeroGo Travel Updates`
     : pathname.startsWith("/companion")
       ? "Sample Trip Companion · AeroGo"
       : isVietnamProposal
@@ -45,11 +45,12 @@ function PageTitle() {
             ? "Destination inspiration · AeroGo"
           : isTravelUpdatesRoute
             ? "AeroGo Travel Updates · AeroGo"
-          : "AeroGo Travel & Tours | See more of the world.";
+          : "Travel Planning for Filipino Travelers · AeroGo Travel & Tours";
   const pageDescription = (isTripPlanner ? "Create a free three, four or five day Singapore itinerary with a travel checklist. No account needed; save, share or print your plan." : undefined)
     ?? (isGuidesDirectory ? "Explore AeroGo’s travel guides, with original photography and practical visitor information. Start with Gardens by the Bay in Singapore." : undefined)
-    ?? (pathname === "/" ? "Travel stories, useful guides, and places worth exploring. Discover the AeroGo travel journal, destination inspiration and the latest travel updates." : undefined)
+    ?? (pathname === "/" ? "AeroGo helps Filipino travelers compare options, shape a practical itinerary, and organize important details from choosing where to go through travel day." : undefined)
     ?? (isGardensGuide ? "A practical visitor guide to Gardens by the Bay in Singapore: free and ticketed areas, Cloud Forest, changing floral displays, Supertrees and planning tips." : undefined)
+    ?? travelUpdate?.seoDescription
     ?? travelUpdate?.summary
     ?? (isVietnamProposal ? "A six-day Vietnam itinerary through Da Nang and Hanoi, with guided tours, free time and confirmed package inclusions." : undefined)
     ?? (isTravelUpdatesRoute ? "Useful events, travel changes and destination ideas for your next trip." : "AeroGo Travel & Tours helps make your trip feel easy. Thoughtful travel planning, booking organization, and a private trip companion.");
@@ -141,6 +142,7 @@ export default function App() {
     <Route path="/trip/vietnam-danang-hanoi" element={<VietnamProposalPage />} />
     <Route path="/trip/:token" element={<MyTripPage />} />
     <Route path="/travel-updates" element={<TravelUpdatesPage />} />
+    <Route path="/travel-updates/sunchang-jangryu-food-festival-2026" element={<Navigate replace to="/travel-updates/sunchang-jangryu-festival-2026" />} />
     <Route path="/travel-updates/:slug" element={<TravelUpdateArticlePage />} />
     <Route path="/guides" element={<TravelGuidesPage />} />
     <Route path="/guides/singapore/gardens-by-the-bay" element={<GardensByTheBayGuide />} />

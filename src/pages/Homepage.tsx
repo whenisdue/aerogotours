@@ -115,12 +115,12 @@ export function Homepage() {
     <main>
       <section className="discovery-hero page-shell" aria-labelledby="homepage-hero-title">
         <div className="discovery-hero__copy">
-          <span className="discovery-eyebrow">The world, a little closer</span>
-          <h1 id="homepage-hero-title">See more of<br />the world.</h1>
-          <p>Travel stories, useful guides, and places worth exploring — whenever you’re ready.</p>
+          <span className="discovery-eyebrow">TRAVEL PLANNING FOR FILIPINO TRAVELERS</span>
+          <h1 id="homepage-hero-title">Get help planning your next trip.</h1>
+          <p>AeroGo helps Filipino travelers compare options, shape a practical itinerary, and organize important details—from choosing where to go through travel day.</p>
           <div className="discovery-hero__actions">
-            <Link className="discovery-button" to="/guides">Explore Travel Guides <ArrowUpRight size={18} aria-hidden="true" /></Link>
-            <a className="discovery-text-link" href="#travel-updates">Latest Travel Updates <ArrowRight size={17} aria-hidden="true" /></a>
+            <Link className="discovery-button" to="#inquiry">Plan a trip with AeroGo <ArrowUpRight size={18} aria-hidden="true" /></Link>
+            <Link className="discovery-text-link" to="/guides">Browse free travel guides <ArrowRight size={17} aria-hidden="true" /></Link>
           </div>
         </div>
         <figure className="discovery-hero__figure">
@@ -129,6 +129,19 @@ export function Homepage() {
           </Link>
           <figcaption><span>Singapore</span> Gardens by the Bay <ArrowUpRight size={14} aria-hidden="true" /></figcaption>
         </figure>
+      </section>
+      <section className="discovery-planning" id="how-it-works" aria-labelledby="planning-title">
+        <div className="page-shell">
+          <div className="discovery-planning__heading">
+            <div><span className="discovery-eyebrow">A SIMPLE STARTING POINT</span><h2 id="planning-title">How AeroGo helps</h2><p>Practical support from the first idea through travel day.</p></div>
+          </div>
+          <div className="discovery-planning__details">
+            <article><span className="discovery-planning__number">01</span><h3>Share your dates and preferences</h3><p>Tell us where you’re considering going, when you hope to travel, and what matters to you.</p></article>
+            <article id="services"><span className="discovery-planning__number">02</span><h3>Compare options and shape an itinerary</h3><p>We research public options and help you make a practical day-by-day plan around your pace and priorities.</p></article>
+            <article><span className="discovery-planning__number">03</span><h3>Organize important trip details</h3><p>Bring together the information and preparation notes you need as your trip takes shape.</p></article>
+          </div>
+          <p className="discovery-planning__companion" id="companion"><strong>Trip Companion</strong> is a fictional sample of the private trip space used for qualifying AeroGo trips. <Link to="/companion">Preview the sample</Link>.</p>
+        </div>
       </section>
       <section className="discovery-featured page-shell" aria-labelledby="featured-guide-title">
         <div className="discovery-section-label"><h2 id="featured-guide-title">Featured guide</h2><Link to="/guides">All travel guides <ArrowRight size={16} aria-hidden="true" /></Link></div>
@@ -159,14 +172,6 @@ export function Homepage() {
         </div>
       </section>
       <TravelUpdatesPreview />
-      <section className="discovery-planning page-shell" aria-labelledby="planning-title">
-        <div className="discovery-planning__heading"><div><span className="discovery-eyebrow">Personal travel planning</span><h2 id="planning-title">Ready to turn an idea into a trip?</h2><p>If you’d like a hand with the details, AeroGo can help you shape a plan around your pace and priorities.</p></div><a className="discovery-text-link" href="#inquiry">Plan my trip <ArrowUpRight size={17} aria-hidden="true" /></a></div>
-        <div className="discovery-planning__details">
-          <article id="how-it-works"><h3>How it works</h3><p>Share your destination, dates and travel style. We research public options and bring the details together so you can make informed choices.</p></article>
-          <article id="services"><h3>What we help with</h3><p>Flights, hotels, transfers, activities, day-by-day plans, booking organization and pre-trip reminders.</p><a className="discovery-text-link" href="#inquiry">Tell us what you need <ArrowRight size={15} aria-hidden="true" /></a></article>
-          <article id="companion"><h3>The Companion</h3><p>For qualifying trips booked with AeroGo, a private space for your itinerary, booking details, reminders and support.</p><Link className="discovery-text-link" to="/companion">Preview a sample trip <ArrowUpRight size={15} aria-hidden="true" /></Link><small>The sample trip is a fictional demo.</small></article>
-        </div>
-      </section>
 
       <section className="inquiry-section section-pad" id="inquiry">
         <div className="page-shell inquiry-layout">

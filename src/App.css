@@ -1740,6 +1740,10 @@ button.trip-event:hover .trip-event__content > strong { color: #b76c4e; }
 .travel-update-article__body { max-width: 700px; margin: 42px auto 0; color: #33423c; font-size: 17px; line-height: 1.8; }
 .travel-update-article__body h2 { margin: 35px 0 8px; color: #13342c; font-size: 25px; line-height: 1.2; }
 .travel-update-article__body p { margin: 0 0 18px; }
+.travel-update-article__body .travel-update-inline-planning { margin: 20px 0 25px; border-left: 2px solid #668471; background: #f1f5f4; padding: 12px 15px; font-size: 15px; line-height: 1.65; }
+.travel-update-inline-planning a { color: #004ba8; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+.travel-update-article__body .travel-update-inline-citation { margin-top: -9px; color: #66716d; font-size: 13px; line-height: 1.55; }
+.travel-update-inline-citation a { color: #004ba8; text-decoration: underline; text-underline-offset: 3px; }
 .travel-update-article__body ul { margin: 0 0 22px; padding-left: 22px; }
 .travel-update-article__body li + li { margin-top: 7px; }
 .travel-update-sources { max-width: 700px; margin: 53px auto 0; border-radius: 18px; background: #edf4f2; padding: 25px 25px 22px; }
