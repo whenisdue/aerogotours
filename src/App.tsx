@@ -45,10 +45,12 @@ function PageTitle() {
             ? "Destination inspiration · AeroGo"
           : isTravelUpdatesRoute
             ? "AeroGo Travel Updates · AeroGo"
-          : "Travel Planning for Filipino Travelers · AeroGo Travel & Tours";
+          : pathname === "/"
+            ? "Travel Stories, News & Guides · AeroGo"
+            : "Travel Planning for Filipino Travelers · AeroGo Travel & Tours";
   const pageDescription = (isTripPlanner ? "Create a free three, four or five day Singapore itinerary with a travel checklist. No account needed; save, share or print your plan." : undefined)
     ?? (isGuidesDirectory ? "Explore AeroGo’s travel guides, with original photography and practical visitor information. Start with Gardens by the Bay in Singapore." : undefined)
-    ?? (pathname === "/" ? "AeroGo helps Filipino travelers compare options, shape a practical itinerary, and organize important details from choosing where to go through travel day." : undefined)
+    ?? (pathname === "/" ? "Discover destination stories, travel news, practical guides and original AeroGo videos for curious Filipino travelers." : undefined)
     ?? (isGardensGuide ? "A practical visitor guide to Gardens by the Bay in Singapore: free and ticketed areas, Cloud Forest, changing floral displays, Supertrees and planning tips." : undefined)
     ?? travelUpdate?.seoDescription
     ?? travelUpdate?.summary

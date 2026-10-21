@@ -86,6 +86,7 @@ export function SiteHeader() {
         <Link to="/" aria-current={pathname === "/" ? "page" : undefined} onClick={() => closeMenu()}>Discover</Link>
         <Link to="/travel-updates" aria-current={pathname.startsWith("/travel-updates") ? "page" : undefined} onClick={() => closeMenu()}>Travel News</Link>
         <Link to="/guides" aria-current={pathname.startsWith("/guides") ? "page" : undefined} onClick={() => closeMenu()}>Guides</Link>
+        <Link to={sectionLink("#watch")} onClick={() => closeMenu("#watch")}>Watch</Link>
         <div id="more-navigation" className={`site-nav__more${menuOpen ? " is-open" : ""}`}>
           <Link to="/trip-planner" onClick={() => closeMenu()}>Build a free itinerary</Link>
           <Link to="/companion" onClick={() => closeMenu()}>Trip Companion</Link>
