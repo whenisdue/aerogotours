@@ -1,0 +1,5 @@
+.editorial-foundation .editorial-breadcrumb { padding-block: 10px; }
+.editorial-foundation .editorial-breadcrumb ol { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; min-height: 36px; margin: 0; padding: 0; color: var(--editorial-muted-ink); font-size: 12px; line-height: 1.5; list-style: none; }
+.editorial-foundation .editorial-breadcrumb li + li::before { margin-right: 10px; color: var(--editorial-line); content: "/"; }
+.editorial-foundation .editorial-breadcrumb a { color: var(--editorial-link-blue); font-weight: 700; text-underline-offset: 3px; }
+.editorial-foundation .editorial-breadcrumb [aria-current="page"] { color: var(--editorial-news-ink); }

@@ -12,7 +12,7 @@ export function TravelGuideFeature({ guide }: { guide: TravelGuide }) {
         <h2>{guide.title}</h2>
         <p>{guide.summary}</p>
         <span className="discovery-read">Read the guide <ArrowUpRight size={19} aria-hidden="true" /></span>
-        <span className="guide-feature__topics">Free &amp; ticketed areas · Conservatories · Day into night</span>
+        {guide.topics?.length ? <span className="guide-feature__topics">{guide.topics.join(" · ")}</span> : null}
       </div>
     </Link>
   </article>;

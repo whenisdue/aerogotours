@@ -23,12 +23,13 @@ function PageTitle() {
   const travelUpdate = getTravelUpdateBySlug(travelUpdateSlug);
   const isTravelUpdatesRoute = pathname === "/travel-updates" || pathname.startsWith("/travel-updates/");
   const isTravelUpdateArticle = Boolean(travelUpdate);
+  const isDestinationArticle = Boolean(destination);
   const isGardensGuide = pathname === "/guides/singapore/gardens-by-the-bay";
   const isGuidesDirectory = pathname === "/guides";
   const isTripPlanner = pathname === "/trip-planner";
   const isDiscoveryPage = pathname === "/" || isGuidesDirectory;
   const isVietnamProposal = pathname === "/trip/vietnam-danang-hanoi";
-  const pageTitle = isTripPlanner ? "Free Singapore Trip Planner · AeroGo Travel & Tours" : isGuidesDirectory ? "Travel Guides · AeroGo Travel & Tours" : isGardensGuide
+  const pageTitle = isTripPlanner ? "Free Singapore Trip Planner · AeroGo Travel & Tours" : isGuidesDirectory ? "Travel Guides · AeroGo" : isGardensGuide
     ? "Gardens by the Bay Visitor Guide · Singapore · AeroGo"
     : travelUpdate
     ? travelUpdate.seoTitle ?? `${travelUpdate.headline} · AeroGo Travel News`
@@ -53,6 +54,7 @@ function PageTitle() {
     ?? (isGuidesDirectory ? "Explore AeroGo’s travel guides, with original photography and practical visitor information. Start with Gardens by the Bay in Singapore." : undefined)
     ?? (pathname === "/" ? "Discover destination stories, travel news, practical guides and original AeroGo videos for curious Filipino travelers." : undefined)
     ?? (isGardensGuide ? "A practical visitor guide to Gardens by the Bay in Singapore: free and ticketed areas, Cloud Forest, changing floral displays, Supertrees and planning tips." : undefined)
+    ?? (destination ? `${destination.intro[0]} Explore AeroGo’s destination inspiration for ${destination.name}.` : undefined)
     ?? travelUpdate?.seoDescription
     ?? travelUpdate?.summary
     ?? (isVietnamProposal ? "A six-day Vietnam itinerary through Da Nang and Hanoi, with guided tours, free time and confirmed package inclusions." : undefined)
@@ -62,14 +64,14 @@ function PageTitle() {
     document.title = pageTitle;
     setMeta("name", "description", pageDescription);
 
-    if (isTravelUpdatesRoute || isGardensGuide || isDiscoveryPage || isTripPlanner) {
+    if (isTravelUpdatesRoute || isGardensGuide || isDiscoveryPage || isTripPlanner || isDestinationArticle) {
       const canonicalUrl = new URL(pathname, window.location.origin).href;
       setCanonical(canonicalUrl);
       setMeta("property", "og:title", pageTitle);
       setMeta("property", "og:description", pageDescription);
       setMeta("property", "og:url", canonicalUrl);
       setMeta("property", "og:type", isTravelUpdateArticle || isGardensGuide ? "article" : "website");
-      setMeta("name", "twitter:card", isTravelUpdateArticle || isGardensGuide || isDiscoveryPage ? "summary_large_image" : "summary");
+      setMeta("name", "twitter:card", isTravelUpdateArticle || isGardensGuide || isDiscoveryPage || isDestinationArticle ? "summary_large_image" : "summary");
       setMeta("name", "twitter:title", pageTitle);
       setMeta("name", "twitter:description", pageDescription);
       if (travelUpdate) {
@@ -88,6 +90,10 @@ function PageTitle() {
         setMeta("property", "og:image", shareImage);
         setMeta("name", "twitter:image", shareImage);
         setMeta("property", "og:image:alt", "An elevated daytime view of Supertree Grove and the conservatories at Gardens by the Bay");
+      } else if (destination) {
+        setMeta("property", "og:image", destination.heroImage);
+        setMeta("name", "twitter:image", destination.heroImage);
+        setMeta("property", "og:image:alt", destination.imageAlt);
       } else {
         removeMeta("property", "og:image");
         removeMeta("name", "twitter:image");
@@ -101,7 +107,7 @@ function PageTitle() {
     } else {
       removeTravelUpdatesMeta();
     }
-  }, [isDiscoveryPage, isGardensGuide, isTravelUpdateArticle, isTravelUpdatesRoute, isTripPlanner, pageDescription, pageTitle, pathname, travelUpdate]);
+  }, [destination, isDestinationArticle, isDiscoveryPage, isGardensGuide, isTravelUpdateArticle, isTravelUpdatesRoute, isTripPlanner, pageDescription, pageTitle, pathname, travelUpdate]);
   useEffect(() => {
     const robots = document.querySelector('meta[name="robots"]') ?? document.head.appendChild(document.createElement("meta"));
     robots.setAttribute("name", "robots");
@@ -161,6 +167,7 @@ export default function App() {
     <Route path="/travel-updates/sunchang-jangryu-food-festival-2026" element={<Navigate replace to="/travel-updates/sunchang-jangryu-festival-2026" />} />
     <Route path="/travel-updates/:slug" element={<TravelUpdateArticlePage />} />
     <Route path="/guides" element={<TravelGuidesPage />} />
+    <Route path="/travel-guides" element={<Navigate replace to="/guides" />} />
     <Route path="/guides/singapore/gardens-by-the-bay" element={<GardensByTheBayGuide />} />
     <Route path="/destinations/:slug" element={<DestinationPage />} />
     <Route path="/dream/:slug" element={<DreamTripPage />} />

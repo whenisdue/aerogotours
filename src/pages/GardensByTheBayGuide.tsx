@@ -1,7 +1,8 @@
 import { ArrowDown, ArrowUpRight, ExternalLink, MapPin } from "lucide-react";
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { Brand } from "../components/Brand";
+import { EditorialBreadcrumb } from "../components/EditorialBreadcrumb";
+import { EditorialFooter } from "../components/EditorialFooter";
 import { SiteHeader } from "../components/SiteHeader";
 import "./GardensByTheBayGuide.css";
 
@@ -47,28 +48,22 @@ function OfficialLink({ href, children }: { href: string; children: ReactNode })
 }
 
 export function GardensByTheBayGuide() {
-  return <div className="public-site gardens-guide-site">
+  return <div className="public-site gardens-guide-site editorial-foundation">
     <SiteHeader />
     <main className="gardens-guide">
-      <nav className="gby-breadcrumb page-shell" aria-label="Breadcrumb">
-        <ol>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/destinations/singapore">Singapore</Link></li>
-          <li aria-current="page">Gardens by the Bay</li>
-        </ol>
-      </nav>
+      <div className="page-shell"><EditorialBreadcrumb items={[{ label: "Discover", to: "/" }, { label: "Guides", to: "/guides" }, { label: "Singapore", to: "/destinations/singapore" }, { label: "Gardens by the Bay" }]} /></div>
 
       <article>
         <header className="gby-hero page-shell">
           <div className="gby-hero__copy">
-            <span className="eyebrow"><span className="gby-eyebrow-mark" /> SINGAPORE TRAVEL GUIDE</span>
+            <span className="eyebrow"><span className="gby-eyebrow-mark" /> PRACTICAL GUIDE / SINGAPORE</span>
             <h1>Gardens by the Bay: <em>More than just the Supertrees</em></h1>
             <p className="gby-hero__lead">A practical guide to the cool conservatories, changing flower displays, open-air gardens and evening light show, with a clear view of what needs a ticket and what you can enjoy for free.</p>
             <div className="gby-hero__byline">
               <span>Visitor guide</span><span aria-hidden="true">·</span>
               <time dateTime="2026-10-11">Checked 11 October 2026</time>
             </div>
-            <a className="gby-hero__jump" href="#visitor-snapshot">Start with the visitor snapshot <ArrowDown size={15} aria-hidden="true" /></a>
+            <a className="gby-hero__jump" href="#visitor-snapshot">Jump to quick answers <ArrowDown size={15} aria-hidden="true" /></a>
           </div>
           <figure className="gby-hero__figure">
             <GuidePhoto
@@ -88,17 +83,17 @@ export function GardensByTheBayGuide() {
             <p>The Gardens combine large outdoor spaces with ticketed indoor and elevated attractions. Decide which paid experiences matter to you, then leave enough time to walk between them.</p>
           </div>
           <div className="gby-snapshot__grid">
+            <article className="gby-snapshot-card gby-snapshot-card--answer">
+              <span className="gby-snapshot-card__index">01</span>
+              <h3>Free and ticketed</h3>
+              <p>Outdoor garden areas are generally free to enter. Cloud Forest, Flower Dome, OCBC Skyway and Supertree Observatory are ticketed attractions; admission terms can vary by product or event.</p>
+              <OfficialLink href="https://www.gardensbythebay.com.sg/en/attractions.html">Compare official attractions</OfficialLink>
+            </article>
             <article className="gby-snapshot-card">
               <MapPin size={19} aria-hidden="true" />
               <h3>Where</h3>
               <address>Gardens by the Bay<br />18 Marina Gardens Drive<br />Singapore 018953</address>
               <a href="https://www.google.com/maps/search/?api=1&amp;query=Gardens%20by%20the%20Bay%2C%2018%20Marina%20Gardens%20Drive%2C%20Singapore%20018953" target="_blank" rel="noopener noreferrer">Open directions in Google Maps <ExternalLink size={13} aria-hidden="true" /></a>
-            </article>
-            <article className="gby-snapshot-card">
-              <span className="gby-snapshot-card__index">01</span>
-              <h3>Free and ticketed</h3>
-              <p>Outdoor garden areas are generally free to enter. Cloud Forest, Flower Dome, OCBC Skyway and Supertree Observatory are ticketed attractions; admission terms can vary by product or event.</p>
-              <OfficialLink href="https://www.gardensbythebay.com.sg/en/attractions.html">Compare official attractions</OfficialLink>
             </article>
             <article className="gby-snapshot-card">
               <span className="gby-snapshot-card__index">02</span>
@@ -251,7 +246,7 @@ export function GardensByTheBayGuide() {
             <li><span>02</span><div><h3>Leave a gap for the outdoor gardens</h3><p>Singapore can feel hot and humid, with sudden rain. Carry water and sun or rain protection, wear comfortable walking shoes and plan shaded or indoor breaks.</p></div></li>
             <li><span>03</span><div><h3>Stay for the grove only if it suits your day</h3><p>If you want to see Garden Rhapsody, check its schedule and allow time to move to the grove. The evening show is optional; you do not need a Skyway ticket to watch from the garden.</p></div></li>
           </ol>
-          <aside className="gby-transit-note">
+          <aside className="gby-transit-note" id="getting-there">
             <div><span className="eyebrow">GETTING THERE</span><h3>Use the official route guide for your arrival</h3></div>
             <div>
               <p>The Gardens’ current directions page lists Bayfront MRT and Gardens by the Bay MRT as rail options, with station exits and walking routes. Check the page before travelling for the latest access guidance.</p>
@@ -284,12 +279,12 @@ export function GardensByTheBayGuide() {
           </ul>
           <time className="gby-sources__checked" dateTime="2026-10-11">Information checked 11 October 2026</time>
         </section>
+        <aside className="gby-related page-shell" aria-label="Related destination">
+          <div><span className="eyebrow">MORE TO DISCOVER</span><h2>Explore Singapore</h2><p>Find more ideas for neighborhoods, gardens and waterfront walks.</p></div>
+          <Link to="/destinations/singapore">See Singapore inspiration <ArrowUpRight size={17} aria-hidden="true" /></Link>
+        </aside>
       </article>
     </main>
-    <GuideFooter />
+    <EditorialFooter editorial />
   </div>;
-}
-
-function GuideFooter() {
-  return <footer className="site-footer"><div className="page-shell site-footer__inner"><Brand light /><span>Thoughtful travel planning, made simpler.</span><span className="site-footer__domain">aerogotours.com</span><span className="site-footer__legal">© 2026 AeroGo Travel &amp; Tours · Sample prototype</span></div></footer>;
 }

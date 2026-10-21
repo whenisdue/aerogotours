@@ -54,6 +54,11 @@
   text-underline-offset: 3px;
 }
 
+.editorial-foundation .editorial-footer.site-footer { background: var(--editorial-news-ink); }
+.editorial-foundation .editorial-footer .brand--editorial .brand__name { color: var(--editorial-paper); font-family: var(--editorial-display-font); font-size: 44px; font-weight: 800; letter-spacing: -.035em; line-height: .9; }
+.editorial-foundation .editorial-footer .brand--editorial .brand__sub { margin-top: 5px; padding: 0; color: var(--editorial-paper); font-family: var(--editorial-body-font); font-size: 12px; font-weight: 500; letter-spacing: 0; }
+.editorial-foundation .editorial-footer .editorial-footer__legal { border-color: #50606a; }
+
 .editorial-foundation :is(a, button):focus-visible {
   outline: 3px solid var(--editorial-link-blue);
   outline-offset: 3px;
