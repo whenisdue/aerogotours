@@ -7,6 +7,7 @@ import { DreamTripNotFound, DreamTripPage } from "./pages/DreamTripPage";
 import { MyTripPage } from "./pages/MyTrip";
 import { findDestination } from "./data/destinations";
 import { getTravelUpdateBySlug } from "./data/travelUpdates";
+import { buildTravelNewsStructuredData } from "./utils/newsSeo";
 import { TravelUpdateArticlePage, TravelUpdatesPage } from "./pages/TravelUpdates";
 import { GardensByTheBayGuide } from "./pages/GardensByTheBayGuide";
 import { TravelGuidesPage } from "./pages/TravelGuides";
@@ -30,7 +31,7 @@ function PageTitle() {
   const pageTitle = isTripPlanner ? "Free Singapore Trip Planner · AeroGo Travel & Tours" : isGuidesDirectory ? "Travel Guides · AeroGo Travel & Tours" : isGardensGuide
     ? "Gardens by the Bay Visitor Guide · Singapore · AeroGo"
     : travelUpdate
-    ? travelUpdate.seoTitle ?? `${travelUpdate.headline} · AeroGo Travel Updates`
+    ? travelUpdate.seoTitle ?? `${travelUpdate.headline} · AeroGo Travel News`
     : pathname.startsWith("/companion")
       ? "Sample Trip Companion · AeroGo"
       : isVietnamProposal
@@ -44,7 +45,7 @@ function PageTitle() {
           : pathname.startsWith("/destinations/")
             ? "Destination inspiration · AeroGo"
           : isTravelUpdatesRoute
-            ? "AeroGo Travel Updates · AeroGo"
+            ? "Travel News · AeroGo"
           : pathname === "/"
             ? "Travel Stories, News & Guides · AeroGo"
             : "Travel Planning for Filipino Travelers · AeroGo Travel & Tours";
@@ -55,7 +56,7 @@ function PageTitle() {
     ?? travelUpdate?.seoDescription
     ?? travelUpdate?.summary
     ?? (isVietnamProposal ? "A six-day Vietnam itinerary through Da Nang and Hanoi, with guided tours, free time and confirmed package inclusions." : undefined)
-    ?? (isTravelUpdatesRoute ? "Useful events, travel changes and destination ideas for your next trip." : "AeroGo Travel & Tours helps make your trip feel easy. Thoughtful travel planning, booking organization, and a private trip companion.");
+    ?? (isTravelUpdatesRoute ? "AeroGo Travel News: published travel developments, events and destination updates, with dates and original source links." : "AeroGo Travel & Tours helps make your trip feel easy. Thoughtful travel planning, booking organization, and a private trip companion.");
 
   useEffect(() => {
     document.title = pageTitle;
@@ -75,6 +76,13 @@ function PageTitle() {
         setMeta("property", "og:image", travelUpdate.image.src);
         setMeta("name", "twitter:image", travelUpdate.image.src);
         setMeta("property", "og:image:alt", travelUpdate.image.alt);
+        setMeta("property", "article:published_time", travelUpdate.publishedAt);
+        if (travelUpdate.updatedAt) setMeta("property", "article:modified_time", travelUpdate.updatedAt);
+        else removeMeta("property", "article:modified_time");
+        const structuredData = document.head.querySelector<HTMLScriptElement>('script[data-aerogo-news-schema]') ?? document.head.appendChild(document.createElement("script"));
+        structuredData.type = "application/ld+json";
+        structuredData.dataset.aerogoNewsSchema = "";
+        structuredData.textContent = JSON.stringify(buildTravelNewsStructuredData(travelUpdate, window.location.origin));
       } else if (isGardensGuide || isDiscoveryPage) {
         const shareImage = new URL("/images/gardens-by-the-bay/optimized/S25-1440.jpg", window.location.origin).href;
         setMeta("property", "og:image", shareImage);
@@ -84,6 +92,11 @@ function PageTitle() {
         removeMeta("property", "og:image");
         removeMeta("name", "twitter:image");
         removeMeta("property", "og:image:alt");
+      }
+      if (!travelUpdate) {
+        removeMeta("property", "article:published_time");
+        removeMeta("property", "article:modified_time");
+        document.head.querySelector('script[data-aerogo-news-schema]')?.remove();
       }
     } else {
       removeTravelUpdatesMeta();
@@ -115,9 +128,10 @@ function setCanonical(url: string) {
 }
 
 function removeTravelUpdatesMeta() {
-  ["og:title", "og:description", "og:url", "og:type", "og:image", "og:image:alt"].forEach((key) => removeMeta("property", key));
+  ["og:title", "og:description", "og:url", "og:type", "og:image", "og:image:alt", "article:published_time", "article:modified_time"].forEach((key) => removeMeta("property", key));
   ["twitter:card", "twitter:title", "twitter:description", "twitter:image"].forEach((key) => removeMeta("name", key));
   document.head.querySelector('link[rel="canonical"]')?.remove();
+  document.head.querySelector('script[data-aerogo-news-schema]')?.remove();
 }
 
 function ScrollToHash() {

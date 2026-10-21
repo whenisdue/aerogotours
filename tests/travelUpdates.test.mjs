@@ -3,11 +3,14 @@ import assert from "node:assert/strict";
 import {
   filterTravelUpdates,
   getActiveTravelUpdates,
+  getArchivedTravelUpdates,
   getFeaturedTravelUpdate,
   getHomepageTravelUpdates,
   getTravelUpdateBySlug,
+  isArchivedTravelUpdate,
   travelUpdates,
 } from "../src/data/travelUpdates.ts";
+import { buildTravelNewsStructuredData } from "../src/utils/newsSeo.ts";
 
 const validCategories = new Set([
   "events-experiences",
@@ -25,6 +28,30 @@ const october5Noon = new Date("2026-10-05T12:00:00+08:00");
 const october14Noon = new Date("2026-10-14T12:00:00+08:00");
 const october15Noon = new Date("2026-10-15T12:00:00+08:00");
 const october17Noon = new Date("2026-10-17T12:00:00+08:00");
+
+test("expired event stories stay accessible in the archive without entering latest", () => {
+  const now = new Date("2026-10-21T12:00:00+08:00");
+  const slug = "cordillera-festival-of-festivals-baguio-2026";
+  const archived = getArchivedTravelUpdates(now);
+  assert.ok(archived.some((update) => update.slug === slug));
+  assert.equal(getActiveTravelUpdates(now).some((update) => update.slug === slug), false);
+  assert.equal(isArchivedTravelUpdate(getTravelUpdateBySlug(slug), now), true);
+  assert.ok(archived.every((update) => getTravelUpdateBySlug(update.slug) === update));
+  assert.ok(archived.every((update) => update.expiresAt && new Date(update.expiresAt) <= now));
+});
+
+test("news schema uses genuine publication and revision dates only", () => {
+  const origin = "https://aerogotours.com";
+  const original = getTravelUpdateBySlug("pal-manila-saipan-flights-october-2026");
+  const revised = getTravelUpdateBySlug("thailand-visa-free-stay-30-days-filipino-passports-2026");
+  assert.equal(revised.effectiveAt, "2026-09-15");
+  const first = buildTravelNewsStructuredData(original, origin);
+  const second = buildTravelNewsStructuredData(revised, origin);
+  assert.equal(first["@graph"][0].datePublished, original.publishedAt);
+  assert.equal(Object.hasOwn(first["@graph"][0], "dateModified"), false);
+  assert.equal(second["@graph"][0].dateModified, revised.updatedAt);
+  assert.equal(first["@graph"][1].itemListElement[2].item, `${origin}/travel-updates/${original.slug}`);
+});
 
 test("travel update slugs are unique and records have the required fields", () => {
   const slugs = travelUpdates.map((update) => update.slug);

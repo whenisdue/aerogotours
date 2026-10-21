@@ -33,6 +33,7 @@ export type TravelUpdate = {
   category: TravelUpdateCategory;
   publishedAt: string;
   updatedAt?: string;
+  effectiveAt?: string;
   image: {
     src: string;
     alt: string;
@@ -1536,6 +1537,7 @@ export const travelUpdates: TravelUpdate[] = [
     category: "travel-requirements",
     publishedAt: "2026-09-24",
     updatedAt: "2026-10-20",
+    effectiveAt: "2026-09-15",
     image: destinationImage("thailand"),
     body: [
       { type: "paragraph", text: "Filipino travelers holding ordinary passports can enter Thailand visa-free for tourism for up to 30 days. The Thai Department of Consular Affairs’ current 30-day list includes the Philippines and is dated 15 September 2026. This replaced the former 60-day tourism-exemption scheme for new entries under the previous arrangement." },
@@ -1834,6 +1836,14 @@ export const getActiveTravelUpdates = (now = new Date()) =>
     .filter((update) => isPublished(update, now) && !isExpired(update, now))
     // Stable sort keeps the existing data order when publication dates match.
     .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
+
+export const getArchivedTravelUpdates = (now = new Date()) =>
+  travelUpdates
+    .filter((update) => isPublished(update, now) && isExpired(update, now))
+    .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
+
+export const isArchivedTravelUpdate = (update: TravelUpdate, now = new Date()) =>
+  isPublished(update, now) && isExpired(update, now);
 
 export const getHomepageTravelUpdates = (now = new Date()) =>
   getActiveTravelUpdates(now).slice(0, 3);
