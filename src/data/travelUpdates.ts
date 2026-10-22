@@ -34,6 +34,8 @@ export type TravelUpdate = {
   publishedAt: string;
   updatedAt?: string;
   effectiveAt?: string;
+  /** Set to false when the source image must not be used in sharing metadata. */
+  socialImage?: false;
   image: {
     src: string;
     alt: string;
@@ -190,6 +192,9 @@ export const travelUpdates: TravelUpdate[] = [
     country: "Philippines",
     category: "events-experiences",
     publishedAt: "2026-10-17",
+    // The PIA-hosted logo returned HTTP 403 during sharing-image QA.
+    // Keep the credited article image, but omit it from OG/Twitter/JSON-LD metadata.
+    socialImage: false,
     image: {
       src: "https://pia.gov.ph/wp-content/uploads/2026/10/DOT-CAR-FOF-Logo-1024x683.jpg",
       alt: "Official Cordillera Festival of Festivals 2026 logo",

@@ -167,6 +167,7 @@
 #discovery-home .desk-watch__item h3 { max-width: 370px; margin: 15px 0 12px; font-family: var(--editorial-display-font); font-size: 30px; font-weight: 600; line-height: 1.05; }
 #discovery-home .desk-watch__item:hover h3 { text-decoration: underline; text-underline-offset: 4px; }
 #discovery-home .desk-watch__action { display: inline-flex; min-height: 44px; align-items: center; gap: 5px; margin-top: auto; font-size: 12px; font-weight: 700; text-decoration: underline; text-underline-offset: 4px; }
+#discovery-home .desk-watch__all { display: inline-flex; min-height: 44px; align-items: center; gap: 6px; margin-top: 12px; color: var(--editorial-electric-yellow); font-size: 13px; font-weight: 700; text-underline-offset: 4px; }
 
 #discovery-home .desk-destinations__grid { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, .7fr); gap: 28px; margin-top: 24px; }
 #discovery-home .desk-destinations__feature > a { display: block; }

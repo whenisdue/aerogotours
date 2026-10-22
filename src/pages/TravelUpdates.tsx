@@ -1,9 +1,11 @@
 import { ArrowRight, ArrowUpRight, ExternalLink } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import { EditorialFooter } from "../components/EditorialFooter";
 import { SiteHeader } from "../components/SiteHeader";
 import { filterTravelUpdates, getActiveTravelUpdates, getArchivedTravelUpdates, getTravelUpdateBySlug, isArchivedTravelUpdate, type TravelUpdate, type TravelUpdateCategory } from "../data/travelUpdates";
+import { buildTravelNewsStructuredData } from "../utils/newsSeo";
+import { SITE_ORIGIN } from "../utils/siteMetadata";
 import "./TravelNews.css";
 
 const categoryLabels: Record<TravelUpdateCategory, string> = {
@@ -108,7 +110,7 @@ function NewsTeaser({ update, past }: { update: TravelUpdate; past: boolean }) {
 function NewsLead({ update, past }: { update: TravelUpdate; past: boolean }) {
   const [imageFailed, setImageFailed] = useState(false);
   return <article className={`news-lead${imageFailed || !update.image?.src ? " news-lead--text-only" : ""}`}>
-    {update.image?.src && !imageFailed && <Link className="news-lead__image" to={articlePath(update)} aria-label={`Read ${update.headline}`}><img src={update.image.src} alt={update.image.alt} fetchPriority="high" onError={() => setImageFailed(true)} /></Link>}
+    {update.image?.src && !imageFailed && <Link className="news-lead__image" to={articlePath(update)} aria-label={`Read ${update.headline}`}><img src={update.image.src} width="1440" height="990" alt={update.image.alt} loading="eager" decoding="async" fetchPriority="high" onError={() => setImageFailed(true)} /></Link>}
     <div className="news-lead__copy">
       <StoryLabel update={update} past={past} />
       <h2><Link to={articlePath(update)}>{update.headline}</Link></h2>
@@ -132,6 +134,17 @@ function NewsRow({ update, past }: { update: TravelUpdate; past: boolean }) {
 export function TravelUpdateArticlePage() {
   const { slug } = useParams();
   const update = getTravelUpdateBySlug(slug);
+
+  useEffect(() => {
+    if (!update) return;
+    const structuredData = document.head.querySelector<HTMLScriptElement>('script[data-aerogo-news-schema]') ?? document.head.appendChild(document.createElement("script"));
+    structuredData.type = "application/ld+json";
+    structuredData.dataset.aerogoNewsSchema = "";
+    structuredData.textContent = JSON.stringify(buildTravelNewsStructuredData(update, SITE_ORIGIN));
+    window.dispatchEvent(new Event("aerogo:metadata-ready"));
+    return () => structuredData.remove();
+  }, [update]);
+
   if (!update) return <TravelUpdateNotFound />;
 
   const past = isArchivedTravelUpdate(update);
@@ -143,7 +156,16 @@ export function TravelUpdateArticlePage() {
   return <div id="travel-news" className="public-site travel-updates-site editorial-foundation">
     <SiteHeader />
     <main className="news-shell">
-      <article className="news-article" aria-labelledby="news-article-title">
+      <article
+        className="news-article"
+        aria-labelledby="news-article-title"
+        data-seo-title={update.seoTitle ?? `${update.headline} · AeroGo Travel News`}
+        data-seo-description={update.seoDescription ?? update.summary}
+        data-seo-image={update.socialImage === false ? undefined : update.image?.src}
+        data-seo-image-alt={update.socialImage === false ? undefined : update.image?.alt}
+        data-seo-published={update.publishedAt}
+        data-seo-updated={update.updatedAt}
+      >
         <nav className="news-breadcrumb" aria-label="Breadcrumb"><Link to="/">Discover</Link><span aria-hidden="true">/</span><Link to="/travel-updates">Travel News</Link><span aria-hidden="true">/</span><span aria-current="page">{categoryLabels[update.category]}</span></nav>
         {past && <div className="news-status" role="note"><strong>{isEventStory(update) ? "Past event" : "Archived update"}</strong><p>{isEventStory(update) ? "This event has ended. This article is kept as a historical record; check the official sources below for any future edition or current details." : "This time-limited update has reached its recorded archive date. This article remains available as a historical record; check the official sources below for current details."}</p></div>}
         <header className="news-article__header">
@@ -194,7 +216,7 @@ function ArticleImage({ update }: { update: TravelUpdate }) {
   const [imageFailed, setImageFailed] = useState(false);
   if (imageFailed || !update.image?.src) return null;
   const mediaLabel = /graphic|diagram|map/i.test(update.image.alt) ? "Information graphic" : /logo/i.test(update.image.alt) ? "Logo" : /poster/i.test(update.image.alt) ? "Poster" : "Image";
-  return <figure className="news-article__image"><img src={update.image.src} alt={update.image.alt} fetchPriority="high" onError={() => setImageFailed(true)} /><figcaption>{update.image.credit ? <>{mediaLabel}: {update.image.creditUrl ? <a href={update.image.creditUrl} target="_blank" rel="noopener noreferrer">{update.image.credit}</a> : update.image.credit}.</> : `Illustrative ${mediaLabel.toLowerCase()}: ${update.image.alt}.`}</figcaption></figure>;
+  return <figure className="news-article__image"><img src={update.image.src} width="1440" height="720" alt={update.image.alt} loading="eager" decoding="async" fetchPriority="high" onError={() => setImageFailed(true)} /><figcaption>{update.image.credit ? <>{mediaLabel}: {update.image.creditUrl ? <a href={update.image.creditUrl} target="_blank" rel="noopener noreferrer">{update.image.credit}</a> : update.image.credit}.</> : `Illustrative ${mediaLabel.toLowerCase()}: ${update.image.alt}.`}</figcaption></figure>;
 }
 
 function TravelUpdateBlock({ block }: { block: TravelUpdate["body"][number] }) {

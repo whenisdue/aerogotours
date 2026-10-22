@@ -5,23 +5,16 @@ import { SiteHeader } from "../components/SiteHeader";
 import { EditorialFooter } from "../components/EditorialFooter";
 import { EditorialPhoto } from "../components/EditorialPhoto";
 import { travelGuides } from "../data/travelGuides";
+import { publishedVideos, videoPlatformLabels } from "../data/publishedVideos";
 import "./Discovery.css";
 import "./Homepage.css";
-import { japanDreamImages } from "../data/dreamTrips";
-import { getHomepageTravelUpdates, type TravelUpdateCategory } from "../data/travelUpdates";
+import type { TravelUpdate, TravelUpdateCategory } from "../data/travelUpdates";
 import type { DreamTripHandoff } from "../utils/dreamTripEngine";
-import { createDreamTrip } from "../utils/dreamTripEngine";
 import vietnamHeroPhoto from "../assets/vietnam-hero.webp";
 
 const discoveryDestinations = [
   { slug: "japan", name: "Japan", region: "Asia", summary: "Quiet gardens, neighborhood discoveries and city nights." },
   { slug: "australia", name: "Australia", region: "Oceania", summary: "Coastal cities, open-air days and room to roam." },
-];
-
-const publishedVideos = [
-  { title: "Five places to see on your first trip to Singapore", destination: "Singapore", url: "https://www.facebook.com/aerogotours/videos/going-to-singapore-for-the-first-time-these-are-5-places-i-would-definitely-put-/1450245700326560/" },
-  { title: "Why Sentosa deserves its own Singapore list", destination: "Sentosa, Singapore", url: "https://www.facebook.com/aerogotours/videos/so-many-of-you-asked-why-sentosa-wasnt-in-our-singapore-top-5the-more-we-looked-/1552256189921006/" },
-  { title: "See the Golden Bridge at Ba Na Hills", destination: "Da Nang, Vietnam", url: "https://www.facebook.com/aerogotours/videos/some-places-look-unreal-until-youre-standing-in-them-the-golden-bridge-at-ba-na-/1442020924658774/" },
 ];
 
 const newsCategories: Record<TravelUpdateCategory, string> = {
@@ -37,12 +30,23 @@ const formatNewsDate = (publishedAt: string) => new Intl.DateTimeFormat("en-GB",
   day: "numeric", month: "short", year: "numeric", timeZone: "Asia/Manila",
 }).format(new Date(`${publishedAt.slice(0, 10)}T00:00:00+08:00`));
 
-const homepageDreamTrip = createDreamTrip({ group: "sample", travelers: 4, duration: 7, interest: "mix", pace: "balanced" });
 const AMBIGUOUS_TRAVEL_DATES = /^\d{1,2}$/;
 const AMBIGUOUS_TRAVEL_DATES_MESSAGE = "Please add a month or a little more detail, e.g. Oct 17 or December 2026.";
 
+type HomepageNewsItem = Pick<TravelUpdate, "slug" | "category" | "headline" | "summary" | "publishedAt">;
+
+function readHomepageNews(): HomepageNewsItem[] {
+  try {
+    const serialized = document.getElementById("aerogo-homepage-news")?.textContent;
+    const value: unknown = serialized ? JSON.parse(serialized) : [];
+    return Array.isArray(value) ? value as HomepageNewsItem[] : [];
+  } catch {
+    return [];
+  }
+}
 export function Homepage() {
-  const newsItems = getHomepageTravelUpdates().slice(0, 2);
+  const [newsItems, setNewsItems] = useState<HomepageNewsItem[]>(readHomepageNews);
+  const [newsLoaded, setNewsLoaded] = useState(() => newsItems.length > 0);
   const leadGuide = travelGuides[0];
   const [submissionState, setSubmissionState] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [submissionError, setSubmissionError] = useState("");
@@ -50,6 +54,17 @@ export function Homepage() {
   const formStartedAt = useRef(0);
   const submissionInFlight = useRef(false);
   const inquiryFormRef = useRef<HTMLFormElement>(null);
+
+  useEffect(() => {
+    if (newsLoaded) return;
+    let active = true;
+    void import("../data/travelUpdates").then(({ getHomepageTravelUpdates }) => {
+      if (!active) return;
+      setNewsItems(getHomepageTravelUpdates().slice(0, 2));
+      setNewsLoaded(true);
+    });
+    return () => { active = false; };
+  }, [newsLoaded]);
 
   useEffect(() => {
     formStartedAt.current = Date.now();
@@ -155,14 +170,15 @@ export function Homepage() {
               <h3><Link to={`/travel-updates/${item.slug}`}>{item.headline} <ArrowUpRight size={18} aria-hidden="true" /></Link></h3>
               <p>{item.summary}</p>
             </li>)}</ol> : <p className="desk-news__empty">Browse our published travel updates and check official sources before making plans.</p>}
-            <div className="desk-news__watch"><span>Watch / Original videos</span><Link to="#watch">Explore AeroGo videos <ArrowUpRight size={17} aria-hidden="true" /></Link><p>Published travel videos from Singapore and Vietnam.</p></div>
+            <div className="desk-news__watch"><span>Watch / Original videos</span><Link to="/watch">Explore AeroGo videos <ArrowUpRight size={17} aria-hidden="true" /></Link><p>Published travel videos from Singapore and Vietnam.</p></div>
           </aside>
         </div>
       </section>
 
       <section className="desk-watch desk-shell" id="watch" aria-labelledby="desk-watch-title">
         <div className="desk-module-heading"><div><span className="desk-kicker">Original AeroGo videos</span><h2 id="desk-watch-title">Watch AeroGo</h2></div><p>Short videos from places worth exploring. Watch the published posts on Facebook.</p></div>
-        <div className="desk-watch__grid">{publishedVideos.map((video, index) => <a key={video.url} href={video.url} target="_blank" rel="noopener noreferrer" className="desk-watch__item"><span className="desk-watch__number">{String(index + 1).padStart(2, "0")} / {video.destination}</span><h3>{video.title}</h3><span className="desk-watch__action">Watch on Facebook <ArrowUpRight size={17} aria-hidden="true" /></span></a>)}</div>
+        <div className="desk-watch__grid">{publishedVideos.map((video, index) => <a key={video.url} href={video.url} target="_blank" rel="noopener noreferrer" className="desk-watch__item"><span className="desk-watch__number">{String(index + 1).padStart(2, "0")} / {video.destination}</span><h3>{video.title}</h3><span className="desk-watch__action">Watch on {videoPlatformLabels[video.platform]} <ArrowUpRight size={17} aria-hidden="true" /></span></a>)}</div>
+        <Link className="desk-watch__all" to="/watch">Browse the video library <ArrowUpRight size={17} aria-hidden="true" /></Link>
       </section>
 
       <section className="desk-destinations desk-shell" id="destinations" aria-labelledby="desk-destinations-title">
@@ -200,18 +216,4 @@ export function Homepage() {
     </main>
     <EditorialFooter editorial />
   </div>;
-}
-
-export function HomepageDreamPreview() {
-  const highlights = [homepageDreamTrip.days[0], homepageDreamTrip.days[2], homepageDreamTrip.days[4]];
-
-  return <section className="homepage-dream-preview" aria-labelledby="homepage-dream-preview-title">
-    <div className="page-shell">
-      <div className="homepage-dream-preview__heading"><div><span className="eyebrow">TRY A DREAM TRIP · JAPAN</span><h2 id="homepage-dream-preview-title">See what seven days in Japan could look like.</h2></div></div>
-      <div className="homepage-dream-preview__feature">
-        <div className="homepage-dream-preview__visual"><img src={japanDreamImages.hero.image} alt={japanDreamImages.hero.alt} loading="lazy" /><span className="homepage-dream-preview__visual-label">JAPAN · ILLUSTRATIVE ONLY</span></div>
-        <div className="homepage-dream-preview__copy"><p>Explore a curated sample journey through Tokyo and Kyoto, then shape it around your travel style.</p><p className="homepage-dream-preview__honesty">Japan is one of AeroGo’s interactive Dream Trip examples. This is an illustrative itinerary, not a confirmed booking. Routes, activities, availability and prices can be refined with AeroGo.</p><div className="homepage-dream-preview__highlights">{highlights.map((day) => <div className="homepage-dream-highlight" key={day.day}><span>DAY {String(day.day).padStart(2, "0")}</span><div><strong>{day.title}</strong><small>{day.location}</small></div><ArrowRight size={16} /></div>)}</div><Link className="button homepage-dream-preview__button" to="/dream/japan">Explore the Japan Dream Trip <ArrowUpRight size={16} /></Link></div>
-      </div>
-    </div>
-  </section>;
 }

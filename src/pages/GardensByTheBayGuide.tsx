@@ -281,7 +281,7 @@ export function GardensByTheBayGuide() {
         </section>
         <aside className="gby-related page-shell" aria-label="Related destination">
           <div><span className="eyebrow">MORE TO DISCOVER</span><h2>Explore Singapore</h2><p>Find more ideas for neighborhoods, gardens and waterfront walks.</p></div>
-          <Link to="/destinations/singapore">See Singapore inspiration <ArrowUpRight size={17} aria-hidden="true" /></Link>
+          <div className="gby-related__links"><Link to="/destinations/singapore">See Singapore inspiration <ArrowUpRight size={17} aria-hidden="true" /></Link><Link to="/watch#video-singapore-first-trip">Watch Singapore first-trip ideas <ArrowUpRight size={17} aria-hidden="true" /></Link></div>
         </aside>
       </article>
     </main>

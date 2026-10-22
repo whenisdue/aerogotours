@@ -25,6 +25,7 @@
 .destination-site.editorial-foundation .destination-published__item > span { display: block; color: var(--editorial-muted-ink); font-size: 11px; font-weight: 700; line-height: 1.5; }
 .destination-site.editorial-foundation .destination-published__item :is(a) { display: inline-flex; min-height: 44px; align-items: center; gap: 6px; color: var(--editorial-link-blue); font-size: 14px; font-weight: 700; line-height: 1.45; overflow-wrap: anywhere; }
 .destination-site.editorial-foundation .destination-published__item svg { flex: 0 0 auto; }
+.destination-site.editorial-foundation .destination-published__watch { display: inline-flex; min-height: 44px; align-items: center; gap: 6px; margin-top: 5px; color: var(--editorial-link-blue); font-size: 13px; font-weight: 700; }
 
 .destination-site.editorial-foundation .destination-moments { background: var(--editorial-desk-gray); padding-block: 43px 52px; }
 .destination-site.editorial-foundation .destination-section-heading { margin-bottom: 18px; }

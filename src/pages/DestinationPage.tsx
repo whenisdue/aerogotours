@@ -4,9 +4,9 @@ import { EditorialBreadcrumb } from "../components/EditorialBreadcrumb";
 import { EditorialFooter } from "../components/EditorialFooter";
 import { SiteHeader } from "../components/SiteHeader";
 import { destinations, findDestination } from "../data/destinations";
-import { destinationVideos } from "../data/destinationVideos";
 import { getActiveTravelUpdates } from "../data/travelUpdates";
 import { travelGuides } from "../data/travelGuides";
+import { getVideosForDestination, videoPlatformLabels } from "../data/publishedVideos";
 import { getDreamDestination } from "../utils/dreamTripEngine";
 import "./DestinationPage.css";
 
@@ -31,7 +31,7 @@ export function DestinationPage() {
   </div>;
 
   const relatedGuides = travelGuides.filter((guide) => guide.destination === destination.name);
-  const videos = destinationVideos[destination.slug] ?? [];
+  const videos = getVideosForDestination(destination.slug);
   const newsCountry = destination.slug === "bali" ? "Indonesia" : destination.name;
   const relatedNews = getActiveTravelUpdates().filter((update) => update.country === newsCountry).slice(0, 2);
   const hasPublishedConnections = relatedGuides.length + videos.length + relatedNews.length > 0;
@@ -54,7 +54,7 @@ export function DestinationPage() {
         </header>
 
         <figure className="destination-lead-photo destination-shell">
-          <img src={destination.heroImage} srcSet={`${imageAtWidth(destination.heroImage, 720)} 720w, ${imageAtWidth(destination.heroImage, 1440)} 1440w, ${destination.heroImage} 2200w`} sizes="(max-width: 700px) 90vw, 92vw" alt={destination.imageAlt} fetchPriority="high" decoding="async" />
+          <img src={destination.heroImage} srcSet={`${imageAtWidth(destination.heroImage, 720)} 720w, ${imageAtWidth(destination.heroImage, 1440)} 1440w, ${destination.heroImage} 2200w`} sizes="(max-width: 700px) 90vw, 92vw" width="2200" height="1238" alt={destination.imageAlt} fetchPriority="high" decoding="async" />
           <figcaption>Destination image via <a href={destination.heroImage} target="_blank" rel="noopener noreferrer">Unsplash</a>. This page offers inspiration, not a reported itinerary.</figcaption>
         </figure>
 
@@ -71,8 +71,9 @@ export function DestinationPage() {
               <span>Published guide</span><Link to={guide.path}>{guide.title} <ArrowUpRight size={16} aria-hidden="true" /></Link>
             </div>)}
             {videos.map((video) => <div className="destination-published__item" key={video.url}>
-              <span>Original AeroGo video · Facebook</span><a href={video.url} target="_blank" rel="noopener noreferrer">{video.title} <ExternalLink size={16} aria-hidden="true" /></a>
+              <span>Original AeroGo video · {videoPlatformLabels[video.platform]}</span><a href={video.url} target="_blank" rel="noopener noreferrer">{video.title} <ExternalLink size={16} aria-hidden="true" /></a>
             </div>)}
+            {videos.length > 0 && <Link className="destination-published__watch" to="/watch">Browse Watch AeroGo <ArrowRight size={16} aria-hidden="true" /></Link>}
             {relatedNews.map((update) => <div className="destination-published__item" key={update.slug}>
               <span>Travel News · Published <time dateTime={update.publishedAt}>{formatPublishedDate(update.publishedAt)}</time></span>
               <Link to={`/travel-updates/${update.slug}`}>{update.headline} <ArrowUpRight size={16} aria-hidden="true" /></Link>
