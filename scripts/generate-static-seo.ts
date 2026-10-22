@@ -145,6 +145,7 @@ const pages: SeoPage[] = [
       description: preview.subtitle,
       image: destination.heroImage,
       imageAlt: destination.imageAlt,
+      robots: "noindex, follow",
       schema: { "@type": "WebPage", name: preview.title, description: preview.subtitle, url: new URL(path, SITE_ORIGIN).href },
       breadcrumbs: [{ label: "Discover", path: "/" }, { label: destination.name, path: `/destinations/${destination.slug}` }, { label: "Dream Trip Preview", path }],
     }];

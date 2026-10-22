@@ -2,7 +2,6 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { destinations } from "../src/data/destinations.ts";
 import { travelUpdates } from "../src/data/travelUpdates.ts";
-import { getDreamDestination } from "../src/utils/dreamTripEngine.ts";
 import { SITE_ORIGIN } from "../src/utils/siteMetadata.ts";
 
 const siteUrl = SITE_ORIGIN;
@@ -36,9 +35,6 @@ const entries: SitemapEntry[] = [
     lastmod: normalizeLastmod(update.updatedAt),
   })),
   ...destinations.map((destination) => ({ path: `/destinations/${destination.slug}` })),
-  ...destinations
-    .filter((destination) => Boolean(getDreamDestination(destination.slug)))
-    .map((destination) => ({ path: `/dream/${destination.slug}` })),
 ];
 
 const uniqueEntries = [...new Map(entries

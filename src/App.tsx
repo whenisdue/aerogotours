@@ -32,6 +32,7 @@ function PageTitle() {
   const isNewsListing = pathname === "/travel-updates";
   const isHomePage = pathname === "/";
   const isCompanionDemo = pathname === "/companion";
+  const isDreamTrip = pathname.startsWith("/dream/");
 
   useEffect(() => {
     const applyMetadata = () => {
@@ -66,7 +67,7 @@ function PageTitle() {
 
     document.title = pageTitle;
     setMeta("name", "description", pageDescription);
-    setMeta("name", "robots", isPrivateTrip ? "noindex, nofollow" : isCompanionDemo ? "noindex, follow" : "index, follow");
+    setMeta("name", "robots", isPrivateTrip ? "noindex, nofollow" : isCompanionDemo || isDreamTrip ? "noindex, follow" : "index, follow");
 
     if (isPrivateTrip) {
       document.head.querySelector('link[rel="canonical"]')?.remove();
@@ -142,7 +143,7 @@ function PageTitle() {
       window.removeEventListener("aerogo:metadata-ready", applyMetadata);
       observer?.disconnect();
     };
-  }, [isCompanionDemo, isDestination, isGardensGuide, isGuideDirectory, isHomePage, isNewsArticle, isNewsListing, isPrivateTrip, isWatchPage, pathname]);
+  }, [isCompanionDemo, isDestination, isDreamTrip, isGardensGuide, isGuideDirectory, isHomePage, isNewsArticle, isNewsListing, isPrivateTrip, isWatchPage, pathname]);
 
   return null;
 }
