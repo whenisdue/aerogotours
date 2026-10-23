@@ -1,98 +1,118 @@
-import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, ArrowUpRight, ExternalLink } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
-import { Brand } from "../components/Brand";
+import { EditorialBreadcrumb } from "../components/EditorialBreadcrumb";
+import { EditorialFooter } from "../components/EditorialFooter";
 import { SiteHeader } from "../components/SiteHeader";
-import { findDestination } from "../data/destinations";
+import { destinations, findDestination } from "../data/destinations";
+import { getActiveTravelUpdates } from "../data/travelUpdates";
+import { travelGuides } from "../data/travelGuides";
+import { getVideosForDestination, videoPlatformLabels } from "../data/publishedVideos";
+import { getDreamDestination } from "../utils/dreamTripEngine";
+import "./DestinationPage.css";
+
+const formatPublishedDate = (publishedAt: string) => new Intl.DateTimeFormat("en-GB", {
+  day: "numeric", month: "short", year: "numeric", timeZone: "Asia/Manila",
+}).format(new Date(`${publishedAt.slice(0, 10)}T00:00:00+08:00`));
+const imageAtWidth = (url: string, width: number) => url.replace(/([?&])w=\d+/, `$1w=${width}`);
 
 export function DestinationPage() {
   const { slug } = useParams();
   const destination = findDestination(slug);
 
-  if (!destination) {
-    return <div className="public-site destination-site">
-      <SiteHeader />
-      <main className="destination-not-found page-shell">
-        <span className="eyebrow">A LITTLE DETOUR</span>
-        <h1>We couldn’t find that place.</h1>
-        <p>There are plenty of other places to imagine.</p>
-        <Link className="text-link" to="/">Back to AeroGo <ArrowLeft size={16} /></Link>
-      </main>
-      <DestinationFooter />
-    </div>;
-  }
+  if (!destination) return <div className="public-site destination-site editorial-foundation">
+    <SiteHeader />
+    <main className="destination-not-found destination-shell">
+      <p className="destination-kicker">Destination inspiration</p>
+      <h1>We couldn’t find that place.</h1>
+      <p>Explore another destination in AeroGo’s collection.</p>
+      <Link to="/">Back to Discover <ArrowLeft size={16} aria-hidden="true" /></Link>
+    </main>
+    <EditorialFooter editorial />
+  </div>;
 
-  return <div className="public-site destination-site">
+  const relatedGuides = travelGuides.filter((guide) => guide.destination === destination.name);
+  const videos = getVideosForDestination(destination.slug);
+  const newsCountry = destination.slug === "bali" ? "Indonesia" : destination.name;
+  const relatedNews = getActiveTravelUpdates().filter((update) => update.country === newsCountry).slice(0, 2);
+  const hasPublishedConnections = relatedGuides.length + videos.length + relatedNews.length > 0;
+  const hasDreamTrip = Boolean(getDreamDestination(destination.slug));
+  const moreDestinations = destinations
+    .filter((item) => item.slug !== destination.slug)
+    .sort((a, b) => Number(b.region === destination.region) - Number(a.region === destination.region))
+    .slice(0, 3);
+
+  return <div className="public-site destination-site editorial-foundation">
     <SiteHeader />
     <main>
-      <section className="destination-hero" aria-labelledby="destination-title">
-        <img className="destination-hero__image" src={destination.heroImage} alt={destination.imageAlt} fetchPriority="high" />
-        <div className="destination-hero__shade" />
-        <div className="page-shell destination-hero__content">
-          <Link className="destination-hero__back" to="/" aria-label="Back to AeroGo homepage"><ArrowLeft size={15} /> AeroGo</Link>
-          <div>
-            <span className="eyebrow eyebrow--light"><span className="eyebrow-mark" /> A PLACE TO IMAGINE</span>
-            <h1 id="destination-title">{destination.name}</h1>
-            <p>{destination.tagline}</p>
+      <div className="destination-shell"><EditorialBreadcrumb items={[{ label: "Discover", to: "/" }, { label: "Destinations" }, { label: destination.name }]} /></div>
+
+      <article>
+        <header className="destination-article-header destination-shell">
+          <span className="destination-kicker">Destination inspiration / {destination.region}</span>
+          <h1>{destination.name}</h1>
+          <p>{destination.tagline}</p>
+        </header>
+
+        <figure className="destination-lead-photo destination-shell">
+          <img src={destination.heroImage} srcSet={`${imageAtWidth(destination.heroImage, 720)} 720w, ${imageAtWidth(destination.heroImage, 1440)} 1440w, ${destination.heroImage} 2200w`} sizes="(max-width: 700px) 90vw, 92vw" width="2200" height="1238" alt={destination.imageAlt} fetchPriority="high" decoding="async" />
+          <figcaption>Destination image via <a href={destination.heroImage} target="_blank" rel="noopener noreferrer">Unsplash</a>. This page offers inspiration, not a reported itinerary.</figcaption>
+        </figure>
+
+        <div className={`destination-opening destination-shell${hasPublishedConnections ? " destination-opening--with-links" : ""}`}>
+          <section className="destination-intro" aria-labelledby="destination-intro-title">
+            <span className="destination-kicker">Get to know the place</span>
+            <h2 id="destination-intro-title">A starting point for {destination.name}</h2>
+            <div className="destination-reading">{destination.intro.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</div>
+          </section>
+          {hasPublishedConnections && <aside className="destination-published" aria-labelledby="destination-published-title">
+            <span className="destination-kicker">From AeroGo</span>
+            <h2 id="destination-published-title">Explore more</h2>
+            {relatedGuides.map((guide) => <div className="destination-published__item" key={guide.path}>
+              <span>Published guide</span><Link to={guide.path}>{guide.title} <ArrowUpRight size={16} aria-hidden="true" /></Link>
+            </div>)}
+            {videos.map((video) => <div className="destination-published__item" key={video.url}>
+              <span>Original AeroGo video · {videoPlatformLabels[video.platform]}</span><a href={video.url} target="_blank" rel="noopener noreferrer">{video.title} <ExternalLink size={16} aria-hidden="true" /></a>
+            </div>)}
+            {videos.length > 0 && <Link className="destination-published__watch" to="/watch">Browse Watch AeroGo <ArrowRight size={16} aria-hidden="true" /></Link>}
+            {relatedNews.map((update) => <div className="destination-published__item" key={update.slug}>
+              <span>Travel News · Published <time dateTime={update.publishedAt}>{formatPublishedDate(update.publishedAt)}</time></span>
+              <Link to={`/travel-updates/${update.slug}`}>{update.headline} <ArrowUpRight size={16} aria-hidden="true" /></Link>
+            </div>)}
+          </aside>}
+        </div>
+
+        <section className="destination-moments" aria-labelledby="destination-moments-title">
+          <div className="destination-shell">
+            <div className="destination-section-heading"><span className="destination-kicker">Ideas for your visit</span><h2 id="destination-moments-title">Follow what interests you</h2></div>
+            <div className="destination-moments__grid">{destination.moments.map((moment, index) => <div className="destination-moment" key={moment.title}>
+              <span className="destination-moment__number">0{index + 1}</span><h3>{moment.title}</h3><p>{moment.description}</p>
+            </div>)}</div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="destination-intro page-shell">
-        <span className="eyebrow">A FEELING, NOT A CHECKLIST</span>
-        <div className="destination-intro__copy">
-          {destination.intro.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-          {destination.slug === "singapore" && <Link className="destination-guide-link" to="/guides/singapore/gardens-by-the-bay">Read our Gardens by the Bay visitor guide <ArrowUpRight size={15} /></Link>}
-        </div>
-      </section>
+        <section className="destination-journey destination-shell" aria-labelledby="destination-journey-title">
+          <div className="destination-section-heading"><span className="destination-kicker">One possible route</span><h2 id="destination-journey-title">A four-day outline</h2><p>These are inspiration ideas. Choose places and timing that suit your trip.</p></div>
+          <ol className="destination-journey__list">{destination.journey.map((day) => <li key={day.day}>
+            <span>Day {day.day}</span><div><h3>{day.title}</h3><p>{day.description}</p></div>
+          </li>)}</ol>
+        </section>
 
-      {(destination.slug === "japan" || destination.slug === "thailand" || destination.slug === "south-korea" || destination.slug === "hong-kong" || destination.slug === "bali" || destination.slug === "singapore" || destination.slug === "vietnam" || destination.slug === "malaysia") && <section className="destination-dream-entry page-shell" aria-labelledby="destination-dream-title">
-        <div className="destination-dream-entry__copy"><span className="eyebrow">A DIFFERENT WAY TO BEGIN</span><h2 id="destination-dream-title">Imagine your trip to {destination.name}</h2><p>See what a vacation here could look like before you make any plans.</p></div>
-        <Link className="button destination-dream-entry__button" to={`/dream/${destination.slug}`}>Explore a Dream Trip <ArrowUpRight size={17} /></Link>
-      </section>}
+        <section className="destination-more destination-shell" aria-labelledby="destination-more-title">
+          <div className="destination-section-heading"><span className="destination-kicker">Keep discovering</span><h2 id="destination-more-title">More destinations</h2></div>
+          <div className="destination-more__grid">{moreDestinations.map((item) => <Link key={item.slug} to={`/destinations/${item.slug}`}>
+            <span>{item.region}</span><strong>{item.name}</strong><ArrowRight size={18} aria-hidden="true" />
+          </Link>)}</div>
+        </section>
 
-      <section className="destination-moments">
-        <div className="page-shell">
-          <div className="destination-section-heading">
-            <span className="eyebrow">A FEW WAYS IT COULD FEEL</span>
-            <h2>What a trip could feel like.</h2>
+        <aside className="destination-planning" aria-label="Travel planning help"><div className="destination-shell">
+          <div><span className="destination-kicker">Travel planning</span><h2>Need help with the details?</h2><p>Tell us what kind of trip you have in mind. We’ll help you compare the options and organize the details.</p></div>
+          <div className="destination-planning__links">
+            {hasDreamTrip && <Link to={`/dream/${destination.slug}`}>Explore a Dream Trip <ArrowUpRight size={17} aria-hidden="true" /></Link>}
+            <Link to="/#inquiry">Send a trip inquiry <ArrowUpRight size={17} aria-hidden="true" /></Link>
           </div>
-          <div className="destination-moments__grid">
-            {destination.moments.map((moment, index) => <article className="destination-moment" key={moment.title}>
-              <span className="destination-moment__number">0{index + 1}</span>
-              <h3>{moment.title}</h3>
-              <p>{moment.description}</p>
-            </article>)}
-          </div>
-        </div>
-      </section>
-
-      <section className="destination-journey page-shell">
-        <div className="destination-section-heading destination-section-heading--journey">
-          <div><span className="eyebrow">A LOOSE STARTING POINT</span><h2>A trip could look like…</h2></div>
-          <p>Just inspiration. The best version of your trip can take a different shape.</p>
-        </div>
-        <ol className="destination-journey__list">
-          {destination.journey.map((day) => <li key={day.day}>
-            <span>DAY {day.day}</span>
-            <div><h3>{day.title}</h3><p>{day.description}</p></div>
-          </li>)}
-        </ol>
-      </section>
-
-      <section className="destination-cta">
-        <div className="page-shell destination-cta__inner">
-          <span className="eyebrow eyebrow--light">WHENEVER YOU’RE READY</span>
-          <h2>Thinking about {destination.name}?</h2>
-          <p>Tell us what kind of trip you have in mind. We’ll help you compare the options and organize the details.</p>
-          <Link className="button destination-cta__button" to="/#inquiry">Tell us about your trip <ArrowUpRight size={17} /></Link>
-          <Link className="destination-cta__browse" to="/">Keep daydreaming <ArrowRight size={15} /></Link>
-        </div>
-      </section>
+        </div></aside>
+      </article>
     </main>
-    <DestinationFooter />
+    <EditorialFooter editorial />
   </div>;
-}
-
-function DestinationFooter() {
-  return <footer className="site-footer"><div className="page-shell site-footer__inner"><Brand light /><span>Thoughtful travel planning, made simpler.</span><span className="site-footer__domain">aerogotours.com</span><span className="site-footer__legal">© 2026 AeroGo Travel &amp; Tours · Sample prototype</span></div></footer>;
 }

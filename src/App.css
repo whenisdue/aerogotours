@@ -3080,20 +3080,20 @@ button.trip-event:hover .trip-event__content > strong { color: #b76c4e; }
   color: #17211e;
 }
 
-:is(.public-site:has(#travel-updates), .travel-updates-site) .site-header {
+:is(.public-site:has(#travel-updates), .travel-updates-site) .site-header:not(.site-header--editorial) {
   border-bottom-color: #e2e9e6;
   background: #fff;
 }
 
-:is(.public-site:has(#travel-updates), .travel-updates-site) .brand {
+:is(.public-site:has(#travel-updates), .travel-updates-site) .brand:not(.brand--editorial) {
   color: #13342c;
 }
 
-:is(.public-site:has(#travel-updates), .travel-updates-site) .brand__sub {
+:is(.public-site:has(#travel-updates), .travel-updates-site) .brand:not(.brand--editorial) .brand__sub {
   color: #66716d;
 }
 
-:is(.public-site:has(#travel-updates), .travel-updates-site) .menu-toggle {
+:is(.public-site:has(#travel-updates), .travel-updates-site) .site-header:not(.site-header--editorial) .menu-toggle {
   color: #13342c;
 }
 

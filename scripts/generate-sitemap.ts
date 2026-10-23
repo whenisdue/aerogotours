@@ -2,9 +2,9 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { destinations } from "../src/data/destinations.ts";
 import { travelUpdates } from "../src/data/travelUpdates.ts";
-import { getDreamDestination } from "../src/utils/dreamTripEngine.ts";
+import { SITE_ORIGIN } from "../src/utils/siteMetadata.ts";
 
-const siteUrl = "https://aerogotours.com";
+const siteUrl = SITE_ORIGIN;
 
 type SitemapEntry = {
   path: string;
@@ -23,22 +23,23 @@ const escapeXml = (value: string) =>
 
 const entries: SitemapEntry[] = [
   { path: "/" },
-  { path: "/companion" },
-  { path: "/trip-planner", lastmod: "2026-10-15" },
+  { path: "/trip-planner" },
   { path: "/guides" },
-  { path: "/guides/singapore/gardens-by-the-bay", lastmod: "2026-10-11" },
+  { path: "/watch" },
+  { path: "/guides/singapore/gardens-by-the-bay" },
   { path: "/travel-updates" },
   ...travelUpdates.map((update) => ({
     path: `/travel-updates/${update.slug}`,
-    lastmod: normalizeLastmod(update.updatedAt ?? update.publishedAt),
+    // Publication date is not a content modification date. Only record a sitemap
+    // lastmod when an actual revision timestamp exists in the article data.
+    lastmod: normalizeLastmod(update.updatedAt),
   })),
   ...destinations.map((destination) => ({ path: `/destinations/${destination.slug}` })),
-  ...destinations
-    .filter((destination) => Boolean(getDreamDestination(destination.slug)))
-    .map((destination) => ({ path: `/dream/${destination.slug}` })),
 ];
 
-const uniqueEntries = [...new Map(entries.map((entry) => [entry.path, entry])).values()];
+const uniqueEntries = [...new Map(entries
+  .filter((entry) => entry.path.startsWith("/") && !entry.path.includes("?") && !entry.path.includes("#"))
+  .map((entry) => [entry.path, entry])).values()];
 const xml = [
   '<?xml version="1.0" encoding="UTF-8"?>',
   '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',

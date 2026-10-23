@@ -15,6 +15,7 @@ export type DestinationJourneyDay = {
 export type Destination = {
   slug: string;
   name: string;
+  region: string;
   tagline: string;
   cardImage: string;
   heroImage: string;
@@ -28,6 +29,7 @@ export const destinations: Destination[] = [
   {
     slug: "thailand",
     name: "Thailand",
+    region: "Southeast Asia",
     tagline: "Island escapes and so much more.",
     cardImage: unsplash("photo-1510414842594-a61c69b5ae57", 900),
     heroImage: unsplash("photo-1507525428034-b723cf961d3e", 2200),
@@ -51,6 +53,7 @@ export const destinations: Destination[] = [
   {
     slug: "greece",
     name: "Greece",
+    region: "Europe",
     tagline: "Timeless beauty at every turn.",
     cardImage: unsplash("photo-1533105079780-92b9be482077", 900),
     heroImage: unsplash("photo-1533105079780-92b9be482077", 2200),
@@ -74,6 +77,7 @@ export const destinations: Destination[] = [
   {
     slug: "japan",
     name: "Japan",
+    region: "East Asia",
     tagline: "Culture, cuisine and unforgettable days.",
     cardImage: unsplash("photo-1493976040374-85c8e12f0c0e", 900),
     heroImage: unsplash("photo-1493976040374-85c8e12f0c0e", 2200),
@@ -97,6 +101,7 @@ export const destinations: Destination[] = [
   {
     slug: "switzerland",
     name: "Switzerland",
+    region: "Europe",
     tagline: "Breathtaking views and bigger stories.",
     cardImage: unsplash("photo-1476514525535-07fb3b4ae5f1", 900),
     heroImage: unsplash("photo-1476514525535-07fb3b4ae5f1", 2200),
@@ -120,6 +125,7 @@ export const destinations: Destination[] = [
   {
     slug: "south-korea",
     name: "South Korea",
+    region: "East Asia",
     tagline: "A city pulse, with quieter corners too.",
     cardImage: unsplash("photo-1546874177-9e664107314e", 900),
     heroImage: unsplash("photo-1546874177-9e664107314e", 2200),
@@ -143,6 +149,7 @@ export const destinations: Destination[] = [
   {
     slug: "bali",
     name: "Bali",
+    region: "Indonesia · Southeast Asia",
     tagline: "Green horizons and gentler mornings.",
     cardImage: unsplash("photo-1537996194471-e657df975ab4", 900),
     heroImage: unsplash("photo-1622833065251-be0d3ceaea04", 2200),
@@ -166,6 +173,7 @@ export const destinations: Destination[] = [
   {
     slug: "hong-kong",
     name: "Hong Kong",
+    region: "East Asia",
     tagline: "A harbor city with room to wander.",
     cardImage: unsplash("photo-1536599018102-9f803c140fc1", 900),
     heroImage: unsplash("photo-1536599018102-9f803c140fc1", 2200),
@@ -189,6 +197,7 @@ export const destinations: Destination[] = [
   {
     slug: "australia",
     name: "Australia",
+    region: "Oceania",
     tagline: "Bright coastlines and open-air days.",
     cardImage: unsplash("photo-1506973035872-a4ec16b8e8d9", 900),
     heroImage: unsplash("photo-1506973035872-a4ec16b8e8d9", 2200),
@@ -212,6 +221,7 @@ export const destinations: Destination[] = [
   {
     slug: "singapore",
     name: "Singapore",
+    region: "Southeast Asia",
     tagline: "A polished city with green space to spare.",
     cardImage: unsplash("photo-1525625293386-3f8f99389edd", 900),
     heroImage: unsplash("photo-1525625293386-3f8f99389edd", 2200),
@@ -235,6 +245,7 @@ export const destinations: Destination[] = [
   {
     slug: "vietnam",
     name: "Vietnam",
+    region: "Southeast Asia",
     tagline: "Street life, slow meals and stories in between.",
     cardImage: unsplash("photo-1528127269322-539801943592", 900),
     heroImage: unsplash("photo-1528127269322-539801943592", 2200),
@@ -258,6 +269,7 @@ export const destinations: Destination[] = [
   {
     slug: "malaysia",
     name: "Malaysia",
+    region: "Southeast Asia",
     tagline: "Many cultures, one generous welcome.",
     cardImage: unsplash("photo-1596422846543-75c6fc197f07", 900),
     heroImage: unsplash("photo-1596422846543-75c6fc197f07", 2200),

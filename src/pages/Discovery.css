@@ -1,6 +1,6 @@
 /* Editorial discovery surfaces; private trips and published guides keep their own styles. */
 #discovery-home.media-homepage.public-site, .public-site.guides-directory { background: var(--paper); color: var(--ink); }
-#discovery-home.media-homepage .site-header--editorial.site-header { background: var(--paper); border-bottom-color: var(--line); }
+#discovery-home.media-homepage .site-header--editorial.site-header { background: var(--editorial-paper); border-bottom-color: var(--editorial-line); }
 #discovery-home.media-homepage.public-site .page-shell, .guides-directory .page-shell { width: min(100% - 80px, 1160px); }
 .discovery-eyebrow { display: block; color: #766b5e; font-size: 11px; font-weight: 700; letter-spacing: .13em; line-height: 1.6; text-transform: uppercase; }
 .discovery-hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; gap: 8%; padding-block: 52px 58px; }
@@ -83,6 +83,8 @@
 #discovery-home.media-homepage.public-site .inquiry-form .button--coral { border-color: var(--forest); background: var(--forest); }
 #discovery-home.media-homepage.public-site .inquiry-form .button--coral:hover { background: var(--forest-deep); }
 #discovery-home.media-homepage.public-site a:focus-visible, #discovery-home.media-homepage.public-site button:focus-visible, .guides-directory a:focus-visible { outline: 3px solid #b87559; outline-offset: 4px; }
+#discovery-home.media-homepage.public-site .site-header--editorial :is(a, button):focus-visible,
+.guides-directory .site-header--editorial :is(a, button):focus-visible { outline: 3px solid var(--editorial-link-blue); outline-offset: 3px; }
 .guides-directory__main { padding-block: 64px 76px; }
 .guides-directory__heading { max-width: 710px; margin-bottom: 55px; }
 .guides-directory h1 { margin: 17px 0 20px; color: var(--forest-deep); font-family: var(--serif); font-size: clamp(50px, 7vw, 80px); font-weight: 400; letter-spacing: -.04em; line-height: 1.05; }

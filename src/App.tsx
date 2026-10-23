@@ -1,97 +1,150 @@
+import { lazy, Suspense, useEffect } from "react";
 import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
-import { useEffect } from "react";
 import { Homepage } from "./pages/Homepage";
-import { CompanionPage } from "./pages/Companion";
-import { DestinationPage } from "./pages/DestinationPage";
-import { DreamTripNotFound, DreamTripPage } from "./pages/DreamTripPage";
-import { MyTripPage } from "./pages/MyTrip";
-import { findDestination } from "./data/destinations";
-import { getTravelUpdateBySlug } from "./data/travelUpdates";
-import { TravelUpdateArticlePage, TravelUpdatesPage } from "./pages/TravelUpdates";
-import { GardensByTheBayGuide } from "./pages/GardensByTheBayGuide";
-import { TravelGuidesPage } from "./pages/TravelGuides";
-import { TripPlanner } from "./features/tripPlanner/TripPlanner";
-import { VietnamProposalPage } from "./pages/VietnamProposal";
+import { SITE_ORIGIN, DEFAULT_SOCIAL_IMAGE, DEFAULT_SOCIAL_IMAGE_ALT, getSocialImageUrl } from "./utils/siteMetadata";
 import "./App.css";
+
+const CompanionPage = lazy(() => import("./pages/Companion").then((module) => ({ default: module.CompanionPage })));
+const DestinationPage = lazy(() => import("./pages/DestinationPage").then((module) => ({ default: module.DestinationPage })));
+const DreamTripPage = lazy(() => import("./pages/DreamTripPage").then((module) => ({ default: module.DreamTripPage })));
+const DreamTripNotFound = lazy(() => import("./pages/DreamTripPage").then((module) => ({ default: module.DreamTripNotFound })));
+const MyTripPage = lazy(() => import("./pages/MyTrip").then((module) => ({ default: module.MyTripPage })));
+const TravelUpdatesPage = lazy(() => import("./pages/TravelUpdates").then((module) => ({ default: module.TravelUpdatesPage })));
+const TravelUpdateArticlePage = lazy(() => import("./pages/TravelUpdates").then((module) => ({ default: module.TravelUpdateArticlePage })));
+const GardensByTheBayGuide = lazy(() => import("./pages/GardensByTheBayGuide").then((module) => ({ default: module.GardensByTheBayGuide })));
+const TravelGuidesPage = lazy(() => import("./pages/TravelGuides").then((module) => ({ default: module.TravelGuidesPage })));
+const WatchPage = lazy(() => import("./pages/Watch").then((module) => ({ default: module.WatchPage })));
+const TripPlanner = lazy(() => import("./features/tripPlanner/TripPlanner").then((module) => ({ default: module.TripPlanner })));
+const VietnamProposalPage = lazy(() => import("./pages/VietnamProposal").then((module) => ({ default: module.VietnamProposalPage })));
+
+const HOME_TITLE = "Travel Stories, News & Guides · AeroGo";
+const HOME_DESCRIPTION = "Discover destination stories, travel news, practical guides and original AeroGo videos for curious Filipino travelers.";
+const NEWS_DESCRIPTION = "AeroGo Travel News: published travel developments, events and destination updates, with dates and original source links.";
 
 function PageTitle() {
   const { pathname } = useLocation();
-  const destinationSlug = pathname.startsWith("/destinations/") ? pathname.split("/").at(-1) : undefined;
-  const destination = findDestination(destinationSlug);
-  const travelUpdateSlug = pathname.startsWith("/travel-updates/") ? pathname.split("/").at(-1) : undefined;
-  const travelUpdate = getTravelUpdateBySlug(travelUpdateSlug);
-  const isTravelUpdatesRoute = pathname === "/travel-updates" || pathname.startsWith("/travel-updates/");
-  const isTravelUpdateArticle = Boolean(travelUpdate);
+  const isPrivateTrip = pathname.startsWith("/trip/");
+  const isNewsArticle = pathname.startsWith("/travel-updates/");
+  const isDestination = pathname.startsWith("/destinations/");
   const isGardensGuide = pathname === "/guides/singapore/gardens-by-the-bay";
-  const isGuidesDirectory = pathname === "/guides";
-  const isTripPlanner = pathname === "/trip-planner";
-  const isDiscoveryPage = pathname === "/" || isGuidesDirectory;
-  const isVietnamProposal = pathname === "/trip/vietnam-danang-hanoi";
-  const pageTitle = isTripPlanner ? "Free Singapore Trip Planner · AeroGo Travel & Tours" : isGuidesDirectory ? "Travel Guides · AeroGo Travel & Tours" : isGardensGuide
-    ? "Gardens by the Bay Visitor Guide · Singapore · AeroGo"
-    : travelUpdate
-    ? travelUpdate.seoTitle ?? `${travelUpdate.headline} · AeroGo Travel Updates`
-    : pathname.startsWith("/companion")
-      ? "Sample Trip Companion · AeroGo"
-      : isVietnamProposal
-        ? "Vietnam Trip Proposal · Da Nang + Hanoi · AeroGo"
-      : pathname.startsWith("/trip/")
-        ? "AeroGo My Trip · Private trip space"
-      : pathname.startsWith("/dream/")
-        ? "Dream Trip Preview · AeroGo"
-      : destination
-          ? `${destination.name} inspiration · AeroGo`
-          : pathname.startsWith("/destinations/")
-            ? "Destination inspiration · AeroGo"
-          : isTravelUpdatesRoute
-            ? "AeroGo Travel Updates · AeroGo"
-          : "Travel Planning for Filipino Travelers · AeroGo Travel & Tours";
-  const pageDescription = (isTripPlanner ? "Create a free three, four or five day Singapore itinerary with a travel checklist. No account needed; save, share or print your plan." : undefined)
-    ?? (isGuidesDirectory ? "Explore AeroGo’s travel guides, with original photography and practical visitor information. Start with Gardens by the Bay in Singapore." : undefined)
-    ?? (pathname === "/" ? "AeroGo helps Filipino travelers compare options, shape a practical itinerary, and organize important details from choosing where to go through travel day." : undefined)
-    ?? (isGardensGuide ? "A practical visitor guide to Gardens by the Bay in Singapore: free and ticketed areas, Cloud Forest, changing floral displays, Supertrees and planning tips." : undefined)
-    ?? travelUpdate?.seoDescription
-    ?? travelUpdate?.summary
-    ?? (isVietnamProposal ? "A six-day Vietnam itinerary through Da Nang and Hanoi, with guided tours, free time and confirmed package inclusions." : undefined)
-    ?? (isTravelUpdatesRoute ? "Useful events, travel changes and destination ideas for your next trip." : "AeroGo Travel & Tours helps make your trip feel easy. Thoughtful travel planning, booking organization, and a private trip companion.");
+  const isGuideDirectory = pathname === "/guides";
+  const isWatchPage = pathname === "/watch";
+  const isNewsListing = pathname === "/travel-updates";
+  const isHomePage = pathname === "/";
+  const isCompanionDemo = pathname === "/companion";
+  const isDreamTrip = pathname.startsWith("/dream/");
 
   useEffect(() => {
+    const applyMetadata = () => {
+    const article = document.querySelector<HTMLElement>(".news-article[data-seo-title]");
+    const heading = document.querySelector<HTMLElement>("main h1")?.textContent?.trim();
+    const pageTitle = isHomePage ? HOME_TITLE
+      : isNewsListing ? "Travel News · AeroGo"
+        : isNewsArticle ? article?.dataset.seoTitle ?? `${heading || "Travel News"} · AeroGo Travel News`
+          : isGardensGuide ? "Gardens by the Bay Visitor Guide · Singapore · AeroGo"
+            : isGuideDirectory ? "Travel Guides · AeroGo"
+              : isWatchPage ? "Watch AeroGo · Original Travel Videos"
+                : pathname === "/trip-planner" ? "Free Singapore Trip Planner · AeroGo Travel & Tours"
+                  : pathname === "/companion" ? "Sample Trip Companion · AeroGo"
+                    : pathname === "/trip/vietnam-danang-hanoi" ? "Vietnam Trip Proposal · Da Nang + Hanoi · AeroGo"
+                      : isPrivateTrip ? "AeroGo My Trip · Private trip space"
+                        : pathname.startsWith("/dream/") ? "Dream Trip Preview · AeroGo"
+                          : isDestination ? `${heading || "Destination"} inspiration · AeroGo`
+                            : HOME_TITLE;
+
+    const pageDescription = isHomePage ? HOME_DESCRIPTION
+      : isNewsListing ? NEWS_DESCRIPTION
+        : isNewsArticle ? article?.dataset.seoDescription ?? document.querySelector(".news-article__deck")?.textContent?.trim() ?? heading ?? NEWS_DESCRIPTION
+          : isGardensGuide ? "A practical visitor guide to Gardens by the Bay in Singapore: free and ticketed areas, Cloud Forest, changing floral displays, Supertrees and planning tips."
+            : isGuideDirectory ? "Explore AeroGo’s travel guides, with original photography and practical visitor information. Start with Gardens by the Bay in Singapore."
+              : isWatchPage ? "Watch published AeroGo travel videos from Singapore and Vietnam, including destination discovery and the Golden Bridge at Ba Na Hills."
+                : pathname === "/trip-planner" ? "Create a free three, four or five day Singapore itinerary with a travel checklist. No account needed; save, share or print your plan."
+                  : isDestination ? document.querySelector(".destination-article-header > p")?.textContent?.trim() ?? `Explore AeroGo’s destination inspiration for ${heading ?? "this destination"}.`
+                    : pathname.startsWith("/dream/") ? document.querySelector(".dream-preview__hero-copy > p")?.textContent?.trim() ?? "Explore a flexible sample itinerary with AeroGo."
+                      : isPrivateTrip ? "Private trip information for invited travelers."
+                        : isNewsArticle ? NEWS_DESCRIPTION
+                          : "AeroGo Travel & Tours helps make your trip feel easy. Thoughtful travel planning, booking organization, and a private trip companion.";
+
     document.title = pageTitle;
     setMeta("name", "description", pageDescription);
+    setMeta("name", "robots", isPrivateTrip ? "noindex, nofollow" : isCompanionDemo || isDreamTrip ? "noindex, follow" : "index, follow");
 
-    if (isTravelUpdatesRoute || isGardensGuide || isDiscoveryPage || isTripPlanner) {
-      const canonicalUrl = new URL(pathname, window.location.origin).href;
-      setCanonical(canonicalUrl);
-      setMeta("property", "og:title", pageTitle);
-      setMeta("property", "og:description", pageDescription);
-      setMeta("property", "og:url", canonicalUrl);
-      setMeta("property", "og:type", isTravelUpdateArticle || isGardensGuide ? "article" : "website");
-      setMeta("name", "twitter:card", isTravelUpdateArticle || isGardensGuide || isDiscoveryPage ? "summary_large_image" : "summary");
-      setMeta("name", "twitter:title", pageTitle);
-      setMeta("name", "twitter:description", pageDescription);
-      if (travelUpdate) {
-        setMeta("property", "og:image", travelUpdate.image.src);
-        setMeta("name", "twitter:image", travelUpdate.image.src);
-        setMeta("property", "og:image:alt", travelUpdate.image.alt);
-      } else if (isGardensGuide || isDiscoveryPage) {
-        const shareImage = new URL("/images/gardens-by-the-bay/optimized/S25-1440.jpg", window.location.origin).href;
-        setMeta("property", "og:image", shareImage);
-        setMeta("name", "twitter:image", shareImage);
-        setMeta("property", "og:image:alt", "An elevated daytime view of Supertree Grove and the conservatories at Gardens by the Bay");
-      } else {
-        removeMeta("property", "og:image");
-        removeMeta("name", "twitter:image");
-        removeMeta("property", "og:image:alt");
-      }
-    } else {
-      removeTravelUpdatesMeta();
+    if (isPrivateTrip) {
+      document.head.querySelector('link[rel="canonical"]')?.remove();
+      ["og:title", "og:description", "og:url", "og:type", "og:image", "og:image:alt", "article:published_time", "article:modified_time"].forEach((key) => removeMeta("property", key));
+      ["twitter:card", "twitter:title", "twitter:description", "twitter:image"].forEach((key) => removeMeta("name", key));
+      return;
     }
-  }, [isDiscoveryPage, isGardensGuide, isTravelUpdateArticle, isTravelUpdatesRoute, isTripPlanner, pageDescription, pageTitle, pathname, travelUpdate]);
-  useEffect(() => {
-    const robots = document.querySelector('meta[name="robots"]') ?? document.head.appendChild(document.createElement("meta"));
-    robots.setAttribute("name", "robots");
-    robots.setAttribute("content", pathname.startsWith("/trip/") ? "noindex, nofollow" : "index, follow");
-  }, [pathname]);
+
+    const canonicalPath = pathname === "/travel-guides" ? "/guides"
+      : pathname.startsWith("/travel-updates/") && !article ? "/travel-updates"
+        : pathname.startsWith("/destinations/") && !document.querySelector(".destination-article-header") ? "/"
+          : pathname;
+    const canonicalUrl = new URL(canonicalPath || "/", SITE_ORIGIN).href;
+    setCanonical(canonicalUrl);
+    setMeta("property", "og:site_name", "AeroGo");
+    setMeta("property", "og:title", pageTitle);
+    setMeta("property", "og:description", pageDescription);
+    setMeta("property", "og:url", canonicalUrl);
+    setMeta("property", "og:type", isNewsArticle || isGardensGuide ? "article" : "website");
+    setMeta("name", "twitter:title", pageTitle);
+    setMeta("name", "twitter:description", pageDescription);
+
+    const pageImage = article?.dataset.seoImage
+      ?? (isHomePage || isGuideDirectory || isGardensGuide || isWatchPage || pathname === "/trip-planner" ? DEFAULT_SOCIAL_IMAGE : undefined)
+      ?? (isNewsListing ? document.querySelector<HTMLImageElement>(".news-lead__image img")?.src : undefined)
+      ?? document.querySelector<HTMLImageElement>(".destination-lead-photo img, .watch-video--featured img")?.src
+      ?? document.querySelector<HTMLImageElement>(".desk-lead img")?.src;
+    const pageImageAlt = article?.dataset.seoImageAlt
+      ?? (isHomePage || isGuideDirectory || isGardensGuide || isWatchPage || pathname === "/trip-planner" ? DEFAULT_SOCIAL_IMAGE_ALT : undefined)
+      ?? (isNewsListing ? document.querySelector<HTMLImageElement>(".news-lead__image img")?.alt : undefined)
+      ?? document.querySelector<HTMLImageElement>(".destination-lead-photo img, .watch-video--featured img, .desk-lead img")?.alt;
+
+    setMeta("name", "twitter:card", pageImage ? "summary_large_image" : "summary");
+    if (pageImage) {
+      const absoluteImage = getSocialImageUrl(pageImage);
+      setMeta("property", "og:image", absoluteImage);
+      setMeta("name", "twitter:image", absoluteImage);
+      if (pageImageAlt) setMeta("property", "og:image:alt", pageImageAlt);
+      else removeMeta("property", "og:image:alt");
+    } else {
+      ["og:image", "og:image:alt"].forEach((key) => removeMeta("property", key));
+      removeMeta("name", "twitter:image");
+    }
+
+    const publishedAt = article?.dataset.seoPublished;
+    const updatedAt = article?.dataset.seoUpdated;
+    if (isNewsArticle && publishedAt) setMeta("property", "article:published_time", publishedAt);
+    else removeMeta("property", "article:published_time");
+    if (isNewsArticle && updatedAt) setMeta("property", "article:modified_time", updatedAt);
+    else removeMeta("property", "article:modified_time");
+    };
+
+    applyMetadata();
+    window.addEventListener("aerogo:metadata-ready", applyMetadata);
+
+    const needsRouteContent = isNewsArticle || isDestination || isNewsListing;
+    let observer: MutationObserver | undefined;
+    if (needsRouteContent) {
+      observer = new MutationObserver(() => {
+        const routeContent = isNewsArticle
+          ? document.querySelector(".news-article[data-seo-title]")
+          : isDestination ? document.querySelector(".destination-article-header")
+            : document.querySelector(".news-lead");
+        if (routeContent) {
+          applyMetadata();
+          observer?.disconnect();
+        }
+      });
+      observer.observe(document.querySelector("#root") ?? document.body, { childList: true, subtree: true });
+    }
+
+    return () => {
+      window.removeEventListener("aerogo:metadata-ready", applyMetadata);
+      observer?.disconnect();
+    };
+  }, [isCompanionDemo, isDestination, isDreamTrip, isGardensGuide, isGuideDirectory, isHomePage, isNewsArticle, isNewsListing, isPrivateTrip, isWatchPage, pathname]);
+
   return null;
 }
 
@@ -112,12 +165,6 @@ function setCanonical(url: string) {
   canonical.setAttribute("href", url);
 }
 
-function removeTravelUpdatesMeta() {
-  ["og:title", "og:description", "og:url", "og:type", "og:image", "og:image:alt"].forEach((key) => removeMeta("property", key));
-  ["twitter:card", "twitter:title", "twitter:description", "twitter:image"].forEach((key) => removeMeta("name", key));
-  document.head.querySelector('link[rel="canonical"]')?.remove();
-}
-
 function ScrollToHash() {
   const { pathname, hash } = useLocation();
   useEffect(() => {
@@ -135,7 +182,7 @@ function ScrollToHash() {
 }
 
 export default function App() {
-  return <BrowserRouter><PageTitle /><ScrollToHash /><Routes>
+  return <BrowserRouter><PageTitle /><ScrollToHash /><Suspense fallback={<p role="status" className="route-loading">Loading AeroGo…</p>}><Routes>
     <Route path="/" element={<Homepage />} />
     <Route path="/companion" element={<CompanionPage />} />
     <Route path="/trip-planner" element={<TripPlanner />} />
@@ -145,10 +192,12 @@ export default function App() {
     <Route path="/travel-updates/sunchang-jangryu-food-festival-2026" element={<Navigate replace to="/travel-updates/sunchang-jangryu-festival-2026" />} />
     <Route path="/travel-updates/:slug" element={<TravelUpdateArticlePage />} />
     <Route path="/guides" element={<TravelGuidesPage />} />
+    <Route path="/watch" element={<WatchPage />} />
+    <Route path="/travel-guides" element={<Navigate replace to="/guides" />} />
     <Route path="/guides/singapore/gardens-by-the-bay" element={<GardensByTheBayGuide />} />
     <Route path="/destinations/:slug" element={<DestinationPage />} />
     <Route path="/dream/:slug" element={<DreamTripPage />} />
     <Route path="/dream/*" element={<DreamTripNotFound />} />
     <Route path="*" element={<Homepage />} />
-  </Routes></BrowserRouter>;
+  </Routes></Suspense></BrowserRouter>;
 }

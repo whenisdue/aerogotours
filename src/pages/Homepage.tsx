@@ -4,32 +4,67 @@ import { Link } from "react-router-dom";
 import { SiteHeader } from "../components/SiteHeader";
 import { EditorialFooter } from "../components/EditorialFooter";
 import { EditorialPhoto } from "../components/EditorialPhoto";
-import { TravelGuideFeature } from "../components/TravelGuideFeature";
 import { travelGuides } from "../data/travelGuides";
+import { publishedVideos, videoPlatformLabels } from "../data/publishedVideos";
 import "./Discovery.css";
-import { japanDreamImages } from "../data/dreamTrips";
-import { TravelUpdatesPreview } from "./TravelUpdates";
+import "./Homepage.css";
+import type { TravelUpdate, TravelUpdateCategory } from "../data/travelUpdates";
 import type { DreamTripHandoff } from "../utils/dreamTripEngine";
-import { createDreamTrip } from "../utils/dreamTripEngine";
 import vietnamHeroPhoto from "../assets/vietnam-hero.webp";
 
 const discoveryDestinations = [
   { slug: "japan", name: "Japan", region: "Asia", summary: "Quiet gardens, neighborhood discoveries and city nights." },
-  { slug: "greece", name: "Greece", region: "Europe", summary: "Island lanes, long lunches and blue horizons." },
   { slug: "australia", name: "Australia", region: "Oceania", summary: "Coastal cities, open-air days and room to roam." },
 ];
 
-const homepageDreamTrip = createDreamTrip({ group: "sample", travelers: 4, duration: 7, interest: "mix", pace: "balanced" });
+const newsCategories: Record<TravelUpdateCategory, string> = {
+  "events-experiences": "Events & experiences",
+  "food-experiences": "Food & experiences",
+  "flights-airports": "Flights & airports",
+  "travel-requirements": "Travel requirements",
+  "deals-savings": "Deals & savings",
+  "destination-tips": "Destination tips",
+};
+
+const formatNewsDate = (publishedAt: string) => new Intl.DateTimeFormat("en-GB", {
+  day: "numeric", month: "short", year: "numeric", timeZone: "Asia/Manila",
+}).format(new Date(`${publishedAt.slice(0, 10)}T00:00:00+08:00`));
+
 const AMBIGUOUS_TRAVEL_DATES = /^\d{1,2}$/;
 const AMBIGUOUS_TRAVEL_DATES_MESSAGE = "Please add a month or a little more detail, e.g. Oct 17 or December 2026.";
 
+type HomepageNewsItem = Pick<TravelUpdate, "slug" | "category" | "headline" | "summary" | "publishedAt">;
+
+function readHomepageNews(): HomepageNewsItem[] {
+  try {
+    const serialized = document.getElementById("aerogo-homepage-news")?.textContent;
+    const value: unknown = serialized ? JSON.parse(serialized) : [];
+    return Array.isArray(value) ? value as HomepageNewsItem[] : [];
+  } catch {
+    return [];
+  }
+}
 export function Homepage() {
+  const [newsItems, setNewsItems] = useState<HomepageNewsItem[]>(readHomepageNews);
+  const [newsLoaded, setNewsLoaded] = useState(() => newsItems.length > 0);
+  const leadGuide = travelGuides[0];
   const [submissionState, setSubmissionState] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [submissionError, setSubmissionError] = useState("");
   const [datesError, setDatesError] = useState("");
   const formStartedAt = useRef(0);
   const submissionInFlight = useRef(false);
   const inquiryFormRef = useRef<HTMLFormElement>(null);
+
+  useEffect(() => {
+    if (newsLoaded) return;
+    let active = true;
+    void import("../data/travelUpdates").then(({ getHomepageTravelUpdates }) => {
+      if (!active) return;
+      setNewsItems(getHomepageTravelUpdates().slice(0, 2));
+      setNewsLoaded(true);
+    });
+    return () => { active = false; };
+  }, [newsLoaded]);
 
   useEffect(() => {
     formStartedAt.current = Date.now();
@@ -110,68 +145,53 @@ export function Homepage() {
     }
   };
 
-  return <div className="public-site media-homepage" id="discovery-home">
+  return <div className="public-site media-homepage editorial-foundation" id="discovery-home">
     <SiteHeader />
     <main>
-      <section className="discovery-hero page-shell" aria-labelledby="homepage-hero-title">
-        <div className="discovery-hero__copy">
-          <span className="discovery-eyebrow">TRAVEL PLANNING FOR FILIPINO TRAVELERS</span>
-          <h1 id="homepage-hero-title">Get help planning your next trip.</h1>
-          <p>AeroGo helps Filipino travelers compare options, shape a practical itinerary, and organize important details—from choosing where to go through travel day.</p>
-          <div className="discovery-hero__actions">
-            <Link className="discovery-button" to="#inquiry">Plan a trip with AeroGo <ArrowUpRight size={18} aria-hidden="true" /></Link>
-            <Link className="discovery-text-link" to="/guides">Browse free travel guides <ArrowRight size={17} aria-hidden="true" /></Link>
-          </div>
-        </div>
-        <figure className="discovery-hero__figure">
-          <Link to="/guides/singapore/gardens-by-the-bay" aria-label="Explore our Gardens by the Bay visitor guide">
-            <EditorialPhoto image="S25" alt="An elevated daytime view of Supertree Grove, glass conservatories and the waterfront at Gardens by the Bay" priority />
-          </Link>
-          <figcaption><span>Singapore</span> Gardens by the Bay <ArrowUpRight size={14} aria-hidden="true" /></figcaption>
-        </figure>
-      </section>
-      <section className="discovery-planning" id="how-it-works" aria-labelledby="planning-title">
-        <div className="page-shell">
-          <div className="discovery-planning__heading">
-            <div><span className="discovery-eyebrow">A SIMPLE STARTING POINT</span><h2 id="planning-title">How AeroGo helps</h2><p>Practical support from the first idea through travel day.</p></div>
-          </div>
-          <div className="discovery-planning__details">
-            <article><span className="discovery-planning__number">01</span><h3>Share your dates and preferences</h3><p>Tell us where you’re considering going, when you hope to travel, and what matters to you.</p></article>
-            <article id="services"><span className="discovery-planning__number">02</span><h3>Compare options and shape an itinerary</h3><p>We research public options and help you make a practical day-by-day plan around your pace and priorities.</p></article>
-            <article><span className="discovery-planning__number">03</span><h3>Organize important trip details</h3><p>Bring together the information and preparation notes you need as your trip takes shape.</p></article>
-          </div>
-          <p className="discovery-planning__companion" id="companion"><strong>Trip Companion</strong> is a fictional sample of the private trip space used for qualifying AeroGo trips. <Link to="/companion">Preview the sample</Link>.</p>
-        </div>
-      </section>
-      <section className="discovery-featured page-shell" aria-labelledby="featured-guide-title">
-        <div className="discovery-section-label"><h2 id="featured-guide-title">Featured guide</h2><Link to="/guides">All travel guides <ArrowRight size={16} aria-hidden="true" /></Link></div>
-        {travelGuides.slice(0, 1).map((guide) => <TravelGuideFeature key={guide.path} guide={guide} />)}
-      </section>
-      <section className="discovery-destinations page-shell" id="destinations" aria-labelledby="discovery-destinations-title">
-        <header className="discovery-destinations__heading">
-          <div><span className="discovery-eyebrow">A different place, a different pace</span><h2 id="discovery-destinations-title">Explore Destinations</h2></div>
-          <p>A few places to spark your next idea. These destination pages offer inspiration for the journey ahead.</p>
-        </header>
-        <div className="discovery-destinations__grid">
-          <article className="discovery-destination-feature">
-            <Link to="/destinations/vietnam" aria-label="Explore Vietnam destination inspiration">
-              <img src={vietnamHeroPhoto} width={1600} height={850} alt="Da Nang’s illuminated Dragon Bridge stretching across the river at dusk" loading="lazy" decoding="async" />
-              <div className="discovery-destination-feature__copy"><span className="discovery-eyebrow">Asia</span><h3 id="discovery-vietnam-title">Vietnam</h3><p>Coffee mornings, old town lanes and life by the river.</p><span className="discovery-text-link">Explore destination <ArrowUpRight size={17} aria-hidden="true" /></span></div>
-            </Link>
-            {/* Existing local photo; provenance is also recorded in VietnamProposal.tsx. */}
-            <small className="discovery-destination-credit">Da Nang · Photo by <a href="https://unsplash.com/photos/lighted-bridge-B76nvP51iew" target="_blank" rel="noopener noreferrer">Ngô Thanh Tùng / Unsplash</a></small>
+      <section className="desk-lead desk-shell" aria-labelledby="homepage-hero-title">
+        <div className="desk-overline"><span>Discover / Asia &amp; beyond</span><span>Selected stories and useful updates</span></div>
+        <div className="desk-lead__grid">
+          <article className="desk-feature">
+            <figure className="desk-feature__figure">
+              <Link to={leadGuide.path} aria-label={`Read ${leadGuide.title}`}><EditorialPhoto image="S25" alt="Supertree Grove and the glass conservatories at Gardens by the Bay, Singapore" priority sizes="(max-width: 650px) 90vw, (max-width: 1000px) 56vw, 55vw" /></Link>
+              <figcaption>Gardens by the Bay, Singapore · AeroGo public image</figcaption>
+            </figure>
+            <div className="desk-feature__body">
+              <span className="desk-kicker">Featured guide · Singapore</span>
+              <h1 id="homepage-hero-title"><Link to={leadGuide.path}>{leadGuide.title}</Link></h1>
+              <p>{leadGuide.summary}</p>
+              <Link className="desk-text-link" to={leadGuide.path}>Read the visitor guide <ArrowUpRight size={18} aria-hidden="true" /></Link>
+            </div>
           </article>
-          <ul className="discovery-destination-list">
-            {discoveryDestinations.map((destination) => <li key={destination.slug}>
-              <Link to={`/destinations/${destination.slug}`} aria-label={`Explore ${destination.name} destination inspiration`}>
-                <div><span className="discovery-eyebrow">{destination.region}</span><h3 id={`discovery-${destination.slug}-title`}>{destination.name}</h3><p>{destination.summary}</p><span className="discovery-text-link">Explore destination</span></div>
-                <ArrowUpRight size={20} aria-hidden="true" />
-              </Link>
-            </li>)}
-          </ul>
+          <aside className="desk-news" id="travel-updates" aria-labelledby="desk-news-title">
+            <div className="desk-section-heading"><h2 id="desk-news-title">Travel news</h2><Link className="desk-text-link" to="/travel-updates">See all updates <ArrowUpRight size={16} aria-hidden="true" /></Link></div>
+            {newsItems.length ? <ol className="desk-news__list">{newsItems.map((item, index) => <li key={item.slug}>
+              <div className="desk-news__meta"><span>{String(index + 1).padStart(2, "0")} / {newsCategories[item.category]}</span><time dateTime={item.publishedAt.slice(0, 10)}>{formatNewsDate(item.publishedAt)}</time></div>
+              <h3><Link to={`/travel-updates/${item.slug}`}>{item.headline} <ArrowUpRight size={18} aria-hidden="true" /></Link></h3>
+              <p>{item.summary}</p>
+            </li>)}</ol> : <p className="desk-news__empty">Browse our published travel updates and check official sources before making plans.</p>}
+            <div className="desk-news__watch"><span>Watch / Original videos</span><Link to="/watch">Explore AeroGo videos <ArrowUpRight size={17} aria-hidden="true" /></Link><p>Published travel videos from Singapore and Vietnam.</p></div>
+          </aside>
         </div>
       </section>
-      <TravelUpdatesPreview />
+
+      <section className="desk-watch desk-shell" id="watch" aria-labelledby="desk-watch-title">
+        <div className="desk-module-heading"><div><span className="desk-kicker">Original AeroGo videos</span><h2 id="desk-watch-title">Watch AeroGo</h2></div><p>Short videos from places worth exploring. Watch the published posts on Facebook.</p></div>
+        <div className="desk-watch__grid">{publishedVideos.map((video, index) => <a key={video.url} href={video.url} target="_blank" rel="noopener noreferrer" className="desk-watch__item"><span className="desk-watch__number">{String(index + 1).padStart(2, "0")} / {video.destination}</span><h3>{video.title}</h3><span className="desk-watch__action">Watch on {videoPlatformLabels[video.platform]} <ArrowUpRight size={17} aria-hidden="true" /></span></a>)}</div>
+        <Link className="desk-watch__all" to="/watch">Browse the video library <ArrowUpRight size={17} aria-hidden="true" /></Link>
+      </section>
+
+      <section className="desk-destinations desk-shell" id="destinations" aria-labelledby="desk-destinations-title">
+        <div className="desk-module-heading"><div><span className="desk-kicker">Places to discover</span><h2 id="desk-destinations-title">Destination Stories</h2></div><p>Explore our published destination pages, from city streets to slower days outdoors.</p></div>
+        <div className="desk-destinations__grid">
+          <article className="desk-destinations__feature"><Link to="/destinations/vietnam"><img src={vietnamHeroPhoto} width={1600} height={850} alt="Da Nang’s illuminated Dragon Bridge crossing the Han River at dusk" loading="lazy" decoding="async" /><span className="desk-kicker">Vietnam / Destination</span><h3>Vietnam: riverfront evenings and old town days <ArrowUpRight size={19} aria-hidden="true" /></h3><p>Explore Da Nang, Hanoi and the places between.</p></Link><small>Da Nang · Photo by <a href="https://unsplash.com/photos/lighted-bridge-B76nvP51iew" target="_blank" rel="noopener noreferrer">Ngô Thanh Tùng / Unsplash</a></small></article>
+          <div className="desk-destinations__list">{discoveryDestinations.map((destination) => <article key={destination.slug}><Link to={`/destinations/${destination.slug}`}><span className="desk-kicker">{destination.region} / Destination</span><h3>{destination.name} <ArrowUpRight size={18} aria-hidden="true" /></h3><p>{destination.summary}</p></Link></article>)}</div>
+        </div>
+      </section>
+
+      <section className="desk-guides desk-shell" aria-labelledby="desk-guides-title"><div><span className="desk-kicker">Useful before you go</span><h2 id="desk-guides-title">Practical Travel Guides</h2><p>Our Gardens by the Bay visitor guide is featured above. Browse the guide library for practical details on what to see, what needs a ticket and how to plan your visit.</p></div><Link className="desk-guides__button" to="/guides">Explore all guides <ArrowUpRight size={18} aria-hidden="true" /></Link></section>
+
+      <section className="desk-planning desk-shell" id="how-it-works" aria-labelledby="planning-title"><div id="services"><span className="desk-kicker">Travel planning</span><h2 id="planning-title">Need a hand with the details?</h2><p>Share your destination, dates and preferences. AeroGo can help shape a practical itinerary and organize your next steps.</p></div><div className="desk-planning__links"><Link className="desk-text-link" to="#inquiry">Send a trip inquiry <ArrowUpRight size={17} aria-hidden="true" /></Link><Link className="desk-text-link" to="/trip-planner">Try the free trip planner <ArrowUpRight size={17} aria-hidden="true" /></Link><p id="companion">See a <Link to="/companion">sample Trip Companion</Link> for an illustrative private trip space.</p></div></section>
 
       <section className="inquiry-section section-pad" id="inquiry">
         <div className="page-shell inquiry-layout">
@@ -194,20 +214,6 @@ export function Homepage() {
         </div>
       </section>
     </main>
-    <EditorialFooter />
+    <EditorialFooter editorial />
   </div>;
-}
-
-export function HomepageDreamPreview() {
-  const highlights = [homepageDreamTrip.days[0], homepageDreamTrip.days[2], homepageDreamTrip.days[4]];
-
-  return <section className="homepage-dream-preview" aria-labelledby="homepage-dream-preview-title">
-    <div className="page-shell">
-      <div className="homepage-dream-preview__heading"><div><span className="eyebrow">TRY A DREAM TRIP · JAPAN</span><h2 id="homepage-dream-preview-title">See what seven days in Japan could look like.</h2></div></div>
-      <div className="homepage-dream-preview__feature">
-        <div className="homepage-dream-preview__visual"><img src={japanDreamImages.hero.image} alt={japanDreamImages.hero.alt} loading="lazy" /><span className="homepage-dream-preview__visual-label">JAPAN · ILLUSTRATIVE ONLY</span></div>
-        <div className="homepage-dream-preview__copy"><p>Explore a curated sample journey through Tokyo and Kyoto, then shape it around your travel style.</p><p className="homepage-dream-preview__honesty">Japan is one of AeroGo’s interactive Dream Trip examples. This is an illustrative itinerary, not a confirmed booking. Routes, activities, availability and prices can be refined with AeroGo.</p><div className="homepage-dream-preview__highlights">{highlights.map((day) => <div className="homepage-dream-highlight" key={day.day}><span>DAY {String(day.day).padStart(2, "0")}</span><div><strong>{day.title}</strong><small>{day.location}</small></div><ArrowRight size={16} /></div>)}</div><Link className="button homepage-dream-preview__button" to="/dream/japan">Explore the Japan Dream Trip <ArrowUpRight size={16} /></Link></div>
-      </div>
-    </div>
-  </section>;
 }
