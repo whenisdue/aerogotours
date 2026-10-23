@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 720" role="img" aria-labelledby="title desc">
+  <title id="title">Taiwan flight advisory — October 23, 2026</title>
+  <desc id="desc">Taiwan domestic flights were announced cancelled for October 23. International changes are airline-specific. Singapore Airlines listed four cancelled Singapore–Taipei services.</desc>
+  <rect width="1440" height="720" fill="#f2efe9"/>
+  <path d="M0 0h20v720H0z" fill="#d65b3b"/>
+  <text x="96" y="88" fill="#b94c32" font-family="Arial, sans-serif" font-size="22" font-weight="700" letter-spacing="4">AEROGO / TRAVEL NEWS</text>
+  <text x="96" y="158" fill="#18343b" font-family="Georgia, serif" font-size="54">Typhoon Champi</text>
+  <text x="96" y="218" fill="#18343b" font-family="Georgia, serif" font-size="54">Taiwan flight advisory</text>
+  <text x="96" y="272" fill="#52636a" font-family="Arial, sans-serif" font-size="24" letter-spacing="2">STATUS CHECKED 23 OCTOBER 2026</text>
+  <rect x="96" y="326" width="596" height="268" rx="8" fill="#18343b"/>
+  <text x="132" y="380" fill="#f4b06a" font-family="Arial, sans-serif" font-size="19" font-weight="700" letter-spacing="3">TAIWAN DOMESTIC</text>
+  <text x="132" y="450" fill="#ffffff" font-family="Georgia, serif" font-size="34">Flights cancelled</text>
+  <text x="132" y="504" fill="#ffffff" font-family="Arial, sans-serif" font-size="22">CAA announcement for October 23</text>
+  <text x="132" y="548" fill="#cbd8d8" font-family="Arial, sans-serif" font-size="18">International flights have separate airline notices.</text>
+  <rect x="724" y="326" width="620" height="268" rx="8" fill="#ffffff" stroke="#d5d8d3" stroke-width="2"/>
+  <text x="760" y="380" fill="#b94c32" font-family="Arial, sans-serif" font-size="19" font-weight="700" letter-spacing="3">SINGAPORE AIRLINES / 23 OCT</text>
+  <text x="760" y="439" fill="#18343b" font-family="Arial, sans-serif" font-size="25" font-weight="700">SQ876 · SQ878</text>
+  <text x="760" y="472" fill="#52636a" font-family="Arial, sans-serif" font-size="19">Singapore → Taipei</text>
+  <text x="760" y="519" fill="#18343b" font-family="Arial, sans-serif" font-size="25" font-weight="700">SQ877 · SQ879</text>
+  <text x="760" y="552" fill="#52636a" font-family="Arial, sans-serif" font-size="19">Taipei → Singapore</text>
+  <text x="96" y="657" fill="#18343b" font-family="Arial, sans-serif" font-size="20" font-weight="700">Manila–Taipei passengers: check your own operating airline.</text>
+  <text x="1344" y="657" text-anchor="end" fill="#52636a" font-family="Arial, sans-serif" font-size="18">Information graphic · not a storm or aircraft image</text>
+</svg>

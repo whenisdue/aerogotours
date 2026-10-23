@@ -44,6 +44,8 @@ export type TravelUpdate = {
   };
   body: TravelUpdateBlock[];
   sources: TravelUpdateSource[];
+  /** Optional article-specific context shown when the story reaches its archive date. */
+  archiveNotice?: string;
   eventStartAt?: string;
   eventEndAt?: string;
   expiresAt?: string;
@@ -68,6 +70,7 @@ const october15AccessedAt = "2026-10-15";
 const october17AccessedAt = "2026-10-17";
 const october19AccessedAt = "2026-10-19";
 const october20AccessedAt = "2026-10-20";
+const october23AccessedAt = "2026-10-23";
 
 const unsplash = (photoId: string, width: number) =>
   `https://images.unsplash.com/${photoId}?auto=format&fit=crop&w=${width}&q=85`;
@@ -79,6 +82,61 @@ const destinationImage = (slug: string) => {
 };
 
 export const travelUpdates: TravelUpdate[] = [
+  {
+    id: "typhoon-champi-taiwan-flight-disruptions-october-2026",
+    slug: "typhoon-champi-taiwan-flight-disruptions-october-2026",
+    headline: "Typhoon Champi disrupts Taiwan flights: What travelers should check",
+    summary: "Taiwan’s aviation authority announced all domestic flights would be cancelled on October 23. International changes are airline-specific; Singapore Airlines has named four cancelled Singapore–Taipei flights for that date.",
+    seoTitle: "Typhoon Champi Taiwan Flight Disruptions: What to Check · AeroGo",
+    seoDescription: "Taiwan domestic flights were cancelled October 23 as airlines issued route-specific Champi changes. Check named affected flights, rebooking and refund terms, and Manila–Taipei status with your airline.",
+    destination: "Taiwan",
+    country: "Taiwan",
+    category: "flights-airports",
+    publishedAt: "2026-10-23",
+    socialImage: false,
+    image: {
+      src: "/images/news/typhoon-champi-flight-advisory-2026.svg",
+      alt: "AeroGo information graphic: Taiwan domestic flights cancelled October 23; international services vary by airline; four Singapore Airlines Taipei services listed as cancelled.",
+      credit: "AeroGo Editorial Desk; an information graphic, not a photograph or depiction of Champi or an aircraft",
+    },
+    body: [
+      { type: "paragraph", text: "Typhoon Champi has disrupted flights in and around Taiwan, but the confirmed changes differ between domestic and international services. Taiwan’s Civil Aviation Administration (CAA) said all domestic flights would be cancelled on Friday, October 23. International flights are being adjusted by individual airlines. As of October 23, the named cancellations in Singapore Airlines’ notice are four Singapore–Taipei services; that notice does not identify Manila–Taipei flights." },
+      { type: "paragraph", text: "Last verified: October 23, 2026 (Philippine time). Flight operations can change after publication. Check the airline actually operating your flight immediately before leaving for the airport; its current status and instructions are the final authority." },
+      { type: "heading", text: "Flights and dates confirmed in official notices" },
+      { type: "list", items: [
+        "Taiwan domestic flights — Taiwan’s CAA announced on October 22 that all domestic services would be cancelled for October 23. This is a domestic-flight notice, not a blanket cancellation of international services.",
+        "Singapore Airlines — SQ876 and SQ878 (Singapore to Taipei), and SQ877 and SQ879 (Taipei to Singapore), were cancelled for October 23. SIA first posted this notice on October 22 at 6:00 PM GMT+8; it says times are local and that other SIA flights may also be affected.",
+        "Japan Airlines — its international flight information page said some flights to or from Taipei Taoyuan and Taipei Songshan were cancelled during October 22–24. The displayed notice was timestamped October 22 at 6:00 AM Japan time and did not name flight numbers. Check JAL’s current flight lookup for your specific service.",
+      ] },
+      { type: "paragraph", text: "Taiwan’s CAA also reported that, by 6:00 PM on October 22, 126 domestic and 40 international flight sectors had been cancelled that day, with the international cancellations mainly involving Okinawa. That is a dated snapshot of October 22, not a count of all October 23 cancellations or a prediction for every international route." },
+      { type: "heading", text: "Does this mean Manila–Taipei flights are cancelled?" },
+      { type: "paragraph", text: "No general cancellation of Manila–Taipei services is established by the notices above. Taiwan’s domestic-flight decision does not cover international Manila–Taipei flights, and SIA’s four named cancellations are on the Singapore–Taipei route. The official notices reviewed for this article did not identify a blanket Philippine Airlines or Cebu Pacific cancellation of Manila–Taipei flights. That does not confirm any individual flight is operating: check the exact date, flight number and operating carrier in your own booking and on that carrier’s current status page." },
+      { type: "heading", text: "How to check your flight before going to the airport" },
+      { type: "list", items: [
+        "Search by flight number and departure date on the operating airline’s flight-status page, then open Manage Booking to see notices and options tied to your reservation.",
+        "For a codeshare or a ticket bought through an online travel agency, confirm which airline operates the flight and contact the airline or agent that issued your ticket. A partner airline’s notice may not apply to the operating carrier’s service.",
+        "Check your email, SMS and airline app for change notices, and make sure your booking has a current contact number and email address.",
+        "Recheck close to departure and before travelling to the airport. If the airline marks your flight cancelled, follow its instructions for the affected booking instead of relying on an older itinerary or airport-board snapshot.",
+      ] },
+      { type: "heading", text: "Rebooking and refunds depend on the airline and ticket" },
+      { type: "paragraph", text: "For the four named October 23 SIA cancellations, affected customers may request reaccommodation on another flight or a full refund of the unused ticket portion. Passengers who booked directly with SIA can submit its assistance request; passengers who booked through an agent or partner airline should contact that seller or issuing airline." },
+      { type: "paragraph", text: "Cathay Pacific’s October 21 waiver covers eligible tickets issued on or before October 21 for flights to or from Taipei scheduled October 23–24. The ticket must be changed before October 24, and new travel must be completed by December 31, subject to seat availability. Cathay waives rebooking and rerouting charges, but any fare or tax difference still applies. This fee waiver is not a blanket cash-refund promise; ask Cathay or the ticket issuer what applies if your flight is cancelled or you choose not to travel." },
+      { type: "paragraph", text: "Do not assume every weather disruption qualifies for a refund or free voluntary change. Eligibility can depend on whether the airline cancelled or significantly changed the flight, the exact ticket, and the carrier’s current waiver. Get the available options and any deadline from the airline or ticket issuer before purchasing a replacement ticket." },
+      { type: "heading", text: "If you are already in Taiwan" },
+      { type: "paragraph", text: "Taiwan’s Tourism Administration advised visitors on October 22 to avoid mountain and coastal attractions while the typhoon warning was in effect and to check for preventive closures. Confirm local weather, transport and venue notices before setting out, even if your flight is operating." },
+    ],
+    sources: [
+      { label: "CAA notice: all Taiwan domestic flights cancelled October 23; October 22 cancellation snapshot", url: "https://www.motc.gov.tw/ch/app/news_list/view?id=14&module=news&serno=26b0392a-6b84-48f2-b4fd-c9157007e3ed", publisher: "Taiwan Ministry of Transportation and Communications / Civil Aviation Administration", accessedAt: october23AccessedAt },
+      { label: "Advisory on Singapore Airlines flights affected by Typhoon Champi", url: "https://www.singaporeair.com/en_UK/sg/corporate/newsroom/newsalert-listing/advisory-on-singapore-airlines-flights-affected-by-typhoon-champ/", publisher: "Singapore Airlines", accessedAt: october23AccessedAt },
+      { label: "International flight information and Taipei Typhoon Champi notice", url: "https://www.jal.co.jp/jp/en/other/weather_info_int/?m=manage_booking", publisher: "Japan Airlines", accessedAt: october23AccessedAt },
+      { label: "Flexible ticket conditions for flights to/from Taipei", url: "https://www.cathaypacific.com/cx/en_TW/latest-news/flight-disruptions/flexible-ticket-conditions-for-typhoon-champi.html", publisher: "Cathay Pacific", accessedAt: october23AccessedAt },
+      { label: "PAL flight status", url: "https://www.philippineairlines.com/en/flight-status", publisher: "Philippine Airlines", accessedAt: october23AccessedAt },
+      { label: "Cebu Pacific: how to manage a disrupted flight", url: "https://help.cebupacificair.com/article/how-to-manage-your-disrupted-flight-120721", publisher: "Cebu Pacific", accessedAt: october23AccessedAt },
+      { label: "Typhoon safety advice and attraction closures", url: "https://www.motc.gov.tw/ch/app/data/view?id=14&module=news&serno=9817bc64-f977-4394-a596-8fa70df575a2", publisher: "Taiwan Tourism Administration / Ministry of Transportation and Communications", accessedAt: october23AccessedAt },
+    ],
+    archiveNotice: "This article has reached its scheduled archive date for homepage placement. That editorial cutoff does not confirm that flight operations have returned to normal or that all disruptions have ended. It remains available as a historical record, and the original last-verified and source-check dates are preserved below. For current status, check the airline operating your flight.",
+    expiresAt: "2026-10-25T00:00:00+08:00",
+  },
   {
     id: "pal-riyadh-flight-suspension-november-2026",
     slug: "pal-riyadh-flight-suspension-november-2026",
