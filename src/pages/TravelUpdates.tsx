@@ -167,7 +167,7 @@ export function TravelUpdateArticlePage() {
         data-seo-updated={update.updatedAt}
       >
         <nav className="news-breadcrumb" aria-label="Breadcrumb"><Link to="/">Discover</Link><span aria-hidden="true">/</span><Link to="/travel-updates">Travel News</Link><span aria-hidden="true">/</span><span aria-current="page">{categoryLabels[update.category]}</span></nav>
-        {past && <div className="news-status" role="note"><strong>{isEventStory(update) ? "Past event" : "Archived update"}</strong><p>{isEventStory(update) ? "This event has ended. This article is kept as a historical record; check the official sources below for any future edition or current details." : "This time-limited update has reached its recorded archive date. This article remains available as a historical record; check the official sources below for current details."}</p></div>}
+        {past && <div className="news-status" role="note"><strong>{isEventStory(update) ? "Past event" : "Archived update"}</strong><p>{isEventStory(update) ? "This event has ended. This article is kept as a historical record; check the official sources below for any future edition or current details." : update.archiveNotice ?? "This time-limited update has reached its recorded archive date. This article remains available as a historical record; check the official sources below for current details."}</p></div>}
         <header className="news-article__header">
           <p className="news-kicker">{categoryLabels[update.category]} / {update.destination}</p>
           <h1 id="news-article-title">{update.headline}</h1>
@@ -215,8 +215,9 @@ export function TravelUpdateArticlePage() {
 function ArticleImage({ update }: { update: TravelUpdate }) {
   const [imageFailed, setImageFailed] = useState(false);
   if (imageFailed || !update.image?.src) return null;
-  const mediaLabel = /graphic|diagram|map/i.test(update.image.alt) ? "Information graphic" : /logo/i.test(update.image.alt) ? "Logo" : /poster/i.test(update.image.alt) ? "Poster" : "Image";
-  return <figure className="news-article__image"><img src={update.image.src} width="1440" height="720" alt={update.image.alt} loading="eager" decoding="async" fetchPriority="high" onError={() => setImageFailed(true)} /><figcaption>{update.image.credit ? <>{mediaLabel}: {update.image.creditUrl ? <a href={update.image.creditUrl} target="_blank" rel="noopener noreferrer">{update.image.credit}</a> : update.image.credit}.</> : `Illustrative ${mediaLabel.toLowerCase()}: ${update.image.alt}.`}</figcaption></figure>;
+  const isGraphic = /graphic|diagram|map/i.test(update.image.alt);
+  const mediaLabel = isGraphic ? "Information graphic" : /logo/i.test(update.image.alt) ? "Logo" : /poster/i.test(update.image.alt) ? "Poster" : "Image";
+  return <figure className={`news-article__image${isGraphic ? " news-article__image--graphic" : ""}`}><img src={update.image.src} width="1440" height="720" alt={update.image.alt} loading="eager" decoding="async" fetchPriority="high" onError={() => setImageFailed(true)} /><figcaption>{update.image.credit ? <>{mediaLabel}: {update.image.creditUrl ? <a href={update.image.creditUrl} target="_blank" rel="noopener noreferrer">{update.image.credit}</a> : update.image.credit}.</> : `Illustrative ${mediaLabel.toLowerCase()}: ${update.image.alt}.`}</figcaption></figure>;
 }
 
 function TravelUpdateBlock({ block }: { block: TravelUpdate["body"][number] }) {

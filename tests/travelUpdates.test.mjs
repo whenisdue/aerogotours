@@ -53,6 +53,43 @@ test("news schema uses genuine publication and revision dates only", () => {
   assert.equal(first["@graph"][1].itemListElement[2].item, `${origin}/travel-updates/${original.slug}`);
 });
 
+test("Typhoon Champi advisory distinguishes Taiwan domestic and international flight changes", () => {
+  const slug = "typhoon-champi-taiwan-flight-disruptions-october-2026";
+  const update = getTravelUpdateBySlug(slug);
+  const now = new Date("2026-10-23T12:00:00+08:00");
+  const copy = update?.body.map((block) => block.text ?? block.items?.join(" ") ?? "").join(" ") ?? "";
+
+  assert.ok(update);
+  assert.equal(update.publishedAt, "2026-10-23");
+  assert.equal(update.expiresAt, "2026-10-25T00:00:00+08:00");
+  assert.equal(update.updatedAt, "2026-10-23");
+  assert.equal(update.socialImage, false);
+  assert.ok(update.image.src.endsWith("typhoon-champi-flight-advisory-2026.svg"));
+  assert.ok(getHomepageTravelUpdates(now).some((item) => item.slug === slug));
+  assert.equal(getFeaturedTravelUpdate(now)?.slug, slug);
+  assert.match(copy, /Reuters reported on October 23, citing Taiwan’s transport ministry/);
+  assert.match(copy, /all 262 domestic flights/);
+  assert.match(copy, /more than 350 international flights/);
+  assert.match(copy, /Taiwan-wide totals, not a route-by-route list/);
+  assert.match(copy, /all 262 domestic flights scheduled for Friday, October 23 were cancelled/);
+  assert.match(copy, /some flights to or from Taipei Taoyuan and Taipei Songshan had been cancelled or delayed for October 23–24/);
+  assert.match(copy, /SQ876 and SQ878/);
+  assert.match(copy, /SQ877 and SQ879/);
+  assert.match(copy, /did not identify a blanket Philippine Airlines or Cebu Pacific cancellation/);
+  assert.ok(update.sources.every((source) => source.accessedAt === "2026-10-23"));
+  assert.ok(update.sources.some((source) => source.publisher?.startsWith("Reuters") && source.url.includes("marketscreener.com")));
+  const structuredData = buildTravelNewsStructuredData(update, "https://aerogotours.com");
+  assert.equal(structuredData["@graph"][0].datePublished, "2026-10-23");
+  assert.equal(structuredData["@graph"][0].dateModified, "2026-10-23");
+  assert.equal(isArchivedTravelUpdate(update, new Date("2026-10-24T23:59:59+08:00")), false);
+  const archiveDate = new Date("2026-10-25T00:00:00+08:00");
+  assert.equal(isArchivedTravelUpdate(update, archiveDate), true);
+  assert.ok(update.archiveNotice.includes("does not confirm that flight operations have returned to normal"));
+  assert.ok(getArchivedTravelUpdates(archiveDate).some((item) => item.slug === slug));
+  assert.equal(getHomepageTravelUpdates(archiveDate).some((item) => item.slug === slug), false);
+  assert.equal(getTravelUpdateBySlug(slug), update);
+});
+
 test("travel update slugs are unique and records have the required fields", () => {
   const slugs = travelUpdates.map((update) => update.slug);
   assert.equal(new Set(slugs).size, slugs.length);
