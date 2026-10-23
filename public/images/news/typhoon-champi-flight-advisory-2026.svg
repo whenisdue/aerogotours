@@ -8,10 +8,11 @@
   <text x="96" y="218" fill="#18343b" font-family="Georgia, serif" font-size="54">Taiwan flight advisory</text>
   <text x="96" y="272" fill="#52636a" font-family="Arial, sans-serif" font-size="24" letter-spacing="2">STATUS CHECKED 23 OCTOBER 2026</text>
   <rect x="96" y="326" width="596" height="268" rx="8" fill="#18343b"/>
-  <text x="132" y="380" fill="#f4b06a" font-family="Arial, sans-serif" font-size="19" font-weight="700" letter-spacing="3">TAIWAN DOMESTIC</text>
-  <text x="132" y="450" fill="#ffffff" font-family="Georgia, serif" font-size="34">Flights cancelled</text>
-  <text x="132" y="504" fill="#ffffff" font-family="Arial, sans-serif" font-size="22">CAA announcement for October 23</text>
-  <text x="132" y="548" fill="#cbd8d8" font-family="Arial, sans-serif" font-size="18">International flights have separate airline notices.</text>
+  <text x="132" y="380" fill="#f4b06a" font-family="Arial, sans-serif" font-size="19" font-weight="700" letter-spacing="3">TAIWAN / OCTOBER 23</text>
+  <text x="132" y="445" fill="#ffffff" font-family="Georgia, serif" font-size="32">262 domestic cancelled</text>
+  <text x="132" y="486" fill="#ffffff" font-family="Arial, sans-serif" font-size="22">350+ international cancelled</text>
+  <text x="132" y="520" fill="#cbd8d8" font-family="Arial, sans-serif" font-size="17">Reuters reported October 23, citing Taiwan’s</text>
+  <text x="132" y="544" fill="#cbd8d8" font-family="Arial, sans-serif" font-size="17">transport ministry. Check airline route notices.</text>
   <rect x="724" y="326" width="620" height="268" rx="8" fill="#ffffff" stroke="#d5d8d3" stroke-width="2"/>
   <text x="760" y="380" fill="#b94c32" font-family="Arial, sans-serif" font-size="19" font-weight="700" letter-spacing="3">SINGAPORE AIRLINES / 23 OCT</text>
   <text x="760" y="439" fill="#18343b" font-family="Arial, sans-serif" font-size="25" font-weight="700">SQ876 · SQ878</text>
