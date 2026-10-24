@@ -60,7 +60,7 @@ function PageTitle() {
         : isNewsArticle ? article?.dataset.seoDescription ?? document.querySelector(".news-article__deck")?.textContent?.trim() ?? heading ?? NEWS_DESCRIPTION
           : isGardensGuide ? "A practical visitor guide to Gardens by the Bay in Singapore: free and ticketed areas, Cloud Forest, changing floral displays, Supertrees and planning tips."
           : isJapanTaxGuide ? "Japan’s tax-free system changes November 1, 2026. Learn when to pay consumption tax, how to complete customs confirmation before baggage check-in, and how refunds work."
-            : isGuideDirectory ? "Explore AeroGo’s travel guides, with original photography and practical visitor information. Start with Gardens by the Bay in Singapore."
+            : isGuideDirectory ? "Explore AeroGo’s travel guides: Japan’s tax-free shopping rules, Singapore attractions and practical travel planning information."
               : isWatchPage ? "Watch published AeroGo travel videos from Singapore and Vietnam, including destination discovery and the Golden Bridge at Ba Na Hills."
                 : pathname === "/trip-planner" ? "Create a free three, four or five day Singapore itinerary with a travel checklist. No account needed; save, share or print your plan."
                   : isDestination ? document.querySelector(".destination-article-header > p")?.textContent?.trim() ?? `Explore AeroGo’s destination inspiration for ${heading ?? "this destination"}.`
