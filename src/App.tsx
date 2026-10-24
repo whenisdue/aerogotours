@@ -12,6 +12,7 @@ const MyTripPage = lazy(() => import("./pages/MyTrip").then((module) => ({ defau
 const TravelUpdatesPage = lazy(() => import("./pages/TravelUpdates").then((module) => ({ default: module.TravelUpdatesPage })));
 const TravelUpdateArticlePage = lazy(() => import("./pages/TravelUpdates").then((module) => ({ default: module.TravelUpdateArticlePage })));
 const GardensByTheBayGuide = lazy(() => import("./pages/GardensByTheBayGuide").then((module) => ({ default: module.GardensByTheBayGuide })));
+const JapanTaxFreeGuide = lazy(() => import("./pages/JapanTaxFreeGuide").then((module) => ({ default: module.JapanTaxFreeGuide })));
 const TravelGuidesPage = lazy(() => import("./pages/TravelGuides").then((module) => ({ default: module.TravelGuidesPage })));
 const WatchPage = lazy(() => import("./pages/Watch").then((module) => ({ default: module.WatchPage })));
 const TripPlanner = lazy(() => import("./features/tripPlanner/TripPlanner").then((module) => ({ default: module.TripPlanner })));
@@ -27,6 +28,7 @@ function PageTitle() {
   const isNewsArticle = pathname.startsWith("/travel-updates/");
   const isDestination = pathname.startsWith("/destinations/");
   const isGardensGuide = pathname === "/guides/singapore/gardens-by-the-bay";
+  const isJapanTaxGuide = pathname === "/guides/japan/tax-free-refund-system-november-2026";
   const isGuideDirectory = pathname === "/guides";
   const isWatchPage = pathname === "/watch";
   const isNewsListing = pathname === "/travel-updates";
@@ -42,6 +44,7 @@ function PageTitle() {
       : isNewsListing ? "Travel News · AeroGo"
         : isNewsArticle ? article?.dataset.seoTitle ?? `${heading || "Travel News"} · AeroGo Travel News`
           : isGardensGuide ? "Gardens by the Bay Visitor Guide · Singapore · AeroGo"
+            : isJapanTaxGuide ? "Japan Tax-Free Shopping Changes Nov. 1: A Filipino Traveler’s Guide · AeroGo"
             : isGuideDirectory ? "Travel Guides · AeroGo"
               : isWatchPage ? "Watch AeroGo · Original Travel Videos"
                 : pathname === "/trip-planner" ? "Free Singapore Trip Planner · AeroGo Travel & Tours"
@@ -56,6 +59,7 @@ function PageTitle() {
       : isNewsListing ? NEWS_DESCRIPTION
         : isNewsArticle ? article?.dataset.seoDescription ?? document.querySelector(".news-article__deck")?.textContent?.trim() ?? heading ?? NEWS_DESCRIPTION
           : isGardensGuide ? "A practical visitor guide to Gardens by the Bay in Singapore: free and ticketed areas, Cloud Forest, changing floral displays, Supertrees and planning tips."
+          : isJapanTaxGuide ? "Japan’s tax-free system changes November 1, 2026. Learn when to pay consumption tax, how to complete customs confirmation before baggage check-in, and how refunds work."
             : isGuideDirectory ? "Explore AeroGo’s travel guides, with original photography and practical visitor information. Start with Gardens by the Bay in Singapore."
               : isWatchPage ? "Watch published AeroGo travel videos from Singapore and Vietnam, including destination discovery and the Golden Bridge at Ba Na Hills."
                 : pathname === "/trip-planner" ? "Create a free three, four or five day Singapore itinerary with a travel checklist. No account needed; save, share or print your plan."
@@ -86,7 +90,7 @@ function PageTitle() {
     setMeta("property", "og:title", pageTitle);
     setMeta("property", "og:description", pageDescription);
     setMeta("property", "og:url", canonicalUrl);
-    setMeta("property", "og:type", isNewsArticle || isGardensGuide ? "article" : "website");
+    setMeta("property", "og:type", isNewsArticle || isGardensGuide || isJapanTaxGuide ? "article" : "website");
     setMeta("name", "twitter:title", pageTitle);
     setMeta("name", "twitter:description", pageDescription);
 
@@ -143,7 +147,7 @@ function PageTitle() {
       window.removeEventListener("aerogo:metadata-ready", applyMetadata);
       observer?.disconnect();
     };
-  }, [isCompanionDemo, isDestination, isDreamTrip, isGardensGuide, isGuideDirectory, isHomePage, isNewsArticle, isNewsListing, isPrivateTrip, isWatchPage, pathname]);
+  }, [isCompanionDemo, isDestination, isDreamTrip, isGardensGuide, isJapanTaxGuide, isGuideDirectory, isHomePage, isNewsArticle, isNewsListing, isPrivateTrip, isWatchPage, pathname]);
 
   return null;
 }
@@ -195,6 +199,7 @@ export default function App() {
     <Route path="/watch" element={<WatchPage />} />
     <Route path="/travel-guides" element={<Navigate replace to="/guides" />} />
     <Route path="/guides/singapore/gardens-by-the-bay" element={<GardensByTheBayGuide />} />
+    <Route path="/guides/japan/tax-free-refund-system-november-2026" element={<JapanTaxFreeGuide />} />
     <Route path="/destinations/:slug" element={<DestinationPage />} />
     <Route path="/dream/:slug" element={<DreamTripPage />} />
     <Route path="/dream/*" element={<DreamTripNotFound />} />
