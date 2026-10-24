@@ -148,7 +148,7 @@ export function TravelUpdateArticlePage() {
   if (!update) return <TravelUpdateNotFound />;
 
   const past = isArchivedTravelUpdate(update);
-  const sourceDates = update.sources.map((source) => source.accessedAt).filter((date): date is string => Boolean(date));
+  const sourceDates = update.sources.map((source) => source.recheckedAt ?? source.accessedAt).filter((date): date is string => Boolean(date));
   const commonSourceDate = sourceDates.length === update.sources.length && sourceDates.every((date) => date === sourceDates[0]) ? sourceDates[0] : undefined;
   const related = getActiveTravelUpdates().filter((item) => item.slug !== update.slug && (item.destination === update.destination || item.category === update.category)).slice(0, 2);
   const isSaipanRoute = update.slug === "pal-manila-saipan-flights-october-2026";
@@ -194,7 +194,7 @@ export function TravelUpdateArticlePage() {
               <p className="news-kicker">ORIGINAL INFORMATION</p>
               <h2 id="news-sources-title">Sources & status</h2>
               <p>Information can change after publication. Check these sources for the latest details before making travel decisions.</p>
-              <ul>{update.sources.map((source) => <li key={source.url}><a href={source.url} target="_blank" rel="noopener noreferrer">{source.label} <ExternalLink size={15} aria-hidden="true" /></a>{(source.publisher || source.accessedAt) && <span>{source.publisher}{source.publisher && source.accessedAt && " · "}{source.accessedAt && <>Source checked <time dateTime={source.accessedAt}>{formatDate(source.accessedAt)}</time></>}</span>}</li>)}</ul>
+              <ul>{update.sources.map((source) => <li key={source.url}><a href={source.url} target="_blank" rel="noopener noreferrer">{source.label} <ExternalLink size={15} aria-hidden="true" /></a>{(source.publisher || source.accessedAt || source.recheckedAt) && <span>{source.publisher}{source.publisher && source.accessedAt && " · "}{source.accessedAt && <>First checked <time dateTime={source.accessedAt}>{formatDate(source.accessedAt)}</time></>}{source.recheckedAt && source.recheckedAt !== source.accessedAt && <> · Rechecked <time dateTime={source.recheckedAt}>{formatDate(source.recheckedAt)}</time></>}</span>}</li>)}</ul>
             </section>}
           </div>
           <aside className="news-article__aside" aria-label="Article context">
