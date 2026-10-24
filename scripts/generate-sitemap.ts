@@ -1,6 +1,7 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { destinations } from "../src/data/destinations.ts";
+import { travelGuides } from "../src/data/travelGuides.ts";
 import { travelUpdates } from "../src/data/travelUpdates.ts";
 import { SITE_ORIGIN } from "../src/utils/siteMetadata.ts";
 
@@ -26,7 +27,7 @@ const entries: SitemapEntry[] = [
   { path: "/trip-planner" },
   { path: "/guides" },
   { path: "/watch" },
-  { path: "/guides/singapore/gardens-by-the-bay" },
+  ...travelGuides.map((guide) => ({ path: guide.path })),
   { path: "/travel-updates" },
   ...travelUpdates.map((update) => ({
     path: `/travel-updates/${update.slug}`,
