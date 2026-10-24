@@ -61,7 +61,7 @@ const pages: SeoPage[] = [
   {
     path: "/guides",
     title: "Travel Guides · AeroGo",
-    description: "Explore AeroGo’s travel guides, with original photography and practical visitor information. Start with Gardens by the Bay in Singapore.",
+    description: "Practical travel guides for Filipino travelers. Explore Singapore attractions and Japan’s November 2026 tax-free shopping refund changes.",
     image: gardenImage,
     imageAlt: gardenGuide.imageAlt,
     schema: { "@type": "CollectionPage", name: "Travel Guides", url: `${SITE_ORIGIN}/guides` },
@@ -87,6 +87,27 @@ const pages: SeoPage[] = [
       { label: "Guides", path: "/guides" },
       { label: "Singapore", path: "/destinations/singapore" },
       { label: "Gardens by the Bay", path: gardenGuide.path },
+    ],
+  },
+  {
+    path: "/guides/japan/tax-free-refund-system-november-2026",
+    title: "Japan Tax-Free Shopping Changes Nov. 1: A Filipino Traveler’s Guide · AeroGo",
+    description: "Japan’s tax-free system changes for purchases from November 1, 2026. Learn about paying tax-inclusive prices, customs checks, and how eligible refunds work.",
+    type: "article",
+    publishedAt: "2026-10-24",
+    schema: {
+      "@type": "Article",
+      headline: "Japan’s tax-free shopping changes November 1: What visitors need to know",
+      description: "Practical steps for Japan’s new tax-free shopping refund method, effective November 1, 2026.",
+      datePublished: "2026-10-24",
+      mainEntityOfPage: { "@type": "WebPage", "@id": `${SITE_ORIGIN}/guides/japan/tax-free-refund-system-november-2026` },
+      publisher: { "@id": brandEntityId },
+    },
+    breadcrumbs: [
+      { label: "Discover", path: "/" },
+      { label: "Guides", path: "/guides" },
+      { label: "Japan", path: "/destinations/japan" },
+      { label: "Tax-free shopping changes", path: "/guides/japan/tax-free-refund-system-november-2026" },
     ],
   },
   {
