@@ -107,6 +107,50 @@ test("Typhoon Champi update preserves its archive while separating October 23 to
   assert.equal(getTravelUpdateBySlug(slug), update);
 });
 
+test("Undas PITX article preserves dated forecasts, passenger guidance, SEO dates and archive context", () => {
+  const slug = "undas-2026-pitx-holiday-travel-rush";
+  const update = getTravelUpdateBySlug(slug);
+  const beforePublication = new Date("2026-10-24T23:59:59+08:00");
+  const published = new Date("2026-10-25T00:00:00+08:00");
+  const archiveDate = new Date("2026-11-05T00:00:00+08:00");
+  const copy = update?.body.map((block) => block.text ?? block.items?.join(" ") ?? "").join(" ") ?? "";
+  const structuredData = update && buildTravelNewsStructuredData(update, "https://aerogotours.com");
+
+  assert.ok(update);
+  assert.equal(update.publishedAt, "2026-10-25");
+  assert.equal(update.updatedAt, undefined);
+  assert.equal(update.expiresAt, "2026-11-05T00:00:00+08:00");
+  assert.ok(update.image.src.endsWith("undas-pitx-travel-2026.jpg"));
+  assert.match(update.image.alt, /AI-generated.*not a photograph of PITX/);
+  assert.match(update.summary, /up to 1.8 million passengers from October 25 to November 4/);
+  assert.match(copy, /GMA News report published late October 23 said the terminal expected up to 1.8 million passengers/);
+  assert.match(copy, /PIA reported on October 21, citing the LTFRB, that PITX expected more than 1.9 million/);
+  assert.match(copy, /Neither number is an actual passenger count/);
+  assert.match(copy, /October 30, as a possible peak/);
+  assert.match(copy, /not confirmation that October 30 will be the busiest day/);
+  assert.match(copy, /384 special-permit applications covering 1,131 passenger buses/);
+  assert.match(copy, /28 applications, covering about 90 buses/);
+  assert.match(copy, /not a PITX-only fleet total or a timetable/);
+  assert.match(copy, /PITX’s official transport guide and live bus schedule/);
+  assert.match(copy, /Check your bus company’s current booking and PITX’s live schedule/);
+  assert.match(copy, /The report does not identify a closure on a specific road to PITX/);
+  assert.ok(getActiveTravelUpdates(beforePublication).some((item) => item.slug !== slug));
+  assert.equal(getActiveTravelUpdates(beforePublication).some((item) => item.slug === slug), false);
+  assert.equal(getHomepageTravelUpdates(published)[0]?.slug, slug);
+  assert.equal(getFeaturedTravelUpdate(published)?.slug, slug);
+  assert.ok(update.sources.every((source) => source.accessedAt === "2026-10-25"));
+  assert.ok(update.sources.some((source) => source.publisher?.includes("LTFRB") && source.url.includes("pia.gov.ph")));
+  assert.ok(update.sources.some((source) => source.publisher === "GMA News Online" && source.url === "https://www.gmanetwork.com/news/topstories/nation/1006971/undas-2026-bus-terminals-see-early-passenger-surge-for-holiday-exodus/story/"));
+  assert.ok(update.sources.some((source) => source.publisher === "Parañaque Integrated Terminal Exchange" && source.url.includes("pitx.ph")));
+  assert.equal(structuredData["@graph"][0].datePublished, "2026-10-25");
+  assert.equal(Object.hasOwn(structuredData["@graph"][0], "dateModified"), false);
+  assert.equal(structuredData["@graph"][1].itemListElement[2].item, `https://aerogotours.com/travel-updates/${slug}`);
+  assert.equal(isArchivedTravelUpdate(update, new Date("2026-11-04T23:59:59+08:00")), false);
+  assert.equal(isArchivedTravelUpdate(update, archiveDate), true);
+  assert.ok(getArchivedTravelUpdates(archiveDate).some((item) => item.slug === slug));
+  assert.ok(update.archiveNotice.includes("does not confirm that travel conditions have returned to normal"));
+});
+
 test("travel update slugs are unique and records have the required fields", () => {
   const slugs = travelUpdates.map((update) => update.slug);
   assert.equal(new Set(slugs).size, slugs.length);
@@ -936,7 +980,7 @@ test("October 14 festival updates resolve, preserve filters and expire in their 
   assert.ok(getActiveTravelUpdates(new Date("2026-10-25T23:59:59+08:00")).some((item) => item.slug === slugs[2]));
   assert.equal(getActiveTravelUpdates(new Date("2026-10-26T00:00:00+08:00")).some((item) => item.slug === slugs[2]), false);
   const afterFestivalExpiry = getActiveTravelUpdates(new Date("2026-10-26T00:00:00+08:00"));
-  assert.equal(getFeaturedTravelUpdate(new Date("2026-10-26T00:00:00+08:00"))?.slug, "pal-riyadh-flight-suspension-november-2026");
+  assert.equal(getFeaturedTravelUpdate(new Date("2026-10-26T00:00:00+08:00"))?.slug, "undas-2026-pitx-holiday-travel-rush");
   assert.equal(afterFestivalExpiry.some((item) => slugs.includes(item.slug)), false);
 });
 
@@ -1089,5 +1133,5 @@ test("October 19 updates resolve, lead in stable order, preserve filters and use
   assert.ok(getActiveTravelUpdates(new Date(mhlifeExpiry.getTime() - 1)).some((item) => item.slug === slugs[2]));
   assert.equal(getActiveTravelUpdates(mhlifeExpiry).some((item) => item.slug === slugs[2]), false);
   assert.ok(getActiveTravelUpdates(new Date("2026-11-29T23:59:59+08:00")).some((item) => item.slug === slugs[0]));
-  assert.equal(getFeaturedTravelUpdate(new Date("2026-10-26T12:00:00+08:00"))?.slug, slugs[0]);
+  assert.equal(getFeaturedTravelUpdate(new Date("2026-10-26T12:00:00+08:00"))?.slug, "undas-2026-pitx-holiday-travel-rush");
 });

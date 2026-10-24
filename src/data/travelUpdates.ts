@@ -74,6 +74,7 @@ const october19AccessedAt = "2026-10-19";
 const october20AccessedAt = "2026-10-20";
 const october23AccessedAt = "2026-10-23";
 const october24AccessedAt = "2026-10-24";
+const october25AccessedAt = "2026-10-25";
 
 const unsplash = (photoId: string, width: number) =>
   `https://images.unsplash.com/${photoId}?auto=format&fit=crop&w=${width}&q=85`;
@@ -85,6 +86,55 @@ const destinationImage = (slug: string) => {
 };
 
 export const travelUpdates: TravelUpdate[] = [
+  {
+    id: "undas-2026-pitx-holiday-travel-rush",
+    slug: "undas-2026-pitx-holiday-travel-rush",
+    headline: "Undas 2026: PITX prepares for holiday travel rush. What passengers should know",
+    summary: "The latest reported PITX projection is up to 1.8 million passengers from October 25 to November 4, while earlier reports cited higher figures for differently described periods. These are forecasts, not actual counts. Confirm your operator’s ticket and PITX’s live schedule before leaving.",
+    seoTitle: "Undas 2026 PITX Travel: Tickets, Forecasts & Tips · AeroGo",
+    seoDescription: "PITX’s latest reported Undas forecast is up to 1.8 million passengers through November 4. Compare earlier estimates and check bus tickets, live schedules and gates.",
+    destination: "Parañaque, Metro Manila",
+    country: "Philippines",
+    category: "destination-tips",
+    publishedAt: "2026-10-25",
+    image: {
+      src: "/images/news/undas-pitx-travel-2026.jpg",
+      alt: "AI-generated illustrative scene of a Filipino family checking travel details beside an unbranded bus in a generic terminal; it is not a photograph of PITX.",
+      credit: "AI-generated editorial illustration of a generic travel-planning scene; not a documentary photograph or a depiction of PITX",
+    },
+    body: [
+      { type: "paragraph", text: "PITX’s Undas travel window is expected to run from October 25 to November 4, but reported passenger projections differ. A GMA News report published late October 23 said the terminal expected up to 1.8 million passengers across that period. PIA reported on October 21, citing the LTFRB, that PITX expected more than 1.9 million for the Undas exodus; that report did not specify the same date range. Neither number is an actual passenger count. Check your bus company’s current booking and PITX’s live schedule before travelling." },
+      { type: "heading", text: "When travel may be busiest" },
+      { type: "paragraph", text: "A Philippine Star report published October 16 described PITX’s earlier forecast of about 1.9 million passengers from October 25 to November 4 and around 200,000 on Friday, October 30, as a possible peak. Separately, state broadcaster Radyo Pilipinas reported on October 23 that PITX said daily passenger volume, then around 180,000, could rise by about 20,000 a day during Undas. Those are estimates reported at different times, not confirmation that October 30 will be the busiest day or that those totals have already been reached." },
+      { type: "paragraph", text: "All Saints’ Day falls on Sunday, November 1, and All Souls’ Day on Monday, November 2; both are special non-working days under the 2026 holiday proclamation. The latest GMA report also noted that some passengers may plan around a separate November 16–18 long weekend for the ASEAN Summit in Metro Manila. That is a later travel period, not part of PITX’s October 25–November 4 Undas projection." },
+      { type: "heading", text: "What the LTFRB bus permits mean" },
+      { type: "paragraph", text: "As of October 21, the LTFRB had approved 384 special-permit applications covering 1,131 passenger buses for Undas. Another 28 applications, covering about 90 buses, were still under review at the time of the report. The approved permits cover routes across Luzon, Visayas and Mindanao: 1,080 approved buses had Metro Manila as their origin, while other approved units served routes that do not enter Metro Manila. This is a national route-permit count, not a PITX-only fleet total or a timetable for a particular bus company." },
+      { type: "paragraph", text: "GMA reported late October 23 that some passengers had already found certain routes sold out, while PITX said additional units were on standby. That report is a dated snapshot; it does not guarantee a seat, departure time or extra bus on the route you want. Confirm availability with the operator that will run your trip." },
+      { type: "heading", text: "Before you leave for PITX" },
+      { type: "list", items: [
+        "Book through the bus company’s official channel when possible. Confirm the destination, travel date, departure time and boarding point, and ask the operator what passenger ID and ticket or boarding-pass procedure it requires. Keep your booking reference and any required documents accessible.",
+        "If you booked online, follow the operator’s instructions for retrieving or validating your ticket. Recheck the booking and any operator messages before setting out; do not assume a route has seats just because the terminal expects additional buses overall.",
+        "Use PITX’s official transport guide and live bus schedule to check listed routes, gates, and bus arrivals or departures. Confirm the current gate with PITX or your operator on the day.",
+        "Allow extra time to reach the terminal, find the correct boarding point and complete your operator’s process. No universal arrival buffer is stated in the sources cited here, so follow the instructions attached to your own booking.",
+        "If a preferred trip is unavailable, ask the operator about its next confirmed departure or another service before travelling to the terminal. Schedules, seats and ticket terms are route-specific.",
+      ] },
+      { type: "heading", text: "Traffic preparations are separate from bus schedules" },
+      { type: "paragraph", text: "In an October 23 update, the Philippine Information Agency said the MMDA and local governments were coordinating Undas traffic management, including rerouting and public assistance around named cemeteries. The report does not identify a closure on a specific road to PITX or announce a PITX departure change. If your route passes a cemetery or another affected area, check current MMDA and local-government advisories for that road rather than assuming the terminal schedule covers it." },
+      { type: "paragraph", text: "This article records forecasts and announcements available on October 25, 2026; it does not provide live passenger counts, route availability or a guaranteed trip schedule. Forecasts and operations may change. Your bus operator is the final source for your ticket, departure and passenger requirements, and PITX’s live schedule is the place to recheck terminal information." },
+    ],
+    sources: [
+      { label: "Undas 2026: Bus terminals see early passenger surge for holiday exodus (published October 23, 2026, 11:20 p.m.)", url: "https://www.gmanetwork.com/news/topstories/nation/1006971/undas-2026-bus-terminals-see-early-passenger-surge-for-holiday-exodus/story/", publisher: "GMA News Online", accessedAt: october25AccessedAt },
+      { label: "LTFRB issues special permits for buses during Undas (published October 21, 2026)", url: "https://pia.gov.ph/news/luzon/ncr/ltfrb-issues-special-permits-for-buses-during-undas/", publisher: "Philippine Information Agency / LTFRB", accessedAt: october25AccessedAt },
+      { label: "PITX-Asean long weekend may affect travel schedules (published October 16, 2026)", url: "https://www.philstar.com/nation/2026/10/16/2563619/pitx-asean-long-weekend-may-affect-travel-schedules", publisher: "The Philippine Star", accessedAt: october25AccessedAt },
+      { label: "200,000 passengers expected daily at PITX for Undas (published October 23, 2026)", url: "https://radyopilipinas.ph/2026/10/23/200000-pasahero-inaasahang-dadagsa-sa-pitx-sa-undas/", publisher: "Radyo Pilipinas", accessedAt: october25AccessedAt },
+      { label: "PITX passenger transport guide, route information and live bus schedule", url: "https://pitx.ph/passengers-guide/transport/", publisher: "Parañaque Integrated Terminal Exchange", accessedAt: october25AccessedAt },
+      { label: "National and local governments strengthen traffic preparations for Undas and the 49th ASEAN Summit (published October 23, 2026)", url: "https://pia.gov.ph/news/luzon/ncr/national-local-govts-strengthen-traffic-plan-preparations-for-undas-49th-asean-summit/", publisher: "Philippine Information Agency / MMDA", accessedAt: october25AccessedAt },
+      { label: "2026 regular holidays and special non-working days (Proclamation No. 1006; announced September 4, 2025)", url: "https://pco.gov.ph/news_releases/pbbm-issues-proclamation-declaring-regular-holidays-special-non-working-days-for-2026/", publisher: "Presidential Communications Office", accessedAt: october25AccessedAt },
+      { label: "Palace declares November 16–18 special non-working days in NCR for ASEAN Summit (published September 23, 2026)", url: "https://pco.gov.ph/news_releases/palace-declares-nov-16-18-as-special-non-working-days-in-ncr-for-asean-summit/", publisher: "Presidential Communications Office", accessedAt: october25AccessedAt },
+    ],
+    archiveNotice: "This article preserves dated passenger forecasts and preparations for PITX’s October 25–November 4, 2026 Undas travel window. The projections were not final passenger counts, and the archived status does not confirm that travel conditions have returned to normal or that operations are unaffected. Check PITX, your bus operator and current traffic advisories for present-day information.",
+    expiresAt: "2026-11-05T00:00:00+08:00",
+  },
   {
     id: "typhoon-champi-taiwan-flight-disruptions-october-2026",
     slug: "typhoon-champi-taiwan-flight-disruptions-october-2026",
