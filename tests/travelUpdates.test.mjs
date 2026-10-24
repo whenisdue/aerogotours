@@ -11,6 +11,7 @@ import {
   travelUpdates,
 } from "../src/data/travelUpdates.ts";
 import { buildTravelNewsStructuredData } from "../src/utils/newsSeo.ts";
+import { getSocialImageUrl } from "../src/utils/siteMetadata.ts";
 
 const validCategories = new Set([
   "events-experiences",
@@ -42,15 +43,20 @@ test("expired event stories stay accessible in the archive without entering late
 
 test("news schema uses genuine publication and revision dates only", () => {
   const origin = "https://aerogotours.com";
+  const previewOrigin = "https://aerogotours-preview.vercel.app";
   const original = getTravelUpdateBySlug("pal-manila-saipan-flights-october-2026");
   const revised = getTravelUpdateBySlug("thailand-visa-free-stay-30-days-filipino-passports-2026");
   assert.equal(revised.effectiveAt, "2026-09-15");
   const first = buildTravelNewsStructuredData(original, origin);
   const second = buildTravelNewsStructuredData(revised, origin);
+  const preview = buildTravelNewsStructuredData(original, origin, previewOrigin);
   assert.equal(first["@graph"][0].datePublished, original.publishedAt);
   assert.equal(Object.hasOwn(first["@graph"][0], "dateModified"), false);
   assert.equal(second["@graph"][0].dateModified, revised.updatedAt);
   assert.equal(first["@graph"][1].itemListElement[2].item, `${origin}/travel-updates/${original.slug}`);
+  assert.equal(preview["@graph"][0].image, getSocialImageUrl(original.image.src, previewOrigin));
+  assert.equal(preview["@graph"][0].mainEntityOfPage["@id"], `${origin}/travel-updates/${original.slug}`);
+  assert.equal(preview["@graph"][0].publisher.url, origin);
 });
 
 test("Typhoon Champi update preserves its archive while separating October 23 totals from October 24 airline notices", () => {

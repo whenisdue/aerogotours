@@ -5,7 +5,7 @@ import { EditorialFooter } from "../components/EditorialFooter";
 import { SiteHeader } from "../components/SiteHeader";
 import { filterTravelUpdates, getActiveTravelUpdates, getArchivedTravelUpdates, getTravelUpdateBySlug, isArchivedTravelUpdate, type TravelUpdate, type TravelUpdateCategory } from "../data/travelUpdates";
 import { buildTravelNewsStructuredData } from "../utils/newsSeo";
-import { SITE_ORIGIN } from "../utils/siteMetadata";
+import { SITE_ORIGIN, getSocialImageOrigin } from "../utils/siteMetadata";
 import "./TravelNews.css";
 
 const categoryLabels: Record<TravelUpdateCategory, string> = {
@@ -151,7 +151,7 @@ export function TravelUpdateArticlePage() {
     const structuredData = document.head.querySelector<HTMLScriptElement>('script[data-aerogo-news-schema]') ?? document.head.appendChild(document.createElement("script"));
     structuredData.type = "application/ld+json";
     structuredData.dataset.aerogoNewsSchema = "";
-    structuredData.textContent = JSON.stringify(buildTravelNewsStructuredData(update, SITE_ORIGIN));
+    structuredData.textContent = JSON.stringify(buildTravelNewsStructuredData(update, SITE_ORIGIN, getSocialImageOrigin()));
     window.dispatchEvent(new Event("aerogo:metadata-ready"));
     return () => structuredData.remove();
   }, [update]);

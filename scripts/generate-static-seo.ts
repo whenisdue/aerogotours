@@ -7,6 +7,10 @@ import { createDreamTrip, getDreamDestination } from "../src/utils/dreamTripEngi
 import { buildTravelNewsStructuredData } from "../src/utils/newsSeo.ts";
 import { DEFAULT_SOCIAL_IMAGE_ALT, getSocialImageUrl, SITE_ORIGIN } from "../src/utils/siteMetadata.ts";
 
+const socialImageOrigin = process.env.VERCEL_ENV === "preview" && process.env.VERCEL_URL
+  ? `https://${process.env.VERCEL_URL}`
+  : SITE_ORIGIN;
+
 type Breadcrumb = { label: string; path: string };
 type SeoPage = {
   path: string;
@@ -56,7 +60,7 @@ const pages: SeoPage[] = [
     type: "article",
     publishedAt: update.publishedAt,
     updatedAt: update.updatedAt,
-    schema: buildTravelNewsStructuredData(update, SITE_ORIGIN),
+    schema: buildTravelNewsStructuredData(update, SITE_ORIGIN, socialImageOrigin),
   })),
   {
     path: "/guides",
@@ -183,7 +187,7 @@ function breadcrumbSchema(page: SeoPage) {
 
 function pageTags(page: SeoPage) {
   const canonical = new URL(page.path, SITE_ORIGIN).href;
-  const image = page.image ? getSocialImageUrl(page.image) : undefined;
+  const image = page.image ? getSocialImageUrl(page.image, socialImageOrigin) : undefined;
   const globalGraph: Record<string, unknown>[] = [organization, {
     "@type": "WebSite",
     "@id": `${SITE_ORIGIN}/#website`,
