@@ -33,7 +33,7 @@ const formatNewsDate = (publishedAt: string) => new Intl.DateTimeFormat("en-GB",
 const AMBIGUOUS_TRAVEL_DATES = /^\d{1,2}$/;
 const AMBIGUOUS_TRAVEL_DATES_MESSAGE = "Please add a month or a little more detail, e.g. Oct 17 or December 2026.";
 
-type HomepageNewsItem = Pick<TravelUpdate, "slug" | "category" | "headline" | "summary" | "publishedAt">;
+type HomepageNewsItem = Pick<TravelUpdate, "slug" | "category" | "headline" | "summary" | "publishedAt" | "updatedAt">;
 
 function readHomepageNews(): HomepageNewsItem[] {
   try {
@@ -166,7 +166,7 @@ export function Homepage() {
           <aside className="desk-news" id="travel-updates" aria-labelledby="desk-news-title">
             <div className="desk-section-heading"><h2 id="desk-news-title">Travel news</h2><Link className="desk-text-link" to="/travel-updates">See all updates <ArrowUpRight size={16} aria-hidden="true" /></Link></div>
             {newsItems.length ? <ol className="desk-news__list">{newsItems.map((item, index) => <li key={item.slug}>
-              <div className="desk-news__meta"><span>{String(index + 1).padStart(2, "0")} / {newsCategories[item.category]}</span><time dateTime={item.publishedAt.slice(0, 10)}>{formatNewsDate(item.publishedAt)}</time></div>
+              <div className="desk-news__meta"><span>{String(index + 1).padStart(2, "0")} / {newsCategories[item.category]}</span><div className="desk-news__date"><time dateTime={item.publishedAt.slice(0, 10)}>Published {formatNewsDate(item.publishedAt)}</time>{item.updatedAt && item.updatedAt !== item.publishedAt && <span className="desk-news__updated">Updated <time dateTime={item.updatedAt.slice(0, 10)}>{formatNewsDate(item.updatedAt)}</time></span>}</div></div>
               <h3><Link to={`/travel-updates/${item.slug}`}>{item.headline} <ArrowUpRight size={18} aria-hidden="true" /></Link></h3>
               <p>{item.summary}</p>
             </li>)}</ol> : <p className="desk-news__empty">Browse our published travel updates and check official sources before making plans.</p>}

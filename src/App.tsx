@@ -1,7 +1,7 @@
 import { lazy, Suspense, useEffect } from "react";
 import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { Homepage } from "./pages/Homepage";
-import { SITE_ORIGIN, DEFAULT_SOCIAL_IMAGE, DEFAULT_SOCIAL_IMAGE_ALT, getSocialImageUrl } from "./utils/siteMetadata";
+import { SITE_ORIGIN, DEFAULT_SOCIAL_IMAGE, DEFAULT_SOCIAL_IMAGE_ALT, getSocialImageOrigin, getSocialImageUrl } from "./utils/siteMetadata";
 import "./App.css";
 
 const CompanionPage = lazy(() => import("./pages/Companion").then((module) => ({ default: module.CompanionPage })));
@@ -102,7 +102,7 @@ function PageTitle() {
 
     setMeta("name", "twitter:card", pageImage ? "summary_large_image" : "summary");
     if (pageImage) {
-      const absoluteImage = getSocialImageUrl(pageImage);
+      const absoluteImage = getSocialImageUrl(pageImage, getSocialImageOrigin());
       setMeta("property", "og:image", absoluteImage);
       setMeta("name", "twitter:image", absoluteImage);
       if (pageImageAlt) setMeta("property", "og:image:alt", pageImageAlt);
