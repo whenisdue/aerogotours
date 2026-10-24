@@ -8,10 +8,7 @@ import "./JapanTaxFreeGuide.css";
 const sources = [
   { label: "Japan Tourism Agency — traveler guide to the refund method", url: "https://www.mlit.go.jp/kankocho/tax-free/page01_000001_00028.html" },
   { label: "Japan Tourism Agency — traveler frequently asked questions", url: "https://www.mlit.go.jp/kankocho/tax-free/page01_000001_00027.html" },
-  { label: "Japan Customs — refund procedure overview", url: "https://www.customs.go.jp/kaigairyoko/taxrefund.htm" },
-  { label: "Japan Customs — departure procedure details", url: "https://www.customs.go.jp/kaigairyoko/tetsuzukishousai_e.html" },
   { label: "Japan Tourism Agency — eligible purchaser documents (PDF)", url: "https://www.mlit.go.jp/kankocho/tax-free/content/001990235.pdf" },
-  { label: "Embassy of Japan in the Philippines — October notice", url: "https://www.ph.emb-japan.go.jp/itpr_ja/11_000001_02363.html" },
 ];
 
 export function JapanTaxFreeGuide() {
@@ -93,7 +90,7 @@ export function JapanTaxFreeGuide() {
             <p><strong>¥5,000</strong> — Minimum qualifying purchase before tax, per store per day.</p>
             <p><strong>90 days</strong> — Customs confirmation window from purchase.</p>
             <p><strong>Before baggage check-in</strong> — Complete customs confirmation while goods are accessible.</p>
-            <a href="https://www.customs.go.jp/kaigairyoko/taxrefund.htm" target="_blank" rel="noopener noreferrer">Japan Customs instructions <ArrowUpRight size={16} aria-hidden="true" /></a>
+            <a href="https://www.mlit.go.jp/kankocho/tax-free/page01_000001_00028.html" target="_blank" rel="noopener noreferrer">Official traveler instructions <ArrowUpRight size={16} aria-hidden="true" /></a>
           </aside>
         </div>
 
