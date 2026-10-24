@@ -4,7 +4,8 @@ import { getSocialImageUrl } from "./siteMetadata.ts";
 export function buildTravelNewsStructuredData(update: TravelUpdate, origin: string) {
   const articleUrl = new URL(`/travel-updates/${update.slug}`, origin).href;
   const newsUrl = new URL("/travel-updates", origin).href;
-  const imageUrl = update.socialImage === false || !update.image?.src ? undefined : getSocialImageUrl(update.image.src);
+  const socialImage = update.socialImage === false ? undefined : update.socialImage ?? update.image;
+  const imageUrl = socialImage?.src ? getSocialImageUrl(socialImage.src) : undefined;
 
   return {
     "@context": "https://schema.org",

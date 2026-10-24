@@ -63,11 +63,15 @@ test("Typhoon Champi update preserves its archive while separating October 23 to
   assert.equal(update.publishedAt, "2026-10-23");
   assert.equal(update.expiresAt, "2026-10-25T00:00:00+08:00");
   assert.equal(update.updatedAt, "2026-10-24");
-  assert.equal(update.socialImage, false);
+  assert.equal(update.listingImage?.src, "/images/news/typhoon-champi-travel-news-2026.png");
+  assert.equal(update.socialImage?.src, update.listingImage.src);
+  assert.equal(update.listingImage.width, 1672);
+  assert.equal(update.listingImage.height, 941);
   assert.ok(update.image.src.endsWith("typhoon-champi-flight-advisory-2026.svg"));
   assert.match(update.image.alt, /historical October 23.*checked October 24/);
   assert.match(update.summary, /Notices published October 23 for October 24 flights/);
   assert.ok(getHomepageTravelUpdates(now).some((item) => item.slug === slug));
+  assert.equal(getHomepageTravelUpdates(now).find((item) => item.slug === slug)?.updatedAt, "2026-10-24");
   assert.equal(getFeaturedTravelUpdate(now)?.slug, slug);
   assert.match(copy, /Updated and re-verified October 24, 2026/);
   assert.match(copy, /Originally published October 23, 2026/);
@@ -98,6 +102,7 @@ test("Typhoon Champi update preserves its archive while separating October 23 to
   const structuredData = buildTravelNewsStructuredData(update, "https://aerogotours.com");
   assert.equal(structuredData["@graph"][0].datePublished, "2026-10-23");
   assert.equal(structuredData["@graph"][0].dateModified, "2026-10-24");
+  assert.match(structuredData["@graph"][0].image, /typhoon-champi-travel-news-2026\.png$/);
   assert.equal(isArchivedTravelUpdate(update, new Date("2026-10-24T23:59:59+08:00")), false);
   const archiveDate = new Date("2026-10-25T00:00:00+08:00");
   assert.equal(isArchivedTravelUpdate(update, archiveDate), true);

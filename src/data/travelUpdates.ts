@@ -23,6 +23,15 @@ export type TravelUpdateSource = {
   recheckedAt?: string;
 };
 
+export type TravelUpdateImage = {
+  src: string;
+  alt: string;
+  credit?: string;
+  creditUrl?: string;
+  width?: number;
+  height?: number;
+};
+
 export type TravelUpdate = {
   id: string;
   slug: string;
@@ -36,14 +45,11 @@ export type TravelUpdate = {
   publishedAt: string;
   updatedAt?: string;
   effectiveAt?: string;
-  /** Set to false when the source image must not be used in sharing metadata. */
-  socialImage?: false;
-  image: {
-    src: string;
-    alt: string;
-    credit?: string;
-    creditUrl?: string;
-  };
+  /** False omits a social image; otherwise this can override the article image. */
+  socialImage?: false | Pick<TravelUpdateImage, "src" | "alt">;
+  /** Optional image chosen specifically for story cards and listings. */
+  listingImage?: TravelUpdateImage;
+  image: TravelUpdateImage;
   body: TravelUpdateBlock[];
   sources: TravelUpdateSource[];
   /** Optional article-specific context shown when the story reaches its archive date. */
@@ -84,6 +90,14 @@ const destinationImage = (slug: string) => {
   return { src: destination.heroImage, alt: destination.imageAlt };
 };
 
+const typhoonChampiGeneratedImage: TravelUpdateImage = {
+  src: "/images/news/typhoon-champi-travel-news-2026.png",
+  alt: "Illustrative generated artwork showing Taiwan, a typhoon spiral and a general travel-advisory panel.",
+  credit: "AI-generated illustration; the advisory panel offers general guidance, not live flight information",
+  width: 1672,
+  height: 941,
+};
+
 export const travelUpdates: TravelUpdate[] = [
   {
     id: "typhoon-champi-taiwan-flight-disruptions-october-2026",
@@ -97,7 +111,8 @@ export const travelUpdates: TravelUpdate[] = [
     category: "flights-airports",
     publishedAt: "2026-10-23",
     updatedAt: "2026-10-24",
-    socialImage: false,
+    listingImage: typhoonChampiGeneratedImage,
+    socialImage: typhoonChampiGeneratedImage,
     image: {
       src: "/images/news/typhoon-champi-flight-advisory-2026.svg",
       alt: "AeroGo information graphic showing historical October 23 Taiwan flight cancellations reported by Reuters and four Singapore Airlines Taipei services cancelled that day; checked October 24.",
