@@ -3,7 +3,23 @@ import { Link } from "react-router-dom";
 import { EditorialBreadcrumb } from "../components/EditorialBreadcrumb";
 import { EditorialFooter } from "../components/EditorialFooter";
 import { SiteHeader } from "../components/SiteHeader";
+import { travelGuides } from "../data/travelGuides";
 import "./JapanTaxFreeGuide.css";
+
+const japanTaxGuide = travelGuides.find((guide) => guide.path === "/guides/japan/tax-free-refund-system-november-2026");
+const requireGuideDate = (date: string | undefined, label: string) => {
+  if (!date) throw new Error(`Japan guide ${label} date is required`);
+  return date;
+};
+const japanTaxGuidePublishedAt = requireGuideDate(japanTaxGuide?.publishedAt, "publication");
+const japanTaxGuideSourcesCheckedAt = requireGuideDate(japanTaxGuide?.sourcesCheckedAt, "source-check");
+
+const formatGuideDate = (date: string) => new Intl.DateTimeFormat("en-GB", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+  timeZone: "UTC",
+}).format(new Date(`${date}T00:00:00Z`));
 
 const sources = [
   { label: "Japan Tourism Agency — traveler guide to the refund method", url: "https://www.mlit.go.jp/kankocho/tax-free/page01_000001_00028.html" },
@@ -23,13 +39,13 @@ export function JapanTaxFreeGuide() {
         { label: "Japan", to: "/destinations/japan" },
         { label: "Tax-free shopping changes" },
       ]} />
-      <article>
+      <article className="japan-refund__article" data-seo-published={japanTaxGuidePublishedAt}>
         <header className="japan-refund__hero">
           <div className="japan-refund__hero-copy">
             <p className="japan-refund__eyebrow">PRACTICAL GUIDE / JAPAN</p>
             <h1>Japan's tax-free shopping changes <span>November 1</span></h1>
             <p className="japan-refund__standfirst">For eligible visitors, purchases made on or after <strong>November 1, 2026</strong> move to a refund system: you pay the full tax-inclusive price at the shop, complete customs confirmation when leaving Japan, then receive the eligible refund through the shop or its provider. <strong>Do the customs step before checking in your bags.</strong></p>
-            <p className="japan-refund__dateline">AeroGo visitor guide <span aria-hidden="true">·</span> <time dateTime="2026-10-25">Official sources checked 25 October 2026</time></p>
+            <p className="japan-refund__dateline"><span>AeroGo visitor guide</span><span>Published <time dateTime={japanTaxGuidePublishedAt}>{formatGuideDate(japanTaxGuidePublishedAt)}</time></span><span>Sources checked <time dateTime={japanTaxGuideSourcesCheckedAt}>{formatGuideDate(japanTaxGuideSourcesCheckedAt)}</time></span></p>
             <a className="japan-refund__jump" href="#steps">Jump to the 3-step checklist ↓</a>
           </div>
           <div className="japan-refund__visual" role="img" aria-label="From 1 November 2026, eligible shoppers pay tax at the shop, confirm exports at Japan Customs, then receive the refund through the shop or refund provider">
@@ -100,7 +116,7 @@ export function JapanTaxFreeGuide() {
           <span>ORIGINAL SOURCES</span><h2 id="japan-refund-sources-title">Official guidance and verification</h2>
           <p>These are Japan's published instructions for the change scheduled for November 1, 2026. Rules and shop procedures may be updated; check the official pages and your tax-free retailer before travel.</p>
           <ul>{sources.map((source) => <li key={source.url}><a href={source.url} target="_blank" rel="noopener noreferrer">{source.label} <ExternalLink size={15} aria-hidden="true" /></a></li>)}</ul>
-          <p className="japan-refund__source-date">Sources checked 25 October 2026 · This guide provides general visitor information, not individualized tax advice.</p>
+          <p className="japan-refund__source-date">Sources checked <time dateTime={japanTaxGuideSourcesCheckedAt}>{formatGuideDate(japanTaxGuideSourcesCheckedAt)}</time> · This guide provides general visitor information, not individualized tax advice.</p>
         </section>
         <nav className="japan-refund__related" aria-label="Continue discovering"><Link to="/destinations/japan">Explore Japan <ArrowUpRight size={18} aria-hidden="true" /></Link><Link to="/guides">All travel guides <ArrowUpRight size={18} aria-hidden="true" /></Link></nav>
       </article>

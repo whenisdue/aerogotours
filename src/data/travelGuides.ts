@@ -7,6 +7,8 @@ export type TravelGuide = {
   image: string;
   imageAlt: string;
   topics?: string[];
+  publishedAt?: string;
+  sourcesCheckedAt?: string;
 };
 
 // Only published, publicly routable editorial guides belong in this list.
@@ -20,6 +22,8 @@ export const travelGuides: TravelGuide[] = [
     image: "japan-tax-refund",
     imageAlt: "AeroGo editorial guide graphic showing Japan’s new tax refund procedure starting 1 November 2026",
     topics: ["Effective 1 November", "Airport customs", "Refund checklist"],
+    publishedAt: "2026-10-25",
+    sourcesCheckedAt: "2026-10-25",
   },
   {
     path: "/guides/singapore/gardens-by-the-bay",

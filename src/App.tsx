@@ -116,9 +116,11 @@ function PageTitle() {
       removeMeta("name", "twitter:image");
     }
 
-    const publishedAt = article?.dataset.seoPublished;
+    const publishedAt = isJapanTaxGuide
+      ? document.querySelector<HTMLElement>(".japan-refund__article")?.dataset.seoPublished
+      : article?.dataset.seoPublished;
     const updatedAt = article?.dataset.seoUpdated;
-    if (isNewsArticle && publishedAt) setMeta("property", "article:published_time", publishedAt);
+    if ((isNewsArticle || isJapanTaxGuide) && publishedAt) setMeta("property", "article:published_time", publishedAt);
     else removeMeta("property", "article:published_time");
     if (isNewsArticle && updatedAt) setMeta("property", "article:modified_time", updatedAt);
     else removeMeta("property", "article:modified_time");
@@ -127,12 +129,13 @@ function PageTitle() {
     applyMetadata();
     window.addEventListener("aerogo:metadata-ready", applyMetadata);
 
-    const needsRouteContent = isNewsArticle || isDestination || isNewsListing;
+    const needsRouteContent = isNewsArticle || isJapanTaxGuide || isDestination || isNewsListing;
     let observer: MutationObserver | undefined;
     if (needsRouteContent) {
       observer = new MutationObserver(() => {
         const routeContent = isNewsArticle
           ? document.querySelector(".news-article[data-seo-title]")
+          : isJapanTaxGuide ? document.querySelector(".japan-refund__article[data-seo-published]")
           : isDestination ? document.querySelector(".destination-article-header")
             : document.querySelector(".news-lead");
         if (routeContent) {

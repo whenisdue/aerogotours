@@ -24,6 +24,8 @@ type SeoPage = {
 
 const gardenGuide = travelGuides.find((guide) => guide.path === "/guides/singapore/gardens-by-the-bay");
 if (!gardenGuide) throw new Error("The published Gardens by the Bay guide is missing from travelGuides.ts");
+const japanTaxGuide = travelGuides.find((guide) => guide.path === "/guides/japan/tax-free-refund-system-november-2026");
+if (!japanTaxGuide?.publishedAt) throw new Error("The Japan guide publication date is missing from travelGuides.ts");
 
 const featuredNews = getFeaturedTravelUpdate();
 const siteDescription = "Discover destination stories, travel news, practical guides and original AeroGo videos for curious Filipino travelers.";
@@ -90,15 +92,17 @@ const pages: SeoPage[] = [
     ],
   },
   {
-    path: "/guides/japan/tax-free-refund-system-november-2026",
+    path: japanTaxGuide.path,
     title: "Japan Tax-Free Shopping Changes Nov. 1: A Filipino Traveler’s Guide · AeroGo",
     description: "Japan’s tax-free system changes for purchases from November 1, 2026. Learn about paying tax-inclusive prices, customs checks, and how eligible refunds work.",
     type: "article",
+    publishedAt: japanTaxGuide.publishedAt,
     schema: {
       "@type": "Article",
       headline: "Japan’s tax-free shopping changes November 1: What visitors need to know",
       description: "Practical steps for Japan’s new tax-free shopping refund method, effective November 1, 2026.",
-      mainEntityOfPage: { "@type": "WebPage", "@id": `${SITE_ORIGIN}/guides/japan/tax-free-refund-system-november-2026` },
+      datePublished: japanTaxGuide.publishedAt,
+      mainEntityOfPage: { "@type": "WebPage", "@id": new URL(japanTaxGuide.path, SITE_ORIGIN).href },
       publisher: { "@id": brandEntityId },
     },
     breadcrumbs: [
