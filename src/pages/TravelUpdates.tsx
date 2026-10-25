@@ -223,6 +223,7 @@ function ArticleImage({ update }: { update: TravelUpdate }) {
 function TravelUpdateBlock({ block }: { block: TravelUpdate["body"][number] }) {
   if (block.type === "heading") return <h2>{block.text}</h2>;
   if (block.type === "list") return <ul>{block.items.map((item) => <li key={item}>{item}</li>)}</ul>;
+  if (block.type === "internalLink") return <p className="news-article__citation"><Link to={block.url}>{block.label} <ArrowUpRight size={15} aria-hidden="true" /></Link></p>;
   if (block.type === "citation") return <p className="news-article__citation">Official source: <a href={block.url} target="_blank" rel="noopener noreferrer">{block.label} <ExternalLink size={15} aria-hidden="true" /></a></p>;
   return <p>{block.text}</p>;
 }

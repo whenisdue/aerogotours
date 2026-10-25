@@ -151,6 +151,42 @@ test("Undas PITX article preserves dated forecasts, passenger guidance, SEO date
   assert.ok(update.archiveNotice.includes("does not confirm that travel conditions have returned to normal"));
 });
 
+test("Davao–Hong Kong route story distinguishes its scheduled restart from verified operations", () => {
+  const slug = "davao-hong-kong-cebu-pacific-restart-october-2026";
+  const update = getTravelUpdateBySlug(slug);
+  const published = new Date("2026-10-25T00:00:00+08:00");
+  const copy = update?.body.map((block) => block.text ?? block.items?.join(" ") ?? "").join(" ") ?? "";
+  const structuredData = update && buildTravelNewsStructuredData(update, "https://aerogotours.com");
+
+  assert.ok(update);
+  assert.equal(update.publishedAt, "2026-10-25");
+  assert.equal(update.updatedAt, undefined);
+  assert.equal(update.expiresAt, "2026-10-26T00:00:00+08:00");
+  assert.match(update.summary, /planned return on October 25 at four flights weekly/);
+  assert.match(copy, /scheduled restart; it does not by itself confirm that a flight operated/);
+  assert.match(copy, /5J5262 from Davao \(DVO\) to Hong Kong \(HKG\) and 5J5263/);
+  assert.match(copy, /could not independently confirm that 5J5262 or 5J5263 operated/);
+  assert.match(copy, /a missing live-board entry is not proof of cancellation/);
+  assert.match(copy, /do not list operating weekdays or clock times/);
+  assert.match(copy, /Terminal 2, Aisle R.*Terminal 1 for boarding/);
+  assert.doesNotMatch(copy, /08:20|11:50|12:35|15:55/);
+  assert.ok(update.image.src.endsWith("davao-hong-kong-route-return-2026.jpg"));
+  assert.match(update.image.alt, /editorial illustration.*not a live map or a specific operating flight/i);
+  assert.equal(update.body.find((block) => block.type === "internalLink")?.url, "/destinations/hong-kong");
+  assert.ok(update.sources.every((source) => source.accessedAt === "2026-10-25"));
+  assert.ok(update.sources.some((source) => source.publisher === "Cebu Pacific" && source.url.includes("davao-travel-guide")));
+  assert.ok(update.sources.some((source) => source.publisher === "Cebu Pacific" && source.url.includes("hong-kong-travel-guide")));
+  assert.ok(update.sources.some((source) => source.publisher === "Cebu Pacific" && source.url.includes("network-adjustments")));
+  assert.ok(getActiveTravelUpdates(published).some((item) => item.slug === slug));
+  assert.equal(getHomepageTravelUpdates(published)[1]?.slug, slug);
+  assert.equal(isArchivedTravelUpdate(update, new Date("2026-10-26T00:00:00+08:00")), true);
+  assert.ok(getArchivedTravelUpdates(new Date("2026-10-26T00:00:00+08:00")).some((item) => item.slug === slug));
+  assert.match(update.archiveNotice, /does not verify that either listed flight operated or establish the route’s current schedule/);
+  assert.equal(structuredData["@graph"][0].datePublished, "2026-10-25");
+  assert.equal(Object.hasOwn(structuredData["@graph"][0], "dateModified"), false);
+  assert.equal(structuredData["@graph"][1].itemListElement[2].item, `https://aerogotours.com/travel-updates/${slug}`);
+});
+
 test("travel update slugs are unique and records have the required fields", () => {
   const slugs = travelUpdates.map((update) => update.slug);
   assert.equal(new Set(slugs).size, slugs.length);

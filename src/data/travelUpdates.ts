@@ -12,7 +12,8 @@ export type TravelUpdateBlock =
   | { type: "paragraph"; text: string }
   | { type: "heading"; text: string }
   | { type: "list"; items: string[] }
-  | { type: "citation"; label: string; url: string };
+  | { type: "citation"; label: string; url: string }
+  | { type: "internalLink"; label: string; url: string };
 
 export type TravelUpdateSource = {
   label: string;
@@ -134,6 +135,53 @@ export const travelUpdates: TravelUpdate[] = [
     ],
     archiveNotice: "This article preserves dated passenger forecasts and preparations for PITX’s October 25–November 4, 2026 Undas travel window. The projections were not final passenger counts, and the archived status does not confirm that travel conditions have returned to normal or that operations are unaffected. Check PITX, your bus operator and current traffic advisories for present-day information.",
     expiresAt: "2026-11-05T00:00:00+08:00",
+  },
+  {
+    id: "davao-hong-kong-cebu-pacific-restart-october-2026",
+    slug: "davao-hong-kong-cebu-pacific-restart-october-2026",
+    headline: "Davao–Hong Kong flights: Cebu Pacific lists October 25 restart",
+    summary: "Cebu Pacific's airport guides list the direct route's planned return on October 25 at four flights weekly. Our October 25 live-status and booking checks did not confirm the first operation or current seat availability; check your own itinerary before travelling.",
+    seoTitle: "Davao–Hong Kong Flights: Cebu Pacific’s Oct. 25 Restart · AeroGo",
+    seoDescription: "Cebu Pacific lists a planned October 25 return for Davao–Hong Kong flights at four weekly services. Check flight numbers, booking status and the airline’s Hong Kong terminal instructions.",
+    destination: "Davao City / Hong Kong",
+    country: "Philippines / Hong Kong",
+    category: "flights-airports",
+    publishedAt: "2026-10-25",
+    image: {
+      src: "/images/news/davao-hong-kong-route-return-2026.jpg",
+      alt: "Original editorial illustration of a dotted air route linking Hong Kong and Davao, with a harbor skyline and coastal landscape; not a live map or a specific operating flight.",
+      credit: "Original AeroGo AI-generated editorial illustration; not a documentary map or an image of a specific operating flight",
+    },
+    body: [
+      { type: "paragraph", text: "Cebu Pacific’s Davao and Hong Kong airport guides list October 25, 2026 as the planned return date for the Davao–Hong Kong route, at four flights weekly. Its network-adjustment notice identifies the services as 5J5262 from Davao (DVO) to Hong Kong (HKG) and 5J5263 on the return. The October 25 date is the carrier’s scheduled restart; it does not by itself confirm that a flight operated." },
+      { type: "heading", text: "What is confirmed—and what is not" },
+      { type: "paragraph", text: "The route had been listed as suspended from August 2 through October 23. Cebu Pacific announced its planned return in August; the airline’s current airport guides now list October 25 as the scheduled restart date. These dates describe the announcement, the earlier suspension and the published plan—not proof of service on a particular day." },
+      { type: "paragraph", text: "In our October 25 check of Cebu Pacific’s public flight-status board and booking system, we could not independently confirm that 5J5262 or 5J5263 operated that day or verify current seat availability. The status board showed no matching Davao–Hong Kong entry in that check; a missing live-board entry is not proof of cancellation. Treat any flight-specific update in your own booking or from Cebu Pacific as the current status." },
+      { type: "paragraph", text: "The current Cebu Pacific guides confirm a frequency of four flights weekly but do not list operating weekdays or clock times. We could not validate the August announcement’s detailed timetable in the carrier’s live booking system during this check, so use the date-specific schedule shown by Cebu Pacific before buying or travelling. This article does not claim a fare, seat inventory or confirmed first operation." },
+      { type: "heading", text: "How to check availability and your booking" },
+      { type: "list", items: [
+        "Search Cebu Pacific’s official booking page or app for Davao (DVO) to Hong Kong (HKG) on your exact travel date. Check whether the offered itinerary is nonstop, and read the flight date and times in the itinerary before paying; a route announcement is not a booking confirmation.",
+        "If you already have a ticket, open Manage Booking or My Bookings and compare the flight number and date with your itinerary receipt. Keep your booking reference and check the email address and mobile number attached to the reservation for airline notices.",
+        "Use Cebu Pacific’s Flight Status page close to departure and again before leaving for the airport. If your flight is changed or cancelled, follow the notice attached to your booking or contact Cebu Pacific through its official app or website. Rebooking and refund eligibility depend on the disruption and ticket conditions; do not assume a particular remedy until the airline confirms it.",
+        "If you booked through a travel agency or another seller, contact that seller for booking changes as well as checking airline notices.",
+      ] },
+      { type: "heading", text: "A Hong Kong airport detail worth knowing" },
+      { type: "paragraph", text: "For Cebu Pacific departures from Hong Kong, the airline’s airport guide says passenger check-in moved to Terminal 2, Aisle R, on June 9, 2026. After check-in, passengers should take the airport train to Terminal 1 for boarding. This instruction is for the Hong Kong departure process; it does not describe check-in at Davao. Recheck the airline guide and airport information before your trip in case arrangements change." },
+      { type: "paragraph", text: "For travelers from Davao and elsewhere in Mindanao, a nonstop DVO–HKG service would offer a direct international option from Davao without connecting through Manila on that flight. Travelers starting elsewhere in Mindanao still need to arrange their own journey to Davao and should check the full itinerary for separate tickets or connections." },
+      { type: "internalLink", label: "Explore AeroGo’s Hong Kong destination guide for ideas beyond the airport.", url: "/destinations/hong-kong" },
+      { type: "paragraph", text: "Information checked October 25, 2026. Flight operations, schedules and seat availability can change. Cebu Pacific is the final authority for the flight on your booking; check its live status and contact the airline before making airport or onward-travel decisions." },
+    ],
+    sources: [
+      { label: "Davao Travel Guide — Davao International Airport (DVO); route frequency and planned restart", url: "https://help.cebupacificair.com/article/davao-travel-guide-davao-international-airport-dvo-211354", publisher: "Cebu Pacific", accessedAt: october25AccessedAt },
+      { label: "Hong Kong Travel Guide — Hong Kong International Airport (HKG); route frequency and Terminal 2 check-in at Aisle R", url: "https://help.cebupacificair.com/article/hong-kong-travel-guide-hong-kong-international-airport-189436", publisher: "Cebu Pacific", accessedAt: october25AccessedAt },
+      { label: "Network Adjustments Due to Middle East Crisis; Davao–Hong Kong flight numbers and suspension dates (updated June 6, 2026)", url: "https://help.cebupacificair.com/article/network-adjustments-due-to-middle-east-crisis-230490", publisher: "Cebu Pacific", accessedAt: october25AccessedAt },
+      { label: "Flight Status", url: "https://flightlocator.cebupacificair.com/flightlocator/Status", publisher: "Cebu Pacific", accessedAt: october25AccessedAt },
+      { label: "Book a flight or manage your booking", url: "https://www.cebupacificair.com/en-PH", publisher: "Cebu Pacific", accessedAt: october25AccessedAt },
+      { label: "How to Manage Your Disrupted Flight; notifications and flight-status guidance", url: "https://help.cebupacificair.com/article/how-to-manage-your-disrupted-flight-120721", publisher: "Cebu Pacific", accessedAt: october25AccessedAt },
+      { label: "Cebu Pacific resumes international connectivity for Davao (published August 14, 2026)", url: "https://www.sunstar.com.ph/davao/cebu-pacific-resumes-intl-connectivity-for-davao", publisher: "SunStar Davao", accessedAt: october25AccessedAt },
+    ],
+    archiveNotice: "This article records Cebu Pacific’s published plan to restart the Davao–Hong Kong route on October 25, 2026. Passing that date does not verify that either listed flight operated or establish the route’s current schedule. Check Cebu Pacific’s live booking and flight-status channels for present service information.",
+    expiresAt: "2026-10-26T00:00:00+08:00",
   },
   {
     id: "typhoon-champi-taiwan-flight-disruptions-october-2026",
