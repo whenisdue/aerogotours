@@ -94,12 +94,10 @@ const pages: SeoPage[] = [
     title: "Japan Tax-Free Shopping Changes Nov. 1: A Filipino Traveler’s Guide · AeroGo",
     description: "Japan’s tax-free system changes for purchases from November 1, 2026. Learn about paying tax-inclusive prices, customs checks, and how eligible refunds work.",
     type: "article",
-    publishedAt: "2026-10-24",
     schema: {
       "@type": "Article",
       headline: "Japan’s tax-free shopping changes November 1: What visitors need to know",
       description: "Practical steps for Japan’s new tax-free shopping refund method, effective November 1, 2026.",
-      datePublished: "2026-10-24",
       mainEntityOfPage: { "@type": "WebPage", "@id": `${SITE_ORIGIN}/guides/japan/tax-free-refund-system-november-2026` },
       publisher: { "@id": brandEntityId },
     },
