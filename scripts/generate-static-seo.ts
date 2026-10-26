@@ -34,6 +34,9 @@ if (!cebuUndasGuide?.sourcesCheckedAt || !cebuUndasGuide.imageSrc) throw new Err
 const featuredNews = getFeaturedTravelUpdate();
 const siteDescription = "Discover destination stories, travel news, practical guides and original AeroGo videos for curious Filipino travelers.";
 const gardenImage = "/images/gardens-by-the-bay/optimized/S25-1440.jpg";
+const socialImageOrigin = process.env.VERCEL_ENV === "preview" && process.env.VERCEL_URL
+  ? `https://${process.env.VERCEL_URL}`
+  : SITE_ORIGIN;
 const brandEntityId = `${SITE_ORIGIN}/#organization`;
 
 const pages: SeoPage[] = [
@@ -133,7 +136,7 @@ const pages: SeoPage[] = [
       "@type": "Article",
       headline: cebuUndasGuide.title,
       description: cebuUndasGuide.seoDescription ?? cebuUndasGuide.summary,
-      image: new URL(cebuUndasGuide.imageSrc, SITE_ORIGIN).href,
+      image: getSocialImageUrl(cebuUndasGuide.imageSrc, socialImageOrigin),
       ...(cebuUndasGuide.publishedAt ? { datePublished: cebuUndasGuide.publishedAt } : {}),
       author: { "@type": "Organization", name: "AeroGo", url: `${SITE_ORIGIN}/` },
       publisher: { "@id": brandEntityId },
@@ -261,7 +264,7 @@ function breadcrumbSchema(page: SeoPage) {
 
 function pageTags(page: SeoPage) {
   const canonical = new URL(page.path, SITE_ORIGIN).href;
-  const image = page.image ? getSocialImageUrl(page.image) : undefined;
+  const image = page.image ? getSocialImageUrl(page.image, socialImageOrigin) : undefined;
   const globalGraph: Record<string, unknown>[] = [organization, {
     "@type": "WebSite",
     "@id": `${SITE_ORIGIN}/#website`,

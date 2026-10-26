@@ -5,7 +5,7 @@ import { EditorialBreadcrumb } from "../components/EditorialBreadcrumb";
 import { EditorialFooter } from "../components/EditorialFooter";
 import { SiteHeader } from "../components/SiteHeader";
 import { travelGuides } from "../data/travelGuides";
-import { SITE_ORIGIN } from "../utils/siteMetadata";
+import { getSocialImageUrl, SITE_ORIGIN } from "../utils/siteMetadata";
 import "./CebuUndasGuide.css";
 
 const guideEntry = travelGuides.find((item) => item.path === "/guides/philippines/cebu-pacific-undas-2026-flight-checklist");
@@ -61,7 +61,7 @@ export function CebuUndasGuide() {
         "@type": "Article",
         headline: guide.title,
         description: guide.seoDescription ?? guide.summary,
-        image: new URL(guide.imageSrc, SITE_ORIGIN).href,
+        image: getSocialImageUrl(guide.imageSrc),
         ...(guide.publishedAt ? { datePublished: guide.publishedAt } : {}),
         author: { "@type": "Organization", name: "AeroGo", url: `${SITE_ORIGIN}/` },
         publisher: { "@type": "Organization", name: "AeroGo", url: `${SITE_ORIGIN}/` },

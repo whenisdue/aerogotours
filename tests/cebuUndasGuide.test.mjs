@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { travelGuides, getFeaturedTravelGuide } from "../src/data/travelGuides.ts";
+import { getSocialImageUrl, SITE_ORIGIN } from "../src/utils/siteMetadata.ts";
 
 const guidePath = "/guides/philippines/cebu-pacific-undas-2026-flight-checklist";
 
@@ -21,6 +22,12 @@ test("holiday checklist leads the homepage only through November 3 in Manila tim
   const afterWindowEnds = new Date("2026-11-03T16:00:00Z");
   assert.equal(getFeaturedTravelGuide(beforeWindowEnds).path, guidePath);
   assert.equal(getFeaturedTravelGuide(afterWindowEnds).path, "/guides/japan/autumn-leaves-2026");
+});
+
+test("social image helper supports deployment-specific Preview assets without changing production defaults", () => {
+  const imagePath = "/images/guides/philippines/cebu-undas-checklist.jpg";
+  assert.equal(getSocialImageUrl(imagePath), `${SITE_ORIGIN}${imagePath}`);
+  assert.equal(getSocialImageUrl(imagePath, "https://aerogotours-preview.vercel.app"), `https://aerogotours-preview.vercel.app${imagePath}`);
 });
 
 test("guide copy flags the unresolved eTravel conflict and separates arrival recommendations from cutoffs", () => {
