@@ -26,6 +26,8 @@ const gardenGuide = travelGuides.find((guide) => guide.path === "/guides/singapo
 if (!gardenGuide) throw new Error("The published Gardens by the Bay guide is missing from travelGuides.ts");
 const japanTaxGuide = travelGuides.find((guide) => guide.path === "/guides/japan/tax-free-refund-system-november-2026");
 if (!japanTaxGuide?.publishedAt) throw new Error("The Japan guide publication date is missing from travelGuides.ts");
+const japanAutumnGuide = travelGuides.find((guide) => guide.path === "/guides/japan/autumn-leaves-2026");
+if (!japanAutumnGuide?.publishedAt || !japanAutumnGuide.imageSrc) throw new Error("The Japan autumn guide publication date or social image is missing from travelGuides.ts");
 
 const featuredNews = getFeaturedTravelUpdate();
 const siteDescription = "Discover destination stories, travel news, practical guides and original AeroGo videos for curious Filipino travelers.";
@@ -63,7 +65,7 @@ const pages: SeoPage[] = [
   {
     path: "/guides",
     title: "Travel Guides · AeroGo",
-    description: "Practical travel guides for Filipino travelers. Explore Singapore attractions and Japan’s November 2026 tax-free shopping refund changes.",
+    description: "Practical travel guides for curious travelers, including Japan’s 2026 autumn foliage forecasts, tax-free shopping changes and Singapore attractions.",
     image: gardenImage,
     imageAlt: gardenGuide.imageAlt,
     schema: { "@type": "CollectionPage", name: "Travel Guides", url: `${SITE_ORIGIN}/guides` },
@@ -89,6 +91,32 @@ const pages: SeoPage[] = [
       { label: "Guides", path: "/guides" },
       { label: "Singapore", path: "/destinations/singapore" },
       { label: "Gardens by the Bay", path: gardenGuide.path },
+    ],
+  },
+  {
+    path: japanAutumnGuide.path,
+    title: japanAutumnGuide.seoTitle ?? `${japanAutumnGuide.title} · AeroGo`,
+    description: japanAutumnGuide.seoDescription ?? japanAutumnGuide.summary,
+    image: japanAutumnGuide.imageSrc,
+    imageAlt: japanAutumnGuide.socialImageAlt ?? japanAutumnGuide.imageAlt,
+    type: "article",
+    publishedAt: japanAutumnGuide.publishedAt,
+    schema: {
+      "@type": "Article",
+      headline: japanAutumnGuide.title,
+      description: japanAutumnGuide.seoDescription ?? japanAutumnGuide.summary,
+      image: new URL(japanAutumnGuide.imageSrc, SITE_ORIGIN).href,
+      datePublished: japanAutumnGuide.publishedAt,
+      author: { "@type": "Organization", name: "AeroGo", url: `${SITE_ORIGIN}/` },
+      publisher: { "@id": brandEntityId },
+      mainEntityOfPage: { "@type": "WebPage", "@id": new URL(japanAutumnGuide.path, SITE_ORIGIN).href },
+      inLanguage: "en",
+    },
+    breadcrumbs: [
+      { label: "Discover", path: "/" },
+      { label: "Guides", path: "/guides" },
+      { label: "Japan", path: "/destinations/japan" },
+      { label: "Autumn leaves 2026", path: japanAutumnGuide.path },
     ],
   },
   {
@@ -237,6 +265,7 @@ function pageTags(page: SeoPage) {
     `<meta name="twitter:title" content="${escapeHtml(page.title)}" />`,
     `<meta name="twitter:description" content="${escapeHtml(page.description)}" />`,
     ...(image ? [`<meta name="twitter:image" content="${escapeHtml(image)}" />`] : []),
+    ...(image && page.imageAlt ? [`<meta name="twitter:image:alt" content="${escapeHtml(page.imageAlt)}" />`] : []),
     ...(page.type === "article" && page.publishedAt ? [`<meta property="article:published_time" content="${escapeHtml(page.publishedAt)}" />`] : []),
     ...(page.type === "article" && page.updatedAt ? [`<meta property="article:modified_time" content="${escapeHtml(page.updatedAt)}" />`] : []),
     `<script type="application/ld+json" data-aerogo-site-schema>${safeJson(globalStructuredData)}</script>`,

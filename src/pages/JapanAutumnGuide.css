@@ -1,0 +1,114 @@
+.japan-autumn-site { min-width: 0; background: var(--editorial-paper); color: var(--editorial-news-ink); }
+.japan-autumn-site .japan-autumn.page-shell { width: min(92%, var(--editorial-content-max)); padding-bottom: 58px; }
+.japan-autumn__article { min-width: 0; }
+.japan-autumn__hero { max-width: 1000px; padding: 25px 0 24px; }
+.japan-autumn__eyebrow,
+.japan-autumn__section-heading > span,
+.japan-autumn__answer > div > span,
+.japan-autumn__sources > span { margin: 0; color: var(--editorial-magenta-ink); font-size: 11px; font-weight: 800; letter-spacing: .08em; line-height: 1.5; }
+.japan-autumn__hero h1 { max-width: 980px; margin: 12px 0 17px; font: 800 clamp(46px, 6.3vw, 82px)/.98 var(--editorial-display-font); letter-spacing: -.025em; overflow-wrap: anywhere; }
+.japan-autumn__standfirst { max-width: 850px; margin: 0; color: var(--editorial-muted-ink); font-size: clamp(17px, 1.7vw, 20px); line-height: 1.65; }
+.japan-autumn__dateline { display: flex; flex-wrap: wrap; gap: 6px 24px; margin: 20px 0 0; border-top: 1px solid var(--editorial-line); padding-top: 13px; color: var(--editorial-muted-ink); font-size: 12px; }
+.japan-autumn__dateline > div { display: flex; flex-wrap: wrap; gap: 5px; }
+.japan-autumn__dateline dt { font-weight: 700; }
+.japan-autumn__dateline dd { margin: 0; }
+.japan-autumn__hero-image { margin: 0 0 26px; }
+.japan-autumn__hero-image img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: center; }
+.japan-autumn__hero-image figcaption { max-width: 1040px; margin-top: 8px; color: var(--editorial-muted-ink); font-size: 11px; line-height: 1.55; }
+.japan-autumn__hero-image figcaption a { color: var(--editorial-link-blue); text-underline-offset: 2px; }
+.japan-autumn__answer { display: grid; grid-template-columns: minmax(220px, .75fr) minmax(0, 1.25fr); gap: 22px 44px; align-items: center; margin: 25px 0 42px; border-left: 6px solid var(--editorial-magenta-ink); padding: 22px clamp(19px, 3vw, 36px); background: var(--editorial-electric-yellow); }
+.japan-autumn__answer h2 { margin: 7px 0 0; font: 700 clamp(27px, 3vw, 40px)/1.02 var(--editorial-display-font); letter-spacing: -.02em; }
+.japan-autumn__answer > p { margin: 0; font-size: 16px; line-height: 1.65; }
+.japan-autumn__section { min-width: 0; border-top: 4px solid var(--editorial-news-ink); padding: 22px 0 45px; scroll-margin-top: 20px; }
+.japan-autumn__section-heading { max-width: 900px; margin-bottom: 21px; }
+.japan-autumn__section-heading h2,
+.japan-autumn__sources h2 { margin: 8px 0 10px; font: 700 clamp(34px, 4.4vw, 53px)/1.03 var(--editorial-display-font); letter-spacing: -.018em; }
+.japan-autumn__section-heading > p { max-width: 830px; margin: 0; color: var(--editorial-muted-ink); font-size: 16px; line-height: 1.65; }
+.japan-autumn__forecast-key { display: flex; flex-wrap: wrap; gap: 9px 24px; margin: 0 0 12px; font-size: 13px; font-weight: 700; }
+.japan-autumn__forecast-key > span { display: inline-flex; align-items: center; gap: 8px; }
+.japan-autumn__key-dot { width: 12px; height: 12px; border: 2px solid var(--editorial-news-ink); border-radius: 50%; }
+.japan-autumn__key-dot--red { background: var(--editorial-signal-magenta); }
+.japan-autumn__key-dot--yellow { background: var(--editorial-electric-yellow); }
+.japan-autumn__table-wrap { width: 100%; min-width: 0; }
+.japan-autumn__forecast-table { width: 100%; table-layout: fixed; border-collapse: collapse; font-size: 15px; }
+.japan-autumn__forecast-table caption { padding: 0 0 12px; color: var(--editorial-muted-ink); font-size: 12px; line-height: 1.45; text-align: left; }
+.japan-autumn__forecast-table th,
+.japan-autumn__forecast-table td { border-bottom: 1px solid var(--editorial-line); padding: 10px 12px; text-align: left; vertical-align: middle; }
+.japan-autumn__forecast-table thead th { background: var(--editorial-news-ink); color: var(--editorial-paper); font-size: 12px; line-height: 1.35; }
+.japan-autumn__forecast-table thead th:nth-child(2) { box-shadow: inset 0 -3px var(--editorial-signal-magenta); }
+.japan-autumn__forecast-table thead th:nth-child(3) { box-shadow: inset 0 -3px var(--editorial-electric-yellow); }
+.japan-autumn__forecast-table tbody th { font-weight: 700; }
+.japan-autumn__forecast-table tbody tr:nth-child(even) { background: var(--editorial-desk-gray); }
+.japan-autumn__table-date { display: inline-block; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.japan-autumn__table-date--red { text-decoration: underline; text-decoration-color: var(--editorial-signal-magenta); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+.japan-autumn__table-date--yellow { text-decoration: underline; text-decoration-color: #b18b00; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+.japan-autumn__forecast-note,
+.japan-autumn__reports-note,
+.japan-autumn__checklist-note { max-width: 900px; margin: 14px 0 0; color: var(--editorial-muted-ink); font-size: 13px; line-height: 1.6; }
+.japan-autumn__date-windows { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 38px; }
+.japan-autumn__date-windows article { min-width: 0; border-top: 1px solid var(--editorial-line); padding: 19px 0 21px; }
+.japan-autumn__date-windows article > span,
+.japan-autumn__report-grid article > span { color: var(--editorial-magenta-ink); font-size: 10px; font-weight: 800; letter-spacing: .07em; }
+.japan-autumn__date-windows h3 { margin: 8px 0 9px; font: 700 clamp(22px, 2.6vw, 31px)/1.1 var(--editorial-display-font); }
+.japan-autumn__date-windows p { margin: 0; color: var(--editorial-muted-ink); font-size: 15px; line-height: 1.65; }
+.japan-autumn__reports { background: linear-gradient(90deg, transparent 0, transparent 2%, var(--editorial-desk-gray) 2%, var(--editorial-desk-gray) 98%, transparent 98%); padding-inline: clamp(13px, 2vw, 28px); }
+.japan-autumn__report-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 36px; }
+.japan-autumn__report-grid article { min-width: 0; border-top: 1px solid var(--editorial-line); padding: 17px 0 13px; }
+.japan-autumn__report-grid h3 { margin: 7px 0; font: 700 25px/1.12 var(--editorial-display-font); }
+.japan-autumn__report-grid p { margin: 0 0 9px; color: var(--editorial-muted-ink); font-size: 14px; line-height: 1.6; }
+.japan-autumn__report-grid a { display: inline-flex; min-height: 40px; align-items: center; gap: 6px; color: var(--editorial-link-blue); font-size: 12px; font-weight: 700; text-underline-offset: 3px; }
+.japan-autumn__prose { max-width: 850px; }
+.japan-autumn__prose p { margin: 0 0 16px; color: var(--editorial-muted-ink); font-size: 16px; line-height: 1.75; }
+.japan-autumn__prose p:last-child { margin-bottom: 0; }
+.japan-autumn__prose strong { color: var(--editorial-news-ink); }
+.japan-autumn__checklist { max-width: 950px; margin: 0; padding-left: 25px; }
+.japan-autumn__checklist li { padding-left: 7px; color: var(--editorial-muted-ink); font-size: 16px; line-height: 1.7; }
+.japan-autumn__checklist li + li { margin-top: 11px; }
+.japan-autumn__checklist strong { color: var(--editorial-news-ink); }
+.japan-autumn__sources { margin-top: 3px; border-top: 4px solid var(--editorial-news-ink); padding: 24px 0 20px; }
+.japan-autumn__sources h2 { margin-bottom: 9px; }
+.japan-autumn__sources > p { max-width: 900px; color: var(--editorial-muted-ink); font-size: 14px; line-height: 1.65; }
+.japan-autumn__sources ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px 30px; margin: 18px 0; padding-left: 22px; }
+.japan-autumn__sources li { padding: 3px 0; line-height: 1.5; }
+.japan-autumn__sources li a { display: inline; color: var(--editorial-link-blue); font-size: 13px; font-weight: 700; text-underline-offset: 3px; }
+.japan-autumn__sources li svg { display: inline; vertical-align: -2px; }
+.japan-autumn__sources .japan-autumn__source-note { font-size: 12px; }
+.japan-autumn__related { display: flex; flex-wrap: wrap; gap: 5px 22px; border-top: 1px solid var(--editorial-line); padding-top: 12px; }
+.japan-autumn__related a { display: inline-flex; min-height: 44px; align-items: center; gap: 5px; color: var(--editorial-link-blue); font-size: 13px; font-weight: 700; text-underline-offset: 3px; }
+
+@media (max-width: 700px) {
+  .japan-autumn-site .japan-autumn.page-shell { width: 90%; padding-bottom: 40px; }
+  .japan-autumn__hero { padding-top: 18px; }
+  .japan-autumn__hero h1 { margin-block: 10px 13px; font-size: clamp(41px, 11vw, 52px); line-height: .99; }
+  .japan-autumn__standfirst { font-size: 16px; line-height: 1.6; }
+  .japan-autumn__dateline { gap: 7px 14px; margin-top: 15px; font-size: 11px; }
+  .japan-autumn__hero-image { margin-bottom: 20px; }
+  .japan-autumn__hero-image img { aspect-ratio: 16 / 10; }
+  .japan-autumn__hero-image figcaption { font-size: 10px; }
+  .japan-autumn__answer { grid-template-columns: 1fr; gap: 9px; margin: 18px 0 30px; padding: 17px 16px; }
+  .japan-autumn__answer h2 { font-size: 29px; }
+  .japan-autumn__answer > p { font-size: 14px; line-height: 1.6; }
+  .japan-autumn__section { padding: 18px 0 31px; }
+  .japan-autumn__section-heading { margin-bottom: 16px; }
+  .japan-autumn__section-heading h2,
+  .japan-autumn__sources h2 { font-size: 36px; }
+  .japan-autumn__section-heading > p { font-size: 14px; line-height: 1.6; }
+  .japan-autumn__forecast-table { font-size: 13px; }
+  .japan-autumn__forecast-table th,
+  .japan-autumn__forecast-table td { padding: 9px 7px; }
+  .japan-autumn__forecast-table thead th { font-size: 10px; }
+  .japan-autumn__forecast-table caption { font-size: 11px; }
+  .japan-autumn__date-windows,
+  .japan-autumn__report-grid { grid-template-columns: 1fr; }
+  .japan-autumn__date-windows h3 { font-size: 25px; }
+  .japan-autumn__date-windows p { font-size: 14px; }
+  .japan-autumn__reports { margin-inline: -5.5%; padding-inline: 5.5%; background: var(--editorial-desk-gray); }
+  .japan-autumn__report-grid h3 { font-size: 23px; }
+  .japan-autumn__prose p,
+  .japan-autumn__checklist li { font-size: 15px; line-height: 1.68; }
+  .japan-autumn__sources > p { font-size: 13px; }
+  .japan-autumn__sources ul { grid-template-columns: 1fr; gap: 4px; margin-block: 12px; padding-left: 19px; }
+  .japan-autumn__sources li a { font-size: 12px; }
+  .japan-autumn__related { gap: 0 12px; }
+  .japan-autumn__related a { font-size: 12px; }
+}
