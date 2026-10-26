@@ -37,8 +37,8 @@ export type TravelUpdate = {
   publishedAt: string;
   updatedAt?: string;
   effectiveAt?: string;
-  /** Set to false when the source image must not be used in sharing metadata. */
-  socialImage?: false;
+  /** Separate social image metadata; false disables sharing imagery. */
+  socialImage?: false | { src: string; alt: string };
   image: {
     src: string;
     alt: string;
@@ -76,6 +76,7 @@ const october20AccessedAt = "2026-10-20";
 const october23AccessedAt = "2026-10-23";
 const october24AccessedAt = "2026-10-24";
 const october25AccessedAt = "2026-10-25";
+const october27AccessedAt = "2026-10-27";
 
 const unsplash = (photoId: string, width: number) =>
   `https://images.unsplash.com/${photoId}?auto=format&fit=crop&w=${width}&q=85`;
@@ -254,39 +255,59 @@ export const travelUpdates: TravelUpdate[] = [
   {
     id: "pal-riyadh-flight-suspension-november-2026",
     slug: "pal-riyadh-flight-suspension-november-2026",
-    headline: "PAL Riyadh Flights Suspended Until November 29: What Filipino Passengers Should Know",
-    summary: "Philippine Airlines confirms that Riyadh flights PR654 and PR655 remain suspended through November 29. Affected passengers should verify their booking status and available options.",
+    headline: "Riyadh Airport Partially Reopens, but PAL Flights Remain Suspended Until November 29",
+    summary: "King Khalid International Airport began limited operations on October 25. PAL’s latest published advisory still suspends Manila–Riyadh flights PR654 and PR655 through November 29; the airport reopening is not a PAL restart notice.",
+    seoTitle: "Riyadh Airport Partly Reopens; PAL Flights Still Suspended | AeroGo",
+    seoDescription: "Riyadh airport resumed limited service on October 25, but PAL’s latest advisory still suspends PR654 and PR655 through November 29. Check your booking with PAL.",
     destination: "Riyadh / Manila",
     country: "Saudi Arabia / Philippines",
     category: "flights-airports",
     publishedAt: "2026-10-19",
+    updatedAt: "2026-10-27",
+    socialImage: {
+      src: "/images/news/riyadh-airport-pal-status-2026-social.png",
+      alt: "Dated AeroGo graphic: King Khalid International Airport limited operations effective October 25; PAL flights PR654 and PR655 suspended through November 29, 2026.",
+    },
     image: {
-      src: unsplash("photo-1436491865332-7a61a109cc05", 2200),
-      alt: "Passenger aircraft flying above the clouds",
+      src: "/images/news/riyadh-airport-pal-status-2026.svg",
+      alt: "Original information graphic comparing King Khalid International Airport’s limited operations from October 25 with PAL flights PR654 and PR655 suspended through November 29; not a live flight-status display",
+      credit: "Original AeroGo information graphic based on dated airport and airline notices; not a live flight-status display",
     },
     body: [
-      { type: "paragraph", text: "Philippine Airlines (PAL) issued a travel advisory on October 12 confirming that its Riyadh services, flights PR654 and PR655, remain suspended until November 29, 2026. This matters to Filipinos travelling between Manila and Riyadh, including overseas Filipino workers and families arranging return trips. Check your own booking directly with PAL or the travel agent that issued it before making airport plans." },
-      { type: "heading", text: "Which flights are affected, and why?" },
-      { type: "paragraph", text: "The advisory applies to PAL flights PR654 and PR655 on the Riyadh route. PAL says the suspension is due to the evolving security situation at King Khalid International Airport. The airline says it is monitoring developments and assessing conditions affecting the operation of its flights. It will provide further updates as necessary." },
-      { type: "heading", text: "What November 29 means" },
-      { type: "paragraph", text: "PAL's notice says the flights remain suspended until November 29. It does not confirm a service restart on November 30, or name a first flight that will operate after the suspension period. Any resumption remains subject to PAL's assessment and a later airline update. Treat November 29 as the current suspension endpoint in the notice, not a guaranteed restart timetable." },
-      { type: "heading", text: "Does this affect every airline or Riyadh airport?" },
-      { type: "paragraph", text: "No broader closure is stated in this notice. It covers the named PAL flights only; it does not announce that other airlines' flights or all services at King Khalid International Airport are suspended. Check directly with the carrier on your ticket for any other itinerary, and do not assume that another airline's schedule or status matches PAL's." },
-      { type: "heading", text: "What passengers and returning OFWs should do" },
-      { type: "paragraph", text: "If your booking includes PR654 or PR655, look up the reservation and flight status using PAL's official channels. Contact PAL through its listed reservation and assistance channels, or contact the travel agent that issued your ticket, to ask what options apply to your booking. The October 12 advisory does not set out a refund entitlement, rebooking waiver, alternative flight schedule or other ticket terms, so confirm these before changing plans." },
+      { type: "paragraph", text: "King Khalid International Airport (KKIA) began a limited return of operations on October 25, with Terminal 1 assigned to domestic flights and Terminal 2 to international flights operated by Saudi national carriers. PAL’s latest published advisory, dated October 12 and still the latest we found on October 27, keeps Manila–Riyadh flights PR654 and PR655 suspended through November 29. The airport’s partial reopening is not a PAL resumption notice." },
+      { type: "heading", text: "What changed at Riyadh Airport?" },
+      { type: "paragraph", text: "KKIA announced the terminal arrangement on October 24, effective Sunday, October 25. Its notice specified Terminal 1 for domestic services and Terminal 2 for international flights operated by Saudi national carriers. That is a limited operating arrangement for the named terminals; it is not confirmation that the airport has returned to full capacity or that every international airline may operate." },
+      { type: "paragraph", text: "In a notice last updated October 26, Saudi carrier flynas said KKIA was operating through Terminals 1 and 2 and told its passengers to confirm their flight status and terminal before travelling. That is flynas-specific guidance; it does not change PAL’s separate suspension notice." },
+      { type: "paragraph", text: "The airport’s current passenger advisory warns that regional developments and airspace restrictions may delay, reschedule or cancel some flights. The airport also directs passengers to check flight status through its official channels. An airport-wide or terminal update cannot establish the status of a particular airline booking." },
+      { type: "heading", text: "What PAL’s latest advisory says" },
+      { type: "paragraph", text: "PAL’s October 12 advisory remains its latest published notice we located as of October 27. It says PR654 and PR655 to and from Riyadh are suspended through November 29 because of the evolving security situation at KKIA, and that the airline is monitoring conditions and will issue further updates as necessary. No confirmed November 30 restart or first operating flight is named." },
+      { type: "heading", text: "What affected passengers should do" },
       { type: "list", items: [
-        "Keep your booking reference and ticket details available when checking with PAL or the agent that issued the ticket.",
-        "If you are an OFW coordinating a return, confirm the itinerary with your employer or family after PAL verifies the booking; do not rely on an older ticket email alone.",
-        "Recheck PAL's travel advisories and live flight status close to departure, since the airline says it is monitoring conditions and may issue further updates.",
+        "Use PAL’s official Manage Booking service and verify flight status for your exact date and flight number.",
+        "Review the latest email, text or other notification from PAL, and confirm that the contact details attached to your booking are current.",
+        "Ask PAL or the travel agent that issued your ticket which options apply to your specific booking. The advisory does not promise a refund, rebooking, compensation or alternative transport.",
+        "Do not go to the airport on the assumption that PR654 or PR655 will operate because two airport terminals have reopened. Wait for confirmation from PAL about your own itinerary.",
       ] },
-      { type: "heading", text: "Before going to the airport" },
-      { type: "paragraph", text: "Do not travel to the airport expecting PR654 or PR655 to operate based only on an earlier itinerary. Confirm the flight's status and any replacement arrangement with PAL first, then follow the instructions attached to your booking. The situation and schedules can change; use PAL's current advisory and status pages for official assistance rather than assuming a date in this notice guarantees service." },
+      { type: "heading", text: "What remains uncertain" },
+      { type: "paragraph", text: "The airport’s notice describes a partial reopening of two terminals, not a full return to normal operations. On October 25, Reuters reported that flight-tracking data showed little traffic at KKIA that day; this was a dated observation, not a current traffic count or proof that a specific route has recovered. Anadolu Agency reported that airport management had not issued a separate statement on the resumption after its Saturday terminal notice, and attributed renewed warnings about the airport to a Houthi military spokesperson. Those reports are not flight-clearance instructions or confirmation of PAL operations." },
+      { type: "paragraph", text: "For Manila–Riyadh travel, PAL remains the final authority for PR654 and PR655 and for the options attached to each booking. Recheck the airline’s advisory and your itinerary close to departure; flight and airport operations can change." },
+      { type: "citation", label: "PAL flight status", url: "https://www.philippineairlines.com/en/flight-status" },
+      { type: "citation", label: "PAL Manage Booking guide and FAQ", url: "https://www.philippineairlines.com/ph/en/faq/manage-booking-faqs.html" },
     ],
     sources: [
-      { label: "Riyadh flights PR654 and PR655 suspension notice, October 12", url: "https://www.philippineairlines.com/us/en/newsevent-listingpage/travel-advisory/riyadh-flights-pr654-pr655-suspended.html", publisher: "Philippine Airlines", accessedAt: october19AccessedAt },
-      { label: "PAL flight status", url: "https://www.philippineairlines.com/en/flight-status", publisher: "Philippine Airlines", accessedAt: october19AccessedAt },
-      { label: "PAL reservation hotline and customer assistance", url: "https://www.philippineairlines.com/en/about-us/contact-us/global-reservation-hotline", publisher: "Philippine Airlines", accessedAt: october19AccessedAt },
+      { label: "Riyadh flights PR654 and PR655 suspended until November 29 (advisory dated October 12)", url: "https://www.philippineairlines.com/us/en/newsevent-listingpage/travel-advisory/riyadh-flights-pr654-pr655-suspended.html", publisher: "Philippine Airlines", accessedAt: october19AccessedAt, recheckedAt: october27AccessedAt },
+      { label: "Passenger notice: Terminal 1 and Terminal 2 arrangements (posted October 24; effective October 25)", url: "https://x.com/KKIASA/status/2114077020531396960", publisher: "King Khalid International Airport", accessedAt: october24AccessedAt, recheckedAt: october27AccessedAt },
+      { label: "Current flight-status and passenger advisory", url: "https://www.kkia.sa/en/presentation/page-designs/home-page", publisher: "King Khalid International Airport", accessedAt: october27AccessedAt },
+      { label: "Live departures and arrivals", url: "https://www.kkia.sa/en/flights/departures-and-arrivals", publisher: "King Khalid International Airport", accessedAt: october27AccessedAt },
+      { label: "Saudi says Riyadh airport partly reopens despite renewed Houthi threats (October 25, 11:05 PM)", url: "https://www.gmanetwork.com/news/topstories/world/1007133/saudi-says-riyadh-airport-partly-reopens-despite-renewed-houthi-threats/story/", publisher: "Reuters, republished by GMA News", accessedAt: october27AccessedAt },
+      { label: "Riyadh airport partially resumes flights after Houthi attacks (October 25; updated October 25)", url: "https://www.aa.com.tr/en/middle-east/riyadh-airport-partially-resumes-flights-after-houthi-attacks/4100424", publisher: "Anadolu Agency", accessedAt: october27AccessedAt },
+      { label: "Riyadh Airport Terminal Update (last updated October 26, 2:00 PM Saudi Arabia time)", url: "https://www.flynas.com/en/travel-advisory", publisher: "flynas", accessedAt: october27AccessedAt },
+      { label: "PAL flight status", url: "https://www.philippineairlines.com/en/flight-status", publisher: "Philippine Airlines", accessedAt: october19AccessedAt, recheckedAt: october27AccessedAt },
+      { label: "Manage Booking FAQs", url: "https://www.philippineairlines.com/ph/en/faq/manage-booking-faqs.html", publisher: "Philippine Airlines", accessedAt: october27AccessedAt },
+      { label: "PAL reservations hotline and customer assistance", url: "https://www.philippineairlines.com/en/about-us/contact-us/global-reservation-hotline", publisher: "Philippine Airlines", accessedAt: october19AccessedAt, recheckedAt: october27AccessedAt },
     ],
+    archiveNotice: "This article is preserved as a dated record of the Riyadh airport operating arrangement and PAL’s suspension notice. Its archive status does not mean airport operations or Manila–Riyadh services have recovered. PAL’s later advisories and your booking remain the authority for current flight status.",
+    expiresAt: "2026-11-30T00:00:00+08:00",
   },
   {
     id: "south-korea-iksan-chrysanthemum-festival-2026",

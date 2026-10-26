@@ -109,8 +109,9 @@ function NewsTeaser({ update, past }: { update: TravelUpdate; past: boolean }) {
 
 function NewsLead({ update, past }: { update: TravelUpdate; past: boolean }) {
   const [imageFailed, setImageFailed] = useState(false);
+  const isGraphic = /graphic|diagram|map/i.test(update.image.alt);
   return <article className={`news-lead${imageFailed || !update.image?.src ? " news-lead--text-only" : ""}`}>
-    {update.image?.src && !imageFailed && <Link className="news-lead__image" to={articlePath(update)} aria-label={`Read ${update.headline}`}><img src={update.image.src} width="1440" height="990" alt={update.image.alt} loading="eager" decoding="async" fetchPriority="high" onError={() => setImageFailed(true)} /></Link>}
+    {update.image?.src && !imageFailed && <Link className={`news-lead__image${isGraphic ? " news-lead__image--graphic" : ""}`} to={articlePath(update)} aria-label={`Read ${update.headline}`}><img src={update.image.src} width="1440" height="720" alt={update.image.alt} loading="eager" decoding="async" fetchPriority="high" onError={() => setImageFailed(true)} /></Link>}
     <div className="news-lead__copy">
       <StoryLabel update={update} past={past} />
       <h2><Link to={articlePath(update)}>{update.headline}</Link></h2>
@@ -140,7 +141,8 @@ export function TravelUpdateArticlePage() {
     const structuredData = document.head.querySelector<HTMLScriptElement>('script[data-aerogo-news-schema]') ?? document.head.appendChild(document.createElement("script"));
     structuredData.type = "application/ld+json";
     structuredData.dataset.aerogoNewsSchema = "";
-    structuredData.textContent = JSON.stringify(buildTravelNewsStructuredData(update, SITE_ORIGIN));
+    const socialImageOrigin = window.location.hostname.endsWith(".vercel.app") ? window.location.origin : SITE_ORIGIN;
+    structuredData.textContent = JSON.stringify(buildTravelNewsStructuredData(update, SITE_ORIGIN, socialImageOrigin));
     window.dispatchEvent(new Event("aerogo:metadata-ready"));
     return () => structuredData.remove();
   }, [update]);
@@ -161,8 +163,8 @@ export function TravelUpdateArticlePage() {
         aria-labelledby="news-article-title"
         data-seo-title={update.seoTitle ?? `${update.headline} · AeroGo Travel News`}
         data-seo-description={update.seoDescription ?? update.summary}
-        data-seo-image={update.socialImage === false ? undefined : update.image?.src}
-        data-seo-image-alt={update.socialImage === false ? undefined : update.image?.alt}
+        data-seo-image={update.socialImage === false ? undefined : update.socialImage?.src ?? update.image?.src}
+        data-seo-image-alt={update.socialImage === false ? undefined : update.socialImage?.alt ?? update.image?.alt}
         data-seo-published={update.publishedAt}
         data-seo-updated={update.updatedAt}
       >

@@ -1097,7 +1097,7 @@ test("October 17 event updates lead deterministically, preserve filters and expi
 
 test("October 19 updates resolve, lead in stable order, preserve filters and use correct lifecycles", () => {
   const cases = [
-    { slug: "pal-riyadh-flight-suspension-november-2026", headline: "PAL Riyadh Flights Suspended Until November 29: What Filipino Passengers Should Know", destination: "Riyadh / Manila", country: "Saudi Arabia / Philippines", category: "flights-airports", eventStartAt: undefined, eventEndAt: undefined, expiresAt: undefined },
+    { slug: "pal-riyadh-flight-suspension-november-2026", headline: "Riyadh Airport Partially Reopens, but PAL Flights Remain Suspended Until November 29", destination: "Riyadh / Manila", country: "Saudi Arabia / Philippines", category: "flights-airports", eventStartAt: undefined, eventEndAt: undefined, expiresAt: "2026-11-30T00:00:00+08:00" },
     { slug: "south-korea-iksan-chrysanthemum-festival-2026", headline: "South Korea's Free Iksan Chrysanthemum Festival Opens October 23: Dates and Visitor Guide", destination: "Iksan, Jeonbuk State", country: "South Korea", category: "events-experiences", eventStartAt: "2026-10-23", eventEndAt: "2026-11-01", expiresAt: "2026-11-02T00:00:00+09:00" },
     { slug: "malaysia-mhlife-festival-2026", headline: "Malaysia's Free MHLife Festival Begins October 23: Food, Culture and Family Activities", destination: "Shah Alam, Selangor", country: "Malaysia", category: "events-experiences", eventStartAt: "2026-10-23", eventEndAt: "2026-10-25", expiresAt: "2026-10-26T00:00:00+08:00" },
   ];
@@ -1128,19 +1128,46 @@ test("October 19 updates resolve, lead in stable order, preserve filters and use
     assert.ok(active.some((item) => item.slug === expected.slug));
     assert.ok(filterTravelUpdates(active, expected.destination, expected.category).some((item) => item.slug === expected.slug));
     assert.ok(update.body.length >= 8);
-    assert.ok(update.sources.every((source) => source.accessedAt === "2026-10-19"));
     assert.ok(update.sources.every((source) => source.url.startsWith("https://")));
+    if (expected.slug === "pal-riyadh-flight-suspension-november-2026") {
+      assert.equal(update.updatedAt, "2026-10-27", "the planned release date is recorded separately from the original publication date");
+      assert.ok(update.sources.every((source) => (source.recheckedAt ?? source.accessedAt) === "2026-10-27"));
+    } else {
+      assert.ok(update.sources.every((source) => source.accessedAt === "2026-10-19"));
+    }
   }
 
   const pal = getTravelUpdateBySlug(slugs[0]);
   const palCopy = pal?.body.map((block) => block.text ?? block.items?.join(" ") ?? "").join(" ") ?? "";
   assert.match(palCopy, /October 12/);
   assert.match(palCopy, /PR654 and PR655/);
-  assert.match(palCopy, /evolving security situation at King Khalid International Airport/);
-  assert.match(palCopy, /does not confirm a service restart on November 30/);
-  assert.match(palCopy, /does not announce that other airlines' flights/);
-  assert.match(palCopy, /refund entitlement, rebooking waiver/);
+  assert.match(palCopy, /evolving security situation at KKIA/);
+  assert.match(palCopy, /limited return of operations on October 25/);
+  assert.match(palCopy, /not a PAL resumption notice/);
+  assert.match(palCopy, /No confirmed November 30 restart/);
+  assert.match(palCopy, /dated observation, not a current traffic count/);
+  assert.match(palCopy, /does not promise a refund, rebooking, compensation or alternative transport/);
   assert.ok(pal?.sources.some((source) => source.publisher === "Philippine Airlines" && source.url.includes("riyadh-flights-pr654-pr655-suspended")));
+  assert.ok(pal?.sources.some((source) => source.publisher === "Reuters, republished by GMA News"));
+  assert.equal(pal?.publishedAt, "2026-10-19");
+  assert.equal(pal?.updatedAt, "2026-10-27");
+  assert.equal(pal?.expiresAt, "2026-11-30T00:00:00+08:00");
+  assert.deepEqual(pal?.socialImage, {
+    src: "/images/news/riyadh-airport-pal-status-2026-social.png",
+    alt: "Dated AeroGo graphic: King Khalid International Airport limited operations effective October 25; PAL flights PR654 and PR655 suspended through November 29, 2026.",
+  });
+  assert.match(pal?.image.alt ?? "", /not a live flight-status display/);
+  const palStructuredData = buildTravelNewsStructuredData(pal, "https://aerogotours.com");
+  assert.equal(palStructuredData["@graph"][0].image, "https://aerogotours.com/images/news/riyadh-airport-pal-status-2026-social.png");
+  assert.equal(palStructuredData["@graph"][0].datePublished, "2026-10-19");
+  assert.equal(palStructuredData["@graph"][0].dateModified, "2026-10-27");
+  const palPreviewStructuredData = buildTravelNewsStructuredData(pal, "https://aerogotours.com", "https://aerogo-preview.vercel.app");
+  assert.equal(palPreviewStructuredData["@graph"][0].mainEntityOfPage["@id"], "https://aerogotours.com/travel-updates/pal-riyadh-flight-suspension-november-2026");
+  assert.equal(palPreviewStructuredData["@graph"][0].image, "https://aerogo-preview.vercel.app/images/news/riyadh-airport-pal-status-2026-social.png");
+  const afterSuspensionWindow = new Date("2026-11-30T00:00:00+08:00");
+  assert.ok(getArchivedTravelUpdates(afterSuspensionWindow).some((update) => update.slug === pal?.slug));
+  assert.equal(getTravelUpdateBySlug(pal?.slug)?.publishedAt, "2026-10-19");
+  assert.match(pal?.archiveNotice ?? "", /does not mean airport operations or Manila–Riyadh services have recovered/);
 
   const iksan = getTravelUpdateBySlug(slugs[1]);
   const iksanCopy = iksan?.body.map((block) => block.text ?? block.items?.join(" ") ?? "").join(" ") ?? "";
