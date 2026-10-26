@@ -153,11 +153,13 @@ export function Homepage() {
         <div className="desk-lead__grid">
           <article className="desk-feature">
             <figure className="desk-feature__figure">
-              <Link to={leadGuide.path} aria-label={`Read ${leadGuide.title}`}><EditorialPhoto image="S25" alt="Supertree Grove and the glass conservatories at Gardens by the Bay, Singapore" priority sizes="(max-width: 650px) 90vw, (max-width: 1000px) 56vw, 55vw" /></Link>
-              <figcaption>Gardens by the Bay, Singapore · AeroGo public image</figcaption>
+              <Link to={leadGuide.path} aria-label={`Read ${leadGuide.title}`}><EditorialPhoto image={leadGuide.image} imageSrc={leadGuide.imageSrc} alt={leadGuide.imageAlt} priority sizes="(max-width: 650px) 90vw, (max-width: 1000px) 56vw, 55vw" /></Link>
+              {leadGuide.imageCredit ? <figcaption>
+                <span>{leadGuide.imageCredit.note}</span> Photo by <a href={leadGuide.imageCredit.authorUrl} target="_blank" rel="noopener noreferrer">{leadGuide.imageCredit.author}</a> via <a href={leadGuide.imageCredit.sourceUrl} target="_blank" rel="noopener noreferrer">{leadGuide.imageCredit.sourceName}</a> · <a href={leadGuide.imageCredit.licenseUrl} target="_blank" rel="noopener noreferrer">{leadGuide.imageCredit.license}</a>.
+              </figcaption> : <figcaption>{leadGuide.destination} · AeroGo editorial image</figcaption>}
             </figure>
             <div className="desk-feature__body">
-              <span className="desk-kicker">Featured guide · Singapore</span>
+              <span className="desk-kicker">Featured guide · {leadGuide.destination}</span>
               <h1 id="homepage-hero-title"><Link to={leadGuide.path}>{leadGuide.title}</Link></h1>
               <p>{leadGuide.summary}</p>
               <Link className="desk-text-link" to={leadGuide.path}>Read the visitor guide <ArrowUpRight size={18} aria-hidden="true" /></Link>
@@ -189,7 +191,7 @@ export function Homepage() {
         </div>
       </section>
 
-      <section className="desk-guides desk-shell" aria-labelledby="desk-guides-title"><div><span className="desk-kicker">Useful before you go</span><h2 id="desk-guides-title">Practical Travel Guides</h2><p>Our Gardens by the Bay visitor guide is featured above. Browse the guide library for practical details on what to see, what needs a ticket and how to plan your visit.</p></div><Link className="desk-guides__button" to="/guides">Explore all guides <ArrowUpRight size={18} aria-hidden="true" /></Link></section>
+      <section className="desk-guides desk-shell" aria-labelledby="desk-guides-title"><div><span className="desk-kicker">Useful before you go</span><h2 id="desk-guides-title">Practical Travel Guides</h2><p>Browse our guides for seasonal planning, attraction details and practical information to help you choose what to do next.</p></div><Link className="desk-guides__button" to="/guides">Explore all guides <ArrowUpRight size={18} aria-hidden="true" /></Link></section>
 
       <section className="desk-planning desk-shell" id="how-it-works" aria-labelledby="planning-title"><div id="services"><span className="desk-kicker">Travel planning</span><h2 id="planning-title">Need a hand with the details?</h2><p>Share your destination, dates and preferences. AeroGo can help shape a practical itinerary and organize your next steps.</p></div><div className="desk-planning__links"><Link className="desk-text-link" to="#inquiry">Send a trip inquiry <ArrowUpRight size={17} aria-hidden="true" /></Link><Link className="desk-text-link" to="/trip-planner">Try the free trip planner <ArrowUpRight size={17} aria-hidden="true" /></Link><p id="companion">See a <Link to="/companion">sample Trip Companion</Link> for an illustrative private trip space.</p></div></section>
 

@@ -50,7 +50,8 @@
 #discovery-home .desk-feature__figure img {
   display: block;
   width: 100%;
-  height: 355px;
+  height: auto;
+  aspect-ratio: 16 / 10;
   object-fit: cover;
   object-position: 50% 48%;
 }
@@ -65,6 +66,7 @@
   font-size: 12px;
   line-height: 1.3;
 }
+#discovery-home .desk-feature__figure figcaption a { color: var(--editorial-link-blue); text-decoration: underline; text-underline-offset: 2px; }
 #discovery-home .desk-feature__body { padding-top: 18px; }
 #discovery-home .desk-kicker {
   display: block;
@@ -218,7 +220,7 @@
 
 @media (max-width: 1000px) {
   #discovery-home .desk-lead__grid { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 20px; }
-  #discovery-home .desk-feature__figure img { height: 310px; }
+  #discovery-home .desk-feature__figure img { height: auto; aspect-ratio: 16 / 10; }
   #discovery-home .desk-news h3 { font-size: 27px; }
   #discovery-home .desk-news__list li { padding-block: 14px; }
 }
@@ -228,7 +230,7 @@
   #discovery-home .desk-overline { padding-block: 12px 10px; font-size: 11px; }
   #discovery-home .desk-overline span:last-child { display: none; }
   #discovery-home .desk-lead__grid { grid-template-columns: 1fr; gap: 30px; padding-block: 12px 32px; }
-  #discovery-home .desk-feature__figure img { height: auto; aspect-ratio: 2 / 1; object-position: 50% 50%; }
+  #discovery-home .desk-feature__figure img { height: auto; aspect-ratio: 16 / 10; object-position: 50% 48%; }
   #discovery-home .desk-feature__figure figcaption { margin-top: -17px; padding: 6px 8px 6px 0; font-size: 10px; }
   #discovery-home .desk-feature__body { padding-top: 12px; }
   #discovery-home .desk-feature h1 { margin: 8px 0; font-size: clamp(39px, 10vw, 48px); line-height: .98; }
