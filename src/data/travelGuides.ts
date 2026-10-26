@@ -20,12 +20,30 @@ export type TravelGuide = {
   topics?: string[];
   publishedAt?: string;
   sourcesCheckedAt?: string;
+  homepageFeaturedThrough?: string;
   seoTitle?: string;
   seoDescription?: string;
 };
 
-// Only published, publicly routable editorial guides belong in this list.
+// Publicly routable guide records used by the directory, homepage and static SEO build.
+// Set publishedAt to the article's actual first-production publication date; correct it before release if publication is delayed.
 export const travelGuides: TravelGuide[] = [
+  {
+    path: "/guides/philippines/cebu-pacific-undas-2026-flight-checklist",
+    destination: "Philippines",
+    title: "Flying Cebu Pacific During Undas 2026? 7 Things to Check Before You Leave",
+    summary: "A saveable flight-day checklist for Cebu Pacific passengers: airport arrival, online check-in, baggage, documents, airport steps and what to do if a flight changes.",
+    image: "cebu-undas-checklist",
+    imageSrc: "/images/guides/philippines/cebu-undas-checklist.jpg",
+    imageAlt: "Original AeroGo illustration of an open suitcase, travel essentials and a phone displaying a generic checklist; this is not a photograph of an airport or airline operation",
+    socialImageAlt: "Original AeroGo illustration of travel essentials beside a generic checklist phone, created for the Cebu Pacific Undas flight guide; not a documentary airport image",
+    topics: ["3 hours domestic · 4 hours international", "48-hour online check-in", "Undas peak-period checklist"],
+    publishedAt: "2026-10-26",
+    sourcesCheckedAt: "2026-10-26",
+    homepageFeaturedThrough: "2026-11-03",
+    seoTitle: "Cebu Pacific Undas 2026: 7 Flight-Day Checks | AeroGo",
+    seoDescription: "Flying Cebu Pacific during Undas 2026? Check airport arrival times, check-in deadlines, baggage, documents and what to do if your flight changes.",
+  },
   {
     path: "/guides/japan/autumn-leaves-2026",
     destination: "Japan",
@@ -74,3 +92,14 @@ export const travelGuides: TravelGuide[] = [
     topics: ["Free & ticketed areas", "Conservatories", "Day into night"],
   },
 ];
+
+export function getFeaturedTravelGuide(now = new Date()): TravelGuide {
+  const manilaDate = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Manila",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(now);
+  return travelGuides.find((guide) => !guide.homepageFeaturedThrough || manilaDate <= guide.homepageFeaturedThrough)
+    ?? travelGuides[0];
+}
