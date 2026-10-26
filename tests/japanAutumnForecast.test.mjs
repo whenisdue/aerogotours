@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { travelGuides } from "../src/data/travelGuides.ts";
+import { getFeaturedTravelGuide, travelGuides } from "../src/data/travelGuides.ts";
 import { jmcCityForecasts, jmcForecastPublishedAt, japanAutumnForecastCheckedAt, jwaLocationForecasts, jwaSecondForecastPublishedAt } from "../src/data/japanAutumnForecast.ts";
 
 test("Japan autumn guide has distinct publication and source-check dates, a licensed image, and the canonical route", () => {
@@ -11,7 +11,8 @@ test("Japan autumn guide has distinct publication and source-check dates, a lice
   assert.equal(guide.imageSrc, "/images/guides/japan-autumn/kiyomizu-dera-kyoto-2016.jpg");
   assert.equal(guide.imageCredit?.license, "CC BY-SA 4.0");
   assert.equal(guide.imageCredit?.licenseUrl, "https://creativecommons.org/licenses/by-sa/4.0");
-  assert.equal(travelGuides[0].path, guide.path);
+  assert.equal(travelGuides[1].path, guide.path, "the evergreen Japan guide remains available after the temporary Undas homepage feature");
+  assert.equal(getFeaturedTravelGuide(new Date("2026-11-04T00:00:00+08:00")).path, guide.path);
 });
 
 test("JMC city table contains the 11 requested cities and their October 1 maple and ginkgo forecasts", () => {

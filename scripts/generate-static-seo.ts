@@ -28,10 +28,15 @@ const japanTaxGuide = travelGuides.find((guide) => guide.path === "/guides/japan
 if (!japanTaxGuide?.publishedAt) throw new Error("The Japan guide publication date is missing from travelGuides.ts");
 const japanAutumnGuide = travelGuides.find((guide) => guide.path === "/guides/japan/autumn-leaves-2026");
 if (!japanAutumnGuide?.publishedAt || !japanAutumnGuide.imageSrc) throw new Error("The Japan autumn guide publication date or social image is missing from travelGuides.ts");
+const cebuUndasGuide = travelGuides.find((guide) => guide.path === "/guides/philippines/cebu-pacific-undas-2026-flight-checklist");
+if (!cebuUndasGuide?.sourcesCheckedAt || !cebuUndasGuide.imageSrc) throw new Error("The Cebu Pacific Undas guide metadata is incomplete");
 
 const featuredNews = getFeaturedTravelUpdate();
 const siteDescription = "Discover destination stories, travel news, practical guides and original AeroGo videos for curious Filipino travelers.";
 const gardenImage = "/images/gardens-by-the-bay/optimized/S25-1440.jpg";
+const socialImageOrigin = process.env.VERCEL_ENV === "preview" && process.env.VERCEL_URL
+  ? `https://${process.env.VERCEL_URL}`
+  : SITE_ORIGIN;
 const brandEntityId = `${SITE_ORIGIN}/#organization`;
 
 const pages: SeoPage[] = [
@@ -65,7 +70,7 @@ const pages: SeoPage[] = [
   {
     path: "/guides",
     title: "Travel Guides · AeroGo",
-    description: "Practical travel guides for curious travelers, including Japan’s 2026 autumn foliage forecasts, tax-free shopping changes and Singapore attractions.",
+    description: "Practical travel guides for Cebu Pacific’s 2026 Undas peak period, Japan autumn planning, tax-free shopping and Singapore attractions.",
     image: gardenImage,
     imageAlt: gardenGuide.imageAlt,
     schema: { "@type": "CollectionPage", name: "Travel Guides", url: `${SITE_ORIGIN}/guides` },
@@ -117,6 +122,31 @@ const pages: SeoPage[] = [
       { label: "Guides", path: "/guides" },
       { label: "Japan", path: "/destinations/japan" },
       { label: "Autumn leaves 2026", path: japanAutumnGuide.path },
+    ],
+  },
+  {
+    path: cebuUndasGuide.path,
+    title: cebuUndasGuide.seoTitle ?? `${cebuUndasGuide.title} · AeroGo`,
+    description: cebuUndasGuide.seoDescription ?? cebuUndasGuide.summary,
+    image: cebuUndasGuide.imageSrc,
+    imageAlt: cebuUndasGuide.socialImageAlt ?? cebuUndasGuide.imageAlt,
+    type: "article",
+    publishedAt: cebuUndasGuide.publishedAt,
+    schema: {
+      "@type": "Article",
+      headline: cebuUndasGuide.title,
+      description: cebuUndasGuide.seoDescription ?? cebuUndasGuide.summary,
+      image: getSocialImageUrl(cebuUndasGuide.imageSrc, socialImageOrigin),
+      ...(cebuUndasGuide.publishedAt ? { datePublished: cebuUndasGuide.publishedAt } : {}),
+      author: { "@type": "Organization", name: "AeroGo", url: `${SITE_ORIGIN}/` },
+      publisher: { "@id": brandEntityId },
+      mainEntityOfPage: { "@type": "WebPage", "@id": new URL(cebuUndasGuide.path, SITE_ORIGIN).href },
+      inLanguage: "en",
+    },
+    breadcrumbs: [
+      { label: "Discover", path: "/" },
+      { label: "Guides", path: "/guides" },
+      { label: "Cebu Pacific Undas checklist", path: cebuUndasGuide.path },
     ],
   },
   {
@@ -234,7 +264,7 @@ function breadcrumbSchema(page: SeoPage) {
 
 function pageTags(page: SeoPage) {
   const canonical = new URL(page.path, SITE_ORIGIN).href;
-  const image = page.image ? getSocialImageUrl(page.image) : undefined;
+  const image = page.image ? getSocialImageUrl(page.image, socialImageOrigin) : undefined;
   const globalGraph: Record<string, unknown>[] = [organization, {
     "@type": "WebSite",
     "@id": `${SITE_ORIGIN}/#website`,

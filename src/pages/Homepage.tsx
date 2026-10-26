@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { SiteHeader } from "../components/SiteHeader";
 import { EditorialFooter } from "../components/EditorialFooter";
 import { EditorialPhoto } from "../components/EditorialPhoto";
-import { travelGuides } from "../data/travelGuides";
+import { getFeaturedTravelGuide } from "../data/travelGuides";
 import { publishedVideos, videoPlatformLabels } from "../data/publishedVideos";
 import "./Discovery.css";
 import "./Homepage.css";
@@ -47,7 +47,7 @@ function readHomepageNews(): HomepageNewsItem[] {
 export function Homepage() {
   const [newsItems, setNewsItems] = useState<HomepageNewsItem[]>(readHomepageNews);
   const [newsLoaded, setNewsLoaded] = useState(() => newsItems.length > 0);
-  const leadGuide = travelGuides[0];
+  const leadGuide = getFeaturedTravelGuide();
   const [submissionState, setSubmissionState] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [submissionError, setSubmissionError] = useState("");
   const [datesError, setDatesError] = useState("");
