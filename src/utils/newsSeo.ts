@@ -1,10 +1,11 @@
 import type { TravelUpdate } from "../data/travelUpdates.ts";
-import { getSocialImageUrl } from "./siteMetadata.ts";
+import { getSocialImageUrl, SITE_ORIGIN } from "./siteMetadata.ts";
 
-export function buildTravelNewsStructuredData(update: TravelUpdate, origin: string) {
+export function buildTravelNewsStructuredData(update: TravelUpdate, origin: string, imageOrigin = SITE_ORIGIN) {
   const articleUrl = new URL(`/travel-updates/${update.slug}`, origin).href;
   const newsUrl = new URL("/travel-updates", origin).href;
-  const imageUrl = update.socialImage === false || !update.image?.src ? undefined : getSocialImageUrl(update.image.src);
+  const socialImage = update.socialImage === false ? undefined : update.socialImage ?? update.image;
+  const imageUrl = socialImage?.src ? getSocialImageUrl(socialImage.src, imageOrigin) : undefined;
 
   return {
     "@context": "https://schema.org",

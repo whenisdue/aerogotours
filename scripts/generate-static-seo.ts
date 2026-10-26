@@ -7,6 +7,10 @@ import { createDreamTrip, getDreamDestination } from "../src/utils/dreamTripEngi
 import { buildTravelNewsStructuredData } from "../src/utils/newsSeo.ts";
 import { DEFAULT_SOCIAL_IMAGE_ALT, getSocialImageUrl, SITE_ORIGIN } from "../src/utils/siteMetadata.ts";
 
+const socialImageOrigin = process.env.VERCEL_ENV === "preview" && process.env.VERCEL_URL
+  ? `https://${process.env.VERCEL_URL}`
+  : SITE_ORIGIN;
+
 type Breadcrumb = { label: string; path: string };
 type SeoPage = {
   path: string;
@@ -44,8 +48,8 @@ const pages: SeoPage[] = [
     path: "/travel-updates",
     title: "Travel News · AeroGo",
     description: "AeroGo Travel News: published travel developments, events and destination updates, with dates and original source links.",
-    image: featuredNews?.image.src,
-    imageAlt: featuredNews?.image.alt,
+    image: (featuredNews?.listingImage ?? featuredNews?.image)?.src,
+    imageAlt: (featuredNews?.listingImage ?? featuredNews?.image)?.alt,
     schema: { "@type": "CollectionPage", name: "Travel News", url: `${SITE_ORIGIN}/travel-updates` },
     breadcrumbs: [{ label: "Discover", path: "/" }, { label: "Travel News", path: "/travel-updates" }],
   },
@@ -53,12 +57,12 @@ const pages: SeoPage[] = [
     path: `/travel-updates/${update.slug}`,
     title: update.seoTitle ?? `${update.headline} · AeroGo Travel News`,
     description: update.seoDescription ?? update.summary,
-    image: update.socialImage === false ? undefined : update.image.src,
-    imageAlt: update.socialImage === false ? undefined : update.image.alt,
+    image: update.socialImage === false ? undefined : (update.socialImage ?? update.image).src,
+    imageAlt: update.socialImage === false ? undefined : (update.socialImage ?? update.image).alt,
     type: "article",
     publishedAt: update.publishedAt,
     updatedAt: update.updatedAt,
-    schema: buildTravelNewsStructuredData(update, SITE_ORIGIN),
+    schema: buildTravelNewsStructuredData(update, SITE_ORIGIN, socialImageOrigin),
   })),
   {
     path: "/guides",
@@ -206,7 +210,7 @@ function breadcrumbSchema(page: SeoPage) {
 
 function pageTags(page: SeoPage) {
   const canonical = new URL(page.path, SITE_ORIGIN).href;
-  const image = page.image ? getSocialImageUrl(page.image) : undefined;
+  const image = page.image ? getSocialImageUrl(page.image, socialImageOrigin) : undefined;
   const globalGraph: Record<string, unknown>[] = [organization, {
     "@type": "WebSite",
     "@id": `${SITE_ORIGIN}/#website`,
@@ -252,7 +256,7 @@ const placeholder = /<!-- AEROGO:SEO:START -->[\s\S]*?<!-- AEROGO:SEO:END -->/;
 if (!placeholder.test(template)) throw new Error("SEO metadata marker is missing from dist/index.html");
 const homeNewsPlaceholder = /<!-- AEROGO:HOME_NEWS:START -->[\s\S]*?<!-- AEROGO:HOME_NEWS:END -->/;
 if (!homeNewsPlaceholder.test(template)) throw new Error("Homepage news data marker is missing from dist/index.html");
-const homepageNews = getHomepageTravelUpdates().slice(0, 2).map(({ slug, category, headline, summary, publishedAt }) => ({ slug, category, headline, summary, publishedAt }));
+const homepageNews = getHomepageTravelUpdates().slice(0, 2).map(({ slug, category, headline, summary, publishedAt, updatedAt }) => ({ slug, category, headline, summary, publishedAt, updatedAt }));
 const routeTemplate = template.replace(homeNewsPlaceholder, `<!-- AEROGO:HOME_NEWS:START --><script id="aerogo-homepage-news" type="application/json">${safeJson(homepageNews)}</script><!-- AEROGO:HOME_NEWS:END -->`);
 
 const seen = new Set<string>();

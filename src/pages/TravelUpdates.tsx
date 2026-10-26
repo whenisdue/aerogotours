@@ -5,7 +5,7 @@ import { EditorialFooter } from "../components/EditorialFooter";
 import { SiteHeader } from "../components/SiteHeader";
 import { filterTravelUpdates, getActiveTravelUpdates, getArchivedTravelUpdates, getTravelUpdateBySlug, isArchivedTravelUpdate, type TravelUpdate, type TravelUpdateCategory } from "../data/travelUpdates";
 import { buildTravelNewsStructuredData } from "../utils/newsSeo";
-import { SITE_ORIGIN } from "../utils/siteMetadata";
+import { SITE_ORIGIN, getSocialImageOrigin } from "../utils/siteMetadata";
 import "./TravelNews.css";
 
 const categoryLabels: Record<TravelUpdateCategory, string> = {
@@ -29,6 +29,13 @@ function StoryLabel({ update, past = false }: { update: TravelUpdate; past?: boo
     <span>{categoryLabels[update.category]}</span>
     <span>{update.destination}</span>
     {past && <span className="news-story-label__past">{isEventStory(update) ? "Past event" : "Archived update"}</span>}
+  </div>;
+}
+
+function StoryDates({ update, compact = false }: { update: TravelUpdate; compact?: boolean }) {
+  return <div className={`news-story-dates${compact ? " news-story-dates--compact" : ""}`}>
+    <span>Published <time dateTime={update.publishedAt}>{formatDate(update.publishedAt)}</time></span>
+    {update.updatedAt && update.updatedAt !== update.publishedAt && <span className="news-story-dates__updated">Updated <time dateTime={update.updatedAt}>{formatDate(update.updatedAt)}</time></span>}
   </div>;
 }
 
@@ -103,19 +110,23 @@ function NewsTeaser({ update, past }: { update: TravelUpdate; past: boolean }) {
     <StoryLabel update={update} past={past} />
     <h3><Link to={articlePath(update)}>{update.headline}</Link></h3>
     <p>{update.summary}</p>
-    <time dateTime={update.publishedAt}>Published {formatDate(update.publishedAt)}</time>
+    <StoryDates update={update} />
   </article>;
 }
 
 function NewsLead({ update, past }: { update: TravelUpdate; past: boolean }) {
   const [imageFailed, setImageFailed] = useState(false);
+  const listingImage = update.listingImage ?? update.image;
   return <article className={`news-lead${imageFailed || !update.image?.src ? " news-lead--text-only" : ""}`}>
-    {update.image?.src && !imageFailed && <Link className="news-lead__image" to={articlePath(update)} aria-label={`Read ${update.headline}`}><img src={update.image.src} width="1440" height="990" alt={update.image.alt} loading="eager" decoding="async" fetchPriority="high" onError={() => setImageFailed(true)} /></Link>}
+    {listingImage?.src && !imageFailed && <figure className={`news-lead__media${update.listingImage ? " news-lead__media--landscape" : ""}`}>
+      <Link className="news-lead__image" to={articlePath(update)} aria-label={`Read ${update.headline}`}><img src={listingImage.src} width={listingImage.width ?? 1440} height={listingImage.height ?? 990} alt={listingImage.alt} loading="eager" decoding="async" fetchPriority="high" onError={() => setImageFailed(true)} /></Link>
+      {update.listingImage?.credit && <figcaption>{update.listingImage.credit}.</figcaption>}
+    </figure>}
     <div className="news-lead__copy">
       <StoryLabel update={update} past={past} />
       <h2><Link to={articlePath(update)}>{update.headline}</Link></h2>
       {update.summary && <p>{update.summary}</p>}
-      <div className="news-story-foot"><span>Published <time dateTime={update.publishedAt}>{formatDate(update.publishedAt)}</time></span><Link to={articlePath(update)}>Read story <ArrowUpRight size={16} aria-hidden="true" /></Link></div>
+      <div className="news-story-foot"><StoryDates update={update} /><Link to={articlePath(update)}>Read story <ArrowUpRight size={16} aria-hidden="true" /></Link></div>
     </div>
   </article>;
 }
@@ -127,7 +138,7 @@ function NewsRow({ update, past }: { update: TravelUpdate; past: boolean }) {
       <h3><Link to={articlePath(update)}>{update.headline}</Link></h3>
       {update.summary && <p>{update.summary}</p>}
     </div>
-    <div className="news-row__end"><span>Published <time dateTime={update.publishedAt}>{formatDate(update.publishedAt)}</time></span><Link to={articlePath(update)} aria-label={`Read ${update.headline}`}><ArrowRight size={20} aria-hidden="true" /></Link></div>
+    <div className="news-row__end"><StoryDates update={update} compact /><Link to={articlePath(update)} aria-label={`Read ${update.headline}`}><ArrowRight size={20} aria-hidden="true" /></Link></div>
   </article>;
 }
 
@@ -140,7 +151,7 @@ export function TravelUpdateArticlePage() {
     const structuredData = document.head.querySelector<HTMLScriptElement>('script[data-aerogo-news-schema]') ?? document.head.appendChild(document.createElement("script"));
     structuredData.type = "application/ld+json";
     structuredData.dataset.aerogoNewsSchema = "";
-    structuredData.textContent = JSON.stringify(buildTravelNewsStructuredData(update, SITE_ORIGIN));
+    structuredData.textContent = JSON.stringify(buildTravelNewsStructuredData(update, SITE_ORIGIN, getSocialImageOrigin()));
     window.dispatchEvent(new Event("aerogo:metadata-ready"));
     return () => structuredData.remove();
   }, [update]);
@@ -148,6 +159,7 @@ export function TravelUpdateArticlePage() {
   if (!update) return <TravelUpdateNotFound />;
 
   const past = isArchivedTravelUpdate(update);
+  const socialImage = update.socialImage === false ? undefined : update.socialImage ?? update.image;
   const sourceDates = update.sources.map((source) => source.recheckedAt ?? source.accessedAt).filter((date): date is string => Boolean(date));
   const commonSourceDate = sourceDates.length === update.sources.length && sourceDates.every((date) => date === sourceDates[0]) ? sourceDates[0] : undefined;
   const related = getActiveTravelUpdates().filter((item) => item.slug !== update.slug && (item.destination === update.destination || item.category === update.category)).slice(0, 2);
@@ -161,8 +173,8 @@ export function TravelUpdateArticlePage() {
         aria-labelledby="news-article-title"
         data-seo-title={update.seoTitle ?? `${update.headline} · AeroGo Travel News`}
         data-seo-description={update.seoDescription ?? update.summary}
-        data-seo-image={update.socialImage === false ? undefined : update.image?.src}
-        data-seo-image-alt={update.socialImage === false ? undefined : update.image?.alt}
+        data-seo-image={socialImage?.src}
+        data-seo-image-alt={socialImage?.alt}
         data-seo-published={update.publishedAt}
         data-seo-updated={update.updatedAt}
       >
@@ -174,7 +186,7 @@ export function TravelUpdateArticlePage() {
           {update.summary && <p className="news-article__deck">{update.summary}</p>}
           <dl className="news-article__dates">
             <div><dt>Published by AeroGo</dt><dd><time dateTime={update.publishedAt}>{formatDate(update.publishedAt)}</time></dd></div>
-            {update.updatedAt && <div><dt>Updated</dt><dd><time dateTime={update.updatedAt}>{formatDate(update.updatedAt)}</time></dd></div>}
+            {update.updatedAt && <div className={update.updatedAt !== update.publishedAt ? "news-article__date--updated" : undefined}><dt>Updated</dt><dd><time dateTime={update.updatedAt}>{formatDate(update.updatedAt)}</time></dd></div>}
             {commonSourceDate && <div><dt>Sources checked</dt><dd><time dateTime={commonSourceDate}>{formatDate(commonSourceDate)}</time></dd></div>}
             {update.effectiveAt && <div><dt>Effective date</dt><dd><time dateTime={update.effectiveAt}>{formatDate(update.effectiveAt)}</time></dd></div>}
             {update.category === "events-experiences" && update.eventStartAt && <div><dt>Event dates</dt><dd><time dateTime={update.eventStartAt}>{formatDate(update.eventStartAt)}</time>{update.eventEndAt && update.eventEndAt !== update.eventStartAt && <> – <time dateTime={update.eventEndAt}>{formatDate(update.eventEndAt)}</time></>}</dd></div>}
