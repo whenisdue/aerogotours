@@ -8,12 +8,12 @@ const articlePath = new URL("../src/pages/EuropeEesEtiasGuide.tsx", import.meta.
 const article = readFileSync(articlePath, "utf8");
 const metadata = readFileSync(new URL("../scripts/generate-static-seo.ts", import.meta.url), "utf8");
 
-test("Europe EES/ETIAS guide has one route, current source-check date, and no draft publication date", () => {
+test("Europe EES/ETIAS guide has one route and separate first-publication and source-check dates", () => {
   const guide = travelGuides.find((item) => item.path === guidePath);
   assert.ok(guide);
   assert.equal(travelGuides.filter((item) => item.path === guidePath).length, 1);
+  assert.equal(guide.publishedAt, "2026-10-27");
   assert.equal(guide.sourcesCheckedAt, "2026-10-27");
-  assert.equal(guide.publishedAt, undefined, "a local draft must not claim it has been published");
   assert.equal(guide.imageSrc, "/images/guides/europe/ees-etias-2026.png");
   assert.equal(guide.socialImageSrc, guide.imageSrc);
   assert.match(guide.imageAlt, /original AeroGo editorial illustration/i);
@@ -46,7 +46,7 @@ test("guide explains EES eligibility, biometrics, country scope, and internation
   assert.match(article, /Cyprus is an EU member but is not currently part of EES/);
 });
 
-test("official references, dated source check, and article schema omit an invented publication date", () => {
+test("official references and source-check date remain separate from article publication metadata", () => {
   for (const url of [
     "https://home-affairs.ec.europa.eu/policies/schengen/smart-borders/entry-exit-system_en",
     "https://travel-europe.europa.eu/ees/faq",
@@ -57,7 +57,11 @@ test("official references, dated source check, and article schema omit an invent
     "https://home-affairs.ec.europa.eu/policies/schengen/visa-policy_en",
   ]) assert.ok(article.includes(url), `missing source URL: ${url}`);
   assert.match(article, /2026-10-27/);
+  assert.match(article, /<strong>Published:<\/strong>\s*<time dateTime=\{guide\.publishedAt\}>/);
+  assert.match(article, /<strong>Official information checked:<\/strong>\s*<time dateTime=\{guide\.sourcesCheckedAt\}>/);
   assert.match(metadata, /path: europeEesGuide\.path,[\s\S]*?type: "article",[\s\S]*?mainEntityOfPage/);
-  assert.doesNotMatch(metadata.match(/path: europeEesGuide\.path,[\s\S]*?\n  },/)?.[0] ?? "", /datePublished|publishedAt/);
-  assert.doesNotMatch(article, /Published:<time|datePublished:/);
+  const europeMetadata = metadata.match(/path: europeEesGuide\.path,[\s\S]*?\n  },/)?.[0] ?? "";
+  assert.match(europeMetadata, /publishedAt: europeEesGuide\.publishedAt/);
+  assert.match(europeMetadata, /datePublished: europeEesGuide\.publishedAt/);
+  assert.match(article, /datePublished: guide\.publishedAt/);
 });

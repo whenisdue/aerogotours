@@ -81,6 +81,7 @@ export const travelGuides: TravelGuide[] = [
     imageAlt: "Original AeroGo editorial illustration comparing EES border registration with the future ETIAS pre-travel authorization; not an official EU graphic or a depiction of an actual border counter",
     socialImageAlt: "Original AeroGo illustration: EES is active at the border; ETIAS applications are not open as checked October 27, 2026",
     topics: ["EES active since 10 April 2026", "ETIAS applications not open", "Rules depend on nationality and travel status"],
+    publishedAt: "2026-10-27",
     sourcesCheckedAt: "2026-10-27",
     seoTitle: "EES vs. ETIAS in 2026: Europe Entry Rules Explained | AeroGo",
     seoDescription: "EES is operating at Europe’s Schengen borders; ETIAS applications are not open. Learn who may be affected, what happens at passport control and what to prepare.",

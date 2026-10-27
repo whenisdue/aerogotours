@@ -11,8 +11,8 @@ import "./EuropeEesEtiasGuide.css";
 const guide = (() => {
   const entry = travelGuides.find((item) => item.path === "/guides/europe/ees-etias-entry-rules-2026");
   if (!entry) throw new Error("Europe EES and ETIAS guide metadata is missing");
-  if (!entry.imageSrc || !entry.socialImageSrc || !entry.sourcesCheckedAt) throw new Error("Europe EES and ETIAS guide metadata is incomplete");
-  return { ...entry, imageSrc: entry.imageSrc, socialImageSrc: entry.socialImageSrc, sourcesCheckedAt: entry.sourcesCheckedAt };
+  if (!entry.imageSrc || !entry.socialImageSrc || !entry.publishedAt || !entry.sourcesCheckedAt) throw new Error("Europe EES and ETIAS guide metadata is incomplete");
+  return { ...entry, imageSrc: entry.imageSrc, socialImageSrc: entry.socialImageSrc, publishedAt: entry.publishedAt, sourcesCheckedAt: entry.sourcesCheckedAt };
 })();
 
 const formatDate = (value: string) => new Intl.DateTimeFormat("en-GB", {
@@ -60,6 +60,7 @@ export function EuropeEesEtiasGuide() {
         headline: guide.title,
         description: guide.seoDescription ?? guide.summary,
         image: getSocialImageUrl(guide.socialImageSrc),
+        datePublished: guide.publishedAt,
         author: { "@type": "Organization", name: "AeroGo", url: `${SITE_ORIGIN}/` },
         publisher: { "@type": "Organization", name: "AeroGo", url: `${SITE_ORIGIN}/` },
         mainEntityOfPage: { "@type": "WebPage", "@id": articleUrl },
@@ -85,7 +86,7 @@ export function EuropeEesEtiasGuide() {
           <p className="europe-ees__eyebrow">EUROPE / BORDER GUIDE</p>
           <h1>Traveling to Europe? EES vs. ETIAS Explained for 2026</h1>
           <p className="europe-ees__standfirst">EES is already recording eligible short-stay visitors at participating borders. ETIAS is a separate future travel authorization, but its official application system is not open. Here is what the two systems mean for different travelers—and what to prepare now.</p>
-          <p className="europe-ees__source-date"><strong>Official information checked:</strong> <time dateTime={guide.sourcesCheckedAt}>{formatDate(guide.sourcesCheckedAt)}</time></p>
+          <p className="europe-ees__source-date"><strong>Published:</strong> <time dateTime={guide.publishedAt}>{formatDate(guide.publishedAt)}</time><span aria-hidden="true"> · </span><strong>Official information checked:</strong> <time dateTime={guide.sourcesCheckedAt}>{formatDate(guide.sourcesCheckedAt)}</time></p>
         </header>
 
         <figure className="europe-ees__hero-image">

@@ -31,7 +31,7 @@ if (!japanAutumnGuide?.publishedAt || !japanAutumnGuide.imageSrc) throw new Erro
 const cebuUndasGuide = travelGuides.find((guide) => guide.path === "/guides/philippines/cebu-pacific-undas-2026-flight-checklist");
 if (!cebuUndasGuide?.sourcesCheckedAt || !cebuUndasGuide.imageSrc) throw new Error("The Cebu Pacific Undas guide metadata is incomplete");
 const europeEesGuide = travelGuides.find((guide) => guide.path === "/guides/europe/ees-etias-entry-rules-2026");
-if (!europeEesGuide?.sourcesCheckedAt || !europeEesGuide.imageSrc || !europeEesGuide.socialImageSrc) throw new Error("The Europe EES and ETIAS guide metadata is incomplete");
+if (!europeEesGuide?.publishedAt || !europeEesGuide.sourcesCheckedAt || !europeEesGuide.imageSrc || !europeEesGuide.socialImageSrc) throw new Error("The Europe EES and ETIAS guide metadata is incomplete");
 
 const featuredNews = getFeaturedTravelUpdate();
 const siteDescription = "Discover destination stories, timely travel news, practical guides and original AeroGo videos for curious travelers around the world.";
@@ -158,11 +158,13 @@ const pages: SeoPage[] = [
     image: europeEesGuide.socialImageSrc,
     imageAlt: europeEesGuide.socialImageAlt ?? europeEesGuide.imageAlt,
     type: "article",
+    publishedAt: europeEesGuide.publishedAt,
     schema: {
       "@type": "Article",
       headline: europeEesGuide.title,
       description: europeEesGuide.seoDescription ?? europeEesGuide.summary,
       image: getSocialImageUrl(europeEesGuide.socialImageSrc, socialImageOrigin),
+      datePublished: europeEesGuide.publishedAt,
       author: { "@type": "Organization", name: "AeroGo", url: `${SITE_ORIGIN}/` },
       publisher: { "@id": brandEntityId },
       mainEntityOfPage: { "@type": "WebPage", "@id": new URL(europeEesGuide.path, SITE_ORIGIN).href },
