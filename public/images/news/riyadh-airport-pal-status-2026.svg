@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="720" viewBox="0 0 1440 720" role="img" aria-labelledby="title description">
+  <title id="title">Riyadh airport and PAL flight status</title>
+  <desc id="description">Dated information graphic: King Khalid International Airport began limited operations on October 25, with Terminal 1 for domestic flights and Terminal 2 for international flights operated by Saudi national carriers. Philippine Airlines flights PR654 and PR655 remain suspended through November 29 according to its October 12 advisory.</desc>
+  <rect width="1440" height="720" fill="#f4f2eb"/>
+  <rect width="1440" height="14" fill="#edc521"/>
+  <text x="78" y="81" fill="#9d174d" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" letter-spacing="4">TRAVEL UPDATE / RIYADH</text>
+  <text x="78" y="148" fill="#102432" font-family="Arial, Helvetica, sans-serif" font-size="45" font-weight="700" letter-spacing="-1">Two different status updates</text>
+  <line x1="78" y1="180" x2="1362" y2="180" stroke="#c7c9c4" stroke-width="2"/>
+
+  <rect x="78" y="215" width="620" height="390" fill="#102432"/>
+  <rect x="78" y="215" width="12" height="390" fill="#edc521"/>
+  <text x="119" y="268" fill="#edc521" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" letter-spacing="3">AIRPORT / LIMITED OPERATIONS</text>
+  <text x="119" y="325" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="31" font-weight="700">King Khalid International Airport</text>
+  <text x="119" y="372" fill="#d7e0e3" font-family="Arial, Helvetica, sans-serif" font-size="22">Effective 25 October 2026</text>
+  <line x1="119" y1="405" x2="652" y2="405" stroke="#53616a" stroke-width="2"/>
+  <text x="119" y="460" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700">Terminal 1</text>
+  <text x="292" y="460" fill="#d7e0e3" font-family="Arial, Helvetica, sans-serif" font-size="22">Domestic flights</text>
+  <text x="119" y="515" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700">Terminal 2</text>
+  <text x="292" y="510" fill="#d7e0e3" font-family="Arial, Helvetica, sans-serif" font-size="20">International flights operated</text>
+  <text x="292" y="540" fill="#d7e0e3" font-family="Arial, Helvetica, sans-serif" font-size="20">by Saudi national carriers</text>
+
+  <rect x="742" y="215" width="620" height="390" fill="#ffffff" stroke="#102432" stroke-width="3"/>
+  <rect x="742" y="215" width="12" height="390" fill="#cf326f"/>
+  <text x="783" y="268" fill="#9d174d" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" letter-spacing="3">PHILIPPINE AIRLINES / MANILA–RIYADH</text>
+  <text x="783" y="355" fill="#102432" font-family="Arial, Helvetica, sans-serif" font-size="61" font-weight="700" letter-spacing="-1">PR654 / PR655</text>
+  <line x1="783" y1="391" x2="1315" y2="391" stroke="#c7c9c4" stroke-width="2"/>
+  <text x="783" y="452" fill="#102432" font-family="Arial, Helvetica, sans-serif" font-size="27" font-weight="700">Suspended through</text>
+  <text x="783" y="501" fill="#102432" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="700">29 November 2026</text>
+  <text x="783" y="553" fill="#51616a" font-family="Arial, Helvetica, sans-serif" font-size="19">PAL advisory dated 12 October 2026</text>
+
+  <text x="78" y="659" fill="#51616a" font-family="Arial, Helvetica, sans-serif" font-size="17">Dated summary of airport and airline notices · Not a live flight-status display</text>
+</svg>
