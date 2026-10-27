@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="750" viewBox="0 0 1200 750" role="img" aria-labelledby="title desc">
+  <title id="title">EES and ETIAS: two different Europe border systems</title>
+  <desc id="desc">Original AeroGo editorial illustration. EES operates at participating borders. ETIAS applications are not open as of 27 October 2026.</desc>
+  <rect width="1200" height="750" fill="#f3f0e8"/>
+  <path d="M0 0h1200v16H0z" fill="#e55279"/>
+  <circle cx="1100" cy="110" r="215" fill="#e9e5da"/>
+  <circle cx="1100" cy="110" r="152" fill="none" stroke="#d1cdc2" stroke-width="2"/>
+  <circle cx="1100" cy="110" r="90" fill="none" stroke="#d1cdc2" stroke-width="2"/>
+  <path d="M910 110h380M1100-80v380" stroke="#d1cdc2" stroke-width="2"/>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <text x="76" y="77" fill="#d84869" font-size="16" font-weight="700" letter-spacing="5">AEROGO  /  THE DISCOVERY DESK</text>
+    <text x="76" y="147" fill="#101f2b" font-size="48" font-weight="700" letter-spacing="-1.8">Two border systems.</text>
+    <text x="76" y="202" fill="#101f2b" font-size="48" font-weight="700" letter-spacing="-1.8">Two different moments.</text>
+    <text x="78" y="243" fill="#596875" font-size="17" letter-spacing="1.4">A PRACTICAL EUROPE ENTRY GUIDE / 2026</text>
+  </g>
+  <rect x="76" y="282" width="506" height="370" rx="10" fill="#101f2b"/>
+  <rect x="618" y="282" width="506" height="370" rx="10" fill="#fffefa" stroke="#d2cec3" stroke-width="2"/>
+  <path d="M76 292a10 10 0 0 1 10-10h486v9H76z" fill="#f0d441"/>
+  <path d="M618 292a10 10 0 0 1 10-10h486v9H618z" fill="#e55279"/>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <text x="108" y="336" fill="#f0d441" font-size="14" font-weight="700" letter-spacing="3">AT THE BORDER</text>
+    <text x="104" y="418" fill="#fffefa" font-size="68" font-weight="700" letter-spacing="-2">EES</text>
+    <text x="108" y="466" fill="#fffefa" font-size="21" font-weight="700">ENTRY / EXIT SYSTEM</text>
+    <path d="M108 495h438" stroke="#48535b" stroke-width="1.5"/>
+    <text x="108" y="538" fill="#fffefa" font-size="20" font-weight="700">Operating since 10 April 2026</text>
+    <text x="108" y="580" fill="#bec4c5" font-size="15">Eligible visitors are registered during border checks.</text>
+    <circle cx="116" cy="617" r="7" fill="#f0d441"/>
+    <circle cx="250" cy="617" r="7" fill="#f0d441"/>
+    <path d="M123 617h119" stroke="#f0d441" stroke-width="2" stroke-dasharray="6 7"/>
+    <text x="268" y="622" fill="#bec4c5" font-size="14">ARRIVAL  →  DEPARTURE</text>
+
+    <text x="650" y="336" fill="#d84869" font-size="14" font-weight="700" letter-spacing="3">BEFORE TRAVEL</text>
+    <text x="646" y="418" fill="#101f2b" font-size="68" font-weight="700" letter-spacing="-2">ETIAS</text>
+    <text x="650" y="466" fill="#344552" font-size="21" font-weight="700">TRAVEL AUTHORIZATION</text>
+    <path d="M650 495h438" stroke="#d8d4ca" stroke-width="1.5"/>
+    <rect x="650" y="520" width="278" height="40" rx="3" fill="#f9e8ed"/>
+    <text x="666" y="547" fill="#9c294b" font-size="16" font-weight="700" letter-spacing="1">APPLICATIONS NOT OPEN</text>
+    <text x="650" y="594" fill="#596875" font-size="15">No confirmed start date in sources checked 27 Oct 2026.</text>
+    <path d="M1057 531v68m-25-53 25-25 25 25m-50 53h50" fill="none" stroke="#d84869" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="76" y="704" fill="#596875" font-family="Arial, Helvetica, sans-serif" font-size="13" letter-spacing="1.2">CHECK YOUR NATIONALITY, DESTINATION AND CURRENT OFFICIAL RULES BEFORE YOU TRAVEL</text>
+</svg>
