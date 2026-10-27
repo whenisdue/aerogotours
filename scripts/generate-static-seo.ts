@@ -30,9 +30,11 @@ const japanAutumnGuide = travelGuides.find((guide) => guide.path === "/guides/ja
 if (!japanAutumnGuide?.publishedAt || !japanAutumnGuide.imageSrc) throw new Error("The Japan autumn guide publication date or social image is missing from travelGuides.ts");
 const cebuUndasGuide = travelGuides.find((guide) => guide.path === "/guides/philippines/cebu-pacific-undas-2026-flight-checklist");
 if (!cebuUndasGuide?.sourcesCheckedAt || !cebuUndasGuide.imageSrc) throw new Error("The Cebu Pacific Undas guide metadata is incomplete");
+const europeEesGuide = travelGuides.find((guide) => guide.path === "/guides/europe/ees-etias-entry-rules-2026");
+if (!europeEesGuide?.sourcesCheckedAt || !europeEesGuide.imageSrc || !europeEesGuide.socialImageSrc) throw new Error("The Europe EES and ETIAS guide metadata is incomplete");
 
 const featuredNews = getFeaturedTravelUpdate();
-const siteDescription = "Discover destination stories, travel news, practical guides and original AeroGo videos for curious Filipino travelers.";
+const siteDescription = "Discover destination stories, timely travel news, practical guides and original AeroGo videos for curious travelers around the world.";
 const gardenImage = "/images/gardens-by-the-bay/optimized/S25-1440.jpg";
 const socialImageOrigin = process.env.VERCEL_ENV === "preview" && process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -70,7 +72,7 @@ const pages: SeoPage[] = [
   {
     path: "/guides",
     title: "Travel Guides · AeroGo",
-    description: "Practical travel guides for Cebu Pacific’s 2026 Undas peak period, Japan autumn planning, tax-free shopping and Singapore attractions.",
+    description: "Practical travel guides for destinations around the world, from seasonal planning and entry rules to attractions and airport procedures.",
     image: gardenImage,
     imageAlt: gardenGuide.imageAlt,
     schema: { "@type": "CollectionPage", name: "Travel Guides", url: `${SITE_ORIGIN}/guides` },
@@ -147,6 +149,29 @@ const pages: SeoPage[] = [
       { label: "Discover", path: "/" },
       { label: "Guides", path: "/guides" },
       { label: "Cebu Pacific Undas checklist", path: cebuUndasGuide.path },
+    ],
+  },
+  {
+    path: europeEesGuide.path,
+    title: europeEesGuide.seoTitle ?? `${europeEesGuide.title} | AeroGo`,
+    description: europeEesGuide.seoDescription ?? europeEesGuide.summary,
+    image: europeEesGuide.socialImageSrc,
+    imageAlt: europeEesGuide.socialImageAlt ?? europeEesGuide.imageAlt,
+    type: "article",
+    schema: {
+      "@type": "Article",
+      headline: europeEesGuide.title,
+      description: europeEesGuide.seoDescription ?? europeEesGuide.summary,
+      image: getSocialImageUrl(europeEesGuide.socialImageSrc, socialImageOrigin),
+      author: { "@type": "Organization", name: "AeroGo", url: `${SITE_ORIGIN}/` },
+      publisher: { "@id": brandEntityId },
+      mainEntityOfPage: { "@type": "WebPage", "@id": new URL(europeEesGuide.path, SITE_ORIGIN).href },
+      inLanguage: "en",
+    },
+    breadcrumbs: [
+      { label: "Discover", path: "/" },
+      { label: "Guides", path: "/guides" },
+      { label: "EES vs. ETIAS", path: europeEesGuide.path },
     ],
   },
   {
