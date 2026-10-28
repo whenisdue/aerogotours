@@ -15,13 +15,14 @@ const GardensByTheBayGuide = lazy(() => import("./pages/GardensByTheBayGuide").t
 const JapanTaxFreeGuide = lazy(() => import("./pages/JapanTaxFreeGuide").then((module) => ({ default: module.JapanTaxFreeGuide })));
 const JapanAutumnGuide = lazy(() => import("./pages/JapanAutumnGuide").then((module) => ({ default: module.JapanAutumnGuide })));
 const CebuUndasGuide = lazy(() => import("./pages/CebuUndasGuide").then((module) => ({ default: module.CebuUndasGuide })));
+const MexicoDayOfTheDeadGuide = lazy(() => import("./pages/MexicoDayOfTheDeadGuide").then((module) => ({ default: module.MexicoDayOfTheDeadGuide })));
 const TravelGuidesPage = lazy(() => import("./pages/TravelGuides").then((module) => ({ default: module.TravelGuidesPage })));
 const WatchPage = lazy(() => import("./pages/Watch").then((module) => ({ default: module.WatchPage })));
 const TripPlanner = lazy(() => import("./features/tripPlanner/TripPlanner").then((module) => ({ default: module.TripPlanner })));
 const VietnamProposalPage = lazy(() => import("./pages/VietnamProposal").then((module) => ({ default: module.VietnamProposalPage })));
 
 const HOME_TITLE = "Travel Stories, News & Guides · AeroGo";
-const HOME_DESCRIPTION = "Discover destination stories, travel news, practical guides and original AeroGo videos for curious Filipino travelers.";
+const HOME_DESCRIPTION = "Discover destination stories, travel news, practical guides and original AeroGo videos for curious travelers everywhere.";
 const NEWS_DESCRIPTION = "AeroGo Travel News: published travel developments, events and destination updates, with dates and original source links.";
 
 function PageTitle() {
@@ -33,6 +34,7 @@ function PageTitle() {
   const isJapanTaxGuide = pathname === "/guides/japan/tax-free-refund-system-november-2026";
   const isJapanAutumnGuide = pathname === "/guides/japan/autumn-leaves-2026";
   const isCebuUndasGuide = pathname === "/guides/philippines/cebu-pacific-undas-2026-flight-checklist";
+  const isMexicoDayOfTheDeadGuide = pathname === "/guides/mexico/mexico-city-day-of-the-dead-2026";
   const isGuideDirectory = pathname === "/guides";
   const isWatchPage = pathname === "/watch";
   const isNewsListing = pathname === "/travel-updates";
@@ -45,6 +47,7 @@ function PageTitle() {
     const article = document.querySelector<HTMLElement>(".news-article[data-seo-title]");
     const autumnGuide = document.querySelector<HTMLElement>(".japan-autumn__article[data-seo-title]");
     const cebuUndasGuide = document.querySelector<HTMLElement>(".cebu-undas__article[data-seo-title]");
+    const mexicoGuide = document.querySelector<HTMLElement>(".mexico-day-of-the-dead__article[data-seo-title]");
     const heading = document.querySelector<HTMLElement>("main h1")?.textContent?.trim();
     const pageTitle = isHomePage ? HOME_TITLE
       : isNewsListing ? "Travel News · AeroGo"
@@ -53,6 +56,7 @@ function PageTitle() {
             : isJapanTaxGuide ? "Japan Tax-Free Shopping Changes Nov. 1: A Filipino Traveler’s Guide · AeroGo"
               : isJapanAutumnGuide ? autumnGuide?.dataset.seoTitle ?? "Japan Autumn Leaves 2026: Forecast Dates by City | AeroGo"
                 : isCebuUndasGuide ? cebuUndasGuide?.dataset.seoTitle ?? "Cebu Pacific Undas 2026: 7 Flight-Day Checks | AeroGo"
+                  : isMexicoDayOfTheDeadGuide ? mexicoGuide?.dataset.seoTitle ?? "Mexico City Day of the Dead 2026: Parade & Ofrendas | AeroGo"
             : isGuideDirectory ? "Travel Guides · AeroGo"
               : isWatchPage ? "Watch AeroGo · Original Travel Videos"
                 : pathname === "/trip-planner" ? "Free Singapore Trip Planner · AeroGo Travel & Tours"
@@ -70,7 +74,8 @@ function PageTitle() {
           : isJapanTaxGuide ? "Japan’s tax-free system changes November 1, 2026. Learn when to pay consumption tax, how to complete customs confirmation before baggage check-in, and how refunds work."
             : isJapanAutumnGuide ? autumnGuide?.dataset.seoDescription ?? "Planning Japan in autumn 2026? Compare red-maple and yellow-ginkgo forecasts for 11 cities, dated foliage reports and practical checks before you go."
             : isCebuUndasGuide ? cebuUndasGuide?.dataset.seoDescription ?? "Flying Cebu Pacific during Undas 2026? Check airport arrival times, check-in deadlines, baggage, documents and what to do if your flight changes."
-              : isGuideDirectory ? "Practical travel guides for Cebu Pacific’s 2026 Undas peak period, Japan autumn planning, tax-free shopping and Singapore attractions."
+              : isMexicoDayOfTheDeadGuide ? mexicoGuide?.dataset.seoDescription ?? "Plan for Mexico City’s 2026 Day of the Dead parade, Zócalo ofrenda and Chapultepec events, with route, transport and visitor details checked against city sources."
+                : isGuideDirectory ? "Practical travel guides for seasonal planning, cultural experiences, travel requirements, transport and attractions around the world."
               : isWatchPage ? "Watch published AeroGo travel videos from Singapore and Vietnam, including destination discovery and the Golden Bridge at Ba Na Hills."
                 : pathname === "/trip-planner" ? "Create a free three, four or five day Singapore itinerary with a travel checklist. No account needed; save, share or print your plan."
                   : isDestination ? document.querySelector(".destination-article-header > p")?.textContent?.trim() ?? `Explore AeroGo’s destination inspiration for ${heading ?? "this destination"}.`
@@ -100,13 +105,14 @@ function PageTitle() {
     setMeta("property", "og:title", pageTitle);
     setMeta("property", "og:description", pageDescription);
     setMeta("property", "og:url", canonicalUrl);
-    setMeta("property", "og:type", isNewsArticle || isGardensGuide || isJapanTaxGuide || isJapanAutumnGuide || isCebuUndasGuide ? "article" : "website");
+    setMeta("property", "og:type", isNewsArticle || isGardensGuide || isJapanTaxGuide || isJapanAutumnGuide || isCebuUndasGuide || isMexicoDayOfTheDeadGuide ? "article" : "website");
     setMeta("name", "twitter:title", pageTitle);
     setMeta("name", "twitter:description", pageDescription);
 
     const pageImage = article?.dataset.seoImage
       ?? (isJapanAutumnGuide ? autumnGuide?.dataset.seoImage : undefined)
       ?? (isCebuUndasGuide ? cebuUndasGuide?.dataset.seoImage : undefined)
+      ?? (isMexicoDayOfTheDeadGuide ? mexicoGuide?.dataset.seoImage : undefined)
       ?? (isHomePage || isGuideDirectory || isGardensGuide || isWatchPage || pathname === "/trip-planner" ? DEFAULT_SOCIAL_IMAGE : undefined)
       ?? (isNewsListing ? document.querySelector<HTMLImageElement>(".news-lead__image img")?.src : undefined)
       ?? document.querySelector<HTMLImageElement>(".destination-lead-photo img, .watch-video--featured img")?.src
@@ -114,6 +120,7 @@ function PageTitle() {
     const pageImageAlt = article?.dataset.seoImageAlt
       ?? (isJapanAutumnGuide ? autumnGuide?.dataset.seoImageAlt : undefined)
       ?? (isCebuUndasGuide ? cebuUndasGuide?.dataset.seoImageAlt : undefined)
+      ?? (isMexicoDayOfTheDeadGuide ? mexicoGuide?.dataset.seoImageAlt : undefined)
       ?? (isHomePage || isGuideDirectory || isGardensGuide || isWatchPage || pathname === "/trip-planner" ? DEFAULT_SOCIAL_IMAGE_ALT : undefined)
       ?? (isNewsListing ? document.querySelector<HTMLImageElement>(".news-lead__image img")?.alt : undefined)
       ?? document.querySelector<HTMLImageElement>(".destination-lead-photo img, .watch-video--featured img, .desk-lead img")?.alt;
@@ -137,9 +144,10 @@ function PageTitle() {
       ? document.querySelector<HTMLElement>(".japan-refund__article")?.dataset.seoPublished
       : isJapanAutumnGuide ? autumnGuide?.dataset.seoPublished
       : isCebuUndasGuide ? cebuUndasGuide?.dataset.seoPublished
+      : isMexicoDayOfTheDeadGuide ? mexicoGuide?.dataset.seoPublished
       : article?.dataset.seoPublished;
     const updatedAt = article?.dataset.seoUpdated;
-    if ((isNewsArticle || isJapanTaxGuide || isJapanAutumnGuide || isCebuUndasGuide) && publishedAt) setMeta("property", "article:published_time", publishedAt);
+    if ((isNewsArticle || isJapanTaxGuide || isJapanAutumnGuide || isCebuUndasGuide || isMexicoDayOfTheDeadGuide) && publishedAt) setMeta("property", "article:published_time", publishedAt);
     else removeMeta("property", "article:published_time");
     if (isNewsArticle && updatedAt) setMeta("property", "article:modified_time", updatedAt);
     else removeMeta("property", "article:modified_time");
@@ -148,7 +156,7 @@ function PageTitle() {
     applyMetadata();
     window.addEventListener("aerogo:metadata-ready", applyMetadata);
 
-    const needsRouteContent = isNewsArticle || isJapanTaxGuide || isJapanAutumnGuide || isCebuUndasGuide || isDestination || isNewsListing;
+    const needsRouteContent = isNewsArticle || isJapanTaxGuide || isJapanAutumnGuide || isCebuUndasGuide || isMexicoDayOfTheDeadGuide || isDestination || isNewsListing;
     let observer: MutationObserver | undefined;
     if (needsRouteContent) {
       observer = new MutationObserver(() => {
@@ -157,6 +165,7 @@ function PageTitle() {
           : isJapanTaxGuide ? document.querySelector(".japan-refund__article[data-seo-published]")
           : isJapanAutumnGuide ? document.querySelector(".japan-autumn__article[data-seo-title]")
           : isCebuUndasGuide ? document.querySelector(".cebu-undas__article[data-seo-title]")
+          : isMexicoDayOfTheDeadGuide ? document.querySelector(".mexico-day-of-the-dead__article[data-seo-title]")
           : isDestination ? document.querySelector(".destination-article-header")
             : document.querySelector(".news-lead");
         if (routeContent) {
@@ -171,7 +180,7 @@ function PageTitle() {
       window.removeEventListener("aerogo:metadata-ready", applyMetadata);
       observer?.disconnect();
     };
-  }, [isCompanionDemo, isDestination, isDreamTrip, isGardensGuide, isJapanTaxGuide, isJapanAutumnGuide, isCebuUndasGuide, isGuideDirectory, isHomePage, isNewsArticle, isNewsListing, isPrivateTrip, isWatchPage, pathname]);
+  }, [isCompanionDemo, isDestination, isDreamTrip, isGardensGuide, isJapanTaxGuide, isJapanAutumnGuide, isCebuUndasGuide, isMexicoDayOfTheDeadGuide, isGuideDirectory, isHomePage, isNewsArticle, isNewsListing, isPrivateTrip, isWatchPage, pathname]);
 
   return null;
 }
@@ -226,6 +235,7 @@ export default function App() {
     <Route path="/guides/japan/tax-free-refund-system-november-2026" element={<JapanTaxFreeGuide />} />
     <Route path="/guides/japan/autumn-leaves-2026" element={<JapanAutumnGuide />} />
     <Route path="/guides/philippines/cebu-pacific-undas-2026-flight-checklist" element={<CebuUndasGuide />} />
+    <Route path="/guides/mexico/mexico-city-day-of-the-dead-2026" element={<MexicoDayOfTheDeadGuide />} />
     <Route path="/destinations/:slug" element={<DestinationPage />} />
     <Route path="/dream/:slug" element={<DreamTripPage />} />
     <Route path="/dream/*" element={<DreamTripNotFound />} />
