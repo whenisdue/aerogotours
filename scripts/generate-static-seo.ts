@@ -30,9 +30,11 @@ const japanAutumnGuide = travelGuides.find((guide) => guide.path === "/guides/ja
 if (!japanAutumnGuide?.publishedAt || !japanAutumnGuide.imageSrc) throw new Error("The Japan autumn guide publication date or social image is missing from travelGuides.ts");
 const cebuUndasGuide = travelGuides.find((guide) => guide.path === "/guides/philippines/cebu-pacific-undas-2026-flight-checklist");
 if (!cebuUndasGuide?.sourcesCheckedAt || !cebuUndasGuide.imageSrc) throw new Error("The Cebu Pacific Undas guide metadata is incomplete");
+const mexicoDayGuide = travelGuides.find((guide) => guide.path === "/guides/mexico/mexico-city-day-of-the-dead-2026");
+if (!mexicoDayGuide?.sourcesCheckedAt || !mexicoDayGuide.imageSrc || !mexicoDayGuide.imageCredit) throw new Error("The Mexico City guide metadata is incomplete");
 
 const featuredNews = getFeaturedTravelUpdate();
-const siteDescription = "Discover destination stories, travel news, practical guides and original AeroGo videos for curious Filipino travelers.";
+const siteDescription = "Discover destination stories, travel news, practical guides and original AeroGo videos for curious travelers everywhere.";
 const gardenImage = "/images/gardens-by-the-bay/optimized/S25-1440.jpg";
 const socialImageOrigin = process.env.VERCEL_ENV === "preview" && process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -70,7 +72,7 @@ const pages: SeoPage[] = [
   {
     path: "/guides",
     title: "Travel Guides · AeroGo",
-    description: "Practical travel guides for Cebu Pacific’s 2026 Undas peak period, Japan autumn planning, tax-free shopping and Singapore attractions.",
+    description: "Practical travel guides for seasonal planning, cultural experiences, travel requirements, transport and attractions around the world.",
     image: gardenImage,
     imageAlt: gardenGuide.imageAlt,
     schema: { "@type": "CollectionPage", name: "Travel Guides", url: `${SITE_ORIGIN}/guides` },
@@ -147,6 +149,38 @@ const pages: SeoPage[] = [
       { label: "Discover", path: "/" },
       { label: "Guides", path: "/guides" },
       { label: "Cebu Pacific Undas checklist", path: cebuUndasGuide.path },
+    ],
+  },
+  {
+    path: mexicoDayGuide.path,
+    title: mexicoDayGuide.seoTitle ?? `${mexicoDayGuide.title} · AeroGo`,
+    description: mexicoDayGuide.seoDescription ?? mexicoDayGuide.summary,
+    image: mexicoDayGuide.imageSrc,
+    imageAlt: mexicoDayGuide.socialImageAlt ?? mexicoDayGuide.imageAlt,
+    type: "article",
+    publishedAt: mexicoDayGuide.publishedAt,
+    schema: {
+      "@type": "Article",
+      headline: mexicoDayGuide.title,
+      description: mexicoDayGuide.seoDescription ?? mexicoDayGuide.summary,
+      ...(mexicoDayGuide.publishedAt ? { datePublished: mexicoDayGuide.publishedAt } : {}),
+      image: {
+        "@type": "ImageObject",
+        contentUrl: getSocialImageUrl(mexicoDayGuide.imageSrc, socialImageOrigin),
+        caption: mexicoDayGuide.imageAlt,
+        creditText: `Photo by ${mexicoDayGuide.imageCredit.author}, via Wikimedia Commons, ${mexicoDayGuide.imageCredit.license}. Photographed 31 October 2025; archival, not the 2026 installation.`,
+        creator: { "@type": "Person", name: mexicoDayGuide.imageCredit.author, url: mexicoDayGuide.imageCredit.authorUrl },
+        license: mexicoDayGuide.imageCredit.licenseUrl,
+      },
+      author: { "@type": "Organization", name: "AeroGo", url: `${SITE_ORIGIN}/` },
+      publisher: { "@id": brandEntityId },
+      mainEntityOfPage: { "@type": "WebPage", "@id": new URL(mexicoDayGuide.path, SITE_ORIGIN).href },
+      inLanguage: "en",
+    },
+    breadcrumbs: [
+      { label: "Discover", path: "/" },
+      { label: "Guides", path: "/guides" },
+      { label: "Mexico City Day of the Dead 2026", path: mexicoDayGuide.path },
     ],
   },
   {

@@ -11,7 +11,7 @@ test("Japan autumn guide has distinct publication and source-check dates, a lice
   assert.equal(guide.imageSrc, "/images/guides/japan-autumn/kiyomizu-dera-kyoto-2016.jpg");
   assert.equal(guide.imageCredit?.license, "CC BY-SA 4.0");
   assert.equal(guide.imageCredit?.licenseUrl, "https://creativecommons.org/licenses/by-sa/4.0");
-  assert.equal(travelGuides[1].path, guide.path, "the evergreen Japan guide remains available after the temporary Undas homepage feature");
+  assert.ok(travelGuides.some((item) => item.path === guide.path), "the evergreen Japan guide remains available in the directory");
   assert.equal(getFeaturedTravelGuide(new Date("2026-11-04T00:00:00+08:00")).path, guide.path);
 });
 

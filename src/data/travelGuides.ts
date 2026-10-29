@@ -21,6 +21,7 @@ export type TravelGuide = {
   publishedAt?: string;
   sourcesCheckedAt?: string;
   homepageFeaturedThrough?: string;
+  homepageLinkThrough?: string;
   seoTitle?: string;
   seoDescription?: string;
 };
@@ -43,6 +44,31 @@ export const travelGuides: TravelGuide[] = [
     homepageFeaturedThrough: "2026-11-03",
     seoTitle: "Cebu Pacific Undas 2026: 7 Flight-Day Checks | AeroGo",
     seoDescription: "Flying Cebu Pacific during Undas 2026? Check airport arrival times, check-in deadlines, baggage, documents and what to do if your flight changes.",
+  },
+  {
+    path: "/guides/mexico/mexico-city-day-of-the-dead-2026",
+    destination: "Mexico City",
+    title: "Mexico City Day of the Dead 2026: Parade, Ofrendas and What to Know",
+    summary: "Plan around the October 31 parade, the Zócalo’s announced monumental ofrenda and Chapultepec events, with current route, transport and access details clearly separated from what is still unconfirmed.",
+    image: "mexico-day-of-dead-zocalo",
+    imageSrc: "/images/guides/mexico/zocalo-ofrenda-2025.jpg",
+    imageAlt: "Archival photograph of a public Day of the Dead ofrenda in Mexico City’s Zócalo, photographed on 31 October 2025; it does not show the announced 2026 installation",
+    socialImageAlt: "Archival public ofrenda in Mexico City’s Zócalo, photographed 31 October 2025 by Luisalvaz; not the 2026 installation. Wikimedia Commons, CC BY-SA 4.0.",
+    imageCredit: {
+      author: "Luisalvaz",
+      authorUrl: "https://commons.wikimedia.org/wiki/User:Luisalvaz",
+      sourceName: "Wikimedia Commons",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Ofrenda_del_d%C3%ADa_de_muertos_en_el_z%C3%B3calo_de_la_Ciudad_de_M%C3%A9xico_03.jpg",
+      license: "CC BY-SA 4.0",
+      licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
+      note: "Archival photograph of a public ofrenda in the Zócalo, taken 31 October 2025. Wikimedia Commons resized the image to 1280 × 854; it is not the 2026 installation.",
+    },
+    topics: ["Parade · 31 October", "Zócalo ofrenda · 29 Oct–2 Nov", "Chapultepec · 29 Oct–4 Nov"],
+    publishedAt: "2026-10-29",
+    sourcesCheckedAt: "2026-10-29",
+    homepageLinkThrough: "2026-11-04",
+    seoTitle: "Mexico City Day of the Dead 2026: Parade & Ofrendas | AeroGo",
+    seoDescription: "Plan for Mexico City’s 2026 Day of the Dead parade, Zócalo ofrenda and Chapultepec events, with route, transport and visitor details checked against city sources.",
   },
   {
     path: "/guides/japan/autumn-leaves-2026",
@@ -100,6 +126,17 @@ export function getFeaturedTravelGuide(now = new Date()): TravelGuide {
     month: "2-digit",
     day: "2-digit",
   }).format(now);
-  return travelGuides.find((guide) => !guide.homepageFeaturedThrough || manilaDate <= guide.homepageFeaturedThrough)
+  return travelGuides.find((guide) => !guide.homepageLinkThrough && (!guide.homepageFeaturedThrough || manilaDate <= guide.homepageFeaturedThrough))
     ?? travelGuides[0];
+}
+
+export function isHomepageTravelGuideLinkActive(guide: TravelGuide, now = new Date()): boolean {
+  if (!guide.homepageLinkThrough) return false;
+  const mexicoCityDate = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "America/Mexico_City",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(now);
+  return mexicoCityDate <= guide.homepageLinkThrough;
 }

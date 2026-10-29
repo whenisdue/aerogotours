@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { SiteHeader } from "../components/SiteHeader";
 import { EditorialFooter } from "../components/EditorialFooter";
 import { EditorialPhoto } from "../components/EditorialPhoto";
-import { getFeaturedTravelGuide } from "../data/travelGuides";
+import { getFeaturedTravelGuide, isHomepageTravelGuideLinkActive, travelGuides } from "../data/travelGuides";
 import { publishedVideos, videoPlatformLabels } from "../data/publishedVideos";
 import "./Discovery.css";
 import "./Homepage.css";
@@ -48,6 +48,8 @@ export function Homepage() {
   const [newsItems, setNewsItems] = useState<HomepageNewsItem[]>(readHomepageNews);
   const [newsLoaded, setNewsLoaded] = useState(() => newsItems.length > 0);
   const leadGuide = getFeaturedTravelGuide();
+  const mexicoSeasonalGuide = travelGuides.find((guide) => guide.path === "/guides/mexico/mexico-city-day-of-the-dead-2026");
+  const showMexicoSeasonalLink = mexicoSeasonalGuide ? isHomepageTravelGuideLinkActive(mexicoSeasonalGuide) : false;
   const [submissionState, setSubmissionState] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [submissionError, setSubmissionError] = useState("");
   const [datesError, setDatesError] = useState("");
@@ -191,7 +193,7 @@ export function Homepage() {
         </div>
       </section>
 
-      <section className="desk-guides desk-shell" aria-labelledby="desk-guides-title"><div><span className="desk-kicker">Useful before you go</span><h2 id="desk-guides-title">Practical Travel Guides</h2><p>Browse our guides for seasonal planning, attraction details and practical information to help you choose what to do next.</p></div><Link className="desk-guides__button" to="/guides">Explore all guides <ArrowUpRight size={18} aria-hidden="true" /></Link></section>
+      <section className="desk-guides desk-shell" aria-labelledby="desk-guides-title"><div><span className="desk-kicker">Useful before you go</span><h2 id="desk-guides-title">Practical Travel Guides</h2><p>Browse our guides for seasonal planning, attraction details and practical information to help you choose what to do next.</p></div><div className="desk-guides__actions"><Link className="desk-guides__button" to="/guides">Explore all guides <ArrowUpRight size={18} aria-hidden="true" /></Link>{showMexicoSeasonalLink && mexicoSeasonalGuide && <Link className="desk-guides__seasonal" to={mexicoSeasonalGuide.path}>Mexico City · Day of the Dead visitor guide <ArrowUpRight size={17} aria-hidden="true" /></Link>}</div></section>
 
       <section className="desk-planning desk-shell" id="how-it-works" aria-labelledby="planning-title"><div id="services"><span className="desk-kicker">Travel planning</span><h2 id="planning-title">Need a hand with the details?</h2><p>Share your destination, dates and preferences. AeroGo can help shape a practical itinerary and organize your next steps.</p></div><div className="desk-planning__links"><Link className="desk-text-link" to="#inquiry">Send a trip inquiry <ArrowUpRight size={17} aria-hidden="true" /></Link><Link className="desk-text-link" to="/trip-planner">Try the free trip planner <ArrowUpRight size={17} aria-hidden="true" /></Link><p id="companion">See a <Link to="/companion">sample Trip Companion</Link> for an illustrative private trip space.</p></div></section>
 

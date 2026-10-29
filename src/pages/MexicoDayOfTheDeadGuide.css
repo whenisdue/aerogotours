@@ -1,0 +1,99 @@
+.mexico-day-of-the-dead-site { min-width: 0; background: var(--editorial-paper); color: var(--editorial-news-ink); }
+.mexico-day-of-the-dead-site .mexico-day-of-the-dead.page-shell { width: min(92%, var(--editorial-content-max)); padding-bottom: 58px; }
+.mexico-day-of-the-dead__article { min-width: 0; }
+.mexico-day-of-the-dead__hero { max-width: 1040px; padding: 25px 0 24px; }
+.mexico-day-of-the-dead__eyebrow,
+.mexico-day-of-the-dead__section-heading > span,
+.mexico-day-of-the-dead__answer > div > span,
+.mexico-day-of-the-dead__sources > span { margin: 0; color: var(--editorial-magenta-ink); font-size: 11px; font-weight: 800; letter-spacing: .09em; line-height: 1.5; }
+.mexico-day-of-the-dead__hero h1 { max-width: 1020px; margin: 12px 0 17px; font: 800 clamp(45px, 6.1vw, 78px)/.99 var(--editorial-display-font); letter-spacing: -.027em; overflow-wrap: anywhere; }
+.mexico-day-of-the-dead__standfirst { max-width: 900px; margin: 0; color: var(--editorial-muted-ink); font-size: clamp(17px, 1.7vw, 20px); line-height: 1.65; }
+.mexico-day-of-the-dead__dateline { display: flex; flex-wrap: wrap; gap: 6px 24px; margin: 20px 0 0; border-top: 1px solid var(--editorial-line); padding-top: 13px; color: var(--editorial-muted-ink); font-size: 12px; }
+.mexico-day-of-the-dead__dateline > div { display: flex; flex-wrap: wrap; gap: 5px; }
+.mexico-day-of-the-dead__dateline dt { font-weight: 700; }
+.mexico-day-of-the-dead__dateline dd { margin: 0; }
+.mexico-day-of-the-dead__hero-image { margin: 0 0 27px; }
+.mexico-day-of-the-dead__hero-image img { display: block; width: 100%; height: auto; aspect-ratio: 1280 / 854; object-fit: contain; background: var(--editorial-desk-gray); }
+.mexico-day-of-the-dead__hero-image figcaption { max-width: 1060px; margin-top: 8px; color: var(--editorial-muted-ink); font-size: 11px; line-height: 1.55; }
+.mexico-day-of-the-dead__hero-image figcaption a,
+.mexico-day-of-the-dead__sources a { color: var(--editorial-link-blue); text-underline-offset: 2px; }
+.mexico-day-of-the-dead__answer { display: grid; grid-template-columns: minmax(220px, .72fr) minmax(0, 1.28fr); gap: 20px 42px; align-items: center; margin: 25px 0 42px; border-left: 6px solid var(--editorial-magenta-ink); padding: 22px clamp(19px, 3vw, 36px); background: var(--editorial-electric-yellow); }
+.mexico-day-of-the-dead__answer h2 { margin: 7px 0 0; font: 700 clamp(28px, 3vw, 40px)/1.02 var(--editorial-display-font); letter-spacing: -.02em; }
+.mexico-day-of-the-dead__answer ul { margin: 0; padding-left: 22px; }
+.mexico-day-of-the-dead__answer li { font-size: 15px; line-height: 1.55; }
+.mexico-day-of-the-dead__answer li + li { margin-top: 7px; }
+.mexico-day-of-the-dead__section { min-width: 0; border-top: 4px solid var(--editorial-news-ink); padding: 22px 0 42px; scroll-margin-top: 20px; }
+.mexico-day-of-the-dead__section-heading { max-width: 900px; margin-bottom: 21px; }
+.mexico-day-of-the-dead__section-heading h2,
+.mexico-day-of-the-dead__sources h2 { margin: 8px 0 10px; font: 700 clamp(34px, 4.4vw, 53px)/1.03 var(--editorial-display-font); letter-spacing: -.018em; }
+.mexico-day-of-the-dead__section-heading > p { max-width: 850px; margin: 0; color: var(--editorial-muted-ink); font-size: 15px; line-height: 1.65; }
+.mexico-day-of-the-dead__prose { max-width: 880px; }
+.mexico-day-of-the-dead__prose p { margin: 0 0 15px; color: var(--editorial-muted-ink); font-size: 16px; line-height: 1.75; }
+.mexico-day-of-the-dead__prose p:last-child { margin-bottom: 0; }
+.mexico-day-of-the-dead__prose strong { color: var(--editorial-news-ink); }
+.mexico-day-of-the-dead__event-list { border-top: 1px solid var(--editorial-line); }
+.mexico-day-of-the-dead__event { display: grid; grid-template-columns: minmax(160px, .32fr) minmax(0, .68fr); gap: 20px 34px; border-bottom: 1px solid var(--editorial-line); padding: 21px 0 22px; }
+.mexico-day-of-the-dead__event--highlight { background: linear-gradient(90deg, var(--editorial-desk-gray), transparent 78%); padding-inline: 16px; }
+.mexico-day-of-the-dead__event-date { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+.mexico-day-of-the-dead__event-date span { color: var(--editorial-magenta-ink); font: 800 clamp(18px, 2vw, 24px)/1.15 var(--editorial-display-font); letter-spacing: -.01em; }
+.mexico-day-of-the-dead__event-date small { color: var(--editorial-muted-ink); font-size: 12px; line-height: 1.5; }
+.mexico-day-of-the-dead__event h3 { margin: 0 0 8px; font: 700 clamp(23px, 2.5vw, 31px)/1.1 var(--editorial-display-font); }
+.mexico-day-of-the-dead__event p { margin: 0 0 9px; color: var(--editorial-muted-ink); font-size: 15px; line-height: 1.65; }
+.mexico-day-of-the-dead__event p:last-child { margin-bottom: 0; }
+.mexico-day-of-the-dead__event .mexico-day-of-the-dead__event-note { font-size: 13px; }
+.mexico-day-of-the-dead__route-line { display: flex; align-items: center; gap: 12px; margin: 3px 0 22px; padding: 17px 20px; background: var(--editorial-news-ink); color: var(--editorial-paper); }
+.mexico-day-of-the-dead__route-line span { font-size: 13px; font-weight: 800; line-height: 1.35; }
+.mexico-day-of-the-dead__route-line i { width: clamp(20px, 8vw, 82px); height: 1px; flex: 0 1 82px; background: var(--editorial-electric-yellow); }
+.mexico-day-of-the-dead__transport-links { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 18px; border-top: 1px solid var(--editorial-line); padding-top: 13px; }
+.mexico-day-of-the-dead__transport-links a,
+.mexico-day-of-the-dead__sources li a { display: inline-flex; align-items: baseline; gap: 4px; min-height: 38px; color: var(--editorial-link-blue); font-size: 12px; font-weight: 700; line-height: 1.5; text-underline-offset: 3px; }
+.mexico-day-of-the-dead__transport-links svg,
+.mexico-day-of-the-dead__sources li svg { flex: 0 0 auto; vertical-align: -2px; }
+.mexico-day-of-the-dead__checklist { max-width: 920px; margin: 0; padding-left: 25px; }
+.mexico-day-of-the-dead__checklist li { padding-left: 7px; color: var(--editorial-muted-ink); font-size: 16px; line-height: 1.7; }
+.mexico-day-of-the-dead__checklist li + li { margin-top: 10px; }
+.mexico-day-of-the-dead__sources { margin-top: 3px; border-top: 4px solid var(--editorial-news-ink); padding: 24px 0 20px; }
+.mexico-day-of-the-dead__sources h2 { margin-bottom: 9px; }
+.mexico-day-of-the-dead__sources > p { max-width: 930px; color: var(--editorial-muted-ink); font-size: 14px; line-height: 1.65; }
+.mexico-day-of-the-dead__sources ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px 30px; margin: 18px 0; padding-left: 22px; }
+.mexico-day-of-the-dead__sources li { min-width: 0; padding: 3px 0; line-height: 1.5; }
+.mexico-day-of-the-dead__sources li a { align-items: flex-start; }
+.mexico-day-of-the-dead__source-note { font-size: 12px !important; }
+.mexico-day-of-the-dead__related { display: flex; flex-wrap: wrap; gap: 5px 22px; border-top: 1px solid var(--editorial-line); padding-top: 12px; }
+.mexico-day-of-the-dead__related a { display: inline-flex; min-height: 44px; align-items: center; gap: 5px; color: var(--editorial-link-blue); font-size: 13px; font-weight: 700; text-underline-offset: 3px; }
+
+@media (max-width: 700px) {
+  .mexico-day-of-the-dead-site .mexico-day-of-the-dead.page-shell { width: 90%; padding-bottom: 40px; }
+  .mexico-day-of-the-dead__hero { padding-top: 18px; }
+  .mexico-day-of-the-dead__hero h1 { margin-block: 10px 13px; font-size: clamp(39px, 10.7vw, 50px); line-height: 1; }
+  .mexico-day-of-the-dead__standfirst { font-size: 16px; line-height: 1.6; }
+  .mexico-day-of-the-dead__dateline { gap: 7px 14px; margin-top: 15px; font-size: 11px; }
+  .mexico-day-of-the-dead__hero-image { margin-bottom: 20px; }
+  .mexico-day-of-the-dead__hero-image figcaption { font-size: 10px; }
+  .mexico-day-of-the-dead__answer { grid-template-columns: 1fr; gap: 10px; margin: 18px 0 30px; padding: 17px 16px; }
+  .mexico-day-of-the-dead__answer h2 { font-size: 29px; }
+  .mexico-day-of-the-dead__answer li { font-size: 14px; line-height: 1.6; }
+  .mexico-day-of-the-dead__section { padding: 18px 0 31px; }
+  .mexico-day-of-the-dead__section-heading { margin-bottom: 16px; }
+  .mexico-day-of-the-dead__section-heading h2,
+  .mexico-day-of-the-dead__sources h2 { font-size: 35px; }
+  .mexico-day-of-the-dead__section-heading > p { font-size: 14px; line-height: 1.6; }
+  .mexico-day-of-the-dead__prose p,
+  .mexico-day-of-the-dead__checklist li { font-size: 15px; line-height: 1.68; }
+  .mexico-day-of-the-dead__event { grid-template-columns: 1fr; gap: 8px; padding-block: 17px; }
+  .mexico-day-of-the-dead__event--highlight { padding-inline: 12px; }
+  .mexico-day-of-the-dead__event-date { flex-direction: row; align-items: baseline; flex-wrap: wrap; gap: 3px 12px; }
+  .mexico-day-of-the-dead__event-date span { font-size: 19px; }
+  .mexico-day-of-the-dead__event h3 { font-size: 25px; }
+  .mexico-day-of-the-dead__event p { font-size: 14px; }
+  .mexico-day-of-the-dead__event .mexico-day-of-the-dead__event-note { font-size: 12px; }
+  .mexico-day-of-the-dead__route-line { justify-content: space-between; gap: 7px; margin-block: 0 18px; padding: 14px 11px; }
+  .mexico-day-of-the-dead__route-line span { font-size: 10px; text-align: center; }
+  .mexico-day-of-the-dead__route-line i { width: auto; min-width: 12px; flex: 1 1 auto; }
+  .mexico-day-of-the-dead__transport-links { gap: 3px 10px; }
+  .mexico-day-of-the-dead__transport-links a { font-size: 11px; }
+  .mexico-day-of-the-dead__sources > p { font-size: 13px; }
+  .mexico-day-of-the-dead__sources ul { grid-template-columns: 1fr; gap: 4px; margin-block: 12px; padding-left: 19px; }
+  .mexico-day-of-the-dead__sources li a { font-size: 12px; }
+  .mexico-day-of-the-dead__related { gap: 0 12px; }
+}

@@ -4,7 +4,11 @@ export const DEFAULT_SOCIAL_IMAGE = "/images/gardens-by-the-bay/optimized/S25-14
 export const DEFAULT_SOCIAL_IMAGE_ALT = "Supertree Grove and the glass conservatories at Gardens by the Bay, Singapore";
 
 function getRuntimeSocialOrigin() {
-  if (typeof window !== "undefined" && window.location.hostname.endsWith(".vercel.app")) {
+  if (typeof window !== "undefined" && (
+    window.location.hostname.endsWith(".vercel.app")
+    || window.location.hostname === "localhost"
+    || window.location.hostname === "127.0.0.1"
+  )) {
     return window.location.origin;
   }
   return SITE_ORIGIN;

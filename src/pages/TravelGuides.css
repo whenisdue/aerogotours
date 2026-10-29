@@ -8,6 +8,7 @@
 .guides-directory.editorial-foundation .guide-feature__figure { min-width: 0; margin: 0; }
 .guides-directory.editorial-foundation .guide-feature__image { display: block; min-width: 0; overflow: hidden; background: var(--editorial-desk-gray); }
 .guides-directory.editorial-foundation .guide-feature__image img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: center; }
+.guides-directory.editorial-foundation .guide-feature--mexico .guide-feature__image img { aspect-ratio: 3 / 2; }
 .guides-directory.editorial-foundation .guide-feature__credit { margin-top: 8px; color: var(--editorial-muted-ink); font-size: 11px; line-height: 1.5; }
 .guides-directory.editorial-foundation .guide-feature__credit a { color: var(--editorial-link-blue); text-underline-offset: 2px; }
 .guides-directory.editorial-foundation .guide-feature__copy { max-width: 590px; padding-top: 4px; }
